@@ -46,7 +46,7 @@ class ConsultationController extends Controller
         // 3. Strict Validation & Character Limits
         $validated = $request->validate([
             'name' => 'required|string|min:2|max:70',
-            'email' => 'required|email:rfc,dns|max:100',
+            'email' => 'required|email|max:100',
             'phone' => 'nullable|string|max:30',
             'company_name' => 'nullable|string|max:100',
             'project_type' => 'nullable|string|max:100',

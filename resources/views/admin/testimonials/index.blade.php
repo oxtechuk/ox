@@ -33,13 +33,17 @@
                             {{ $t->order }}
                         </td>
                         <td>
-                            <strong style="color: var(--text-heading);">{{ $t->partner_name }}</strong>
+                            <strong class="truncate-text sm" title="{{ $t->partner_name }}" style="color: var(--text-heading);">{{ $t->partner_name }}</strong>
                             <div style="font-size: 11px; color: var(--brand-green); font-weight: 600;">شارة: {{ $t->number_badge ?? '01' }}</div>
                         </td>
-                        <td style="color: var(--text-body);">{{ $t->partner_role }}</td>
+                        <td style="color: var(--text-body);">
+                            <span class="truncate-text sm" title="{{ $t->partner_role }}">{{ $t->partner_role }}</span>
+                        </td>
                         <td style="color: var(--text-muted);">{{ $t->partner_country ?? '-' }}</td>
-                        <td style="max-width: 250px; font-size: 11.5px; color: var(--text-body);">
-                            {{ Str::limit($t->quote, 80) }}
+                        <td>
+                            <span class="truncate-text md" title="{{ $t->quote }}" style="font-size: 11.5px; color: var(--text-body);">
+                                {{ $t->quote }}
+                            </span>
                         </td>
                         <td>
                             @if($t->video_url)

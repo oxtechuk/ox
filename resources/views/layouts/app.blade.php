@@ -105,9 +105,15 @@
     @endif
 
     <!-- Marketing Tracking Pixels Injection (GA4, GTM, Meta, Snapchat, TikTok) -->
-    @foreach($activePixels as $pixel)
-        {!! $pixel->renderHeadScript() !!}
-    @endforeach
+    @if(!empty($activePixels) && is_iterable($activePixels))
+        @foreach($activePixels as $pixel)
+            @if(is_object($pixel) && method_exists($pixel, 'renderHeadScript'))
+                {!! $pixel->renderHeadScript() !!}
+            @elseif(is_string($pixel))
+                {!! $pixel !!}
+            @endif
+        @endforeach
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,6 +128,81 @@
             --lime-glow: rgba(201, 250, 75, 0.35);
             --blue-glow: rgba(31, 99, 255, 0.4);
             --navy-card: #0d2235;
+        }
+
+        /* Luxury Global Pagination */
+        .ox-pagination-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .ox-pagination-info {
+            font-size: 13px;
+            color: #94a3b8;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .ox-pagination-info strong {
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .ox-pagination-list {
+            display: inline-flex;
+            align-items: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 6px;
+        }
+        .ox-page-item {
+            display: inline-block;
+        }
+        .ox-page-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-width: 36px;
+            height: 36px;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .ox-page-link:hover {
+            background: rgba(201, 250, 75, 0.15);
+            color: #c9fa4b;
+            border-color: #c9fa4b;
+        }
+        .ox-page-item.active .ox-page-link {
+            background: #c9fa4b;
+            color: #071827;
+            border-color: #c9fa4b;
+            font-weight: 800;
+        }
+        .ox-page-item.disabled .ox-page-link {
+            background: rgba(255, 255, 255, 0.02);
+            color: #475569;
+            border-color: rgba(255, 255, 255, 0.05);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        nav[role="navigation"] svg {
+            width: 14px !important;
+            height: 14px !important;
+            max-width: 14px !important;
+            max-height: 14px !important;
+            display: inline-block !important;
         }
         
         .consult-modal-backdrop {
@@ -304,9 +385,13 @@
 <body>
 
     <!-- Tracking Pixels Body Injection -->
-    @foreach($activePixels as $pixel)
-        {!! $pixel->renderBodyScript() !!}
-    @endforeach
+    @if(!empty($activePixels) && is_iterable($activePixels))
+        @foreach($activePixels as $pixel)
+            @if(is_object($pixel) && method_exists($pixel, 'renderBodyScript'))
+                {!! $pixel->renderBodyScript() !!}
+            @endif
+        @endforeach
+    @endif
 
     @if(session('success'))
         <div class="flash-alert" id="flash-msg">

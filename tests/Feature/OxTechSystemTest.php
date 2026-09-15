@@ -91,6 +91,38 @@ class OxTechSystemTest extends TestCase
         ]);
     }
 
+    public function test_consultation_honeypot_discards_bot_submission(): void
+    {
+        $payload = [
+            'name' => 'Spam Bot',
+            'email' => 'spambot@example.com',
+            'message' => 'This is a spam message attempting to submit via bot script.',
+            'hp_check' => 'http://spam-trap-link.ru', // bot fills the hidden trap
+        ];
+
+        $response = $this->postJson('/consultation/store', $payload);
+        $response->assertStatus(200);
+        $response->assertJson(['success' => true]);
+
+        // Assert database does NOT contain this spam lead
+        $this->assertDatabaseMissing('consultations', [
+            'email' => 'spambot@example.com',
+        ]);
+    }
+
+    public function test_consultation_validation_fails_on_short_message(): void
+    {
+        $payload = [
+            'name' => 'أحمد',
+            'email' => 'ahmed@test.sa',
+            'message' => 'قصير', // less than 10 characters
+        ];
+
+        $response = $this->postJson('/consultation/store', $payload);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['message']);
+    }
+
     public function test_admin_guest_redirected_from_dashboard(): void
     {
         $response = $this->get('/admin/dashboard');
