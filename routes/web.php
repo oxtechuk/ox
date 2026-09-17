@@ -28,6 +28,13 @@ use App\Models\SiteSetting;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['ar', 'en', 'fr'])) {
+        session(['locale' => $locale]);
+        cookie()->queue('locale', $locale, 60 * 24 * 365);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 /*
 |--------------------------------------------------------------------------

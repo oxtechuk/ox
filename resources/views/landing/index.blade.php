@@ -4,100 +4,101 @@
 
 @section('content')
 <main id="home">
-    <!-- Hero Cinematic Slider Section -->
-    <section class="hero" id="heroSection">
-        <div class="hero-slider">
-            <!-- Slide 1: Saudi Heritage & Digital Vision (Exact Replica of Reference Design) -->
-            <div class="hero-slide active" data-slide="0">
-                <div class="hero-slide-photo" style="background-image: url('{{ asset('assets/ox-hero-gathering.jpg') }}');"></div>
-                <div class="hero-slide-overlay"></div>
-                <div class="hero-copy">
-                    <p class="hero-kicker-text">احتفال أصيل · 23 سبتمبر</p>
-                    <h1 class="hero-title-main">
-                        <span class="white-text">دارنا</span>
-                        <span class="lime-text">تجمعنا</span>
-                    </h1>
-                    <p>حكاية وطن تنسجها التفاصيل، وترويها الأجيال بكل فخر.</p>
-                    <div class="hero-actions">
-                        <a class="hero-circle-btn" href="javascript:void(0)" onclick="openConsultModal()">
-                            <span class="btn-circle-arrow">↓</span>
-                            <span class="btn-text">اكتشف الحكاية</span>
-                        </a>
-                    </div>
+    @php
+        $locale = request('lang', session('locale', request()->cookie('locale', app()->getLocale() ?: 'ar')));
+        if (!in_array($locale, ['ar', 'en', 'fr'])) {
+            $locale = 'ar';
+        }
+        app()->setLocale($locale);
+
+        $showcaseTexts = [
+            'ar' => [
+                'intro' => 'OX Tech لا تبرمج فقط. نبني ما يُحرّك عملك.',
+                'header_1' => 'كل مشروع ريادي يبدأ بـ',
+                'header_2' => 'OX Tech',
+                't1_icon' => 'rocket-outline',
+                't1_title' => 'بنية سحابية فائقة',
+                't1_desc' => 'حلول سحابية وتطبيقات قابلة للتوسع غير المحدود، تعمل بأعلى معايير الأمان والاستقرار المستمر.',
+                't2_icon' => 'sparkles-outline',
+                't2_title' => 'حلول رقمية ذكية',
+                't2_desc' => 'ندمج أحدث تقنيات البرمجة والذكاء الاصطناعي في صلب عملك، لنحوّل رؤيتك إلى منتج تقني رائد.',
+            ],
+            'en' => [
+                'intro' => "OX Tech doesn't just code. We build what moves you.",
+                'header_1' => "Every Great Product Starts With",
+                'header_2' => "OX Tech",
+                't1_icon' => 'rocket-outline',
+                't1_title' => "Engineered to Scale",
+                't1_desc' => "High-performance cloud architecture and mobile apps built to scale limitlessly with zero downtime.",
+                't2_icon' => 'sparkles-outline',
+                't2_title' => "Intelligent Engineering",
+                't2_desc' => "Custom software and AI-driven systems crafted to transform your vision into market-leading products.",
+            ],
+            'fr' => [
+                'intro' => "OX Tech ne code pas seulement. Nous bâtissons votre avenir.",
+                'header_1' => "Chaque vision digitale commence par",
+                'header_2' => "OX Tech",
+                't1_icon' => 'rocket-outline',
+                't1_title' => "Ingénierie Haute Performance",
+                't1_desc' => "Architecture cloud et applications mobiles conçues pour évoluer sans limites avec une fiabilité maximale.",
+                't2_icon' => 'sparkles-outline',
+                't2_title' => "Solutions Intelligentes",
+                't2_desc' => "Des systèmes sur mesure intégrant l'IA pour transformer vos ambitions en succès numériques durables.",
+            ]
+        ];
+
+        $txt = $showcaseTexts[$locale] ?? $showcaseTexts['ar'];
+    @endphp
+
+    <!-- 3D Product Scroll Showcase (AR / EN / FR) -->
+    <div class="showcase-root {{ $locale === 'ar' ? 'is-rtl' : 'is-ltr' }}" id="showcaseRoot" dir="{{ $locale === 'ar' ? 'rtl' : 'ltr' }}">
+
+        <!-- Intro -->
+        <section class="intro">
+            <h1>{{ $txt['intro'] }}</h1>
+        </section>
+
+        <!-- Pinned Product Overview -->
+        <section class="product-overview" id="productOverview">
+            <div class="header-1">
+                <h1>{{ $txt['header_1'] }}</h1>
+            </div>
+            <div class="header-2">
+                <h1>{{ $txt['header_2'] }}</h1>
+            </div>
+            <div class="circular-mask"></div>
+            <div class="tooltips">
+                <div class="tooltip">
+                    <div class="icon"><ion-icon name="{{ $txt['t1_icon'] }}"></ion-icon></div>
+                    <div class="divider"></div>
+                    <div class="title"><h2>{{ $txt['t1_title'] }}</h2></div>
+                    <div class="description"><p>{{ $txt['t1_desc'] }}</p></div>
+                </div>
+                <div class="tooltip">
+                    <div class="icon"><ion-icon name="{{ $txt['t2_icon'] }}"></ion-icon></div>
+                    <div class="divider"></div>
+                    <div class="title"><h2>{{ $txt['t2_title'] }}</h2></div>
+                    <div class="description"><p>{{ $txt['t2_desc'] }}</p></div>
                 </div>
             </div>
+            <div class="model-container" data-model-url="{{ asset('assets/3d/model.glb') }}"></div>
+        </section>
+    </div>
 
-            <!-- Slide 2: Digital Growth & Innovation -->
-            <div class="hero-slide" data-slide="1">
-                <div class="hero-slide-photo" style="background-image: url('{{ asset('assets/ox-hero-skyline.jpg') }}');"></div>
-                <div class="hero-slide-overlay"></div>
-                <div class="hero-copy">
-                    <p class="hero-kicker-text">رؤية رقمية · ابتكار مستمر</p>
-                    <h1 class="hero-title-main">
-                        <span class="white-text">نبني ما</span>
-                        <span class="lime-text">يحرّك عملك</span>
-                    </h1>
-                    <p>شريكك التقني من الفكرة الأولى إلى منتج يخدم ملايين المستخدمين.</p>
-                    <div class="hero-actions">
-                        <a class="hero-circle-btn" href="#work">
-                            <span class="btn-circle-arrow">↓</span>
-                            <span class="btn-text">استكشف أعمالنا</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Software Solutions -->
-            <div class="hero-slide" data-slide="2">
-                <div class="hero-slide-photo" style="background-image: url('{{ asset('assets/ox-hero.png') }}');"></div>
-                <div class="hero-slide-overlay"></div>
-                <div class="hero-copy">
-                    <p class="hero-kicker-text">حلول برمجية متكاملة · 2030</p>
-                    <h1 class="hero-title-main">
-                        <span class="white-text">حلول تصنع</span>
-                        <span class="lime-text">الفارق</span>
-                    </h1>
-                    <p>أنظمة تشغيل وتجارب رقمية ومنصات تُصمم لتواكب طموحك.</p>
-                    <div class="hero-actions">
-                        <a class="hero-circle-btn" href="javascript:void(0)" onclick="openConsultModal()">
-                            <span class="btn-circle-arrow">↓</span>
-                            <span class="btn-text">احجز استشارة</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Left Vertical Scroll Prompt -->
-        <div class="scroll-explore-indicator">
-            <div class="scroll-line"><span class="scroll-dot"></span></div>
-            <span class="scroll-text">اسحب للاستكشاف</span>
-        </div>
-
-        <!-- Slider Navigation & Dots -->
-        <div class="hero-slider-nav">
-            <button type="button" class="slider-arrow-btn" onclick="prevHeroSlide()" aria-label="الشريحة السابقة">←</button>
-            <div class="slider-dots" id="heroSliderDots">
-                <span class="slider-dot active" onclick="goToHeroSlide(0)"></span>
-                <span class="slider-dot" onclick="goToHeroSlide(1)"></span>
-                <span class="slider-dot" onclick="goToHeroSlide(2)"></span>
-            </div>
-            <button type="button" class="slider-arrow-btn" onclick="nextHeroSlide()" aria-label="الشريحة التالية">→</button>
-        </div>
-
-        <!-- Floating Proof Stats -->
-        <div class="hero-proof">
-            <span><b>+48</b> منتج أُطلق</span>
-            <span><b>8</b> أسواق نخدمها</span>
-            <span><b>4.9/5</b> رضا الشركاء</span>
-        </div>
-    </section>
-
-    <!-- Brands & Partners Marquee Section (Two Opposite Moving Rows with Unified Monochrome Filter & Hover Glow) -->
+    <!-- Brands & Partners Marquee Section (Matching Reference Card Design with Monochrome-to-Color Hover) -->
     <section class="brands-marquee-section">
         <div class="brands-header reveal">
-            <p class="kicker">TRUSTED BY LEADING BRANDS & VISIONARIES</p>
-            <h3>موثوق من رواد الأعمال و<span>أكبر المنظومات الرقمية</span> في المنطقة</h3>
+            <p class="kicker">{{ $locale === 'ar' ? 'تكاملات وشراكات استراتيجية' : ($locale === 'fr' ? 'ÉCOSYSTÈME & INTÉGRATIONS' : 'ECOSYSTEM & INTEGRATIONS') }}</p>
+            @if($locale === 'ar')
+                <h3>تكامل سلس مع <span class="accent-highlight">+80 شريك</span> عالمي ومحلي، لتلبية جميع احتياجاتك وتوسيع إمكانياتك بسهولة</h3>
+                <p class="brands-subtitle">ربط منجز مع أنظمة المبيعات والمحاسبة والمخزون لديك، تكامل مباشر مع منصات التجارة الإلكترونية، أنظمة CRM أخرى، وأدوات الدفع الإلكتروني لأتمتة كاملة من أول تفاعل إلى إتمام البيع.</p>
+            @elseif($locale === 'fr')
+                <h3>Intégration fluide avec plus de <span class="accent-highlight">+80 partenaires</span> mondiaux et locaux, pour répondre à tous vos besoins.</h3>
+                <p class="brands-subtitle">Connexion directe avec les leaders des ERP, plateformes e-commerce, CRM et passerelles de paiement pour une automatisation complète.</p>
+            @else
+                <h3>Seamless integration with <span class="accent-highlight">+80 global & local partners</span>, to fulfill your needs and scale effortlessly.</h3>
+                <p class="brands-subtitle">Direct, unified integration with top enterprise ERPs, eCommerce engines, CRMs, and payment gateways for end-to-end operational automation.</p>
+            @endif
         </div>
 
         <div class="marquee-container">
@@ -105,242 +106,168 @@
             <div class="marquee-row" title="حرك الفأرة لإيقاف الحركة وإظهار الألوان الأصلية">
                 <div class="marquee-track track-left">
                     @for($repeat = 0; $repeat < 2; $repeat++)
-                        <!-- STC Pay -->
+                        <!-- Yellow Order Up -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#ff3366" stroke-width="2.5" fill="#4f008c"/>
-                                    <circle cx="12" cy="12" r="4.5" fill="#ff3366"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">STC Pay</span>
-                                <span class="brand-tag">البنك الرقمي والمدفوعات</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50%" y="24" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="800" font-size="26" fill="#c49b09">Yellow</text>
+                                <text x="50%" y="36" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="9" letter-spacing="1.5" fill="#a37e06">ORDER UP!</text>
+                            </svg>
                         </div>
 
-                        <!-- Jahez -->
+                        <!-- CleanCloud -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="12" fill="#e60028"/>
-                                    <path d="M7 13C7 9.5 9.5 7 13 7C16.5 7 17 10 17 12C17 15.5 14.5 17 11 17H7V13Z" fill="#ffd700"/>
-                                    <circle cx="12" cy="12" r="2" fill="#e60028"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">جاهز | Jahez</span>
-                                <span class="brand-tag">المنصات واللوجستيات</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(4, 8)">
+                                    <path d="M14 6C15.8 3.5 18.7 2 22 2C27.5 2 32 6.5 32 12C32 12.3 32 12.7 31.9 13C34.3 14 36 16.3 36 19C36 22.9 32.9 26 29 26H11C6.6 26 3 22.4 3 18C3 14 5.9 10.7 9.8 10.1C10.8 7.6 13.2 6 16 6" fill="#0084ff"/>
+                                    <circle cx="15" cy="16" r="3.5" fill="#ffffff"/>
+                                </g>
+                                <text x="48" y="27" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="18" fill="#0c2340">Clean<tspan font-weight="500">Cloud</tspan></text>
+                            </svg>
                         </div>
 
-                        <!-- Mersal -->
+                        <!-- Vend -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#00d084"/>
-                                    <path d="M5 12L19 6L13 19L11 13L5 12Z" fill="#071827"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">مِرسال | Mersal</span>
-                                <span class="brand-tag">سلاسل الإمداد الذكية</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="25" y="4" width="80" height="32" rx="7" fill="#2eb85c"/>
+                                <text x="65" y="26" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="20" fill="#ffffff" letter-spacing="-0.5">vend</text>
+                            </svg>
                         </div>
 
-                        <!-- Lucid Motors -->
+                        <!-- FOODICS -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#e0e0e0" stroke-width="2" fill="#111"/>
-                                    <path d="M6 12H18M7 9H17M8 15H16" stroke="#c9fa4b" stroke-width="1.8" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">Lucid Motors</span>
-                                <span class="brand-tag">السيارات الكهربائية</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50%" y="27" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="900" font-size="22" letter-spacing="2.5" fill="#121826">FOODICS</text>
+                                <circle cx="126" cy="21" r="3.5" fill="#ff2a5f"/>
+                            </svg>
                         </div>
 
-                        <!-- Aramco Ventures -->
+                        <!-- Magento -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#00a3e0"/>
-                                    <path d="M12 4L19 18H5L12 4Z" fill="#00843d"/>
-                                    <circle cx="12" cy="13" r="3" fill="#ffffff"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">Aramco Ventures</span>
-                                <span class="brand-tag">صندوق الابتكار التقني</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(10, 6)">
+                                    <path d="M14 2L2 9V23L7 26V12L14 8L21 12V26L26 23V9L14 2Z" fill="#ea580c"/>
+                                    <path d="M14 14L10 16.5V25.5L14 28L18 25.5V16.5L14 14Z" fill="#ea580c"/>
+                                </g>
+                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="19" fill="#1f2937">Magento</text>
+                            </svg>
                         </div>
 
-                        <!-- Tabby -->
+                        <!-- Kentoo -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#3bffb1"/>
-                                    <path d="M7 8H17M12 8V17" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">تابي | Tabby</span>
-                                <span class="brand-tag">التقنية المالية والتسوق</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(15, 6)">
+                                    <circle cx="14" cy="14" r="13" fill="#14b8a6"/>
+                                    <path d="M9 7V21M9 14L18 7M11 12L19 21" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                                <text x="52" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="18" fill="#1e293b">kentoo</text>
+                            </svg>
                         </div>
 
-                        <!-- Elm -->
+                        <!-- SAP -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" fill="#005596"/>
-                                    <path d="M8 8H16V10H10V11H15V13H10V16H8V8Z" fill="#ffffff"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">عِلـم | Elm</span>
-                                <span class="brand-tag">الحلول الرقمية المتكاملة</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 110 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 3H75L106 39H4V3Z" fill="#008FD3"/>
+                                <path d="M22 13C17 13 14 16 14 19C14 26 27 23 27 28C27 32 22 33 19 32C15 31 13 28 13 28L10 32C10 32 14 36 20 36C26 36 31 32 31 27C31 20 18 22 18 17C18 15 21 14 24 15C26 15 28 17 28 17L31 13C31 13 27 13 22 13Z" fill="#ffffff"/>
+                                <path d="M39 13L32 35H36L38 29H47L49 35H53L45 13H39ZM42 17L45.5 26H38.5L42 17Z" fill="#ffffff"/>
+                                <path d="M55 13V35H59V27H66C71 27 74 24 74 20C74 15 70 13 66 13H55ZM59 17H65C68 17 70 18 70 20C70 23 67 24 65 24H59V17Z" fill="#ffffff"/>
+                            </svg>
                         </div>
 
-                        <!-- Nexa Cloud -->
+                        <!-- Odoo -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#1f63ff"/>
-                                    <path d="M7 14C5.9 14 5 13.1 5 12C5 11 5.8 10.1 6.8 10C7.3 7.7 9.4 6 12 6C15 6 17.4 8.2 17.9 11.1C18.6 11.5 19 12.2 19 13C19 14.1 18.1 15 17 15H7" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">Nexa Cloud</span>
-                                <span class="brand-tag">البنية السحابية وSaaS</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50%" y="28" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="28" letter-spacing="1" fill="#714B67">odoo</text>
+                            </svg>
                         </div>
                     @endfor
                 </div>
             </div>
 
-            <!-- Row 2: Rightward Scroll (Moving Opposite Direction) -->
+            <!-- Row 2: Rightward Scroll (Moving Right) -->
             <div class="marquee-row" title="حرك الفأرة لإيقاف الحركة وإظهار الألوان الأصلية">
                 <div class="marquee-track track-right">
                     @for($repeat = 0; $repeat < 2; $repeat++)
+                        <!-- Qoyod (قيود) -->
+                        <div class="brand-card">
+                            <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(14, 8)">
+                                    <circle cx="12" cy="12" r="10" fill="#0284c7"/>
+                                    <circle cx="12" cy="12" r="5" fill="#ffffff"/>
+                                    <circle cx="21" cy="6" r="3" fill="#38bdf8"/>
+                                    <circle cx="3" cy="18" r="3" fill="#38bdf8"/>
+                                </g>
+                                <g transform="translate(48, 12)">
+                                    <text x="0" y="14" font-family="system-ui, 'Cairo', sans-serif" font-weight="800" font-size="16" fill="#0f172a">قيـود</text>
+                                    <text x="0" y="24" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="8" letter-spacing="1.5" fill="#0284c7">QOYOD</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- ZenHR -->
+                        <div class="brand-card">
+                            <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="20" r="13" fill="#00b4d8"/>
+                                <path d="M18 20L22 24L30 16" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="18" fill="#0f172a">zen<tspan fill="#00b4d8">HR</tspan></text>
+                            </svg>
+                        </div>
+
+                        <!-- Lightspeed -->
+                        <div class="brand-card">
+                            <svg class="brand-logo-svg" viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(14, 8)">
+                                    <path d="M12 2C8 6 3 14 3 18C3 23 7 26 12 26C17 26 21 23 21 18C21 14 16 6 12 2Z" fill="#ed1c24"/>
+                                    <path d="M12 9C10 12 7 16 7 19C7 21.8 9.2 23 12 23C14.8 23 17 21.8 17 19C17 16 14 12 12 9Z" fill="#ffffff"/>
+                                </g>
+                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="16" fill="#18181b">lightspeed</text>
+                            </svg>
+                        </div>
+
+                        <!-- Oracle NetSuite -->
+                        <div class="brand-card">
+                            <svg class="brand-logo-svg" viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50%" y="16" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="12" letter-spacing="3" fill="#e51c24">ORACLE</text>
+                                <text x="50%" y="32" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="15" letter-spacing="1.5" fill="#18181b">NETSUITE</text>
+                            </svg>
+                        </div>
+
+                        <!-- STC Pay -->
+                        <div class="brand-card">
+                            <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="20" r="13" fill="#4f008c"/>
+                                <circle cx="24" cy="20" r="6" fill="#ff3366"/>
+                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="17" fill="#18181b">stc <tspan fill="#ff3366">pay</tspan></text>
+                            </svg>
+                        </div>
+
+                        <!-- Tabby -->
+                        <div class="brand-card">
+                            <svg class="brand-logo-svg" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="14" y="8" width="92" height="24" rx="6" fill="#2ee59d"/>
+                                <text x="60" y="25" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="17" letter-spacing="-0.5" fill="#05121e">tabby</text>
+                            </svg>
+                        </div>
+
                         <!-- Tamara -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="12" fill="#ff6b00"/>
-                                    <path d="M6 9H18M12 9V17" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
-                                    <circle cx="16" cy="15" r="2" fill="#ffe600"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">تمارا | Tamara</span>
-                                <span class="brand-tag">حلول الدفع والتقسيط</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="tamaraGrad{{ $repeat }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#ff5e3a"/>
+                                        <stop offset="100%" stop-color="#ffa03a"/>
+                                    </linearGradient>
+                                </defs>
+                                <text x="50%" y="27" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="22" letter-spacing="-0.5" fill="url(#tamaraGrad{{ $repeat }})">tamara</text>
+                            </svg>
                         </div>
 
-                        <!-- Foodics -->
+                        <!-- Jahez (جاهز) -->
                         <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#6c2d82"/>
-                                    <circle cx="12" cy="12" r="6" stroke="#ff2d55" stroke-width="3" fill="#ffffff"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">فودكس | Foodics</span>
-                                <span class="brand-tag">إدارة المطاعم ونقاط البيع</span>
-                            </div>
-                        </div>
-
-                        <!-- Mozn AI -->
-                        <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#1b1c3a"/>
-                                    <circle cx="8" cy="8" r="3" fill="#00e5ff"/>
-                                    <circle cx="16" cy="16" r="3" fill="#7b2cbf"/>
-                                    <line x1="8" y1="8" x2="16" y2="16" stroke="#ffffff" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">مُزن | Mozn AI</span>
-                                <span class="brand-tag">الذكاء الاصطناعي وأمن البيانات</span>
-                            </div>
-                        </div>
-
-                        <!-- Lean Tech -->
-                        <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" fill="#00473e"/>
-                                    <path d="M7 16L12 7L17 16H7Z" fill="#a7f3d0"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">Lean Tech | لين</span>
-                                <span class="brand-tag">الربط المالي والـ Open Banking</span>
-                            </div>
-                        </div>
-
-                        <!-- Rased -->
-                        <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#0f2b3e"/>
-                                    <circle cx="12" cy="12" r="7" stroke="#00ffff" stroke-width="2" stroke-dasharray="3 2"/>
-                                    <circle cx="12" cy="12" r="2.5" fill="#c9fa4b"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">راصد | Rased</span>
-                                <span class="brand-tag">أنظمة الرقابة والذكاء</span>
-                            </div>
-                        </div>
-
-                        <!-- Bidayah -->
-                        <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#1b365d"/>
-                                    <path d="M12 5L5 11V19H19V11L12 5Z" fill="#d9b56c"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">بِداية | Bidayah</span>
-                                <span class="brand-tag">التمويل الرقمي العقاري</span>
-                            </div>
-                        </div>
-
-                        <!-- Gobox Logistics -->
-                        <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#ff7a00"/>
-                                    <path d="M6 9L12 5L18 9L12 13L6 9Z" fill="#ffffff"/>
-                                    <path d="M6 11L12 15L18 11V15L12 19L6 15V11Z" fill="#2b1800"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">Gobox Logistics</span>
-                                <span class="brand-tag">الشحن السريع واللوجستيات</span>
-                            </div>
-                        </div>
-
-                        <!-- Al Rajhi Capital -->
-                        <div class="brand-card">
-                            <div class="brand-logo-box">
-                                <svg class="brand-icon-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="24" height="24" rx="6" fill="#002b49"/>
-                                    <path d="M8 17V7L12 11L16 7V17H14V11L12 13L10 11V17H8Z" fill="#c9fa4b"/>
-                                </svg>
-                            </div>
-                            <div class="brand-info">
-                                <span class="brand-name">الراجحي المالية</span>
-                                <span class="brand-tag">إدارة الأصول والاستثمار</span>
-                            </div>
+                            <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="14" y="6" width="28" height="28" rx="6" fill="#e30613"/>
+                                <text x="28" y="25" text-anchor="middle" font-family="system-ui, 'Cairo', sans-serif" font-weight="900" font-size="14" fill="#ffffff">جـ</text>
+                                <text x="52" y="27" font-family="system-ui, 'Cairo', sans-serif" font-weight="800" font-size="18" fill="#18181b">جاهـز</text>
+                            </svg>
                         </div>
                     @endfor
                 </div>
@@ -348,37 +275,264 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services & Sectors Showcase Section (Split Layout with Vibrant 3D Isometric Cards) -->
     <section class="services section" id="services">
-        <div class="intro reveal">
-            <p class="kicker">WHAT WE DO</p>
-            <h2>ليس مجرد كود.<br/><span>بل نظام ينمو معك.</span></h2>
-        </div>
-        <div class="service-list">
-            <article class="reveal">
-                <i>01</i>
-                <h3>منصات ومواقع</h3>
-                <p>مواقع شركات ومنصات حجز وتجارب رقمية سريعة، واضحة ومبنية للتحويل.</p>
-                <a href="javascript:void(0)" onclick="openConsultModal()">اكتشف الخدمة ↗</a>
-            </article>
-            <article class="reveal">
-                <i>02</i>
-                <h3>متاجر إلكترونية</h3>
-                <p>تجارة متعددة القنوات، دفع وشحن وتكاملات تناسب العميل الخليجي وتزيد المبيعات.</p>
-                <a href="javascript:void(0)" onclick="openConsultModal()">اكتشف الخدمة ↗</a>
-            </article>
-            <article class="reveal">
-                <i>03</i>
-                <h3>تطبيقات ومنتجات</h3>
-                <p>تطبيقات iOS وAndroid ولوحات تحكم وSaaS من الاستراتيجية إلى الإطلاق والدعم.</p>
-                <a href="javascript:void(0)" onclick="openConsultModal()">اكتشف الخدمة ↗</a>
-            </article>
-            <article class="reveal">
-                <i>04</i>
-                <h3>إضافات وتكاملات</h3>
-                <p>نربط أدوات عملك، نبني إضافات مخصصة، ونختصر الخطوات اليدوية المرهقة.</p>
-                <a href="javascript:void(0)" onclick="openConsultModal()">اكتشف الخدمة ↗</a>
-            </article>
+        <div class="services-wrapper">
+            <!-- Text & Info Column (Right side in RTL) -->
+            <div class="services-info-col reveal">
+                <p class="kicker">{{ $locale === 'ar' ? 'القطاعات والحلول الموجهة' : ($locale === 'fr' ? 'SECTEURS & IMPACT' : 'TARGET SECTORS & SOLUTIONS') }}</p>
+                @if($locale === 'ar')
+                    <h2 class="services-main-title">من يستفيد من<br/><span class="services-highlight">حلول أوكس؟</span></h2>
+                    <p class="services-lead">أوكس يخدم مختلف القطاعات التشغيلية الحيوية، ويمنح كل دور الأدوات البرمجية الذكية التي يحتاجها للنجاح والريادة.</p>
+                    <p class="services-desc">من الأبراج والشركات الكبرى إلى المجمعات التجارية والمرافق والمنشآت الذكية، كل العمليات تجري في منصة موحّدة ذكية، فائقة الأمان وسهلة الاستخدام.</p>
+                @elseif($locale === 'fr')
+                    <h2 class="services-main-title">Qui bénéficie des<br/><span class="services-highlight">solutions OX ?</span></h2>
+                    <p class="services-lead">OX dessert les secteurs opérationnels stratégiques en fournissant les outils logiciels nécessaires pour accélérer la croissance.</p>
+                    <p class="services-desc">Des tours d'affaires aux hôpitaux, hôtels et entités publiques—toutes vos opérations réunies dans une plateforme intelligente et hautement sécurisée.</p>
+                @else
+                    <h2 class="services-main-title">Who Benefits from<br/><span class="services-highlight">OX Solutions?</span></h2>
+                    <p class="services-lead">OX empowers high-impact operational sectors with cutting-edge digital infrastructure and enterprise software tailored for scalable growth.</p>
+                    <p class="services-desc">From commercial towers to hotels, government facilities and smart complexes—all operations united in a secure, intelligent, and seamless platform.</p>
+                @endif
+
+                <div class="services-cta-wrap">
+                    <a href="javascript:void(0)" onclick="openConsultModal()" class="services-cta-btn">
+                        <span>{{ $locale === 'ar' ? 'اطلب استشارة تقنية لقطاعك' : ($locale === 'fr' ? 'Demander une consultation' : 'Request Sector Consultation') }}</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dark Device Panel with Colorful Cards (Left side in RTL) -->
+            <div class="services-panel-col reveal">
+                <div class="services-showcase-panel">
+                    <!-- Top Bar inside Panel -->
+                    <div class="panel-top-bar">
+                        <div class="panel-tag">
+                            <span class="panel-tag-bar"></span>
+                            <span class="panel-tag-text">{{ $locale === 'ar' ? 'القطاعات التي نحدث فيها الأثر' : ($locale === 'fr' ? 'Secteurs à Fort Impact' : 'Sectors Where We Drive Real Impact') }}</span>
+                        </div>
+                        <div class="panel-slider-arrows">
+                            <button type="button" class="slider-arrow-btn" id="sectorSlidePrev" aria-label="Previous" title="السابق">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                            <button type="button" class="slider-arrow-btn" id="sectorSlideNext" aria-label="Next" title="التالي">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cards Slider Track -->
+                    <div class="services-cards-viewport" id="servicesViewport">
+                        <div class="services-cards-track" id="servicesCardsTrack">
+                            <!-- Card 1: Facility & Ops Management (Royal Blue) -->
+                            <div class="service-sector-card card-blue" data-index="0">
+                                <div class="sector-card-header">
+                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'شركات إدارة المرافق والخدمات التشغيلية' : ($locale === 'fr' ? 'Gestion des Installations & Opérations' : 'Facility Management & Operations') }}</h4>
+                                </div>
+                                <div class="sector-card-graphic">
+                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
+                                        <!-- Isometric Grid Floor -->
+                                        <path d="M10 110L100 150L190 110L100 70Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
+                                        <!-- Isometric 3D Clipboard Base -->
+                                        <path d="M60 48L140 18L170 82L90 112Z" fill="#1e40af" stroke="#60a5fa" stroke-width="1.5"/>
+                                        <path d="M60 48L90 112L85 116L55 52Z" fill="#172554"/>
+                                        <path d="M90 112L170 82L165 86L85 116Z" fill="#1e3a8a"/>
+                                        <!-- White Sheet on Clipboard -->
+                                        <path d="M72 50L135 26L158 78L95 102Z" fill="#f8fafc"/>
+                                        <path d="M85 54L125 38" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+                                        <path d="M88 64L135 46" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+                                        <path d="M92 74L142 55" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+                                        <!-- 3D Isometric Blue Gear -->
+                                        <g transform="translate(100, 58)">
+                                            <ellipse cx="20" cy="20" rx="26" ry="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+                                            <ellipse cx="20" cy="20" rx="12" ry="7.5" fill="#1e40af"/>
+                                            <circle cx="20" cy="20" r="4" fill="#ffffff"/>
+                                        </g>
+                                        <!-- 3D Glowing Cursor Pointer -->
+                                        <path d="M130 92L142 118L132 122L126 108L116 114Z" fill="#ffffff" stroke="#2563eb" stroke-width="2" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.4))"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Hospitality & Hotels (Sky / Cyan Blue) -->
+                            <div class="service-sector-card card-cyan" data-index="1">
+                                <div class="sector-card-header">
+                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'الضيافة والفنادق والمنشآت الذكية' : ($locale === 'fr' ? 'Hôtellerie & Établissements Intelligents' : 'Hospitality & Smart Hotels') }}</h4>
+                                </div>
+                                <div class="sector-card-graphic">
+                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
+                                        <!-- Isometric Grid Floor -->
+                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
+                                        <!-- Isometric Hotel Building Left Facade -->
+                                        <path d="M70 42L105 60V126L70 108Z" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+                                        <!-- Isometric Hotel Building Right Facade -->
+                                        <path d="M105 60L145 38V104L105 126Z" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5"/>
+                                        <!-- Hotel Roof -->
+                                        <path d="M70 42L110 20L145 38L105 60Z" fill="#38bdf8"/>
+                                        <!-- Neon HOTEL Sign on Roof -->
+                                        <rect x="92" y="14" width="36" height="12" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
+                                        <text x="110" y="23" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="8" fill="#0284c7">HOTEL</text>
+                                        <!-- Windows Left -->
+                                        <rect x="76" y="54" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
+                                        <rect x="76" y="74" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
+                                        <rect x="76" y="94" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
+                                        <!-- Windows Right -->
+                                        <rect x="120" y="50" width="12" height="12" rx="2" fill="#bae6fd" opacity="0.9"/>
+                                        <rect x="120" y="70" width="12" height="12" rx="2" fill="#bae6fd" opacity="0.9"/>
+                                        <!-- Room 302 Keycard badge -->
+                                        <g transform="translate(130, 88)">
+                                            <rect x="0" y="0" width="46" height="26" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.3))"/>
+                                            <text x="23" y="16" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="7" fill="#0369a1">ROOM 302</text>
+                                            <circle cx="9" cy="13" r="2" fill="#22c55e"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Government & Public Entities (Deep Indigo) -->
+                            <div class="service-sector-card card-indigo" data-index="2">
+                                <div class="sector-card-header">
+                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'الجهات الحكومية والخدمية' : ($locale === 'fr' ? 'Secteur Public & Gouvernement' : 'Government & Public Entities') }}</h4>
+                                </div>
+                                <div class="sector-card-graphic">
+                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
+                                        <!-- Isometric Grid Floor -->
+                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
+                                        <!-- Stepped Isometric Plinth -->
+                                        <path d="M45 110L100 135L155 110L100 85Z" fill="#312e81" stroke="#818cf8" stroke-width="1.5"/>
+                                        <path d="M45 110L100 135V142L45 117Z" fill="#1e1b4b"/>
+                                        <path d="M100 135L155 110V117L100 142Z" fill="#1e1b4b"/>
+                                        <!-- Neoclassical Columns -->
+                                        <rect x="62" y="70" width="8" height="34" rx="2" fill="#e0e7ff" stroke="#6366f1" stroke-width="1"/>
+                                        <rect x="80" y="76" width="8" height="34" rx="2" fill="#e0e7ff" stroke="#6366f1" stroke-width="1"/>
+                                        <rect x="112" y="76" width="8" height="34" rx="2" fill="#c7d2fe" stroke="#6366f1" stroke-width="1"/>
+                                        <rect x="130" y="70" width="8" height="34" rx="2" fill="#c7d2fe" stroke="#6366f1" stroke-width="1"/>
+                                        <!-- Classical Pediment / Roof -->
+                                        <path d="M50 72L100 50L150 72Z" fill="#4338ca" stroke="#818cf8" stroke-width="1.5"/>
+                                        <!-- Central Dome with Spire -->
+                                        <path d="M78 50C78 32 122 32 122 50Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
+                                        <line x1="100" y1="32" x2="100" y2="20" stroke="#c9fa4b" stroke-width="3" stroke-linecap="round"/>
+                                        <circle cx="100" cy="18" r="3" fill="#c9fa4b"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Omnichannel & eCommerce (Royal Violet) -->
+                            <div class="service-sector-card card-violet" data-index="3">
+                                <div class="sector-card-header">
+                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'التجارة والمنصات متعددة القنوات' : ($locale === 'fr' ? 'Commerce Omnicanal & Plateformes' : 'Omnichannel Retail & eCommerce') }}</h4>
+                                </div>
+                                <div class="sector-card-graphic">
+                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
+                                        <!-- Isometric Grid Floor -->
+                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
+                                        <!-- Storefront Base -->
+                                        <path d="M55 70L100 92L145 70L100 48Z" fill="#6d28d9" stroke="#a78bfa" stroke-width="1.5"/>
+                                        <path d="M55 70L100 92V124L55 102Z" fill="#4c1d95"/>
+                                        <path d="M100 92L145 70V102L100 124Z" fill="#5b21b6"/>
+                                        <!-- Glass Window with Product Glow -->
+                                        <path d="M63 76L95 91V115L63 100Z" fill="#ddd6fe" opacity="0.85"/>
+                                        <!-- Awning / Canopy Stripes -->
+                                        <path d="M48 66L100 40L152 66L100 92Z" fill="#c084fc"/>
+                                        <path d="M55 70L100 48L112 54L67 76Z" fill="#ffffff" opacity="0.8"/>
+                                        <path d="M85 84L130 62L142 68L97 90Z" fill="#ffffff" opacity="0.8"/>
+                                        <!-- 3D Floating Shopping Parcel & Credit Card -->
+                                        <g transform="translate(115, 84)">
+                                            <!-- Parcel Box -->
+                                            <path d="M15 10L35 0L50 12L30 22Z" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+                                            <path d="M15 10L30 22V36L15 24Z" fill="#d97706"/>
+                                            <path d="M30 22L50 12V24L30 36Z" fill="#b45309"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Smart Healthcare & MedTech (Emerald Teal) -->
+                            <div class="service-sector-card card-teal" data-index="4">
+                                <div class="sector-card-header">
+                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'الرعاية الصحية والمستشفيات الذكية' : ($locale === 'fr' ? 'Santé Connectée & Hôpitaux' : 'Smart Healthcare & MedTech') }}</h4>
+                                </div>
+                                <div class="sector-card-graphic">
+                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
+                                        <!-- Isometric Grid Floor -->
+                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
+                                        <!-- Medical Facility Block -->
+                                        <path d="M60 52L105 72L145 52L100 32Z" fill="#059669" stroke="#34d399" stroke-width="1.5"/>
+                                        <path d="M60 52L105 72V120L60 100Z" fill="#047857"/>
+                                        <path d="M105 72L145 52V100L105 120Z" fill="#065f46"/>
+                                        <!-- Glowing Medical Cross on Facade -->
+                                        <rect x="78" y="74" width="8" height="24" rx="2" fill="#ffffff"/>
+                                        <rect x="70" y="82" width="24" height="8" rx="2" fill="#ffffff"/>
+                                        <!-- Floating 3D ECG / Heartbeat Monitor -->
+                                        <g transform="translate(112, 70)">
+                                            <rect x="0" y="0" width="54" height="36" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2" filter="drop-shadow(0 6px 12px rgba(0,0,0,0.4))"/>
+                                            <path d="M6 18H16L21 8L27 28L33 14L38 22H48" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Card 6: Education & EdTech (Warm Amber) -->
+                            <div class="service-sector-card card-amber" data-index="5">
+                                <div class="sector-card-header">
+                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'التعليم والجامعات والأكاديميات' : ($locale === 'fr' ? 'Éducation & Académies Numériques' : 'Higher Education & EdTech') }}</h4>
+                                </div>
+                                <div class="sector-card-graphic">
+                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
+                                        <!-- Isometric Grid Floor -->
+                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
+                                        <!-- Stack of 3D Books Base -->
+                                        <path d="M60 90L100 110L145 88L105 68Z" fill="#b45309" stroke="#f59e0b" stroke-width="1.5"/>
+                                        <path d="M60 90L100 110V118L60 98Z" fill="#78350f"/>
+                                        <path d="M100 110L145 88V96L100 118Z" fill="#fef3c7"/>
+                                        <!-- Book 2 -->
+                                        <path d="M65 76L105 96L142 76L102 56Z" fill="#d97706" stroke="#fbbf24" stroke-width="1.5"/>
+                                        <!-- Graduation Cap (Mortarboard) -->
+                                        <path d="M50 48L100 24L150 48L100 72Z" fill="#1e293b" stroke="#fbbf24" stroke-width="2"/>
+                                        <path d="M78 62V78C78 88 122 88 122 78V62Z" fill="#0f172a"/>
+                                        <!-- Gold Tassel -->
+                                        <path d="M100 48L138 60V76" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+                                        <circle cx="138" cy="78" r="3" fill="#f59e0b"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Bar inside Panel -->
+                    <div class="panel-bottom-bar">
+                        <!-- Navigation Dots Indicator -->
+                        <div class="panel-slider-dots" id="sectorDots">
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                            <span class="dot" data-index="2"></span>
+                            <span class="dot" data-index="3"></span>
+                            <span class="dot" data-index="4"></span>
+                            <span class="dot" data-index="5"></span>
+                        </div>
+
+                        <!-- Trust Guarantee Badge -->
+                        <div class="panel-trust-badge">
+                            <div class="trust-badge-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    <path d="M9 12l2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <p class="trust-badge-text">
+                                @if($locale === 'ar')
+                                    مهما كان نوع منشأتك .. أوكس هو شريكك الذكي لإدارة كل التفاصيل بثقة من <strong>منصة واحدة آمنة ومبنية بأعلى المعايير العالمية</strong>
+                                @elseif($locale === 'fr')
+                                    Quelle que soit votre organisation .. OX orchestre tous vos flux en toute confiance sur <strong>une plateforme unifiée et sécurisée</strong>
+                                @else
+                                    Whatever your enterprise scale .. OX is your intelligent partner to orchestrate operations from <strong>a unified, world-class secure platform</strong>
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -808,6 +962,24 @@
 </main>
 @endsection
 
+@push('styles')
+<script type="importmap">
+{
+    "imports": {
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js",
+        "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/ScrollTrigger.js",
+        "gsap/SplitText": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/SplitText.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.mjs",
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+        "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js",
+        "three/examples/jsm/utils/BufferGeometryUtils.js": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/BufferGeometryUtils.js",
+        "three/examples/jsm/utils/SkeletonUtils.js": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/SkeletonUtils.js"
+    }
+}
+</script>
+<link rel="stylesheet" href="{{ asset('assets/product-scroll.css') }}">
+@endpush
+
 @push('scripts')
 <script>
     // Reveal animation
@@ -1027,71 +1199,13 @@
         });
     }
 
-    // Hero Slider Controller
-    let currentHeroSlide = 0;
-    const heroSlides = document.querySelectorAll('.hero-slide');
-    const heroDots = document.querySelectorAll('#heroSliderDots .slider-dot');
-    let heroSliderTimer = null;
-
-    function showHeroSlide(idx) {
-        if (!heroSlides.length) return;
-        currentHeroSlide = (idx + heroSlides.length) % heroSlides.length;
-        
-        heroSlides.forEach((slide, i) => {
-            if (i === currentHeroSlide) {
-                slide.classList.add('active');
-            } else {
-                slide.classList.remove('active');
-            }
-        });
-
-        heroDots.forEach((dot, i) => {
-            if (i === currentHeroSlide) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-
-    function nextHeroSlide() {
-        showHeroSlide(currentHeroSlide + 1);
-        resetHeroTimer();
-    }
-
-    function prevHeroSlide() {
-        showHeroSlide(currentHeroSlide - 1);
-        resetHeroTimer();
-    }
-
-    function goToHeroSlide(idx) {
-        showHeroSlide(idx);
-        resetHeroTimer();
-    }
-
-    function startHeroTimer() {
-        if (heroSliderTimer) clearInterval(heroSliderTimer);
-        heroSliderTimer = setInterval(() => {
-            showHeroSlide(currentHeroSlide + 1);
-        }, 6500);
-    }
-
-    function resetHeroTimer() {
-        startHeroTimer();
-    }
-
-    // Pause slider on hover over hero section
-    const heroSec = document.getElementById('heroSection');
-    if (heroSec) {
-        heroSec.addEventListener('mouseenter', () => {
-            if (heroSliderTimer) clearInterval(heroSliderTimer);
-        });
-        heroSec.addEventListener('mouseleave', () => {
-            startHeroTimer();
-        });
-    }
-
-    // Start auto-play
-    startHeroTimer();
+    // Hero Slider - removed (section replaced by 3D showcase)
 </script>
+
+<!-- Ionicons v7 Web Components (self-hosted) -->
+<script type="module" src="{{ asset('vendor/ionicons/ionicons.esm.js') }}"></script>
+<script nomodule src="{{ asset('vendor/ionicons/ionicons.js') }}"></script>
+
+<!-- 3D Product Scroll Showcase -->
+<script type="module" src="{{ asset('assets/product-scroll.js') }}"></script>
 @endpush

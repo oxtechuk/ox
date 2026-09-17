@@ -58,9 +58,15 @@
             ]
         ]
     ];
+
+    $currentLocale = request('lang', session('locale', request()->cookie('locale', app()->getLocale() ?: 'ar')));
+    if (!in_array($currentLocale, ['ar', 'en', 'fr'])) {
+        $currentLocale = 'ar';
+    }
+    app()->setLocale($currentLocale);
 @endphp
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="{{ $currentLocale }}" dir="{{ $currentLocale === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -373,11 +379,51 @@
             background: #000;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .video-modal-container video, .video-modal-container iframe {
-            width: 100%;
-            height: 450px;
-            display: block;
-            border: none;
+        /* Language Switcher Dropdown */
+        .lang-switcher-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .lang-menu-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            inset-inline-start: 0;
+            background: rgba(5, 18, 30, 0.96);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 6px;
+            min-width: 140px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 10001;
+        }
+        .lang-menu-dropdown.active {
+            display: flex;
+        }
+        .lang-menu-dropdown a {
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .lang-menu-dropdown a:hover {
+            background: rgba(201, 250, 75, 0.15);
+            color: var(--lime);
+        }
+        .lang-menu-dropdown a.active {
+            background: var(--lime);
+            color: #071827;
+            font-weight: 800;
         }
     </style>
     @stack('styles')
@@ -412,7 +458,17 @@
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
-            <a href="javascript:void(0)" class="lang-pill-badge" title="Language">EN</a>
+            <div class="lang-switcher-dropdown">
+                <a href="javascript:void(0)" class="lang-pill-badge" id="langBadgeBtn" onclick="toggleLangMenu(event)" title="Language">
+                    {{ strtoupper($currentLocale) }}
+                    <span style="font-size:8px;margin-inline-start:4px;opacity:0.75;">▼</span>
+                </a>
+                <div class="lang-menu-dropdown" id="langMenuDropdown">
+                    <a href="{{ route('lang.switch', 'ar') }}" class="{{ $currentLocale === 'ar' ? 'active' : '' }}"><span>العربية</span> <small>AR</small></a>
+                    <a href="{{ route('lang.switch', 'en') }}" class="{{ $currentLocale === 'en' ? 'active' : '' }}"><span>English</span> <small>EN</small></a>
+                    <a href="{{ route('lang.switch', 'fr') }}" class="{{ $currentLocale === 'fr' ? 'active' : '' }}"><span>Français</span> <small>FR</small></a>
+                </div>
+            </div>
         </div>
 
         <!-- Center Nav Links -->
@@ -653,6 +709,18 @@
             document.getElementById('videoModal').classList.remove('active');
             document.getElementById('videoPlayerBox').innerHTML = '';
         }
+
+        // Language Switcher Dropdown Handler
+        function toggleLangMenu(e) {
+            if (e) e.stopPropagation();
+            const m = document.getElementById('langMenuDropdown');
+            if (m) m.classList.toggle('active');
+        }
+        document.addEventListener('click', () => {
+            const m = document.getElementById('langMenuDropdown');
+            if (m) m.classList.remove('active');
+        });
+
         // Mobile Drawer Handlers
         function toggleMobileNav() {
             const drawer = document.getElementById('mobileNavDrawer');

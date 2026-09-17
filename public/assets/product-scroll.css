@@ -1,0 +1,366 @@
+/* ═══════════════════════════════════════════════════════════════
+   3D Product Scroll Showcase — OX Tech Homepage Luxury Theme
+   Colors: Deep Navy (#05121e, #071827), Neon Lime (#c9fa4b),
+           Electric Blue (#1f63ff), Frosted Cards, Space Grotesk
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap");
+
+.showcase-root {
+    --ox-navy-deep: #05121e;
+    --ox-navy: #071827;
+    --ox-navy-card: #0d2235;
+    --ox-lime: #c9fa4b;
+    --ox-blue: #1f63ff;
+    --ox-ink: #f5f8f4;
+    --ox-muted: #94a3b8;
+    --ox-border: rgba(255, 255, 255, 0.12);
+    --ox-lime-glow: rgba(201, 250, 75, 0.35);
+    --ox-blue-glow: rgba(31, 99, 255, 0.4);
+
+    direction: ltr;
+    text-align: left;
+    position: relative;
+    background: #05121e;
+    color: var(--ox-ink);
+    font-family: "Space Grotesk", "Alexandria", sans-serif;
+    overflow: hidden;
+}
+
+/* ── Typography ── */
+.showcase-root h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+}
+.showcase-root h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+.showcase-root p {
+    font-family: "Alexandria", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--ox-muted);
+}
+
+/* ── Sections ── */
+.showcase-root section {
+    position: relative;
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden;
+    background: #05121e;
+    color: var(--ox-ink);
+}
+
+/* ── Intro ── */
+.showcase-root .intro {
+    background: #05121e;
+    background-image: linear-gradient(180deg, rgba(4, 18, 24, 0.8) 0%, #05121e 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 5vw;
+    text-align: center;
+    position: relative;
+}
+.showcase-root .intro::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 250, 75, 0.3), transparent);
+}
+
+.showcase-root .intro h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    max-width: 900px;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* ── Product Overview (Pinned Section) ── */
+.showcase-root .product-overview {
+    background: #05121e;
+    background-image: radial-gradient(circle at 50% 45%, rgba(31, 99, 255, 0.08) 0%, #05121e 75%);
+}
+
+/* ── 3D Model Container ── */
+.showcase-root .model-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    pointer-events: none;
+}
+.showcase-root .model-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+/* ── Header 1 (Initial sweep) ── */
+.showcase-root .header-1 {
+    position: relative;
+    width: 200vw;
+    height: 100svh;
+    color: #ffffff;
+    transform: translateX(0%);
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    z-index: 1;
+}
+.showcase-root .header-1 h1 {
+    width: 100%;
+    font-size: 14vw;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    color: #ffffff;
+    white-space: nowrap;
+    text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Header 2 (Sweeps across in neon lime) ── */
+.showcase-root .header-2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 150vw;
+    height: 100svh;
+    color: var(--ox-lime);
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    pointer-events: none;
+}
+.showcase-root .header-2 h1 {
+    width: 100%;
+    font-size: 14vw;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    color: var(--ox-lime);
+    white-space: nowrap;
+    text-shadow: 0 0 50px rgba(201, 250, 75, 0.4), 0 0 100px rgba(201, 250, 75, 0.2);
+}
+
+/* ── Circular Mask (Expands seamlessly in deep navy) ── */
+.showcase-root .circular-mask {
+    position: absolute;
+    inset: 0;
+    background: #05121e;
+    background-image: radial-gradient(circle at 50% 50%, #0a2033 0%, #05121e 75%);
+    clip-path: circle(0% at 50% 50%);
+    z-index: 2;
+}
+
+/* ── Tooltips ── */
+.showcase-root .tooltips {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 75%;
+    display: flex;
+    gap: 16rem;
+    z-index: 200;
+    pointer-events: none;
+}
+.showcase-root .tooltip {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: #ffffff;
+    background: rgba(13, 34, 53, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 2rem 2.2rem;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(31, 99, 255, 0.12);
+    max-width: 440px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(25px);
+    pointer-events: none;
+    will-change: opacity, transform, visibility;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+}
+.showcase-root .tooltip.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+.showcase-root .tooltip:nth-child(1) {
+    align-self: flex-start;
+    border-top: 2px solid rgba(201, 250, 75, 0.5);
+}
+.showcase-root .tooltip:nth-child(2) {
+    align-self: flex-end;
+    justify-content: flex-end;
+    align-items: flex-end;
+    text-align: right;
+    border-bottom: 2px solid rgba(31, 99, 255, 0.6);
+}
+
+/* Divider */
+.showcase-root .tooltip .divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--ox-lime) 0%, var(--ox-blue) 100%);
+    box-shadow: 0 0 10px rgba(201, 250, 75, 0.4);
+    margin: 0.5rem 0;
+    transform: scaleX(0%);
+    transform-origin: right center;
+}
+.showcase-root .tooltip:nth-child(2) .divider {
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--ox-blue) 0%, var(--ox-lime) 100%);
+}
+
+/* Icon */
+.showcase-root .tooltip .icon {
+    font-size: 2.8rem;
+    overflow: hidden;
+    color: var(--ox-lime);
+    filter: drop-shadow(0 0 14px rgba(201, 250, 75, 0.6));
+    display: inline-flex;
+}
+.showcase-root .tooltip:nth-child(2) .icon {
+    color: #4da3ff;
+    filter: drop-shadow(0 0 14px rgba(31, 99, 255, 0.7));
+}
+
+/* Title & Description */
+.showcase-root .tooltip .title {
+    overflow: hidden;
+}
+.showcase-root .tooltip .title h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0;
+}
+.showcase-root .tooltip .description {
+    overflow: hidden;
+    color: var(--ox-muted);
+    width: 100%;
+}
+.showcase-root .tooltip .description p {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: #cbd5e1;
+    margin: 0;
+}
+
+/* ── Text Mask / Reveal Plumbing ── */
+.showcase-root .header-1 h1 .char,
+.showcase-root .header-1 h1 .word,
+.showcase-root .tooltip .title .line,
+.showcase-root .tooltip .description .line {
+    display: inline-block;
+    overflow: hidden;
+}
+.showcase-root .header-1 h1 .word {
+    margin-inline-end: 0.35em;
+}
+.showcase-root .header-1 h1 .char > span,
+.showcase-root .header-1 h1 .word > span,
+.showcase-root .tooltip .icon ion-icon,
+.showcase-root .tooltip .title .line > span,
+.showcase-root .tooltip .description .line > span {
+    position: relative;
+    display: block;
+    transform: translateY(100%);
+    will-change: transform;
+}
+
+/* ── RTL Specific Support (Arabic) ── */
+.showcase-root.is-rtl {
+    direction: rtl;
+    text-align: right;
+}
+.showcase-root.is-rtl h1,
+.showcase-root.is-rtl h2,
+.showcase-root.is-rtl p {
+    font-family: "Alexandria", sans-serif;
+}
+.showcase-root.is-rtl .tooltip:nth-child(1) {
+    text-align: right;
+    align-items: flex-start;
+}
+.showcase-root.is-rtl .tooltip:nth-child(2) {
+    text-align: left;
+    align-items: flex-start;
+}
+.showcase-root.is-rtl .tooltip:nth-child(1) .divider {
+    transform-origin: left center;
+}
+.showcase-root.is-rtl .tooltip:nth-child(2) .divider {
+    transform-origin: right center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+    .showcase-root h1 {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+    .showcase-root h2 {
+        font-size: 1.6rem;
+    }
+    .showcase-root .tooltip .icon {
+        font-size: 2rem;
+    }
+    .showcase-root .tooltips {
+        width: 90%;
+        height: auto;
+        top: auto;
+        bottom: 6vh;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .showcase-root .tooltip {
+        width: 100%;
+        max-width: 100%;
+        padding: 1.5rem 1.6rem;
+    }
+    .showcase-root .tooltip:nth-child(2) {
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .showcase-root .tooltip .divider {
+        width: 100%;
+    }
+    .showcase-root .tooltip:nth-child(2) .divider {
+        transform-origin: right center;
+    }
+}
