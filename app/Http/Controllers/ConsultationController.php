@@ -17,13 +17,14 @@ class ConsultationController extends Controller
         // 1. Anti-Spam Bot Honeypot Trap
         // If a hidden bot field is filled, silently discard or fake success to fool automated scrapers
         if ($request->filled('hp_check') || $request->filled('website_hp')) {
-            Log::info('Anti-Spam Honeypot triggered by IP: ' . $request->ip());
+            Log::info('Anti-Spam Honeypot triggered by IP: '.$request->ip());
             if ($request->wantsJson() || $request->ajax()) {
                 return response()->json([
                     'success' => true,
                     'message' => 'تم استلام طلب استشارتك بنجاح! سيتواصل معك فريقنا خلال 24 ساعة.',
                 ]);
             }
+
             return back()->with('success', 'تم إرسال طلبك بنجاح! سنتواصل معك في أقرب وقت.');
         }
 
@@ -32,13 +33,14 @@ class ConsultationController extends Controller
             $loadTime = (int) $request->input('_form_load_time');
             $currentTime = time();
             if ($loadTime > 0 && ($currentTime - $loadTime) < 2) {
-                Log::info('Anti-Spam Time-Trap triggered (instant submit) by IP: ' . $request->ip());
+                Log::info('Anti-Spam Time-Trap triggered (instant submit) by IP: '.$request->ip());
                 if ($request->wantsJson() || $request->ajax()) {
                     return response()->json([
                         'success' => true,
                         'message' => 'تم استلام طلب استشارتك بنجاح! سيتواصل معك فريقنا خلال 24 ساعة.',
                     ]);
                 }
+
                 return back()->with('success', 'تم إرسال طلبك بنجاح!');
             }
         }
@@ -53,17 +55,17 @@ class ConsultationController extends Controller
             'budget' => 'nullable|string|max:100',
             'message' => 'required|string|min:10|max:1000',
         ], [
-            'name.required' => 'يرجى إدخال الاسم الكريم.',
-            'name.min' => 'الاسم يجب أن يتكون من حرفين على الأقل.',
-            'name.max' => 'الاسم يجب ألا يتجاوز 70 حرفاً.',
-            'email.required' => 'البريد الإلكتروني مطلوب.',
-            'email.email' => 'يرجى إدخال بريد إلكتروني صحيح.',
-            'email.max' => 'البريد الإلكتروني يجب ألا يتجاوز 100 حرف.',
-            'phone.max' => 'رقم الجوال يجب ألا يتجاوز 30 حرفاً.',
-            'company_name.max' => 'اسم الشركة يجب ألا يتجاوز 100 حرف.',
-            'message.required' => 'يرجى كتابة تفاصيل مشروعك أو فكرتك.',
-            'message.min' => 'يرجى كتابة 10 أحرف على الأقل لشرح الفكرة بشكل أوضح.',
-            'message.max' => 'تفاصيل الرسالة يجب ألا تتجاوز 1000 حرف.',
+            'name.required' => __('يرجى إدخال الاسم الكريم.'),
+            'name.min' => __('الاسم يجب أن يتكون من حرفين على الأقل.'),
+            'name.max' => __('الاسم يجب ألا يتجاوز 70 حرفاً.'),
+            'email.required' => __('البريد الإلكتروني مطلوب.'),
+            'email.email' => __('يرجى إدخال بريد إلكتروني صحيح.'),
+            'email.max' => __('البريد الإلكتروني يجب ألا يتجاوز 100 حرف.'),
+            'phone.max' => __('رقم الجوال يجب ألا يتجاوز 30 حرفاً.'),
+            'company_name.max' => __('اسم الشركة يجب ألا يتجاوز 100 حرف.'),
+            'message.required' => __('يرجى كتابة تفاصيل مشروعك أو فكرتك.'),
+            'message.min' => __('يرجى كتابة 10 أحرف على الأقل لشرح الفكرة بشكل أوضح.'),
+            'message.max' => __('تفاصيل الرسالة يجب ألا تتجاوز 1000 حرف.'),
         ]);
 
         // Merge attribution data
@@ -90,18 +92,18 @@ class ConsultationController extends Controller
                 Mail::to($adminEmail)->send(new ConsultationAdminNotificationMail($consultation));
             }
         } catch (\Throwable $e) {
-            Log::warning('Could not dispatch consultation email: ' . $e->getMessage());
+            Log::warning('Could not dispatch consultation email: '.$e->getMessage());
         }
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'تم استلام طلب استشارتك بنجاح! سيتواصل معك فريقنا خلال 24 ساعة.',
+                'message' => __('تم استلام طلب استشارتك بنجاح! سيتواصل معك فريقنا خلال 24 ساعة.'),
                 'consultation_id' => $consultation->id,
                 'platform' => $consultation->platform_detected,
             ]);
         }
 
-        return back()->with('success', 'تم إرسال طلبك بنجاح! سنتواصل معك في أقرب وقت لتحديد موعد الاستشارة.');
+        return back()->with('success', __('تم إرسال طلبك بنجاح! سنتواصل معك في أقرب وقت.'));
     }
 }

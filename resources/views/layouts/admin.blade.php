@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8"/>
@@ -21,9 +21,9 @@
             --text-muted: #64748b;
             --brand-green: #006848;
             --brand-forest: #092c22;
-            --brand-blue: #1f63ff;
-            --font: 'Alexandria', sans-serif;
-            --font-code: 'Space Grotesk', sans-serif;
+            --brand-blue: #1A56F5;
+            --font: var(--font), sans-serif;
+            --font-code: var(--font-latin), sans-serif;
         }
 
         * {
@@ -66,7 +66,7 @@
         }
 
         .sidebar-logo {
-            font: 800 22px/1 'Space Grotesk', sans-serif;
+            font: 800 22px/1 var(--font-latin), sans-serif;
             letter-spacing: -1px;
             color: var(--brand-forest);
             text-decoration: none;
@@ -79,7 +79,7 @@
         .sidebar-logo span { color: var(--brand-green); }
         .sidebar-logo small {
             display: block;
-            font: 700 9px/1 'Space Grotesk', sans-serif;
+            font: 700 9px/1 var(--font-latin), sans-serif;
             color: var(--brand-green);
             letter-spacing: 1.5px;
             margin-top: 4px;

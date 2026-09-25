@@ -4,6 +4,25 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* ─── Arabic Typography (Aligned with ox/landing) ─── */
+    --font-arabic:       'Alexandria', 'Noto Kufi Arabic', ui-sans-serif, system-ui, sans-serif;
+    --font-arabic-body:  'Alexandria', ui-sans-serif, system-ui, sans-serif;
+
+    /* ─── Latin Typography (Aligned with ox/landing) ─── */
+    --font-latin:        'Syne', 'Plus Jakarta Sans', ui-sans-serif, sans-serif;
+    --font-latin-body:   'Plus Jakarta Sans', ui-sans-serif, sans-serif;
+
+    /* ─── Tailwind default override ─── */
+    --font-sans:         'Alexandria', 'Plus Jakarta Sans', 'Syne', ui-sans-serif, system-ui, sans-serif;
+
+    /* ─── Color Palette ─── */
+    --color-ink:         #EAEFF0;
+    --color-navy:        #060F1A;
+    --color-navy-deep:   #030B12;
+    --color-navy-mid:    #0A1C2E;
+    --color-lime:        #BDFF45;
+    --color-blue:        #1A56F5;
+    --color-indigo:      #3226A0;
+    --color-gold:        #D4A853;
+    --color-muted:       #8FA3A8;
 }

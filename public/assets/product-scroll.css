@@ -1,17 +1,17 @@
 /* ═══════════════════════════════════════════════════════════════
    3D Product Scroll Showcase — OX Tech Homepage Luxury Theme
-   Colors: Deep Navy (#05121e, #071827), Neon Lime (#c9fa4b),
-           Electric Blue (#1f63ff), Frosted Cards, Space Grotesk
+   Colors: Deep Navy (#030B12, #060F1A), Neon Lime (#BDFF45),
+           Electric Blue (#1A56F5), Frosted Cards, Space Grotesk
    ═══════════════════════════════════════════════════════════════ */
 
 @import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap");
 
 .showcase-root {
-    --ox-navy-deep: #05121e;
-    --ox-navy: #071827;
+    --ox-navy-deep: #030B12;
+    --ox-navy: #060F1A;
     --ox-navy-card: #0d2235;
-    --ox-lime: #c9fa4b;
-    --ox-blue: #1f63ff;
+    --ox-lime: #BDFF45;
+    --ox-blue: #1A56F5;
     --ox-ink: #f5f8f4;
     --ox-muted: #94a3b8;
     --ox-border: rgba(255, 255, 255, 0.12);
@@ -21,7 +21,7 @@
     direction: ltr;
     text-align: left;
     position: relative;
-    background: #05121e;
+    background: #030B12;
     color: var(--ox-ink);
     font-family: "Space Grotesk", "Alexandria", sans-serif;
     overflow: hidden;
@@ -58,19 +58,23 @@
     width: 100vw;
     height: 100svh;
     overflow: hidden;
-    background: #05121e;
+    background: #030B12;
     color: var(--ox-ink);
 }
 
-/* ── Intro ── */
+/* ── Intro (Royal Cobalt Fabric from Reference) ── */
 .showcase-root .intro {
-    background: #05121e;
-    background-image: linear-gradient(180deg, rgba(4, 18, 24, 0.8) 0%, #05121e 100%);
+    background: radial-gradient(circle at 50% 20%, #1e6fe3 0%, #1257b3 45%, #0c3e82 100%);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px),
+                      linear-gradient(180deg, #1662c4 0%, #0c3e82 100%);
+    background-size: 18px 18px, 100% 100%;
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 5vw;
+    min-height: 46svh;
+    height: auto;
+    padding: 3.5rem 5vw 2.5rem;
     text-align: center;
     position: relative;
 }
@@ -78,23 +82,24 @@
     content: "";
     position: absolute;
     bottom: 0;
-    left: 10%;
-    right: 10%;
+    left: 5%;
+    right: 5%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201, 250, 75, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(189, 255, 69, 0.4), transparent);
 }
 
 .showcase-root .intro h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(2rem, 4.5vw, 3.8rem);
     font-weight: 800;
     max-width: 900px;
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
 }
 
 /* ── Product Overview (Pinned Section) ── */
 .showcase-root .product-overview {
-    background: #05121e;
-    background-image: radial-gradient(circle at 50% 45%, rgba(31, 99, 255, 0.08) 0%, #05121e 75%);
+    background: #030B12;
+    background-image: radial-gradient(circle at 50% 45%, rgba(31, 99, 255, 0.08) 0%, #030B12 75%);
 }
 
 /* ── 3D Model Container ── */
@@ -158,23 +163,35 @@
     font-size: 14vw;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    font-weight: 800;
-    color: var(--ox-lime);
+    font-weight: 900;
+    color: #1662c4;
+    background: linear-gradient(135deg, #1662c4 0%, #129e38 50%, #061720 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     white-space: nowrap;
-    text-shadow: 0 0 50px rgba(201, 250, 75, 0.4), 0 0 100px rgba(201, 250, 75, 0.2);
+    filter: drop-shadow(0 15px 35px rgba(22, 98, 196, 0.2));
 }
 
-/* ── Circular Mask (Expands seamlessly in deep navy) ── */
+/* ── Circular Mask (Light Style — Luxury Porcelain / Pearl Reveal) ── */
 .showcase-root .circular-mask {
     position: absolute;
     inset: 0;
-    background: #05121e;
-    background-image: radial-gradient(circle at 50% 50%, #0a2033 0%, #05121e 75%);
+    background: #f8fafc;
+    background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #f1f5f9 65%, #e2e8f0 100%);
     clip-path: circle(0% at 50% 50%);
     z-index: 2;
 }
+.showcase-root .circular-mask::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(22, 98, 196, 0.08) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    opacity: 0.7;
+    pointer-events: none;
+}
 
-/* ── Tooltips ── */
+/* ── Tooltips (Light Luxury Frosted Glass Cards) ── */
 .showcase-root .tooltips {
     position: absolute;
     top: 50%;
@@ -192,14 +209,14 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    color: #ffffff;
-    background: rgba(13, 34, 53, 0.82);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #061720;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(22, 98, 196, 0.16);
     border-radius: 20px;
     padding: 2rem 2.2rem;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(31, 99, 255, 0.12);
+    box-shadow: 0 20px 45px rgba(6, 26, 36, 0.08), 0 4px 16px rgba(22, 98, 196, 0.06);
     max-width: 440px;
     opacity: 0;
     visibility: hidden;
@@ -216,42 +233,42 @@
 }
 .showcase-root .tooltip:nth-child(1) {
     align-self: flex-start;
-    border-top: 2px solid rgba(201, 250, 75, 0.5);
+    border-top: 2px solid #1662c4;
 }
 .showcase-root .tooltip:nth-child(2) {
     align-self: flex-end;
     justify-content: flex-end;
     align-items: flex-end;
     text-align: right;
-    border-bottom: 2px solid rgba(31, 99, 255, 0.6);
+    border-bottom: 2px solid #129e38;
 }
 
 /* Divider */
 .showcase-root .tooltip .divider {
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, var(--ox-lime) 0%, var(--ox-blue) 100%);
-    box-shadow: 0 0 10px rgba(201, 250, 75, 0.4);
+    background: linear-gradient(90deg, #1662c4 0%, #129e38 100%);
+    box-shadow: 0 0 10px rgba(22, 98, 196, 0.2);
     margin: 0.5rem 0;
     transform: scaleX(0%);
     transform-origin: right center;
 }
 .showcase-root .tooltip:nth-child(2) .divider {
     transform-origin: left center;
-    background: linear-gradient(90deg, var(--ox-blue) 0%, var(--ox-lime) 100%);
+    background: linear-gradient(90deg, #129e38 0%, #1662c4 100%);
 }
 
 /* Icon */
 .showcase-root .tooltip .icon {
     font-size: 2.8rem;
     overflow: hidden;
-    color: var(--ox-lime);
-    filter: drop-shadow(0 0 14px rgba(201, 250, 75, 0.6));
+    color: #1662c4;
+    filter: drop-shadow(0 4px 12px rgba(22, 98, 196, 0.25));
     display: inline-flex;
 }
 .showcase-root .tooltip:nth-child(2) .icon {
-    color: #4da3ff;
-    filter: drop-shadow(0 0 14px rgba(31, 99, 255, 0.7));
+    color: #129e38;
+    filter: drop-shadow(0 4px 12px rgba(18, 158, 56, 0.25));
 }
 
 /* Title & Description */
@@ -260,20 +277,20 @@
 }
 .showcase-root .tooltip .title h2 {
     font-size: 2.2rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.02em;
-    color: #ffffff;
+    color: #061720;
     margin: 0;
 }
 .showcase-root .tooltip .description {
     overflow: hidden;
-    color: var(--ox-muted);
+    color: #475569;
     width: 100%;
 }
 .showcase-root .tooltip .description p {
     font-size: 0.98rem;
     line-height: 1.65;
-    color: #cbd5e1;
+    color: #475569;
     margin: 0;
 }
 
@@ -326,31 +343,38 @@
 
 /* ── Responsive ── */
 @media (max-width: 1000px) {
+    .showcase-root .intro {
+        min-height: 40svh;
+        padding: 2.5rem 5vw 2rem;
+    }
+    .showcase-root .intro h1 {
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+    }
     .showcase-root h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
         text-align: center;
     }
     .showcase-root h2 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
     .showcase-root .tooltip .icon {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     .showcase-root .tooltips {
         width: 90%;
         height: auto;
         top: auto;
-        bottom: 6vh;
+        bottom: 4vh;
         left: 50%;
         transform: translateX(-50%);
         flex-direction: column;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1rem;
     }
     .showcase-root .tooltip {
         width: 100%;
         max-width: 100%;
-        padding: 1.5rem 1.6rem;
+        padding: 1.1rem 1.3rem;
     }
     .showcase-root .tooltip:nth-child(2) {
         justify-content: flex-start;
@@ -362,5 +386,41 @@
     }
     .showcase-root .tooltip:nth-child(2) .divider {
         transform-origin: right center;
+    }
+}
+
+@media (max-width: 600px) {
+    .showcase-root .intro {
+        min-height: 34svh;
+        padding: 2rem 4vw 1.5rem;
+    }
+    .showcase-root .intro h1 {
+        font-size: clamp(1.4rem, 4.8vw, 2.1rem);
+        line-height: 1.3;
+    }
+    .showcase-root .header-1 h1,
+    .showcase-root .header-2 h1 {
+        font-size: clamp(1.5rem, 5.2vw, 2.2rem);
+    }
+    .showcase-root .tooltips {
+        width: 92%;
+        bottom: 2vh;
+        gap: 0.6rem;
+    }
+    .showcase-root .tooltip {
+        padding: 0.75rem 0.9rem;
+        border-radius: 12px;
+    }
+    .showcase-root .tooltip .icon {
+        font-size: 1.3rem;
+        margin-bottom: 0.2rem;
+    }
+    .showcase-root .tooltip .title h2 {
+        font-size: 1.05rem;
+        margin-bottom: 0.2rem;
+    }
+    .showcase-root .tooltip .description p {
+        font-size: 0.82rem;
+        line-height: 1.45;
     }
 }

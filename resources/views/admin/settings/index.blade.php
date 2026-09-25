@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('title', 'إعدادات الهوية والفوتر و SEO | OX Tech')
 @section('header_title', 'إعدادات النظام والموقع والظهور الإقليمي')
@@ -88,7 +88,7 @@
                     </div>
                     <div>
                         <label class="form-label">اللون الثانوي (Secondary Blue)</label>
-                        <input type="text" name="brand_color_secondary" class="form-control" value="{{ $settings['brand_color_secondary'] ?? '#1f63ff' }}" placeholder="#1f63ff">
+                        <input type="text" name="brand_color_secondary" class="form-control" value="{{ $settings['brand_color_secondary'] ?? '#1A56F5' }}" placeholder="#1A56F5">
                     </div>
                 </div>
             </div>

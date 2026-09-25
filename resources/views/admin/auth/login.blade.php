@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8"/>
@@ -13,8 +13,8 @@
     <style>
         :root {
             --navy-bg: #06131f;
-            --lime: #c9fa4b;
-            --font: 'Alexandria', sans-serif;
+            --lime: #BDFF45;
+            --font: var(--font), sans-serif;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -28,7 +28,7 @@
             padding: 20px;
         }
         .login-box {
-            background: linear-gradient(135deg, #0c2532, #071827);
+            background: linear-gradient(135deg, #0c2532, #060F1A);
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px;
             padding: 45px 38px;
@@ -38,7 +38,7 @@
             position: relative;
         }
         .login-logo {
-            font: 700 32px/1 'Space Grotesk';
+            font: 700 32px/1 var(--font-latin);
             letter-spacing: -1.5px;
             color: #fff;
             text-decoration: none;
@@ -85,7 +85,7 @@
         .login-btn {
             width: 100%;
             background: var(--lime);
-            color: #071827;
+            color: #060F1A;
             font-family: var(--font);
             font-weight: 800;
             font-size: 14px;

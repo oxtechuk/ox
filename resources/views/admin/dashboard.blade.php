@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('title', 'لوحة الإحصائيات | OX Tech')
 @section('header_title', 'نظرة عامة على الإحصائيات والأداء')
@@ -26,7 +26,7 @@
         margin-bottom: 8px;
     }
     .stat-number {
-        font: 800 32px/1 'Space Grotesk', var(--font);
+        font: 800 32px/1 var(--font-latin), var(--font);
         color: var(--text-heading);
     }
     .stat-number.green {
@@ -126,7 +126,7 @@
                                     <td>
                                         <span class="status-badge {{ $c->status }}">{{ $c->status_label }}</span>
                                     </td>
-                                    <td style="font-size: 12px; font-family: 'Space Grotesk'; color: var(--text-muted);">
+                                    <td style="font-size: 12px; font-family: var(--font-latin); color: var(--text-muted);">
                                         {{ $c->created_at->diffForHumans() }}
                                     </td>
                                     <td>

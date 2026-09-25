@@ -1,13 +1,17 @@
+@php
+    $isRtl = app()->getLocale() === 'ar';
+@endphp
+
 @if ($paginator->hasPages())
-    <nav role="navigation" aria-label="تنقل بين الصفحات" class="ox-pagination-wrapper">
+    <nav role="navigation" aria-label="{{ $isRtl ? 'تنقل بين الصفحات' : 'Pagination Navigation' }}" class="ox-pagination-wrapper">
         <div class="ox-pagination-info">
-            <span>عرض</span>
+            <span>{{ __('عرض') }}</span>
             <strong>{{ $paginator->firstItem() }}</strong>
-            <span>إلى</span>
+            <span>{{ __('إلى') }}</span>
             <strong>{{ $paginator->lastItem() }}</strong>
-            <span>من إجمالي</span>
+            <span>{{ __('من إجمالي') }}</span>
             <strong>{{ $paginator->total() }}</strong>
-            <span>سجل</span>
+            <span>{{ __('سجل') }}</span>
         </div>
 
         <ul class="ox-pagination-list">
@@ -15,15 +19,15 @@
             @if ($paginator->onFirstPage())
                 <li class="ox-page-item disabled" aria-disabled="true">
                     <span class="ox-page-link">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                        <span>السابق</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="{{ $isRtl ? 'transform: rotate(180deg);' : '' }}"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <span>{{ __('السابق') }}</span>
                     </span>
                 </li>
             @else
                 <li class="ox-page-item">
                     <a class="ox-page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                        <span>السابق</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="{{ $isRtl ? 'transform: rotate(180deg);' : '' }}"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        <span>{{ __('السابق') }}</span>
                     </a>
                 </li>
             @endif
@@ -51,15 +55,15 @@
             @if ($paginator->hasMorePages())
                 <li class="ox-page-item">
                     <a class="ox-page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">
-                        <span>التالي</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <span>{{ __('التالي') }}</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="{{ $isRtl ? '' : 'transform: rotate(180deg);' }}"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </a>
                 </li>
             @else
                 <li class="ox-page-item disabled" aria-disabled="true">
                     <span class="ox-page-link">
-                        <span>التالي</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <span>{{ __('التالي') }}</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="{{ $isRtl ? '' : 'transform: rotate(180deg);' }}"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </span>
                 </li>
             @endif

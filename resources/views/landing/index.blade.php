@@ -109,8 +109,8 @@
                         <!-- Yellow Order Up -->
                         <div class="brand-card">
                             <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <text x="50%" y="24" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="800" font-size="26" fill="#c49b09">Yellow</text>
-                                <text x="50%" y="36" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="9" letter-spacing="1.5" fill="#a37e06">ORDER UP!</text>
+                                <text x="50%" y="24" text-anchor="middle" font-family="var(--font-latin)" font-weight="800" font-size="26" fill="#c49b09">Yellow</text>
+                                <text x="50%" y="36" text-anchor="middle" font-family="var(--font-latin)" font-weight="700" font-size="9" letter-spacing="1.5" fill="#a37e06">ORDER UP!</text>
                             </svg>
                         </div>
 
@@ -121,7 +121,7 @@
                                     <path d="M14 6C15.8 3.5 18.7 2 22 2C27.5 2 32 6.5 32 12C32 12.3 32 12.7 31.9 13C34.3 14 36 16.3 36 19C36 22.9 32.9 26 29 26H11C6.6 26 3 22.4 3 18C3 14 5.9 10.7 9.8 10.1C10.8 7.6 13.2 6 16 6" fill="#0084ff"/>
                                     <circle cx="15" cy="16" r="3.5" fill="#ffffff"/>
                                 </g>
-                                <text x="48" y="27" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="18" fill="#0c2340">Clean<tspan font-weight="500">Cloud</tspan></text>
+                                <text x="48" y="27" font-family="var(--font-latin)" font-weight="800" font-size="18" fill="#0c2340">Clean<tspan font-weight="500">Cloud</tspan></text>
                             </svg>
                         </div>
 
@@ -129,14 +129,14 @@
                         <div class="brand-card">
                             <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="25" y="4" width="80" height="32" rx="7" fill="#2eb85c"/>
-                                <text x="65" y="26" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="20" fill="#ffffff" letter-spacing="-0.5">vend</text>
+                                <text x="65" y="26" text-anchor="middle" font-family="var(--font-latin)" font-weight="800" font-size="20" fill="#ffffff" letter-spacing="-0.5">vend</text>
                             </svg>
                         </div>
 
                         <!-- FOODICS -->
                         <div class="brand-card">
                             <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <text x="50%" y="27" text-anchor="middle" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="900" font-size="22" letter-spacing="2.5" fill="#121826">FOODICS</text>
+                                <text x="50%" y="27" text-anchor="middle" font-family="var(--font-latin)" font-weight="900" font-size="22" letter-spacing="2.5" fill="#121826">FOODICS</text>
                                 <circle cx="126" cy="21" r="3.5" fill="#ff2a5f"/>
                             </svg>
                         </div>
@@ -148,7 +148,7 @@
                                     <path d="M14 2L2 9V23L7 26V12L14 8L21 12V26L26 23V9L14 2Z" fill="#ea580c"/>
                                     <path d="M14 14L10 16.5V25.5L14 28L18 25.5V16.5L14 14Z" fill="#ea580c"/>
                                 </g>
-                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="19" fill="#1f2937">Magento</text>
+                                <text x="46" y="26" font-family="var(--font-latin)" font-weight="700" font-size="19" fill="#1f2937">Magento</text>
                             </svg>
                         </div>
 
@@ -159,7 +159,7 @@
                                     <circle cx="14" cy="14" r="13" fill="#14b8a6"/>
                                     <path d="M9 7V21M9 14L18 7M11 12L19 21" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                                 </g>
-                                <text x="52" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="18" fill="#1e293b">kentoo</text>
+                                <text x="52" y="26" font-family="var(--font-latin)" font-weight="800" font-size="18" fill="#1e293b">kentoo</text>
                             </svg>
                         </div>
 
@@ -176,7 +176,7 @@
                         <!-- Odoo -->
                         <div class="brand-card">
                             <svg class="brand-logo-svg" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <text x="50%" y="28" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="28" letter-spacing="1" fill="#714B67">odoo</text>
+                                <text x="50%" y="28" text-anchor="middle" font-family="var(--font-latin)" font-weight="900" font-size="28" letter-spacing="1" fill="#714B67">odoo</text>
                             </svg>
                         </div>
                     @endfor
@@ -197,8 +197,8 @@
                                     <circle cx="3" cy="18" r="3" fill="#38bdf8"/>
                                 </g>
                                 <g transform="translate(48, 12)">
-                                    <text x="0" y="14" font-family="system-ui, 'Cairo', sans-serif" font-weight="800" font-size="16" fill="#0f172a">قيـود</text>
-                                    <text x="0" y="24" font-family="'Space Grotesk', sans-serif" font-weight="700" font-size="8" letter-spacing="1.5" fill="#0284c7">QOYOD</text>
+                                    <text x="0" y="14" font-family="'Alexandria', sans-serif" font-weight="800" font-size="16" fill="#0f172a">قيـود</text>
+                                    <text x="0" y="24" font-family="var(--font-latin)" font-weight="700" font-size="8" letter-spacing="1.5" fill="#0284c7">QOYOD</text>
                                 </g>
                             </svg>
                         </div>
@@ -208,7 +208,7 @@
                             <svg class="brand-logo-svg" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="24" cy="20" r="13" fill="#00b4d8"/>
                                 <path d="M18 20L22 24L30 16" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="18" fill="#0f172a">zen<tspan fill="#00b4d8">HR</tspan></text>
+                                <text x="46" y="26" font-family="var(--font-latin)" font-weight="800" font-size="18" fill="#0f172a">zen<tspan fill="#00b4d8">HR</tspan></text>
                             </svg>
                         </div>
 
@@ -219,15 +219,15 @@
                                     <path d="M12 2C8 6 3 14 3 18C3 23 7 26 12 26C17 26 21 23 21 18C21 14 16 6 12 2Z" fill="#ed1c24"/>
                                     <path d="M12 9C10 12 7 16 7 19C7 21.8 9.2 23 12 23C14.8 23 17 21.8 17 19C17 16 14 12 12 9Z" fill="#ffffff"/>
                                 </g>
-                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="16" fill="#18181b">lightspeed</text>
+                                <text x="46" y="26" font-family="var(--font-latin)" font-weight="800" font-size="16" fill="#18181b">lightspeed</text>
                             </svg>
                         </div>
 
                         <!-- Oracle NetSuite -->
                         <div class="brand-card">
                             <svg class="brand-logo-svg" viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <text x="50%" y="16" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="12" letter-spacing="3" fill="#e51c24">ORACLE</text>
-                                <text x="50%" y="32" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="15" letter-spacing="1.5" fill="#18181b">NETSUITE</text>
+                                <text x="50%" y="16" text-anchor="middle" font-family="var(--font-latin)" font-weight="900" font-size="12" letter-spacing="3" fill="#e51c24">ORACLE</text>
+                                <text x="50%" y="32" text-anchor="middle" font-family="var(--font-latin)" font-weight="800" font-size="15" letter-spacing="1.5" fill="#18181b">NETSUITE</text>
                             </svg>
                         </div>
 
@@ -236,7 +236,7 @@
                             <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="24" cy="20" r="13" fill="#4f008c"/>
                                 <circle cx="24" cy="20" r="6" fill="#ff3366"/>
-                                <text x="46" y="26" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="17" fill="#18181b">stc <tspan fill="#ff3366">pay</tspan></text>
+                                <text x="46" y="26" font-family="var(--font-latin)" font-weight="800" font-size="17" fill="#18181b">stc <tspan fill="#ff3366">pay</tspan></text>
                             </svg>
                         </div>
 
@@ -244,7 +244,7 @@
                         <div class="brand-card">
                             <svg class="brand-logo-svg" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="14" y="8" width="92" height="24" rx="6" fill="#2ee59d"/>
-                                <text x="60" y="25" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="17" letter-spacing="-0.5" fill="#05121e">tabby</text>
+                                <text x="60" y="25" text-anchor="middle" font-family="var(--font-latin)" font-weight="900" font-size="17" letter-spacing="-0.5" fill="#030B12">tabby</text>
                             </svg>
                         </div>
 
@@ -257,7 +257,7 @@
                                         <stop offset="100%" stop-color="#ffa03a"/>
                                     </linearGradient>
                                 </defs>
-                                <text x="50%" y="27" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="22" letter-spacing="-0.5" fill="url(#tamaraGrad{{ $repeat }})">tamara</text>
+                                <text x="50%" y="27" text-anchor="middle" font-family="var(--font-latin)" font-weight="900" font-size="22" letter-spacing="-0.5" fill="url(#tamaraGrad{{ $repeat }})">tamara</text>
                             </svg>
                         </div>
 
@@ -265,8 +265,8 @@
                         <div class="brand-card">
                             <svg class="brand-logo-svg" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="14" y="6" width="28" height="28" rx="6" fill="#e30613"/>
-                                <text x="28" y="25" text-anchor="middle" font-family="system-ui, 'Cairo', sans-serif" font-weight="900" font-size="14" fill="#ffffff">جـ</text>
-                                <text x="52" y="27" font-family="system-ui, 'Cairo', sans-serif" font-weight="800" font-size="18" fill="#18181b">جاهـز</text>
+                                <text x="28" y="25" text-anchor="middle" font-family="'Alexandria', sans-serif" font-weight="900" font-size="14" fill="#ffffff">جـ</text>
+                                <text x="52" y="27" font-family="'Alexandria', sans-serif" font-weight="800" font-size="18" fill="#18181b">جاهـز</text>
                             </svg>
                         </div>
                     @endfor
@@ -274,6 +274,13 @@
             </div>
         </div>
     </section>
+
+    <!-- ─── Sadu Scalloped Fringe Divider into Festive Green Services ─── -->
+    <div class="sadu-divider" style="color: #129e38;">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
 
     <!-- Services & Sectors Showcase Section (Split Layout with Vibrant 3D Isometric Cards) -->
     <section class="services section" id="services">
@@ -372,7 +379,7 @@
                                         <path d="M70 42L110 20L145 38L105 60Z" fill="#38bdf8"/>
                                         <!-- Neon HOTEL Sign on Roof -->
                                         <rect x="92" y="14" width="36" height="12" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
-                                        <text x="110" y="23" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="8" fill="#0284c7">HOTEL</text>
+                                        <text x="110" y="23" text-anchor="middle" font-family="var(--font-latin)" font-weight="900" font-size="8" fill="#0284c7">HOTEL</text>
                                         <!-- Windows Left -->
                                         <rect x="76" y="54" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
                                         <rect x="76" y="74" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
@@ -383,7 +390,7 @@
                                         <!-- Room 302 Keycard badge -->
                                         <g transform="translate(130, 88)">
                                             <rect x="0" y="0" width="46" height="26" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.3))"/>
-                                            <text x="23" y="16" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="800" font-size="7" fill="#0369a1">ROOM 302</text>
+                                            <text x="23" y="16" text-anchor="middle" font-family="var(--font-latin)" font-weight="800" font-size="7" fill="#0369a1">ROOM 302</text>
                                             <circle cx="9" cy="13" r="2" fill="#22c55e"/>
                                         </g>
                                     </svg>
@@ -412,8 +419,8 @@
                                         <path d="M50 72L100 50L150 72Z" fill="#4338ca" stroke="#818cf8" stroke-width="1.5"/>
                                         <!-- Central Dome with Spire -->
                                         <path d="M78 50C78 32 122 32 122 50Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
-                                        <line x1="100" y1="32" x2="100" y2="20" stroke="#c9fa4b" stroke-width="3" stroke-linecap="round"/>
-                                        <circle cx="100" cy="18" r="3" fill="#c9fa4b"/>
+                                        <line x1="100" y1="32" x2="100" y2="20" stroke="#BDFF45" stroke-width="3" stroke-linecap="round"/>
+                                        <circle cx="100" cy="18" r="3" fill="#BDFF45"/>
                                     </svg>
                                 </div>
                             </div>
@@ -536,27 +543,34 @@
         </div>
     </section>
 
+    <!-- ─── Sadu Chevron Zigzag Divider into Work & Projects (Light Style) ─── -->
+    <div class="sadu-divider" style="color: #f7f9f6;">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,0 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
     <!-- Works & Projects Section -->
     <section class="work section" id="work">
         <div class="work-top reveal">
             <div>
                 <p class="kicker">SELECTED WORK</p>
-                <h2>أعمالنا تتكلم<br/><span>بأثرها.</span></h2>
+                <h2>{{ __('أعمالنا تتكلم') }}<br/><span>{{ __('بأثرها.') }}</span></h2>
             </div>
-            <p>فلتر المشاريع حسب السوق أو القطاع، واستكشف كيف حوّلنا التحديات التشغيلية إلى تجارب رقمية واضحة ومربحة.</p>
+            <p>{{ __('فلتر المشاريع حسب السوق أو القطاع، واستكشف كيف حوّلنا التحديات التشغيلية إلى تجارب رقمية واضحة ومربحة.') }}</p>
         </div>
 
         <div class="filters reveal">
             <div class="filter-group" id="countries">
-                <button class="active" data-filter="all">كل الدول</button>
+                <button class="active" data-filter="all">{{ __('كل الدول') }}</button>
                 @foreach($countries as $c)
-                    <button data-filter="{{ $c->country_code }}">{{ $c->country_name }}</button>
+                    <button data-filter="{{ $c->country_code }}">{{ __($c->country_name) }}</button>
                 @endforeach
             </div>
             <div class="filter-group dark" id="sectors">
-                <button class="active" data-sector="all">كل التخصصات</button>
+                <button class="active" data-sector="all">{{ __('كل التخصصات') }}</button>
                 @foreach($sectors as $s)
-                    <button data-sector="{{ $s->sector_slug }}">{{ $s->sector_name }}</button>
+                    <button data-sector="{{ $s->sector_slug }}">{{ __($s->sector_name) }}</button>
                 @endforeach
             </div>
         </div>
@@ -571,7 +585,7 @@
                             <i>{{ $project->subtitle }}</i>
                         </div>
                         <div>
-                            <small>{{ $project->country_name }} · {{ $project->sector_name }}</small>
+                            <small>{{ __($project->country_name) }} · {{ __($project->sector_name) }}</small>
                             <h3>{{ $project->short_description ?? $project->summary }}</h3>
                             @if($project->impact_stat)
                                 <p>{{ $project->impact_stat }}</p>
@@ -580,108 +594,122 @@
                     </a>
                 </article>
             @empty
-                <p style="grid-column: 1/-1; text-align: center; color: #587069; padding: 40px;">لا توجد مشاريع مضافة حالياً.</p>
+                <p style="grid-column: 1/-1; text-align: center; color: #587069; padding: 40px;">{{ __('لا توجد مشاريع مضافة حالياً.') }}</p>
             @endforelse
         </div>
     </section>
+
+    <!-- ─── Sadu Chevron Zigzag Divider into Models ─── -->
+    <div class="sadu-divider" style="color: #0a241f;">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,0 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
 
     <!-- Models Section -->
     <section class="models section">
         <div class="intro reveal">
             <p class="kicker">BUILT FOR BOTH</p>
-            <h2>نشتغل مع <span>B2B</span><br/>ونفهم <span>B2C.</span></h2>
+            <h2>{{ __('نشتغل مع') }} <span>B2B</span><br/>{{ __('ونفهم') }} <span>B2C.</span></h2>
         </div>
         <div class="model-grid">
             <article class="reveal">
                 <span>B2B</span>
-                <h3>نرتب العمل المعقد.</h3>
-                <p>أنظمة داخلية، لوحات تحكم، منصات شركاء وتكاملات تجعل فرقك أسرع وأكثر وضوحًا.</p>
+                <h3>{{ __('نرتب العمل المعقد.') }}</h3>
+                <p>{{ __('أنظمة داخلية، لوحات تحكم، منصات شركاء وتكاملات تجعل فرقك أسرع وأكثر وضوحًا.') }}</p>
                 <ul>
-                    <li>تقليل العمل اليدوي</li>
-                    <li>بيانات في مكان واحد</li>
-                    <li>دعم نمو الفريق</li>
+                    <li>{{ __('تقليل العمل اليدوي') }}</li>
+                    <li>{{ __('بيانات في مكان واحد') }}</li>
+                    <li>{{ __('دعم نمو الفريق') }}</li>
                 </ul>
             </article>
             <article class="reveal">
                 <span>B2C</span>
-                <h3>نصنع تجربة يُحبها العميل.</h3>
-                <p>متاجر وتطبيقات ومنتجات خفيفة وسريعة، من لحظة الاكتشاف وحتى عودة العميل.</p>
+                <h3>{{ __('نصنع تجربة يُحبها العميل.') }}</h3>
+                <p>{{ __('متاجر وتطبيقات ومنتجات خفيفة وسريعة، من لحظة الاكتشاف وحتى عودة العميل.') }}</p>
                 <ul>
-                    <li>تجربة شراء سلسة</li>
-                    <li>هوية تترك أثرًا</li>
-                    <li>تحويل ومبيعات أعلى</li>
+                    <li>{{ __('تجربة شراء سلسة') }}</li>
+                    <li>{{ __('هوية تترك أثرًا') }}</li>
+                    <li>{{ __('تحويل ومبيعات أعلى') }}</li>
                 </ul>
             </article>
         </div>
     </section>
 
+    <!-- ─── Sadu Scalloped Fringe Divider into Electric Purple Stories ─── -->
+    <div class="sadu-divider" style="color: #311e9e;">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
     <!-- Partner Stories / Testimonials Section (Saudi Sadu Aesthetic & Inline Video Player) -->
     <section class="testimonials section" id="stories">
         <!-- Sadu Corner Accents -->
         <svg class="sadu-corner top-right" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="0" width="8" height="8" fill="#c9fa4b"/>
-            <rect x="0" y="16" width="8" height="8" fill="#c9fa4b"/>
-            <rect x="32" y="16" width="8" height="8" fill="#c9fa4b"/>
-            <rect x="16" y="32" width="8" height="8" fill="#c9fa4b"/>
+            <rect x="16" y="0" width="8" height="8" fill="#BDFF45"/>
+            <rect x="0" y="16" width="8" height="8" fill="#BDFF45"/>
+            <rect x="32" y="16" width="8" height="8" fill="#BDFF45"/>
+            <rect x="16" y="32" width="8" height="8" fill="#BDFF45"/>
             <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
-            <rect x="8" y="8" width="8" height="8" fill="#9f99ec"/>
-            <rect x="24" y="8" width="8" height="8" fill="#9f99ec"/>
-            <rect x="8" y="24" width="8" height="8" fill="#9f99ec"/>
-            <rect x="24" y="24" width="8" height="8" fill="#9f99ec"/>
+            <rect x="8" y="8" width="8" height="8" fill="#9490E8"/>
+            <rect x="24" y="8" width="8" height="8" fill="#9490E8"/>
+            <rect x="8" y="24" width="8" height="8" fill="#9490E8"/>
+            <rect x="24" y="24" width="8" height="8" fill="#9490E8"/>
         </svg>
         <svg class="sadu-corner top-left" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="0" width="8" height="8" fill="#c9fa4b"/>
-            <rect x="0" y="16" width="8" height="8" fill="#c9fa4b"/>
-            <rect x="32" y="16" width="8" height="8" fill="#c9fa4b"/>
-            <rect x="16" y="32" width="8" height="8" fill="#c9fa4b"/>
+            <rect x="16" y="0" width="8" height="8" fill="#BDFF45"/>
+            <rect x="0" y="16" width="8" height="8" fill="#BDFF45"/>
+            <rect x="32" y="16" width="8" height="8" fill="#BDFF45"/>
+            <rect x="16" y="32" width="8" height="8" fill="#BDFF45"/>
             <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
-            <rect x="8" y="8" width="8" height="8" fill="#9f99ec"/>
-            <rect x="24" y="8" width="8" height="8" fill="#9f99ec"/>
-            <rect x="8" y="24" width="8" height="8" fill="#9f99ec"/>
-            <rect x="24" y="24" width="8" height="8" fill="#9f99ec"/>
+            <rect x="8" y="8" width="8" height="8" fill="#9490E8"/>
+            <rect x="24" y="8" width="8" height="8" fill="#9490E8"/>
+            <rect x="8" y="24" width="8" height="8" fill="#9490E8"/>
+            <rect x="24" y="24" width="8" height="8" fill="#9490E8"/>
         </svg>
 
         <div class="test-heading reveal">
             <div class="sadu-badge-wrap">
                 <!-- Sadu Ribbon Pattern Left -->
                 <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="4" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="6" y="0" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="6" y="8" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="0" y="4" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="6" y="0" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="6" y="8" width="6" height="6" fill="#BDFF45"/>
                     <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="18" y="4" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="24" y="0" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="24" y="8" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="18" y="4" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="24" y="0" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="24" y="8" width="6" height="6" fill="#BDFF45"/>
                     <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="36" y="4" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="42" y="0" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="42" y="8" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="36" y="4" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="42" y="0" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="42" y="8" width="6" height="6" fill="#BDFF45"/>
                     <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="54" y="4" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="54" y="4" width="6" height="6" fill="#BDFF45"/>
                 </svg>
 
                 <p class="kicker">PARTNER STORIES</p>
 
                 <!-- Sadu Ribbon Pattern Right -->
                 <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="4" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="6" y="0" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="6" y="8" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="0" y="4" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="6" y="0" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="6" y="8" width="6" height="6" fill="#BDFF45"/>
                     <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="18" y="4" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="24" y="0" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="24" y="8" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="18" y="4" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="24" y="0" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="24" y="8" width="6" height="6" fill="#BDFF45"/>
                     <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="36" y="4" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="42" y="0" width="6" height="6" fill="#c9fa4b"/>
-                    <rect x="42" y="8" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="36" y="4" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="42" y="0" width="6" height="6" fill="#BDFF45"/>
+                    <rect x="42" y="8" width="6" height="6" fill="#BDFF45"/>
                     <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="54" y="4" width="6" height="6" fill="#c9fa4b"/>
+                    <rect x="54" y="4" width="6" height="6" fill="#BDFF45"/>
                 </svg>
             </div>
 
-            <h2>شركاؤنا<br/>هم <span>الـدليـل.</span></h2>
-            <p>قصص حقيقية من شركاء بنوا معنا منتجات رقمية أحدثت نقلة نوعية في تجربة عملائهم ونمو أعمالهم.</p>
+            <h2>{{ __('شركاؤنا') }}<br/>{{ __('هم') }} <span>{{ __('الـدليـل.') }}</span></h2>
+            <p>{{ __('قصص حقيقية من شركاء بنوا معنا منتجات رقمية أحدثت نقلة نوعية في تجربة عملائهم ونمو أعمالهم.') }}</p>
         </div>
 
         @if($testimonials->count() > 0)
@@ -703,25 +731,25 @@
                             <div class="card-sadu-art">
                                 <svg width="180" height="180" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <!-- Sadu Diamond Star Pattern -->
-                                    <rect x="70" y="10" width="20" height="20" fill="#9f99ec"/>
-                                    <rect x="70" y="130" width="20" height="20" fill="#9f99ec"/>
-                                    <rect x="10" y="70" width="20" height="20" fill="#9f99ec"/>
-                                    <rect x="130" y="70" width="20" height="20" fill="#9f99ec"/>
+                                    <rect x="70" y="10" width="20" height="20" fill="#9490E8"/>
+                                    <rect x="70" y="130" width="20" height="20" fill="#9490E8"/>
+                                    <rect x="10" y="70" width="20" height="20" fill="#9490E8"/>
+                                    <rect x="130" y="70" width="20" height="20" fill="#9490E8"/>
 
-                                    <rect x="50" y="30" width="20" height="20" fill="#c9fa4b"/>
-                                    <rect x="90" y="30" width="20" height="20" fill="#c9fa4b"/>
-                                    <rect x="30" y="50" width="20" height="20" fill="#c9fa4b"/>
-                                    <rect x="110" y="50" width="20" height="20" fill="#c9fa4b"/>
-                                    <rect x="30" y="90" width="20" height="20" fill="#c9fa4b"/>
-                                    <rect x="110" y="90" width="20" height="20" fill="#c9fa4b"/>
-                                    <rect x="50" y="110" width="20" height="20" fill="#c9fa4b"/>
-                                    <rect x="90" y="110" width="20" height="20" fill="#c9fa4b"/>
+                                    <rect x="50" y="30" width="20" height="20" fill="#BDFF45"/>
+                                    <rect x="90" y="30" width="20" height="20" fill="#BDFF45"/>
+                                    <rect x="30" y="50" width="20" height="20" fill="#BDFF45"/>
+                                    <rect x="110" y="50" width="20" height="20" fill="#BDFF45"/>
+                                    <rect x="30" y="90" width="20" height="20" fill="#BDFF45"/>
+                                    <rect x="110" y="90" width="20" height="20" fill="#BDFF45"/>
+                                    <rect x="50" y="110" width="20" height="20" fill="#BDFF45"/>
+                                    <rect x="90" y="110" width="20" height="20" fill="#BDFF45"/>
 
                                     <rect x="70" y="50" width="20" height="20" fill="#ffffff"/>
                                     <rect x="50" y="70" width="20" height="20" fill="#ffffff"/>
                                     <rect x="90" y="70" width="20" height="20" fill="#ffffff"/>
                                     <rect x="70" y="90" width="20" height="20" fill="#ffffff"/>
-                                    <rect x="70" y="70" width="20" height="20" fill="#c9fa4b"/>
+                                    <rect x="70" y="70" width="20" height="20" fill="#BDFF45"/>
                                 </svg>
                             </div>
 
@@ -779,7 +807,7 @@
                                        src="{{ $t->video_src }}" 
                                        style="width:100%; height:100%; object-fit:cover;"></video>
                             @else
-                                <div style="display:grid; place-items:center; height:100%; color:#c9fa4b; padding:20px; text-align:center;">
+                                <div style="display:grid; place-items:center; height:100%; color:#BDFF45; padding:20px; text-align:center;">
                                     <span>جاري تجهيز فيديو التجربة...</span>
                                 </div>
                             @endif
@@ -788,14 +816,7 @@
                 @endforeach
             </div>
 
-            <div class="quote reveal">
-                <span class="quote-mark">“</span>
-                <blockquote id="quote-text">{{ $testimonials[0]->quote }}</blockquote>
-                <div>
-                    <b id="quote-name">{{ $testimonials[0]->partner_name }}</b>
-                    <small id="quote-role">{{ $testimonials[0]->partner_role }} · {{ $testimonials[0]->partner_country }}</small>
-                </div>
-            </div>
+         
 
             <div class="story-controls reveal">
                 <button id="story-prev" aria-label="القصة السابقة">←</button>
@@ -805,48 +826,62 @@
         @endif
     </section>
 
+    <!-- ─── Traditional Mud-Brick Battlement Divider into Desert Gold About ─── -->
+    <div class="sadu-divider" style="color: #9c7c3d;">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
     <!-- About & Roots Section -->
     <section class="about section" id="about">
         <div class="about-visual reveal">
-            <img src="{{ asset('assets/ox-saudi-story.png') }}" alt="بداية OX Tech في بيئة سعودية معاصرة"/>
-            <div class="heritage-mark">جذور سعودية<br/><span>رؤية رقمية</span></div>
+            <img src="{{ asset('assets/ox-saudi-story.png') }}" alt="بداية OX Tech في بيئة سعودية معاصرة" loading="lazy" decoding="async" width="600" height="700"/>
+            <div class="heritage-mark">{{ __('جذور سعودية') }}<br/><span>{{ __('رؤية رقمية') }}</span></div>
         </div>
         <div class="about-copy reveal">
             <p class="kicker">OUR STORY · ROOTED IN SAUDI</p>
-            <h2>{{ $siteContents['about_story_title'] ?? 'بدأنا من السعودية. وكبرنا بثقة شركائنا.' }}</h2>
-            <p>{{ $siteContents['about_story_p'] ?? 'في 2021 بدأنا كفريق صغير يؤمن أن التقنية لازم تفهم الناس والسوق قبل أي شيء. أول مشاريعنا كانت لفرق سعودية طموحة تحتاج حلولًا أسرع وأوضح—ومن هناك تعلّمنا أن أفضل المنتجات تبدأ من الاستماع الجيد.' }}</p>
+            <h2>{{ $siteContents['about_story_title'] ?? __('بدأنا من السعودية. وكبرنا بثقة شركائنا.') }}</h2>
+            <p>{{ $siteContents['about_story_p'] ?? __('في 2021 بدأنا كفريق صغير يؤمن أن التقنية لازم تفهم الناس والسوق قبل أي شيء. أول مشاريعنا كانت لفرق سعودية طموحة تحتاج حلولًا أسرع وأوضح—ومن هناك تعلّمنا أن أفضل المنتجات تبدأ من الاستماع الجيد.') }}</p>
             
             <div class="journey">
                 <article>
                     <b>2021</b>
                     <div>
-                        <strong>البداية في الرياض</strong>
-                        <small>فريق صغير، أول شريك، ووعد واحد: نبني منتجًا يُعتمد عليه.</small>
+                        <strong>{{ __('البداية في الرياض') }}</strong>
+                        <small>{{ __('فريق صغير، أول شريك، ووعد واحد: نبني منتجًا يُعتمد عليه.') }}</small>
                     </div>
                 </article>
                 <article>
                     <b>2023</b>
                     <div>
-                        <strong>من فكرة إلى بيت برمجيات</strong>
-                        <small>توسعنا في المتاجر والمنصات والتطبيقات لفرق في السعودية والإمارات ومصر.</small>
+                        <strong>{{ __('من فكرة إلى بيت برمجيات') }}</strong>
+                        <small>{{ __('توسعنا في المتاجر والمنصات والتطبيقات لفرق في السعودية والإمارات ومصر.') }}</small>
                     </div>
                 </article>
                 <article>
                     <b>اليوم</b>
                     <div>
-                        <strong>شريك نمو طويل المدى</strong>
-                        <small>ندعم الإطلاق، التشغيل، والتحسين المستمر لمنتجات تظل قوية مع نمو الأعمال.</small>
+                        <strong>{{ __('شريك نمو طويل المدى') }}</strong>
+                        <small>{{ __('ندعم الإطلاق، التشغيل، والتحسين المستمر لمنتجات تظل قوية مع نمو الأعمال.') }}</small>
                     </div>
                 </article>
             </div>
 
             <div class="numbers">
-                <span><b>5+</b> سنوات خبرة</span>
-                <span><b>48+</b> منتج أُطلق</span>
-                <span><b>24/7</b> دعم فني</span>
+                <span><b>5+</b> {{ __('سنوات خبرة') }}</span>
+                <span><b>48+</b> {{ __('منتج أُطلق') }}</span>
+                <span><b>24/7</b> {{ __('دعم فني') }}</span>
             </div>
         </div>
     </section>
+
+    <!-- ─── Traditional Battlement Divider into Consultation ─── -->
+    <div class="sadu-divider" style="color: #06131f;">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
 
     <!-- Ultra-Luxurious Inline Consultation Section -->
     <section class="consult-section" id="consult">
@@ -857,13 +892,22 @@
                     <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--lime); display: inline-block; box-shadow: 0 0 10px var(--lime);"></span>
                     LET'S BUILD SOMETHING GREAT
                 </p>
-                <h2>{{ $siteContents['consult_title'] ?? 'عندك فكرة؟' }}<br/><span>خلّينا نرتّبها ونبنيها.</span></h2>
-                <div class="consult-direct-box">
+                <h2>{{ $siteContents['consult_title'] ?? __('عندك فكرة؟') }}<br/><span>{{ __('خلّينا نرتّبها ونبنيها.') }}</span></h2>
+                <div class="consult-direct-box" style="display: flex; flex-direction: column; gap: 14px; margin-top: 25px;">
                     <div class="direct-info">
-                        <small>تفضل التواصل المباشر؟</small>
-                        <strong>{{ $siteContents['contact_email'] ?? 'hello@oxtech.studio' }}</strong>
+                        <small style="color: #94b8ac;">{{ __('تفضل التواصل المباشر السريع؟') }}</small>
+                        <strong style="color: #fff; font-size: 15px; display: block; margin-top: 2px;">{{ $siteContents['contact_email'] ?? 'hello@oxtech.studio' }}</strong>
                     </div>
-                    <a href="mailto:{{ $siteContents['contact_email'] ?? 'hello@oxtech.studio' }}" class="direct-btn">راسلنا إيميل ↗</a>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <a href="mailto:{{ $siteContents['contact_email'] ?? 'hello@oxtech.studio' }}" class="pill-btn-purple">
+                            <span>{{ __('راسلنا إيميل') }}</span>
+                            <b>↗</b>
+                        </a>
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? '966500000000') }}" target="_blank" class="pill-btn-lime">
+                            <span>{{ __('محادثة واتساب') }}</span>
+                            <b>💬</b>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -878,69 +922,69 @@
 
                         <!-- Project Type Pills -->
                         <div class="form-section-title">
-                            <span>01</span> اختر نوع المشروع أو الخدمة المطلوبة:
+                            <span>01</span> {{ __('اختر نوع المشروع أو الخدمة المطلوبة:') }}
                         </div>
                         <div class="pills-grid" id="projectTypePills">
-                            <button type="button" class="pill-btn active" data-val="منصات ومواقع">منصات ومواقع ويب</button>
-                            <button type="button" class="pill-btn" data-val="متاجر إلكترونية">متجر إلكتروني متكامل</button>
-                            <button type="button" class="pill-btn" data-val="تطبيقات ومنتجات">تطبيق جوال iOS / Android</button>
-                            <button type="button" class="pill-btn" data-val="أنظمة SaaS مخصصة">نظام سحابي / SaaS</button>
-                            <button type="button" class="pill-btn" data-val="تكاملات وأتمتة">تكاملات وأتمتة عمل</button>
+                            <button type="button" class="pill-btn active" data-val="منصات ومواقع">{{ __('منصات ومواقع ويب') }}</button>
+                            <button type="button" class="pill-btn" data-val="متاجر إلكترونية">{{ __('متجر إلكتروني متكامل') }}</button>
+                            <button type="button" class="pill-btn" data-val="تطبيقات ومنتجات">{{ __('تطبيق جوال iOS / Android') }}</button>
+                            <button type="button" class="pill-btn" data-val="أنظمة SaaS مخصصة">{{ __('نظام سحابي / SaaS') }}</button>
+                            <button type="button" class="pill-btn" data-val="تكاملات وأتمتة">{{ __('تكاملات وأتمتة عمل') }}</button>
                         </div>
                         <input type="hidden" name="project_type" id="selectedProjectType" value="منصات ومواقع">
 
                         <!-- Personal / Contact Details -->
                         <div class="form-section-title">
-                            <span>02</span> بيانات التواصل الأساسية:
+                            <span>02</span> {{ __('بيانات التواصل الأساسية:') }}
                         </div>
                         <div class="input-row">
                             <div class="consult-field">
-                                <label>الاسم الكريم *</label>
-                                <input type="text" name="name" class="consult-input" placeholder="مثال: عبدالله الراجحي" maxlength="70" required>
+                                <label>{{ __('الاسم الكريم') }} *</label>
+                                <input type="text" name="name" class="consult-input" placeholder="{{ $locale === 'ar' ? 'مثال: عبدالله الراجحي' : 'e.g. John Doe' }}" maxlength="70" required>
                             </div>
                             <div class="consult-field">
-                                <label>رقم الجوال / واتساب *</label>
+                                <label>{{ __('رقم الجوال / واتساب *') }}</label>
                                 <input type="text" name="phone" class="consult-input" placeholder="+966 50 000 0000" dir="ltr" style="text-align: right;" maxlength="30" required>
                             </div>
                         </div>
 
                         <div class="input-row">
                             <div class="consult-field">
-                                <label>البريد الإلكتروني *</label>
+                                <label>{{ __('البريد الإلكتروني') }} *</label>
                                 <input type="email" name="email" class="consult-input" placeholder="name@company.com" maxlength="100" required>
                             </div>
                             <div class="consult-field">
-                                <label>اسم الشركة أو الجهة (اختياري)</label>
-                                <input type="text" name="company_name" class="consult-input" placeholder="مثال: شركة نمو الرقمية" maxlength="100">
+                                <label>{{ __('اسم الشركة أو الجهة (اختياري)') }}</label>
+                                <input type="text" name="company_name" class="consult-input" placeholder="{{ $locale === 'ar' ? 'مثال: شركة نمو الرقمية' : 'e.g. Acme Tech' }}" maxlength="100">
                             </div>
                         </div>
 
                         <!-- Budget Range Pills -->
                         <div class="form-section-title" style="margin-top: 10px;">
-                            <span>03</span> الميزانية التقديرية المتوقعة:
+                            <span>03</span> {{ __('الميزانية التقديرية المتوقعة:') }}
                         </div>
                         <div class="pills-grid" id="budgetPills">
-                            <button type="button" class="pill-btn" data-val="أقل من $10,000">أقل من $10k</button>
+                            <button type="button" class="pill-btn" data-val="أقل من $10,000">{{ __('أقل من $10k') }}</button>
                             <button type="button" class="pill-btn active" data-val="$10,000 - $25,000">$10,000 - $25,000</button>
                             <button type="button" class="pill-btn" data-val="$25,000 - $50,000">$25,000 - $50,000</button>
-                            <button type="button" class="pill-btn" data-val="أكثر من $50,000">أكثر من $50,000</button>
+                            <button type="button" class="pill-btn" data-val="أكثر من $50,000">{{ $locale === 'ar' ? 'أكثر من $50,000' : '> $50,000' }}</button>
                         </div>
                         <input type="hidden" name="budget" id="selectedBudget" value="$10,000 - $25,000">
 
                         <!-- Message -->
                         <div class="consult-field">
-                            <label>أخبرنا باختصار عن فكرتك أو التحدي التقني *</label>
-                            <textarea name="message" class="consult-textarea" rows="3" placeholder="ما هو الهدف الأساسي من المشروع؟ ومن هم عملاؤك المستهدفون؟" minlength="10" maxlength="1000" required></textarea>
+                            <label>{{ __('أخبرنا باختصار عن فكرتك أو التحدي التقني *') }}</label>
+                            <textarea name="message" class="consult-textarea" rows="3" placeholder="{{ __('ما هو الهدف الأساسي من المشروع؟ ومن هم عملاؤك المستهدفون؟') }}" minlength="10" maxlength="1000" required></textarea>
                             <div style="display: flex; justify-content: space-between; font-size: 11px; color: #8fa099; margin-top: 4px;">
-                                <span>الحد الأدنى 10 أحرف</span>
-                                <span id="inlineMsgCounter">0 / 1000 حرف</span>
+                                <span>{{ __('الحد الأدنى 10 أحرف') }}</span>
+                                <span id="inlineMsgCounter">0 / 1000 {{ __('حرف') }}</span>
                             </div>
                         </div>
 
                         <!-- Submit Button -->
                         <button type="submit" class="submit-consult-btn" id="inlineSubmitBtn">
-                            <span>إرسال وتأكيد طلب الاستشارة</span>
-                            <b style="font-size: 18px;">←</b>
+                            <span>{{ __('إرسال وتأكيد طلب الاستشارة') }}</span>
+                            <b style="font-size: 18px;">{{ $locale === 'ar' ? '←' : '→' }}</b>
                         </button>
                     </form>
                 </div>
@@ -948,12 +992,12 @@
                 <!-- Success Celebration Screen -->
                 <div class="consult-success-box" id="inlineSuccessBox">
                     <div class="success-icon-badge">✓</div>
-                    <h3>تم استلام طلبك بنجاح!</h3>
+                    <h3>{{ __('تم استلام طلبك بنجاح!') }}</h3>
                     <p id="successMsgText">
-                        شكرًا لاهتمامك بالعمل معنا. تم إرسال تفاصيل فكرتك إلى فريقنا التقني، وسيتواصل معك مهندس المشروع خلال 24 ساعة لترتيب موعد الاستشارة.
+                        {{ __('شكرًا لاهتمامك بالعمل معنا. تم إرسال تفاصيل فكرتك إلى فريقنا التقني، وسيتواصل معك مهندس المشروع خلال 24 ساعة لترتيب موعد الاستشارة.') }}
                     </p>
                     <button type="button" class="pill-btn active" onclick="resetInlineForm()" style="padding: 12px 28px; font-size: 12px;">
-                        إرسال طلب استشارة آخر
+                        {{ __('إرسال طلب استشارة آخر') }}
                     </button>
                 </div>
             </div>
@@ -1139,7 +1183,7 @@
         inlineForm.addEventListener('submit', function(e) {
             e.preventDefault();
             inlineSubmitBtn.disabled = true;
-            inlineSubmitBtn.querySelector('span').textContent = 'جاري إرسال الطلب...';
+            inlineSubmitBtn.querySelector('span').textContent = "{{ __('جاري إرسال الطلب...') }}";
 
             const formData = new FormData(this);
 
@@ -1160,9 +1204,9 @@
                         document.getElementById('successMsgText').textContent = data.message;
                     }
                 } else {
-                    alert('حدث خطأ أثناء الإرسال، يرجى التحقق من البيانات والمحاولة مجدداً.');
+                    alert("{{ __('حدث خطأ أثناء الإرسال، يرجى التحقق من البيانات والمحاولة مجدداً.') }}");
                     inlineSubmitBtn.disabled = false;
-                    inlineSubmitBtn.querySelector('span').textContent = 'إرسال وتأكيد طلب الاستشارة';
+                    inlineSubmitBtn.querySelector('span').textContent = "{{ __('إرسال وتأكيد طلب الاستشارة') }}";
                 }
             })
             .catch(err => {
@@ -1179,10 +1223,10 @@
         if (inlineSuccessBox) inlineSuccessBox.style.display = 'none';
         if (inlineSubmitBtn) {
             inlineSubmitBtn.disabled = false;
-            inlineSubmitBtn.querySelector('span').textContent = 'إرسال وتأكيد طلب الاستشارة';
+            inlineSubmitBtn.querySelector('span').textContent = "{{ __('إرسال وتأكيد طلب الاستشارة') }}";
         }
         const inlineCounter = document.getElementById('inlineMsgCounter');
-        if (inlineCounter) inlineCounter.innerText = '0 / 1000 حرف';
+        if (inlineCounter) inlineCounter.innerText = "0 / 1000 {{ __('حرف') }}";
     }
 
     // Live Character Counter for Inline Form

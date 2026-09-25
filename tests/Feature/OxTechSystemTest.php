@@ -2,13 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Project;
-use App\Models\Testimonial;
 use App\Models\Consultation;
-use App\Models\SiteContent;
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
 class OxTechSystemTest extends TestCase
 {
@@ -60,7 +58,7 @@ class OxTechSystemTest extends TestCase
 
         $this->assertNotNull($project);
 
-        $response = $this->get('/projects/' . $project->slug);
+        $response = $this->get('/projects/'.$project->slug);
         $response->assertStatus(200);
         $response->assertSee($project->title);
         $response->assertSee('3 أشهر');
@@ -146,7 +144,7 @@ class OxTechSystemTest extends TestCase
 
     public function test_admin_can_create_new_project_with_details(): void
     {
-        $uniqueSlug = 'test-proj-' . uniqid();
+        $uniqueSlug = 'test-proj-'.uniqid();
         $payload = [
             'title' => 'مشروع تجريبي جديد',
             'slug' => $uniqueSlug,
@@ -188,7 +186,7 @@ class OxTechSystemTest extends TestCase
             'status' => 'new',
         ]);
 
-        $response = $this->actingAs($this->admin)->patch('/admin/consultations/' . $consultation->id . '/status', [
+        $response = $this->actingAs($this->admin)->patch('/admin/consultations/'.$consultation->id.'/status', [
             'status' => 'scheduled',
             'admin_notes' => 'تم التواصل وتحديد اجتماع يوم الأربعاء 10 صباحاً',
         ]);
@@ -216,5 +214,36 @@ class OxTechSystemTest extends TestCase
             'key' => 'hero_kicker',
             'value' => 'SOFTWARE STUDIO · 2026',
         ]);
+    }
+
+    public function test_language_switch_route_and_rendering(): void
+    {
+        // 1. Language switcher route sets session & cookie
+        $response = $this->get('/lang/en');
+        $response->assertRedirect();
+        $response->assertSessionHas('locale', 'en');
+        $response->assertCookie('locale', 'en');
+
+        // 2. English render has LTR and English keywords
+        $enResponse = $this->withSession(['locale' => 'en'])->get('/');
+        $enResponse->assertStatus(200);
+        $enResponse->assertSee('dir="ltr"', false);
+        $enResponse->assertSee('lang="en"', false);
+        $enResponse->assertSee('Engineered to Scale');
+        $enResponse->assertSee('All Sectors');
+
+        // 3. French switch and render
+        $frResponse = $this->withSession(['locale' => 'fr'])->get('/');
+        $frResponse->assertStatus(200);
+        $frResponse->assertSee('dir="ltr"', false);
+        $frResponse->assertSee('lang="fr"', false);
+        $frResponse->assertSee('Ingénierie Haute Performance');
+        $frResponse->assertSee('Tous les Secteurs');
+
+        // 4. Arabic default render has RTL
+        $arResponse = $this->withSession(['locale' => 'ar'])->get('/');
+        $arResponse->assertStatus(200);
+        $arResponse->assertSee('dir="rtl"', false);
+        $arResponse->assertSee('lang="ar"', false);
     }
 }

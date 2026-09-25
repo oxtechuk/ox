@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <title>فاتورة رقم {{ $invoice->invoice_number }}</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #071827; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff; direction: rtl; text-align: right;">
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #071827; padding: 35px 15px;">
+<body style="margin: 0; padding: 0; background-color: #060F1A; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #ffffff; direction: rtl; text-align: right;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #060F1A; padding: 35px 15px;">
         <tr>
             <td align="center">
                 <table role="presentation" width="650" cellspacing="0" cellpadding="0" style="background-color: #0c2532; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; overflow: hidden;">
                     <tr>
-                        <td style="padding: 30px; background: linear-gradient(135deg, #0c2532 0%, #1a365d 100%); border-bottom: 2px solid #1f63ff;">
+                        <td style="padding: 30px; background: linear-gradient(135deg, #0c2532 0%, #1a365d 100%); border-bottom: 2px solid #1A56F5;">
                             <table role="presentation" width="100%">
                                 <tr>
                                     <td>
-                                        <h1 style="margin: 0; font-size: 26px; color: #c9fa4b;">OX TECH</h1>
+                                        <h1 style="margin: 0; font-size: 26px; color: #BDFF45;">OX TECH</h1>
                                         <p style="margin: 3px 0 0; font-size: 13px; color: #94a3b8;">فاتورة ضريبية / مطالبة مالية</p>
                                     </td>
                                     <td align="left">
@@ -34,7 +34,7 @@
                             </p>
 
                             @if($customMessage)
-                                <div style="background-color: rgba(31, 99, 255, 0.1); border-right: 3px solid #1f63ff; padding: 12px 16px; margin-bottom: 25px; border-radius: 6px; font-size: 14px; color: #f1f5f9;">
+                                <div style="background-color: rgba(31, 99, 255, 0.1); border-right: 3px solid #1A56F5; padding: 12px 16px; margin-bottom: 25px; border-radius: 6px; font-size: 14px; color: #f1f5f9;">
                                     {{ $customMessage }}
                                 </div>
                             @endif
@@ -85,19 +85,19 @@
 
                             <!-- Payment details -->
                             <div style="background-color: rgba(255,255,255,0.03); border-radius: 8px; padding: 15px; font-size: 13px; color: #94a3b8; margin-bottom: 25px;">
-                                <p style="margin: 0 0 5px; color: #c9fa4b; font-weight: bold;">معلومات الحساب البنكي للتحويل:</p>
+                                <p style="margin: 0 0 5px; color: #BDFF45; font-weight: bold;">معلومات الحساب البنكي للتحويل:</p>
                                 <p style="margin: 3px 0;"><strong>البنك:</strong> مصرف الراجحي / البنك الأهلي السعودي (SNB)</p>
                                 <p style="margin: 3px 0;"><strong>اسم المستفيد:</strong> مؤسسة أوكس للتقنية وتطوير البرمجيات</p>
                                 <p style="margin: 3px 0;"><strong>IBAN:</strong> SA00 0000 0000 0000 0000 0000</p>
                             </div>
 
                             <div style="text-align: center;">
-                                <a href="mailto:finance@ox-tech.sa?subject={{ urlencode('إشعار تحويل فاتورة ' . $invoice->invoice_number) }}" style="display: inline-block; background-color: #1f63ff; color: #ffffff; padding: 12px 30px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;">إرسال إشعار السداد 📩</a>
+                                <a href="mailto:finance@ox-tech.sa?subject={{ urlencode('إشعار تحويل فاتورة ' . $invoice->invoice_number) }}" style="display: inline-block; background-color: #1A56F5; color: #ffffff; padding: 12px 30px; border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;">إرسال إشعار السداد 📩</a>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 20px; background-color: #071827; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 20px; background-color: #060F1A; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid rgba(255,255,255,0.05);">
                             OX Tech Software House • المملكة العربية السعودية • مصر • الإمارات
                         </td>
                     </tr>

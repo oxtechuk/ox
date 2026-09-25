@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $project->title . ' | تفاصيل المشروع — OX Tech')
+@section('title', $project->title . ' | ' . __('OX Tech | تفاصيل المشروع'))
 @section('meta_description', $project->short_description ?? $project->summary)
 
 @push('styles')
@@ -11,7 +11,7 @@
         display: flex;
         align-items: center;
         padding: 130px 8vw 60px;
-        background: radial-gradient(circle at 80% 20%, rgba(31, 99, 255, 0.25), transparent 45%), linear-gradient(180deg, #06131f 0%, #071827 100%);
+        background: radial-gradient(circle at 80% 20%, rgba(31, 99, 255, 0.25), transparent 45%), linear-gradient(180deg, #06131f 0%, #060F1A 100%);
         overflow: hidden;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -66,7 +66,7 @@
         border-color: rgba(201, 250, 75, 0.4);
         color: var(--lime);
         font-weight: 700;
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: var(--font-latin), sans-serif;
     }
     .project-title-large {
         font: 800 clamp(42px, 6vw, 76px)/1.1 var(--font);
@@ -136,7 +136,7 @@
     }
     .meta-item span.accent {
         color: var(--lime);
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: var(--font-latin), sans-serif;
     }
 
     /* Main Details Grid */
@@ -145,7 +145,7 @@
         display: grid;
         grid-template-columns: 1.3fr 0.8fr;
         gap: 7vw;
-        background: #071827;
+        background: #060F1A;
     }
     .detail-card-box {
         background: rgba(255, 255, 255, 0.03);
@@ -166,7 +166,7 @@
     .detail-card-box h3 i {
         font-style: normal;
         color: var(--lime);
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: var(--font-latin), sans-serif;
     }
     .detail-card-box p {
         font-size: 14px;
@@ -210,7 +210,7 @@
         border-radius: 99px;
         font-size: 12px;
         font-weight: 600;
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: var(--font-latin), sans-serif;
     }
 
     /* Visual Showcase */
@@ -243,7 +243,7 @@
         z-index: 2;
     }
     .banner-overlay-info b {
-        font: 800 36px/1.2 'Space Grotesk', var(--font);
+        font: 800 36px/1.2 var(--font-latin), var(--font);
         color: #fff;
         display: block;
     }
@@ -295,23 +295,26 @@
 
 @section('content')
 <main>
+    @php
+        $isRtl = app()->getLocale() === 'ar';
+    @endphp
     <!-- Project Hero Header -->
     <section class="project-detail-hero">
         <div class="hero-glow-bg"></div>
         <div class="project-hero-content">
             <a href="{{ route('home') }}#work" class="back-nav-link">
-                <b>→</b> العودة إلى جميع الأعمال
+                <b>{{ $isRtl ? '→' : '←' }}</b> {{ __('العودة إلى جميع الأعمال') }}
             </a>
             
             <div class="project-badges">
                 <span class="badge-tag lime">{{ $project->number_badge ?? '01' }}</span>
-                <span class="badge-tag">{{ $project->country_name }}</span>
-                <span class="badge-tag">{{ $project->sector_name }}</span>
+                <span class="badge-tag">{{ __($project->country_name) }}</span>
+                <span class="badge-tag">{{ __($project->sector_name) }}</span>
                 @if($project->duration)
-                    <span class="badge-tag">⏱ مدة العمل: {{ $project->duration }}</span>
+                    <span class="badge-tag">⏱ {{ __('مدة العمل:') }} {{ $project->duration }}</span>
                 @endif
                 @if($project->delivery_date)
-                    <span class="badge-tag">🚀 أُنجز في: {{ $project->delivery_date }}</span>
+                    <span class="badge-tag">🚀 {{ __('أُنجز في:') }} {{ $project->delivery_date }}</span>
                 @endif
             </div>
 
@@ -324,12 +327,12 @@
             <div class="hero-cta-group">
                 @if($project->live_url)
                     <a href="{{ $project->live_url }}" target="_blank" rel="noopener noreferrer" class="btn-live-link">
-                        <span>زيارة ومعاينة المشروع الحي</span>
+                        <span>{{ __('زيارة ومعاينة المشروع الحي') }}</span>
                         <b>↗</b>
                     </a>
                 @endif
                 <button onclick="openConsultModal()" class="outline" style="background:transparent; cursor:pointer; padding: 14px 22px;">
-                    طلب مشروع مشابه ↗
+                    {{ __('طلب مشروع مشابه ↗') }}
                 </button>
             </div>
         </div>
@@ -338,24 +341,24 @@
     <!-- Key Facts Strip -->
     <section class="meta-strip">
         <div class="meta-item">
-            <label>العميل والجهة</label>
+            <label>{{ __('العميل والجهة') }}</label>
             <span>{{ $project->client_name ?? $project->title }}</span>
         </div>
         <div class="meta-item">
-            <label>مدة التنفيذ (Duration)</label>
-            <span class="accent">{{ $project->duration ?? 'غير محدد' }}</span>
+            <label>{{ __('مدة التنفيذ') }}</label>
+            <span class="accent">{{ $project->duration ?? '-' }}</span>
         </div>
         <div class="meta-item">
-            <label>تاريخ الإطلاق والعمل (Launched)</label>
-            <span>{{ $project->delivery_date ?? 'مكتمل' }}</span>
+            <label>{{ __('تاريخ الإطلاق والعمل') }}</label>
+            <span>{{ $project->delivery_date ?? '-' }}</span>
         </div>
         <div class="meta-item">
-            <label>السوق والقطاع</label>
-            <span>{{ $project->country_name }} · {{ $project->sector_name }}</span>
+            <label>{{ __('السوق والقطاع') }}</label>
+            <span>{{ __($project->country_name) }} · {{ __($project->sector_name) }}</span>
         </div>
         @if($project->impact_stat)
             <div class="meta-item">
-                <label>الأثر المحقق (Key Metric)</label>
+                <label>{{ __('الأثر المحقق') }}</label>
                 <span class="accent">{{ $project->impact_stat }}</span>
             </div>
         @endif
@@ -379,23 +382,23 @@
 
             <!-- Summary / Overview -->
             <div class="detail-card-box">
-                <h3><i>01</i> نبذة عامة عن المشروع</h3>
-                <p>{{ $project->summary ?? $project->short_description ?? 'مشروع تقني متكامل تم بناؤه وتطويره بواسطة فريق OX Tech لتوفير تجربة مستخدم فائقة وسرعة تشغيل عالية.' }}</p>
+                <h3><i>01</i> {{ __('نبذة عامة عن المشروع') }}</h3>
+                <p>{{ $project->summary ?? $project->short_description ?? __('مشروع تقني متكامل تم بناؤه وتطويره بواسطة فريق OX Tech لتوفير تجربة مستخدم فائقة وسرعة تشغيل عالية.') }}</p>
             </div>
 
             <!-- Challenge & Solution -->
             @if($project->challenge || $project->solution)
                 <div class="detail-card-box">
-                    <h3><i>02</i> التحدي وحل OX Tech</h3>
+                    <h3><i>02</i> {{ __('التحدي وحل OX Tech') }}</h3>
                     @if($project->challenge)
                         <div style="margin-bottom: 20px;">
-                            <strong style="color: #ff8585; display: block; font-size: 13px; margin-bottom: 6px;">⚠️ التحدي التشغيلي والتقني:</strong>
+                            <strong style="color: #ff8585; display: block; font-size: 13px; margin-bottom: 6px;">⚠️ {{ __('التحدي التشغيلي والتقني:') }}</strong>
                             <p>{{ $project->challenge }}</p>
                         </div>
                     @endif
                     @if($project->solution)
                         <div>
-                            <strong style="color: var(--lime); display: block; font-size: 13px; margin-bottom: 6px;">💡 الحل المنفذ:</strong>
+                            <strong style="color: var(--lime); display: block; font-size: 13px; margin-bottom: 6px;">💡 {{ __('الحل المنفذ:') }}</strong>
                             <p>{{ $project->solution }}</p>
                         </div>
                     @endif
@@ -405,8 +408,8 @@
             <!-- Live Link CTA Box -->
             @if($project->live_url)
                 <div class="detail-card-box" style="background: linear-gradient(135deg, rgba(31, 99, 255, 0.15), rgba(201, 250, 75, 0.05)); border-color: rgba(31, 99, 255, 0.3);">
-                    <h3 style="margin-bottom: 10px;">🔗 رابط المعاينة الحية</h3>
-                    <p style="margin-bottom: 18px;">يمكنك تفقد وتجربة النسخة الحية من المشروع مباشرة:</p>
+                    <h3 style="margin-bottom: 10px;">🔗 {{ __('رابط المعاينة الحية') }}</h3>
+                    <p style="margin-bottom: 18px;">{{ __('يمكنك تفقد وتجربة النسخة الحية من المشروع مباشرة:') }}</p>
                     <a href="{{ $project->live_url }}" target="_blank" rel="noopener noreferrer" class="btn-live-link" style="display: inline-flex;">
                         <span>{{ $project->live_url }}</span>
                         <b>↗</b>
@@ -420,7 +423,7 @@
             <!-- Key Features -->
             @if(!empty($project->key_features) && count($project->key_features) > 0)
                 <div class="detail-card-box">
-                    <h3><i>03</i> أبرز الميزات والوظائف</h3>
+                    <h3><i>03</i> {{ __('أبرز الميزات والوظائف') }}</h3>
                     <ul class="feature-list">
                         @foreach($project->key_features as $feature)
                             <li>
@@ -435,7 +438,7 @@
             <!-- Technologies -->
             @if(!empty($project->technologies) && count($project->technologies) > 0)
                 <div class="detail-card-box">
-                    <h3><i>04</i> التقنيات والمكتبات</h3>
+                    <h3><i>04</i> {{ __('التقنيات والمكتبات') }}</h3>
                     <div class="tech-tags">
                         @foreach($project->technologies as $tech)
                             <span class="tech-pill">{{ $tech }}</span>
@@ -445,15 +448,15 @@
             @endif
 
             <!-- Quick Project Consultation Card -->
-            <div class="detail-card-box" style="background: linear-gradient(145deg, #112a3a, #071827); border-color: rgba(201, 250, 75, 0.3);">
+            <div class="detail-card-box" style="background: linear-gradient(145deg, #112a3a, #060F1A); border-color: rgba(201, 250, 75, 0.3);">
                 <p class="kicker" style="color: var(--lime); margin-bottom: 8px;">GET STARTED</p>
-                <h3 style="font-size: 20px; margin-bottom: 10px;">معجب بهذا المشروع؟</h3>
+                <h3 style="font-size: 20px; margin-bottom: 10px;">{{ __('معجب بهذا المشروع؟') }}</h3>
                 <p style="font-size: 12px; line-height: 1.9; margin-bottom: 20px;">
-                    يمكننا بناء منتجك الرقمي بنفس المستوى من الدقة والسرعة والجودة.
+                    {{ __('يمكننا بناء منتجك الرقمي بنفس المستوى من الدقة والسرعة والجودة.') }}
                 </p>
                 <button onclick="openConsultModal()" class="form-submit-btn" style="cursor: pointer;">
-                    <span>احجز استشارة لمشروعك</span>
-                    <b>←</b>
+                    <span>{{ __('احجز استشارة لمشروعك') }}</span>
+                    <b style="margin-inline-start: 6px;">{{ $isRtl ? '←' : '→' }}</b>
                 </button>
             </div>
         </div>
@@ -463,9 +466,9 @@
     <section class="project-pagination-strip">
         @if($prevProject)
             <a href="{{ route('projects.show', $prevProject->slug) }}" class="nav-project-btn">
-                <b style="font-size: 20px;">→</b>
+                <b style="font-size: 20px;">{{ $isRtl ? '→' : '←' }}</b>
                 <div>
-                    <span>المشروع السابق</span>
+                    <span>{{ __('المشروع السابق') }}</span>
                     <strong>{{ $prevProject->title }}</strong>
                 </div>
             </a>
@@ -473,15 +476,15 @@
             <div></div>
         @endif
 
-        <a href="{{ route('home') }}#work" class="outline" style="font-size: 11px;">كل المشاريع</a>
+        <a href="{{ route('home') }}#work" class="outline" style="font-size: 11px;">{{ __('كل المشاريع') }}</a>
 
         @if($nextProject)
-            <a href="{{ route('projects.show', $nextProject->slug) }}" class="nav-project-btn" style="text-align: left;">
+            <a href="{{ route('projects.show', $nextProject->slug) }}" class="nav-project-btn" style="text-align: {{ $isRtl ? 'left' : 'right' }};">
                 <div>
-                    <span>المشروع التالي</span>
+                    <span>{{ __('المشروع التالي') }}</span>
                     <strong>{{ $nextProject->title }}</strong>
                 </div>
-                <b style="font-size: 20px;">←</b>
+                <b style="font-size: 20px;">{{ $isRtl ? '←' : '→' }}</b>
             </a>
         @else
             <div></div>

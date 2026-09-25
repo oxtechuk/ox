@@ -1,24 +1,24 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\ClientController as AdminClientController;
+use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\QuotationController as AdminQuotationController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\SiteContentController as AdminSiteContentController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
+use App\Http\Controllers\Admin\TrackingController as AdminTrackingController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\ConsultationController;
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
-use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
-use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
-use App\Http\Controllers\Admin\SiteContentController as AdminSiteContentController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Admin\SettingController as AdminSettingController;
-use App\Http\Controllers\Admin\TrackingController as AdminTrackingController;
-use App\Http\Controllers\Admin\ClientController as AdminClientController;
-use App\Http\Controllers\Admin\QuotationController as AdminQuotationController;
-use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
-use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Models\Project;
-use App\Models\SiteSetting;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +28,29 @@ use App\Models\SiteSetting;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['ar', 'en', 'fr'])) {
+Route::get('/lang/{locale}', function (Request $request, string $locale) {
+    if (in_array($locale, ['ar', 'en', 'fr'], true)) {
         session(['locale' => $locale]);
         cookie()->queue('locale', $locale, 60 * 24 * 365);
+        app()->setLocale($locale);
     }
-    return redirect()->back();
+
+    $referer = $request->header('referer');
+    if ($referer) {
+        $parsed = parse_url($referer);
+        if (! empty($parsed['query'])) {
+            parse_str($parsed['query'], $queryParams);
+            unset($queryParams['lang']);
+            $newQuery = http_build_query($queryParams);
+            $cleanUrl = ($parsed['scheme'] ?? 'http').'://'.($parsed['host'] ?? '').($parsed['path'] ?? '').($newQuery ? '?'.$newQuery : '');
+
+            return redirect($cleanUrl);
+        }
+
+        return redirect($referer);
+    }
+
+    return redirect()->route('home');
 })->name('lang.switch');
 
 /*
@@ -47,11 +64,11 @@ Route::get('/sitemap.xml', function () {
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>';
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
-    
+
     // Homepage
     $xml .= '<url>';
-    $xml .= '<loc>' . $baseUrl . '</loc>';
-    $xml .= '<lastmod>' . now()->toAtomString() . '</lastmod>';
+    $xml .= '<loc>'.$baseUrl.'</loc>';
+    $xml .= '<lastmod>'.now()->toAtomString().'</lastmod>';
     $xml .= '<changefreq>daily</changefreq>';
     $xml .= '<priority>1.0</priority>';
     $xml .= '</url>';
@@ -59,8 +76,8 @@ Route::get('/sitemap.xml', function () {
     // Projects
     foreach ($projects as $project) {
         $xml .= '<url>';
-        $xml .= '<loc>' . route('projects.show', $project->slug) . '</loc>';
-        $xml .= '<lastmod>' . $project->updated_at->toAtomString() . '</lastmod>';
+        $xml .= '<loc>'.route('projects.show', $project->slug).'</loc>';
+        $xml .= '<lastmod>'.$project->updated_at->toAtomString().'</lastmod>';
         $xml .= '<changefreq>weekly</changefreq>';
         $xml .= '<priority>0.8</priority>';
         $xml .= '</url>';
