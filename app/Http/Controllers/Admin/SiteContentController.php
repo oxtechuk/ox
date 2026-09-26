@@ -11,6 +11,7 @@ class SiteContentController extends Controller
     public function index()
     {
         $contents = SiteContent::all()->groupBy('group');
+
         return view('admin.site-content.index', compact('contents'));
     }
 

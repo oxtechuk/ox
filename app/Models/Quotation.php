@@ -64,6 +64,7 @@ class Quotation extends Model
     {
         $year = date('Y');
         $count = static::whereYear('created_at', $year)->count() + 1;
+
         return sprintf('QT-%s-%04d', $year, $count);
     }
 

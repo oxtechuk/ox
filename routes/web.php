@@ -4,7 +4,10 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DigitalOrderController;
+use App\Http\Controllers\Admin\DigitalProductController;
 use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Admin\PaymentLogController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\QuotationController as AdminQuotationController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
@@ -14,6 +17,9 @@ use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialControll
 use App\Http\Controllers\Admin\TrackingController as AdminTrackingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\CustomerDashboardController;
+use App\Http\Controllers\DigitalCheckoutController;
+use App\Http\Controllers\DigitalStoreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Models\Project;
@@ -28,6 +34,36 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
+
+/*
+|--------------------------------------------------------------------------
+| Digital Store, Software Sales & High-Converting Landing Pages
+|--------------------------------------------------------------------------
+*/
+Route::get('/store', [DigitalStoreController::class, 'index'])->name('store.index');
+Route::get('/store/product/{slug}', [DigitalStoreController::class, 'show'])->name('store.product');
+Route::get('/p/{slug}', [DigitalStoreController::class, 'landing'])->name('store.landing');
+
+/*
+|--------------------------------------------------------------------------
+| Checkout & PaySky Gateway Integration
+|--------------------------------------------------------------------------
+*/
+Route::post('/checkout/initiate', [DigitalCheckoutController::class, 'initiate'])->name('checkout.initiate');
+Route::match(['get', 'post'], '/checkout/paysky/callback', [DigitalCheckoutController::class, 'callback'])->name('checkout.paysky.callback');
+Route::post('/checkout/paysky/webhook', [DigitalCheckoutController::class, 'webhook'])->name('checkout.paysky.webhook');
+Route::get('/checkout/success/{orderNumber}', [DigitalCheckoutController::class, 'success'])->name('checkout.success');
+
+/*
+|--------------------------------------------------------------------------
+| Customer Portal & Secure Downloads
+|--------------------------------------------------------------------------
+*/
+Route::get('/account', [CustomerDashboardController::class, 'dashboard'])->name('customer.dashboard');
+Route::get('/account/login', [CustomerDashboardController::class, 'showLogin'])->name('customer.login');
+Route::post('/account/login', [CustomerDashboardController::class, 'login'])->name('customer.login.submit');
+Route::post('/account/logout', [CustomerDashboardController::class, 'logout'])->name('customer.logout');
+Route::get('/downloads/{token}', [CustomerDashboardController::class, 'download'])->name('digital.download');
 Route::get('/lang/{locale}', function (Request $request, string $locale) {
     if (in_array($locale, ['ar', 'en', 'fr'], true)) {
         session(['locale' => $locale]);
@@ -128,6 +164,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/consultations/{consultation}', [AdminConsultationController::class, 'show'])->name('consultations.show');
         Route::patch('/consultations/{consultation}/status', [AdminConsultationController::class, 'updateStatus'])->name('consultations.status');
         Route::delete('/consultations/{consultation}', [AdminConsultationController::class, 'destroy'])->name('consultations.destroy');
+
+        // Digital Products & Software Store Management
+        Route::resource('digital-products', DigitalProductController::class);
+        Route::resource('digital-orders', DigitalOrderController::class)->only(['index', 'show']);
+        Route::get('/payment-logs', [PaymentLogController::class, 'index'])->name('payment-logs.index');
+        Route::get('/payment-logs/{paymentLog}', [PaymentLogController::class, 'show'])->name('payment-logs.show');
+        Route::post('/payment-logs/clear-old', [PaymentLogController::class, 'clearOld'])->name('payment-logs.clear_old');
 
         // Site Content Management
         Route::get('/site-content', [AdminSiteContentController::class, 'index'])->name('site-content.index');

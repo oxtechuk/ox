@@ -63,7 +63,7 @@ class CrmAndSettingsSuiteTest extends TestCase
         // Submit consultation form and verify attribution saved
         $postRes = $this->post('/consultation/store', [
             'name' => 'سعد القحطاني',
-            'email' => 'saad_unique_' . time() . '@example.sa',
+            'email' => 'saad_unique_'.time().'@example.sa',
             'phone' => '+966551234567',
             'company_name' => 'شركة قمة التقنية',
             'project_type' => 'تطبيقات ومنتجات',
@@ -124,7 +124,7 @@ class CrmAndSettingsSuiteTest extends TestCase
                     'pixel_id' => 'G-OXTECH2026',
                     'is_active' => '1',
                 ],
-            ]
+            ],
         ]);
 
         $response->assertRedirect(route('admin.tracking.index'));
@@ -139,7 +139,7 @@ class CrmAndSettingsSuiteTest extends TestCase
     {
         $this->actingAs($this->adminUser);
 
-        $uniqueEmail = 'faisal_' . time() . '@harbi-group.sa';
+        $uniqueEmail = 'faisal_'.time().'@harbi-group.sa';
         $response = $this->post(route('admin.crm.clients.store'), [
             'name' => 'فيصل الحربي',
             'email' => $uniqueEmail,
@@ -164,7 +164,7 @@ class CrmAndSettingsSuiteTest extends TestCase
 
         $client = Client::create([
             'name' => 'ريم الدوسري',
-            'email' => 'reem_' . time() . '@al-dossary.sa',
+            'email' => 'reem_'.time().'@al-dossary.sa',
             'status' => 'active',
         ]);
 
@@ -192,7 +192,7 @@ class CrmAndSettingsSuiteTest extends TestCase
                     'quantity' => 1,
                     'unit_price' => 20000,
                 ],
-            ]
+            ],
         ];
 
         $response = $this->post(route('admin.crm.quotations.store'), $postData);
@@ -234,13 +234,13 @@ class CrmAndSettingsSuiteTest extends TestCase
 
         $client = Client::create([
             'name' => 'طارق الزهراني',
-            'email' => 'tariq_' . time() . '@al-zahrani.sa',
+            'email' => 'tariq_'.time().'@al-zahrani.sa',
             'status' => 'active',
         ]);
 
         $invoice = Invoice::create([
             'client_id' => $client->id,
-            'invoice_number' => 'INV-TEST-' . time(),
+            'invoice_number' => 'INV-TEST-'.time(),
             'title' => 'عقد الصيانة السنوية',
             'issue_date' => now(),
             'due_date' => now()->addDays(14),
@@ -286,7 +286,7 @@ class CrmAndSettingsSuiteTest extends TestCase
 
         Consultation::create([
             'name' => 'عميل سناب',
-            'email' => 'snapclient_' . time() . '@example.com',
+            'email' => 'snapclient_'.time().'@example.com',
             'message' => 'استشارة تجارة إلكترونية',
             'platform_detected' => 'Snapchat',
             'utm_source' => 'snapchat',
@@ -294,7 +294,7 @@ class CrmAndSettingsSuiteTest extends TestCase
 
         Consultation::create([
             'name' => 'عميل تيك توك',
-            'email' => 'ttclient_' . time() . '@example.com',
+            'email' => 'ttclient_'.time().'@example.com',
             'message' => 'استشارة تطبيق توصيل',
             'platform_detected' => 'TikTok',
             'utm_source' => 'tiktok',

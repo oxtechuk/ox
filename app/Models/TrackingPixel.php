@@ -36,7 +36,7 @@ class TrackingPixel extends Model
 
     public function renderHeadScript(): string
     {
-        if (!$this->is_active) {
+        if (! $this->is_active) {
             return '';
         }
 
@@ -113,7 +113,7 @@ HTML : '',
 
     public function renderBodyScript(): string
     {
-        if (!$this->is_active) {
+        if (! $this->is_active) {
             return '';
         }
 

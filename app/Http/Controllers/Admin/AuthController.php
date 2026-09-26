@@ -13,6 +13,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('admin.dashboard');
         }
+
         return view('admin.auth.login');
     }
 
@@ -27,13 +28,15 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
-            if (!$user->is_active) {
+            if (! $user->is_active) {
                 Auth::logout();
+
                 return back()->withErrors(['email' => 'تم تعطيل هذا الحساب. يرجى مراجعة الإدارة.']);
             }
 
             $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard'))->with('success', 'مرحباً بك مجدداً، ' . $user->name);
+
+            return redirect()->intended(route('admin.dashboard'))->with('success', 'مرحباً بك مجدداً، '.$user->name);
         }
 
         return back()->withErrors([

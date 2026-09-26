@@ -12,6 +12,7 @@ class TestimonialController extends Controller
     public function index()
     {
         $testimonials = Testimonial::orderBy('order', 'asc')->get();
+
         return view('admin.testimonials.index', compact('testimonials'));
     }
 
@@ -80,7 +81,7 @@ class TestimonialController extends Controller
         $validated['order'] = $validated['order'] ?? $testimonial->order;
 
         if ($request->hasFile('video_file')) {
-            if ($testimonial->video_url && !str_starts_with($testimonial->video_url, 'http')) {
+            if ($testimonial->video_url && ! str_starts_with($testimonial->video_url, 'http')) {
                 Storage::disk('public')->delete($testimonial->video_url);
             }
             $path = $request->file('video_file')->store('testimonials/videos', 'public');
@@ -89,7 +90,7 @@ class TestimonialController extends Controller
         }
 
         if ($request->hasFile('poster_image')) {
-            if ($testimonial->poster_image && !str_starts_with($testimonial->poster_image, 'assets/')) {
+            if ($testimonial->poster_image && ! str_starts_with($testimonial->poster_image, 'assets/')) {
                 Storage::disk('public')->delete($testimonial->poster_image);
             }
             $path = $request->file('poster_image')->store('testimonials/posters', 'public');
@@ -103,10 +104,10 @@ class TestimonialController extends Controller
 
     public function destroy(Testimonial $testimonial)
     {
-        if ($testimonial->video_url && !str_starts_with($testimonial->video_url, 'http')) {
+        if ($testimonial->video_url && ! str_starts_with($testimonial->video_url, 'http')) {
             Storage::disk('public')->delete($testimonial->video_url);
         }
-        if ($testimonial->poster_image && !str_starts_with($testimonial->poster_image, 'assets/')) {
+        if ($testimonial->poster_image && ! str_starts_with($testimonial->poster_image, 'assets/')) {
             Storage::disk('public')->delete($testimonial->poster_image);
         }
         $testimonial->delete();

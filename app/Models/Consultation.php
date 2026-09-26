@@ -44,6 +44,7 @@ class Consultation extends Model
     public function getStatusLabelAttribute(): string
     {
         $labels = self::statusLabels();
+
         return $labels[$this->status] ?? $this->status;
     }
 }

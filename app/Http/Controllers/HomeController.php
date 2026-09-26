@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\Testimonial;
 use App\Models\SiteContent;
-use Illuminate\Http\Request;
+use App\Models\Testimonial;
 
 class HomeController extends Controller
 {
@@ -37,7 +36,7 @@ class HomeController extends Controller
             return [
                 $t->quote,
                 $t->partner_name,
-                $t->partner_role . ($t->partner_country ? ' · ' . $t->partner_country : ''),
+                $t->partner_role.($t->partner_country ? ' · '.$t->partner_country : ''),
                 $t->video_src,
                 $t->video_type,
             ];

@@ -11,12 +11,13 @@ class AdminAuth
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect()->route('admin.login')->with('error', 'يرجى تسجيل الدخول للوصول إلى لوحة التحكم.');
         }
 
-        if (!Auth::user()->is_active) {
+        if (! Auth::user()->is_active) {
             Auth::logout();
+
             return redirect()->route('admin.login')->with('error', 'تم تعطيل هذا الحساب.');
         }
 

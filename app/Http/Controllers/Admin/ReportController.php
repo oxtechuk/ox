@@ -26,14 +26,14 @@ class ReportController extends Controller
         $totalInvoiced = Invoice::sum('total_amount');
         $totalCollected = Invoice::sum('paid_amount');
         $totalOutstanding = Invoice::sum('due_amount');
-        
+
         $overdueInvoices = Invoice::with('client')
             ->where(function ($q) {
                 $q->where('status', 'overdue')
-                  ->orWhere(function ($sub) {
-                      $sub->where('due_amount', '>', 0)
-                          ->where('due_date', '<', now());
-                  });
+                    ->orWhere(function ($sub) {
+                        $sub->where('due_amount', '>', 0)
+                            ->where('due_date', '<', now());
+                    });
             })
             ->latest('due_date')
             ->take(10)

@@ -2,11 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Project;
-use App\Models\Testimonial;
+use App\Models\Client;
 use App\Models\Consultation;
+use App\Models\Invoice;
+use App\Models\InvoicePayment;
+use App\Models\Project;
+use App\Models\Quotation;
+use App\Models\QuotationItem;
 use App\Models\SiteContent;
+use App\Models\SiteSetting;
+use App\Models\Testimonial;
+use App\Models\TrackingPixel;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -453,24 +460,24 @@ class DatabaseSeeder extends Seeder
             ['key' => 'header_logo_sub', 'value' => 'TECH STUDIO', 'group' => 'branding', 'type' => 'text', 'label' => 'الوصف التابع للشعار'],
             ['key' => 'custom_logo_image', 'value' => null, 'group' => 'branding', 'type' => 'file', 'label' => 'صورة اللوجو المخصص (PNG/SVG)'],
             ['key' => 'custom_favicon', 'value' => null, 'group' => 'branding', 'type' => 'file', 'label' => 'أيقونة الموقع (Favicon)'],
-            
+
             // Footer & Corporate
             ['key' => 'footer_description', 'value' => 'بيت برمجيات سعودي معاصر. نبني منصات ومتاجر وتطبيقات وحلول SaaS تصنع الفارق الحقيقي في نمو الأعمال.', 'group' => 'footer', 'type' => 'textarea', 'label' => 'نبذة الفوتر'],
-            ['key' => 'footer_copyright', 'value' => '© ' . date('Y') . ' OX Tech. جميع الحقوق محفوظة.', 'group' => 'footer', 'type' => 'text', 'label' => 'حقوق النشر'],
+            ['key' => 'footer_copyright', 'value' => '© '.date('Y').' OX Tech. جميع الحقوق محفوظة.', 'group' => 'footer', 'type' => 'text', 'label' => 'حقوق النشر'],
             ['key' => 'phone_ksa', 'value' => '+966 50 123 4567', 'group' => 'footer', 'type' => 'text', 'label' => 'هاتف / واتساب الرياض'],
             ['key' => 'phone_uae', 'value' => '+971 50 987 6543', 'group' => 'footer', 'type' => 'text', 'label' => 'هاتف / واتساب دبي'],
             ['key' => 'phone_egypt', 'value' => '+20 100 123 4567', 'group' => 'footer', 'type' => 'text', 'label' => 'هاتف / واتساب القاهرة'],
             ['key' => 'address_riyadh', 'value' => 'طريق الملك فهد، حي الملقا، الرياض، المملكة العربية السعودية', 'group' => 'footer', 'type' => 'text', 'label' => 'عنوان مكتب الرياض'],
             ['key' => 'address_dubai', 'value' => 'خليج الأعمال (Business Bay)، دبي، الإمارات العربية المتحدة', 'group' => 'footer', 'type' => 'text', 'label' => 'عنوان مكتب دبي'],
             ['key' => 'address_cairo', 'value' => 'التجمع الخامس، القاهرة الجديدة، مصر', 'group' => 'footer', 'type' => 'text', 'label' => 'عنوان مكتب القاهرة'],
-            
+
             // Social Media Links
             ['key' => 'social_x', 'value' => 'https://x.com/oxtech_studio', 'group' => 'footer', 'type' => 'text', 'label' => 'حساب X (تويتر)'],
             ['key' => 'social_linkedin', 'value' => 'https://linkedin.com/company/oxtech-studio', 'group' => 'footer', 'type' => 'text', 'label' => 'لينكد إن (LinkedIn)'],
             ['key' => 'social_instagram', 'value' => 'https://instagram.com/oxtech_studio', 'group' => 'footer', 'type' => 'text', 'label' => 'إنستغرام'],
             ['key' => 'social_tiktok', 'value' => 'https://tiktok.com/@oxtech_studio', 'group' => 'footer', 'type' => 'text', 'label' => 'تيك توك'],
             ['key' => 'social_whatsapp', 'value' => 'https://wa.me/966501234567', 'group' => 'footer', 'type' => 'text', 'label' => 'رابط واتساب المباشر'],
-            
+
             // Regional Tech SEO (KSA, Egypt, UAE)
             ['key' => 'seo_meta_title', 'value' => 'OX Tech | أفضل بيت برمجيات وتطوير تطبيقات ومواقع في السعودية والإمارات ومصر', 'group' => 'seo', 'type' => 'text', 'label' => 'عنوان الـ SEO الأساسي (Meta Title)'],
             ['key' => 'seo_meta_description', 'value' => 'شريكك التقني المعتمد لتطوير التطبيقات، المتاجر الإلكترونية، المنصات السحابية SaaS، وتكاملات الدفع في الرياض ودبي والقاهرة. استشارة مجانية مع خبرائنا.', 'group' => 'seo', 'type' => 'textarea', 'label' => 'وصف الـ SEO (Meta Description)'],
@@ -481,7 +488,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($settings as $s) {
-            \App\Models\SiteSetting::updateOrCreate(['key' => $s['key']], $s);
+            SiteSetting::updateOrCreate(['key' => $s['key']], $s);
         }
 
         // 7. Tracking Pixels (Google, Meta, Snapchat, TikTok)
@@ -496,11 +503,11 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($pixels as $p) {
-            \App\Models\TrackingPixel::updateOrCreate(['platform' => $p['platform']], $p);
+            TrackingPixel::updateOrCreate(['platform' => $p['platform']], $p);
         }
 
         // 8. Initial CRM Clients, Quotations & Invoices (Demonstration Suite)
-        $client1 = \App\Models\Client::updateOrCreate(
+        $client1 = Client::updateOrCreate(
             ['email' => 'contact@mersal.sa'],
             [
                 'name' => 'سارة العتيبي',
@@ -515,7 +522,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $client2 = \App\Models\Client::updateOrCreate(
+        $client2 = Client::updateOrCreate(
             ['email' => 'nasser@driveplus.ae'],
             [
                 'name' => 'ناصر المنصوري',
@@ -530,7 +537,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $client3 = \App\Models\Client::updateOrCreate(
+        $client3 = Client::updateOrCreate(
             ['email' => 'omar@madahealth.eg'],
             [
                 'name' => 'د. عمر مدني',
@@ -546,7 +553,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Create Quotations for Client 1
-        $quotation1 = \App\Models\Quotation::updateOrCreate(
+        $quotation1 = Quotation::updateOrCreate(
             ['quotation_number' => 'QT-2026-0001'],
             [
                 'client_id' => $client1->id,
@@ -568,21 +575,21 @@ class DatabaseSeeder extends Seeder
         );
 
         // Add Quotation Items
-        \App\Models\QuotationItem::updateOrCreate(
+        QuotationItem::updateOrCreate(
             ['quotation_id' => $quotation1->id, 'service_name' => 'تصميم واجهة وتجربة المستخدم UX/UI'],
             ['description' => 'تصميم كامل لواجهات الويب وتطبيقات الجوال بنظام Figma التفاعلي', 'unit_price' => 12000.00, 'quantity' => 1, 'total' => 12000.00, 'order' => 1]
         );
-        \App\Models\QuotationItem::updateOrCreate(
+        QuotationItem::updateOrCreate(
             ['quotation_id' => $quotation1->id, 'service_name' => 'برمجة وتطوير المتجر الإلكتروني والباك إند'],
             ['description' => 'بناء المنصة على Laravel مع تكاملات الدفع والشحن المباشر', 'unit_price' => 20000.00, 'quantity' => 1, 'total' => 20000.00, 'order' => 2]
         );
-        \App\Models\QuotationItem::updateOrCreate(
+        QuotationItem::updateOrCreate(
             ['quotation_id' => $quotation1->id, 'service_name' => 'تطبيق الجوال iOS & Android'],
             ['description' => 'تطبيق هجين فائق السرعة عبر Flutter', 'unit_price' => 13000.00, 'quantity' => 1, 'total' => 13000.00, 'order' => 3]
         );
 
         // Create Invoice for Client 1
-        $invoice1 = \App\Models\Invoice::updateOrCreate(
+        $invoice1 = Invoice::updateOrCreate(
             ['invoice_number' => 'INV-2026-0001'],
             [
                 'client_id' => $client1->id,
@@ -601,7 +608,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // Add payment for invoice 1
-        \App\Models\InvoicePayment::updateOrCreate(
+        InvoicePayment::updateOrCreate(
             ['invoice_id' => $invoice1->id, 'transaction_reference' => 'TXN-BANK-998822'],
             [
                 'amount' => 30000.00,

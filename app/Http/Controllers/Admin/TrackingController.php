@@ -28,7 +28,7 @@ class TrackingController extends Controller
         $payload = $request->input('pixels', []);
 
         foreach ($payload as $platform => $data) {
-            $isActive = !empty($data['is_active']);
+            $isActive = ! empty($data['is_active']);
             $pixelId = $data['pixel_id'] ?? null;
             $headCode = $data['head_code'] ?? null;
             $bodyCode = $data['body_code'] ?? null;

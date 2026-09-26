@@ -23,7 +23,7 @@ class ConsultationAdminNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'طلب استشارة جديد من: ' . $this->consultation->name . ' [مصدر: ' . ($this->consultation->platform_detected ?? 'Direct') . ']',
+            subject: 'طلب استشارة جديد من: '.$this->consultation->name.' [مصدر: '.($this->consultation->platform_detected ?? 'Direct').']',
         );
     }
 

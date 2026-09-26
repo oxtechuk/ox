@@ -24,9 +24,10 @@ class SiteContent extends Model
     public static function getByKey(string $key, mixed $default = null)
     {
         $item = static::where('key', $key)->first();
-        if (!$item) {
+        if (! $item) {
             return $default;
         }
+
         return $item->payload ?? $item->value ?? $default;
     }
 

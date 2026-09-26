@@ -28,7 +28,7 @@ class CaptureMarketingAttribution
         $utmSource = $request->query('utm_source', session('attribution.utm_source'));
         $referrer = $request->header('referer');
 
-        if ($referrer && !session()->has('attribution.referrer_url')) {
+        if ($referrer && ! session()->has('attribution.referrer_url')) {
             session()->put('attribution.referrer_url', $referrer);
         }
 
@@ -70,7 +70,7 @@ class CaptureMarketingAttribution
             }
         }
 
-        if ($platform && (!session()->has('attribution.platform_detected') || $hasUtm)) {
+        if ($platform && (! session()->has('attribution.platform_detected') || $hasUtm)) {
             session()->put('attribution.platform_detected', $platform);
         }
 

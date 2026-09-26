@@ -14,6 +14,7 @@ class QuotationMail extends Mailable
     use Queueable, SerializesModels;
 
     public Quotation $quotation;
+
     public ?string $customMessage;
 
     public function __construct(Quotation $quotation, ?string $customMessage = null)
@@ -25,7 +26,7 @@ class QuotationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'عرض سعر تقني مخصص: ' . $this->quotation->quotation_number . ' | OX Tech',
+            subject: 'عرض سعر تقني مخصص: '.$this->quotation->quotation_number.' | OX Tech',
         );
     }
 

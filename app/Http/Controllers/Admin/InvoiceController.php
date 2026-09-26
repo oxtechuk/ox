@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Mail\InvoiceMail;
 use App\Models\Client;
 use App\Models\Invoice;
-use App\Models\InvoicePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -29,10 +28,10 @@ class InvoiceController extends Controller
             $s = $request->search;
             $query->where(function ($q) use ($s) {
                 $q->where('invoice_number', 'like', "%{$s}%")
-                  ->orWhere('title', 'like', "%{$s}%")
-                  ->orWhereHas('client', function ($cq) use ($s) {
-                      $cq->where('name', 'like', "%{$s}%")->orWhere('company_name', 'like', "%{$s}%");
-                  });
+                    ->orWhere('title', 'like', "%{$s}%")
+                    ->orWhereHas('client', function ($cq) use ($s) {
+                        $cq->where('name', 'like', "%{$s}%")->orWhere('company_name', 'like', "%{$s}%");
+                    });
             });
         }
 
@@ -116,12 +115,14 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         $invoice->load(['client', 'quotation.items', 'payments' => fn ($q) => $q->latest()]);
+
         return view('admin.crm.invoices.show', compact('invoice'));
     }
 
     public function edit(Invoice $invoice)
     {
         $clients = Client::orderBy('name')->get();
+
         return view('admin.crm.invoices.edit', compact('invoice', 'clients'));
     }
 
@@ -175,13 +176,14 @@ class InvoiceController extends Controller
     public function destroy(Invoice $invoice)
     {
         $invoice->delete();
+
         return redirect()->route('admin.crm.invoices.index')->with('success', 'تم حذف الفاتورة بنجاح.');
     }
 
     public function addPayment(Request $request, Invoice $invoice)
     {
         $validated = $request->validate([
-            'amount' => 'required|numeric|min:0.01|max:' . ($invoice->due_amount + 0.01),
+            'amount' => 'required|numeric|min:0.01|max:'.($invoice->due_amount + 0.01),
             'payment_date' => 'required|date',
             'payment_method' => 'required|in:bank_transfer,mada,visa_mastercard,cash,cheque,other',
             'transaction_reference' => 'nullable|string|max:100',
@@ -200,7 +202,7 @@ class InvoiceController extends Controller
             $invoice->recalculatePaymentStatus();
         });
 
-        return back()->with('success', 'تم تسجيل دفعة مالية بقيمة (' . number_format($validated['amount'], 2) . ' ' . $invoice->currency . ') بنجاح!');
+        return back()->with('success', 'تم تسجيل دفعة مالية بقيمة ('.number_format($validated['amount'], 2).' '.$invoice->currency.') بنجاح!');
     }
 
     public function sendEmail(Request $request, Invoice $invoice)
@@ -213,9 +215,10 @@ class InvoiceController extends Controller
             if ($invoice->status === 'draft') {
                 $invoice->update(['status' => 'sent']);
             }
-            return back()->with('success', 'تم إرسال الفاتورة إلى بريد العميل (' . $invoice->client->email . ') بنجاح!');
+
+            return back()->with('success', 'تم إرسال الفاتورة إلى بريد العميل ('.$invoice->client->email.') بنجاح!');
         } catch (\Throwable $e) {
-            return back()->with('error', 'تعذر إرسال البريد: ' . $e->getMessage());
+            return back()->with('error', 'تعذر إرسال البريد: '.$e->getMessage());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8"/>
@@ -684,6 +684,55 @@
                             </svg>
                         </span>
                         <span class="menu-text">الإحصائيات</span>
+                    </div>
+                </a>
+            </li>
+
+            <!-- Group: Digital Software & Store -->
+            <li class="menu-heading">متجر البرمجيات والمنتجات الرقمية</li>
+            <li>
+                <a href="{{ route('admin.digital-products.index') }}" class="menu-link {{ request()->routeIs('admin.digital-products.*') ? 'active' : '' }}" data-tooltip="البرامج والمنتجات الرقمية">
+                    <div class="menu-link-content">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </span>
+                        <span class="menu-text">البرامج والمنتجات</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.digital-orders.index') }}" class="menu-link {{ request()->routeIs('admin.digital-orders.*') ? 'active' : '' }}" data-tooltip="مبيعات وتراخيص PaySky">
+                    <div class="menu-link-content">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                        </span>
+                        <span class="menu-text">مبيعات وتراخيص PaySky</span>
+                    </div>
+                    @php
+                        $recentOrdersCount = \App\Models\Order::where('payment_status', 'paid')->count();
+                    @endphp
+                    @if($recentOrdersCount > 0)
+                        <span class="menu-badge" style="background: #10b981;">{{ $recentOrdersCount }}</span>
+                    @endif
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.payment-logs.index') }}" class="menu-link {{ request()->routeIs('admin.payment-logs.*') ? 'active' : '' }}" data-tooltip="سجل عمليات PaySky (Logs)">
+                    <div class="menu-link-content">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </span>
+                        <span class="menu-text">سجل عمليات PaySky (Logs)</span>
                     </div>
                 </a>
             </li>

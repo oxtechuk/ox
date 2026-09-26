@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'إعدادات الهوية والفوتر و SEO | OX Tech')
 @section('header_title', 'إعدادات النظام والموقع والظهور الإقليمي')
@@ -22,6 +22,9 @@
         </a>
         <a href="{{ route('admin.settings.index', ['tab' => 'mail']) }}" class="btn {{ $activeTab === 'mail' ? 'btn-lime' : 'btn-outline' }}">
             خادم البريد (SMTP)
+        </a>
+        <a href="{{ route('admin.settings.index', ['tab' => 'paysky']) }}" class="btn {{ $activeTab === 'paysky' ? 'btn-lime' : 'btn-outline' }}" style="border-color: #38bdf8;">
+            💳 بوابة دفع PaySky
         </a>
     </div>
 
@@ -250,6 +253,79 @@
                     <div>
                         <label class="form-label">بريد المرسل الافتراضي (From Address)</label>
                         <input type="email" name="mail_from_address" class="form-control" value="{{ $settings['mail_from_address'] ?? 'noreply@ox-tech.sa' }}">
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        @if($activeTab === 'paysky')
+            <!-- PaySky Omni Gateway Settings -->
+            <div class="card">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 class="card-title">إعدادات بوابة الدفع PaySky Omni Gateway</h3>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                            تحكم ببيانات الربط مع PaySky، التبديل بين البيئة التجريبية والحية، ومفاتيح التشفير SecureHash
+                        </p>
+                    </div>
+
+                    <a href="{{ route('admin.payment-logs.index') }}" class="btn btn-outline btn-sm" style="display: flex; align-items: center; gap: 6px;">
+                        <span>📋 سجل العمليات (Logs)</span>
+                    </a>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">حالة بوابة الدفع *</label>
+                        <select name="paysky_enabled" class="form-control">
+                            <option value="1" {{ ($settings['paysky_enabled'] ?? '1') === '1' ? 'selected' : '' }}>مفعلة وتستقبل المدفوعات (Enabled)</option>
+                            <option value="0" {{ ($settings['paysky_enabled'] ?? '1') === '0' ? 'selected' : '' }}>معطلة مؤقتاً (Disabled)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label">بيئة العمل والتشغيل (Environment Mode) *</label>
+                        <select name="paysky_mode" class="form-control">
+                            <option value="test" {{ ($settings['paysky_mode'] ?? 'test') === 'test' ? 'selected' : '' }}>بيئة التجربة والاختبار (Staging / Test)</option>
+                            <option value="live" {{ ($settings['paysky_mode'] ?? 'test') === 'live' ? 'selected' : '' }}>البيئة الحية للإنتاج الحقيقي (Live / Production)</option>
+                        </select>
+                        <small style="color: var(--text-muted); font-size: 11px;">في البيئة الحية سيتم خصم مبالغ حقيقية من بطاقات العملاء.</small>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">رقم التاجر (Merchant ID - MID) *</label>
+                        <input type="text" name="paysky_mid" class="form-control" value="{{ $settings['paysky_mid'] ?? config('services.paysky.mid', '10000000001') }}" required style="font-family: var(--font-code);">
+                        <small style="color: var(--text-muted); font-size: 11px;">مقدم من بنك مصر / البنك الشريك أو PaySky</small>
+                    </div>
+
+                    <div>
+                        <label class="form-label">رقم نقطة البيع / المحطة (Terminal ID - TID) *</label>
+                        <input type="text" name="paysky_tid" class="form-control" value="{{ $settings['paysky_tid'] ?? config('services.paysky.tid', '10000001') }}" required style="font-family: var(--font-code);">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label">المفتاح السري للتشفير (Merchant Secret Key / Secure Hash Key) *</label>
+                    <input type="password" name="paysky_secret_key" class="form-control" value="{{ $settings['paysky_secret_key'] ?? config('services.paysky.secret_key', '31323334353637383930313233343536') }}" required style="font-family: var(--font-code);">
+                    <small style="color: var(--text-muted); font-size: 11px;">المفتاح السري بنظام HEX أو النص لتوليد توقيع HMAC-SHA256 والتحقق من الاستجابة.</small>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">العملة الافتراضية للتحصيل</label>
+                        <select name="paysky_currency" class="form-control">
+                            <option value="EGP" {{ ($settings['paysky_currency'] ?? 'EGP') === 'EGP' ? 'selected' : '' }}>جنيه مصري (EGP - 818)</option>
+                            <option value="SAR" {{ ($settings['paysky_currency'] ?? 'EGP') === 'SAR' ? 'selected' : '' }}>ريال سعودي (SAR - 682)</option>
+                            <option value="USD" {{ ($settings['paysky_currency'] ?? 'EGP') === 'USD' ? 'selected' : '' }}>دولار أمريكي (USD - 840)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label">رابط استلام إشعار الخادم (Webhook / IPN URL)</label>
+                        <input type="text" readonly class="form-control" value="{{ route('checkout.paysky.webhook') }}" style="background: #f8fafc; font-family: var(--font-code); color: var(--text-muted);">
+                        <small style="color: var(--text-muted); font-size: 11px;">ضعه في لوحة تحكم PaySky لاستلام تأكيدات الدفع الآلية.</small>
                     </div>
                 </div>
             </div>

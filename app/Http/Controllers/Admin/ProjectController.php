@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -26,8 +26,8 @@ class ProjectController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('subtitle', 'like', "%{$search}%")
-                  ->orWhere('client_name', 'like', "%{$search}%");
+                    ->orWhere('subtitle', 'like', "%{$search}%")
+                    ->orWhere('client_name', 'like', "%{$search}%");
             });
         }
 
@@ -72,7 +72,7 @@ class ProjectController extends Controller
         ]);
 
         if (empty($validated['slug'])) {
-            $validated['slug'] = Str::slug($validated['title']) ?: 'project-' . time();
+            $validated['slug'] = Str::slug($validated['title']) ?: 'project-'.time();
         }
 
         // Handle raw features (one per line)
@@ -109,7 +109,7 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:191',
-            'slug' => 'nullable|string|max:191|unique:projects,slug,' . $project->id,
+            'slug' => 'nullable|string|max:191|unique:projects,slug,'.$project->id,
             'subtitle' => 'nullable|string|max:191',
             'country_code' => 'required|string|max:10',
             'country_name' => 'required|string|max:100',
@@ -153,7 +153,7 @@ class ProjectController extends Controller
         $validated['order'] = $validated['order'] ?? $project->order;
 
         if ($request->hasFile('hero_image')) {
-            if ($project->hero_image && !str_starts_with($project->hero_image, 'assets/')) {
+            if ($project->hero_image && ! str_starts_with($project->hero_image, 'assets/')) {
                 Storage::disk('public')->delete($project->hero_image);
             }
             $path = $request->file('hero_image')->store('projects', 'public');
@@ -167,7 +167,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->hero_image && !str_starts_with($project->hero_image, 'assets/')) {
+        if ($project->hero_image && ! str_starts_with($project->hero_image, 'assets/')) {
             Storage::disk('public')->delete($project->hero_image);
         }
         $project->delete();

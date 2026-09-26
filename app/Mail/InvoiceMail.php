@@ -14,6 +14,7 @@ class InvoiceMail extends Mailable
     use Queueable, SerializesModels;
 
     public Invoice $invoice;
+
     public ?string $customMessage;
 
     public function __construct(Invoice $invoice, ?string $customMessage = null)
@@ -25,7 +26,7 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'فاتورة رسمية: ' . $this->invoice->invoice_number . ' | OX Tech',
+            subject: 'فاتورة رسمية: '.$this->invoice->invoice_number.' | OX Tech',
         );
     }
 

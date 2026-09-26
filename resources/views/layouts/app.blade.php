@@ -1149,18 +1149,24 @@
         <!-- Center Nav Links -->
         <nav class="desktop-nav">
             @if($currentLocale === 'ar')
+                <a href="{{ route('store.index') }}" style="color: #38bdf8; font-weight: 700;">🛒 متجر البرمجيات</a>
+                <a href="{{ route('customer.dashboard') }}">حسابي</a>
                 <a href="{{ route('home') }}#consult">الهوية</a>
                 <a href="{{ route('home') }}#stories">قصصنا</a>
                 <a href="{{ route('home') }}#services">الخدمات</a>
                 <a href="{{ route('home') }}#work">أعمالنا</a>
                 <a href="{{ route('home') }}#home">الحكاية</a>
             @elseif($currentLocale === 'fr')
+                <a href="{{ route('store.index') }}" style="color: #38bdf8; font-weight: 700;">🛒 Boutique</a>
+                <a href="{{ route('customer.dashboard') }}">Mon Compte</a>
                 <a href="{{ route('home') }}#consult">Consultation</a>
                 <a href="{{ route('home') }}#stories">Témoignages</a>
                 <a href="{{ route('home') }}#services">Solutions</a>
                 <a href="{{ route('home') }}#work">Réalisations</a>
                 <a href="{{ route('home') }}#home">À Propos</a>
             @else
+                <a href="{{ route('store.index') }}" style="color: #38bdf8; font-weight: 700;">🛒 Store</a>
+                <a href="{{ route('customer.dashboard') }}">Account</a>
                 <a href="{{ route('home') }}#consult">Consultation</a>
                 <a href="{{ route('home') }}#stories">Stories</a>
                 <a href="{{ route('home') }}#services">Services</a>

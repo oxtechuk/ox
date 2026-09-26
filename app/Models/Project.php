@@ -54,7 +54,7 @@ class Project extends Model
 
         static::creating(function ($project) {
             if (empty($project->slug)) {
-                $project->slug = Str::slug($project->title) ?: 'project-' . time();
+                $project->slug = Str::slug($project->title) ?: 'project-'.time();
             }
         });
     }
@@ -69,8 +69,9 @@ class Project extends Model
         if ($this->hero_image) {
             return str_starts_with($this->hero_image, 'http')
                 ? $this->hero_image
-                : asset('storage/' . $this->hero_image);
+                : asset('storage/'.$this->hero_image);
         }
+
         return asset('assets/ox-saudi-story.png');
     }
 }

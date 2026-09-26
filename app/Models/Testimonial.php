@@ -32,8 +32,9 @@ class Testimonial extends Model
         if ($this->poster_image) {
             return str_starts_with($this->poster_image, 'http')
                 ? $this->poster_image
-                : asset('storage/' . $this->poster_image);
+                : asset('storage/'.$this->poster_image);
         }
+
         return '';
     }
 
@@ -42,8 +43,9 @@ class Testimonial extends Model
         if ($this->video_url) {
             return str_starts_with($this->video_url, 'http')
                 ? $this->video_url
-                : asset('storage/' . $this->video_url);
+                : asset('storage/'.$this->video_url);
         }
+
         return '';
     }
 }

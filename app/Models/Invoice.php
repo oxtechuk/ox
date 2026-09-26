@@ -68,6 +68,7 @@ class Invoice extends Model
     {
         $year = date('Y');
         $count = static::whereYear('created_at', $year)->count() + 1;
+
         return sprintf('INV-%s-%04d', $year, $count);
     }
 

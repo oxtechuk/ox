@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    'paysky' => [
+        'mid' => env('PAYSKY_MID', '10000000001'),
+        'tid' => env('PAYSKY_TID', '10000001'),
+        'secret_key' => env('PAYSKY_SECRET_KEY', '31323334353637383930313233343536'),
+        'mode' => env('PAYSKY_MODE', 'test'), // 'test' or 'live'
+        'test_script_url' => 'https://grey.paysky.io:9006/invchost/JS/LightBox.js',
+        'live_script_url' => 'https://cube.paysky.io:6006/js/LightBox.js',
+    ],
+
 ];

@@ -22,12 +22,12 @@ return new class extends Migration
             $table->boolean('is_big')->default(false);
             $table->boolean('is_featured')->default(true);
             $table->integer('order')->default(0);
-            
+
             // Project card & metadata
             $table->string('number_badge', 10)->nullable(); // e.g. 01, 02
             $table->string('short_description')->nullable();
             $table->string('impact_stat')->nullable(); // e.g. +38% في معدل إتمام الطلب خلال 90 يومًا.
-            
+
             // Details page fields
             $table->string('hero_image')->nullable();
             $table->string('client_name')->nullable();
@@ -40,7 +40,7 @@ return new class extends Migration
             $table->json('key_features')->nullable(); // الميزات الرئيسية
             $table->json('technologies')->nullable(); // التقنيات المستخدمة
             $table->json('gallery')->nullable(); // معرض الصور
-            
+
             $table->timestamps();
         });
     }

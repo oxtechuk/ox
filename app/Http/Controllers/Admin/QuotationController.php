@@ -7,7 +7,6 @@ use App\Mail\QuotationMail;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\Quotation;
-use App\Models\QuotationItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -30,10 +29,10 @@ class QuotationController extends Controller
             $s = $request->search;
             $query->where(function ($q) use ($s) {
                 $q->where('quotation_number', 'like', "%{$s}%")
-                  ->orWhere('title', 'like', "%{$s}%")
-                  ->orWhereHas('client', function ($cq) use ($s) {
-                      $cq->where('name', 'like', "%{$s}%")->orWhere('company_name', 'like', "%{$s}%");
-                  });
+                    ->orWhere('title', 'like', "%{$s}%")
+                    ->orWhereHas('client', function ($cq) use ($s) {
+                        $cq->where('name', 'like', "%{$s}%")->orWhere('company_name', 'like', "%{$s}%");
+                    });
             });
         }
 
@@ -115,6 +114,7 @@ class QuotationController extends Controller
     public function show(Quotation $quotation)
     {
         $quotation->load(['client', 'items']);
+
         return view('admin.crm.quotations.show', compact('quotation'));
     }
 
@@ -184,6 +184,7 @@ class QuotationController extends Controller
     public function destroy(Quotation $quotation)
     {
         $quotation->delete();
+
         return redirect()->route('admin.crm.quotations.index')->with('success', 'تم حذف عرض السعر بنجاح.');
     }
 
@@ -195,9 +196,10 @@ class QuotationController extends Controller
         try {
             Mail::to($quotation->client->email)->send(new QuotationMail($quotation, $customMessage));
             $quotation->update(['status' => 'sent']);
-            return back()->with('success', 'تم إرسال عرض السعر إلى بريد العميل (' . $quotation->client->email . ') بنجاح!');
+
+            return back()->with('success', 'تم إرسال عرض السعر إلى بريد العميل ('.$quotation->client->email.') بنجاح!');
         } catch (\Throwable $e) {
-            return back()->with('error', 'تعذر إرسال البريد: ' . $e->getMessage());
+            return back()->with('error', 'تعذر إرسال البريد: '.$e->getMessage());
         }
     }
 

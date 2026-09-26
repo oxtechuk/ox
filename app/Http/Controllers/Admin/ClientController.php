@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -16,9 +17,9 @@ class ClientController extends Controller
             $s = $request->search;
             $query->where(function ($q) use ($s) {
                 $q->where('name', 'like', "%{$s}%")
-                  ->orWhere('company_name', 'like', "%{$s}%")
-                  ->orWhere('email', 'like', "%{$s}%")
-                  ->orWhere('phone', 'like', "%{$s}%");
+                    ->orWhere('company_name', 'like', "%{$s}%")
+                    ->orWhere('email', 'like', "%{$s}%")
+                    ->orWhere('phone', 'like', "%{$s}%");
             });
         }
 
@@ -34,9 +35,9 @@ class ClientController extends Controller
 
         // High level CRM stats
         $totalClients = Client::count();
-        $totalBilled = \App\Models\Invoice::sum('total_amount');
-        $totalCollected = \App\Models\Invoice::sum('paid_amount');
-        $totalOutstanding = \App\Models\Invoice::sum('due_amount');
+        $totalBilled = Invoice::sum('total_amount');
+        $totalCollected = Invoice::sum('paid_amount');
+        $totalOutstanding = Invoice::sum('due_amount');
 
         return view('admin.crm.clients.index', compact(
             'clients',
@@ -92,7 +93,7 @@ class ClientController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:191',
-            'email' => 'required|email|max:191|unique:clients,email,' . $client->id,
+            'email' => 'required|email|max:191|unique:clients,email,'.$client->id,
             'phone' => 'nullable|string|max:50',
             'company_name' => 'nullable|string|max:191',
             'tax_number' => 'nullable|string|max:100',
@@ -112,6 +113,7 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         $client->delete();
+
         return redirect()->route('admin.crm.clients.index')->with('success', 'تم حذف العميل بنجاح.');
     }
 }

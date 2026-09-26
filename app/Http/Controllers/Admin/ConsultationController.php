@@ -20,9 +20,9 @@ class ConsultationController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('company_name', 'like', "%{$search}%")
-                  ->orWhere('phone', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('company_name', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
             });
         }
 
@@ -59,6 +59,7 @@ class ConsultationController extends Controller
     public function destroy(Consultation $consultation)
     {
         $consultation->delete();
+
         return redirect()->route('admin.consultations.index')->with('success', 'تم حذف الطلب بنجاح.');
     }
 }

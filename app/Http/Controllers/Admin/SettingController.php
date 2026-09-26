@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -26,9 +25,9 @@ class SettingController extends Controller
         foreach ($fileKeys as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $file = $request->file($fileKey);
-                $filename = $fileKey . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $filename = $fileKey.'_'.time().'.'.$file->getClientOriginalExtension();
                 $path = $file->storeAs('uploads/branding', $filename, 'public');
-                SiteSetting::set($fileKey, '/storage/' . $path, 'branding', 'file');
+                SiteSetting::set($fileKey, '/storage/'.$path, 'branding', 'file');
                 unset($data[$fileKey]);
             }
         }
@@ -48,6 +47,8 @@ class SettingController extends Controller
                 $group = 'footer';
             } elseif (str_starts_with($key, 'mail_')) {
                 $group = 'mail';
+            } elseif (str_starts_with($key, 'paysky_')) {
+                $group = 'paysky';
             }
 
             SiteSetting::set($key, is_array($value) ? json_encode($value) : $value, $group);
