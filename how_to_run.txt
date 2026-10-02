@@ -1,0 +1,66 @@
+HOW TO RUN THIS APP (WAMP / Windows)
+====================================
+
+REQUIREMENTS
+------------
+- WAMP running (Apache + MySQL)
+- PHP 8.4 from WAMP: C:\wamp64\bin\php\php8.4.15\php.exe
+- Node.js + npm
+- MySQL database named `ox` (already exists; create it in phpMyAdmin if missing)
+
+NOTE: `php` and `composer` are NOT in Windows PATH, so always use the full PHP path.
+You can also use php composer.phar (composer.phar is already in this folder).
+
+1. CONFIGURE .env
+-----------------
+Copy-Item .env.example .env   (only first time)
+
+Then set:
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=ox
+  DB_USERNAME=root
+  DB_PASSWORD=
+
+2. INSTALL DEPENDENCIES (first time only)
+-----------------------------------------
+C:\wamp64\bin\php\php8.4.15\php.exe composer.phar install
+npm install
+
+3. APP KEY (first time only)
+----------------------------
+C:\wamp64\bin\php\php8.4.15\php.exe artisan key:generate
+
+4. MIGRATE + SEED (MySQL)
+--------------------------
+C:\wamp64\bin\php\php8.4.15\php.exe artisan migrate --force
+C:\wamp64\bin\php\php8.4.15\php.exe artisan db:seed --force
+C:\wamp64\bin\php\php8.4.15\php.exe artisan db:seed --class=DigitalProductSeeder --force
+
+(Second seeder is required because DatabaseSeeder does not call DigitalProductSeeder.)
+Fresh reset alternative:
+C:\wamp64\bin\php\php8.4.15\php.exe artisan migrate:fresh --seed --force
+C:\wamp64\bin\php\php8.4.15\php.exe artisan db:seed --class=DigitalProductSeeder --force
+
+Seeded logins:
+- admin@oxtech.studio / admin123456
+- editor@oxtech.studio / editor123456
+
+5. RUN THE APP
+--------------
+Terminal 1:
+C:\wamp64\bin\php\php8.4.15\php.exe artisan serve
+
+Terminal 2:
+npm run dev
+
+Then open: http://localhost:8000
+
+NOTE: `composer dev` (= `php artisan dev`) does NOT work here, that artisan
+command does not exist. Use `artisan serve` + `npm run dev` instead.
+
+OPTIONAL: add PHP to PATH
+--------------------------
+Add C:\wamp64\bin\php\php8.4.15 to system PATH once, then you can type `php`
+instead of the full path.

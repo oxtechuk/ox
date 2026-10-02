@@ -141,43 +141,57 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- ─── Google Fonts: Arabic (Alexandria + Noto Kufi Arabic) & Latin (Plus Jakarta Sans + Syne) ─── -->
-    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- ─── Google Fonts: Arabic (Cairo + Tajawal + Alexandria) & Latin (Poppins + Syne + Plus Jakarta Sans) ─── -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=Poppins:wght@400;500;600;700;800&family=Alexandria:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
     <!-- ─── Main Styles ─── -->
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}" fetchpriority="high"/>
+    <link rel="stylesheet" href="{{ asset('assets/ox-theme.css') }}" fetchpriority="high"/>
 
     <style>
         :root {
-            /* ─── Unified Design Tokens ─── */
-            --ink:         #EAEFF0;
-            --navy:        #060F1A;
-            --navy-deep:   #030B12;
-            --navy-mid:    #0A1C2E;
-            --lime:        #BDFF45;
-            --lime-glow:   rgba(189, 255, 69, 0.18);
-            --blue:        #1A56F5;
-            --blue-glow:   rgba(26, 86, 245, 0.35);
-            --indigo:      #3226A0;
-            --gold:        #D4A853;
-            --muted:       #8FA3A8;
-            --border:      rgba(255, 255, 255, 0.08);
-            --navy-card:   #0A1C2E;
+            /* ===== BRAND COLORS ===== */
+            --ox-carbon:       #071B19;
+            --ox-emerald:      #1D8A68;
+            --ox-ivory:        #F3EFE5;
+            --ox-gold:         #C8A96B;
 
-            /* ─── Distinct Typography Fonts ─── */
-            --font-ar:          'Alexandria', 'Noto Kufi Arabic', system-ui, sans-serif;
-            --font-en:          'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-            --font-display-en:  'Syne', 'Plus Jakarta Sans', sans-serif;
+            /* ===== EXTENDED COLORS ===== */
+            --ox-dark-card:    #0D2925;
+            --ox-dark-soft:    #12352F;
+            --ox-white:        #FFFFFF;
+            --ox-gray:         #A7B3AE;
+            --ox-border:       rgba(29, 138, 104, 0.25);
+
+            /* ─── Unified Design Tokens (Mapped to Master Theme) ─── */
+            --ink:             var(--ox-ivory);
+            --navy:            var(--ox-carbon);
+            --navy-deep:       #041210;
+            --navy-mid:        var(--ox-dark-card);
+            --lime:            var(--ox-emerald);
+            --lime-glow:       rgba(29, 138, 104, 0.25);
+            --blue:            #1A56F5;
+            --blue-glow:       rgba(26, 86, 245, 0.35);
+            --indigo:          #3226A0;
+            --gold:            var(--ox-gold);
+            --muted:           var(--ox-gray);
+            --border:          var(--ox-border);
+            --navy-card:       var(--ox-dark-card);
+
+            /* ─── Typography Fonts ─── */
+            --font-ar:          "Cairo", "Tajawal", 'Alexandria', system-ui, sans-serif;
+            --font-en:          "Poppins", 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-display-en:  "Poppins", 'Syne', sans-serif;
 
             /* Default active typography */
-            --font:        var(--font-ar);
-            --font-body:   var(--font-ar);
-            --font-latin:  var(--font-en);
+            --font:            var(--font-ar);
+            --font-body:       var(--font-ar);
+            --font-latin:      var(--font-en);
 
             /* ─── Radii ─── */
             --radius-sm:  8px;
             --radius-md:  14px;
-            --radius-lg:  20px;
+            --radius-lg:  24px;
             --radius-xl:  28px;
         }
 
@@ -1125,64 +1139,67 @@
         </script>
     @endif
 
-    <header id="mainHeader" class="site-header">
-        <!-- Left Controls: Menu Hamburger & Language EN -->
-        <div class="header-left-actions">
-            <button class="nav-menu-btn" id="mobileNavToggle" onclick="toggleMobileNav()" aria-label="القائمة">
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-            <div class="lang-switcher-dropdown">
-                <a href="javascript:void(0)" class="lang-pill-badge" id="langBadgeBtn" onclick="toggleLangMenu(event)" title="Language">
-                    <span style="font-size:13px; margin-inline-end:3px;">{{ $currentLocale === 'ar' ? '🇸🇦' : ($currentLocale === 'fr' ? '🇫🇷' : '🇬🇧') }}</span>
-                    {{ strtoupper($currentLocale) }}
-                    <span style="font-size:8px;margin-inline-start:4px;opacity:0.75;">▼</span>
+    <header id="mainHeader" class="navbar site-header">
+        <div class="container navbar-inner">
+            <!-- Right CTA Action in RTL -->
+            <div class="navbar-cta-group">
+                <a href="#consult" onclick="openConsultModal(); return false;" class="btn-primary nav-cta-btn">
+                    <span>{{ $currentLocale === 'ar' ? 'ابدأ مشروعك' : ($currentLocale === 'fr' ? 'Démarrer Projet' : 'Start Project') }}</span>
+                    <span class="btn-arrow-icon">{{ $currentLocale === 'ar' ? '←' : '→' }}</span>
                 </a>
-                <div class="lang-menu-dropdown" id="langMenuDropdown">
-                    <a href="{{ route('lang.switch', 'ar') }}" class="{{ $currentLocale === 'ar' ? 'active' : '' }}"><span>🇸🇦 العربية</span> <small>AR</small></a>
-                    <a href="{{ route('lang.switch', 'en') }}" class="{{ $currentLocale === 'en' ? 'active' : '' }}"><span>🇬🇧 English</span> <small>EN</small></a>
-                    <a href="{{ route('lang.switch', 'fr') }}" class="{{ $currentLocale === 'fr' ? 'active' : '' }}"><span>🇫🇷 Français</span> <small>FR</small></a>
+            </div>
+
+            <!-- Center Navigation Links -->
+            <nav class="navbar-links">
+                @if($currentLocale === 'ar')
+                    <a href="{{ route('home') }}" class="active">الرئيسية</a>
+                    <a href="{{ route('home') }}#services">خدماتنا</a>
+                    <a href="{{ route('home') }}#work">أعمالنا</a>
+                    <a href="{{ route('home') }}#about">من نحن</a>
+                    <a href="{{ route('home') }}#consult">تواصل معنا</a>
+                @elseif($currentLocale === 'fr')
+                    <a href="{{ route('home') }}" class="active">Accueil</a>
+                    <a href="{{ route('home') }}#services">Services</a>
+                    <a href="{{ route('home') }}#work">Réalisations</a>
+                    <a href="{{ route('home') }}#about">À Propos</a>
+                    <a href="{{ route('home') }}#consult">Contact</a>
+                @else
+                    <a href="{{ route('home') }}" class="active">Home</a>
+                    <a href="{{ route('home') }}#services">Services</a>
+                    <a href="{{ route('home') }}#work">Work</a>
+                    <a href="{{ route('home') }}#about">About</a>
+                    <a href="{{ route('home') }}#consult">Contact</a>
+                @endif
+            </nav>
+
+            <!-- Left Brand Logo & Lang Switcher in RTL -->
+            <div class="navbar-brand-wrap">
+                <a class="ox-brand-logo" href="{{ route('home') }}">
+                    <span class="ox-logo-title">Ox<span class="dot-accent">Tech</span></span>
+                    <span class="ox-logo-subtitle">TECHNOLOGY FOR A BETTER TOMORROW</span>
+                </a>
+
+                <div class="navbar-controls">
+                    <div class="lang-switcher-dropdown">
+                        <a href="javascript:void(0)" class="ox-lang-pill" id="langBadgeBtn" onclick="toggleLangMenu(event)" title="Language">
+                            {{ strtoupper($currentLocale) }}
+                            <span style="font-size:8px; margin-inline-start:2px; opacity:0.75;">▼</span>
+                        </a>
+                        <div class="lang-menu-dropdown" id="langMenuDropdown">
+                            <a href="{{ route('lang.switch', 'ar') }}" class="{{ $currentLocale === 'ar' ? 'active' : '' }}"><span>🇸🇦 العربية</span> <small>AR</small></a>
+                            <a href="{{ route('lang.switch', 'en') }}" class="{{ $currentLocale === 'en' ? 'active' : '' }}"><span>🇬🇧 English</span> <small>EN</small></a>
+                            <a href="{{ route('lang.switch', 'fr') }}" class="{{ $currentLocale === 'fr' ? 'active' : '' }}"><span>🇫🇷 Français</span> <small>FR</small></a>
+                        </div>
+                    </div>
+
+                    <button class="ox-menu-toggle" id="mobileNavToggle" onclick="toggleMobileNav()" aria-label="القائمة">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
                 </div>
             </div>
         </div>
-
-        <!-- Center Nav Links -->
-        <nav class="desktop-nav">
-            @if($currentLocale === 'ar')
-                <a href="{{ route('store.index') }}" style="color: #38bdf8; font-weight: 700;">🛒 متجر البرمجيات</a>
-                <a href="{{ route('customer.dashboard') }}">حسابي</a>
-                <a href="{{ route('home') }}#consult">الهوية</a>
-                <a href="{{ route('home') }}#stories">قصصنا</a>
-                <a href="{{ route('home') }}#services">الخدمات</a>
-                <a href="{{ route('home') }}#work">أعمالنا</a>
-                <a href="{{ route('home') }}#home">الحكاية</a>
-            @elseif($currentLocale === 'fr')
-                <a href="{{ route('store.index') }}" style="color: #38bdf8; font-weight: 700;">🛒 Boutique</a>
-                <a href="{{ route('customer.dashboard') }}">Mon Compte</a>
-                <a href="{{ route('home') }}#consult">Consultation</a>
-                <a href="{{ route('home') }}#stories">Témoignages</a>
-                <a href="{{ route('home') }}#services">Solutions</a>
-                <a href="{{ route('home') }}#work">Réalisations</a>
-                <a href="{{ route('home') }}#home">À Propos</a>
-            @else
-                <a href="{{ route('store.index') }}" style="color: #38bdf8; font-weight: 700;">🛒 Store</a>
-                <a href="{{ route('customer.dashboard') }}">Account</a>
-                <a href="{{ route('home') }}#consult">Consultation</a>
-                <a href="{{ route('home') }}#stories">Stories</a>
-                <a href="{{ route('home') }}#services">Services</a>
-                <a href="{{ route('home') }}#work">Selected Work</a>
-                <a href="{{ route('home') }}#home">About</a>
-            @endif
-        </nav>
-
-        <!-- Right Logo -->
-        <a class="logo" href="{{ route('home') }}">
-            @if(!empty($siteSettings['site_logo_main']))
-                <img src="{{ $siteSettings['site_logo_main'] }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" style="max-height: 38px;" fetchpriority="high" decoding="async">
-            @else
-                OX<span>.</span><small>{{ $siteSettings['site_name'] ?? 'TECH STUDIO' }}</small>
-            @endif
-        </a>
     </header>
 
     <!-- Mobile Navigation Drawer -->

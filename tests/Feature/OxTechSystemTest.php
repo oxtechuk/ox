@@ -31,6 +31,22 @@ class OxTechSystemTest extends TestCase
 
     public function test_landing_page_loads_with_dynamic_data(): void
     {
+        Project::firstOrCreate(
+            ['slug' => 'mersal-shipping-saas'],
+            [
+                'title' => 'مِرسال',
+                'subtitle' => 'منصة لوجستية سحابية متكاملة',
+                'country_name' => 'السعودية',
+                'country_code' => 'SA',
+                'sector_name' => 'اللوجستيات والشحن',
+                'sector_slug' => 'logistics',
+                'duration' => '3 أشهر',
+                'delivery_date' => 'يناير 2026',
+                'summary' => 'منصة سحابية متقدمة لربط المتاجر بمزودي الشحن.',
+                'is_featured' => true,
+            ]
+        );
+
         $response = $this->get('/');
         $response->assertStatus(200);
         $response->assertSee('OX');
@@ -229,7 +245,7 @@ class OxTechSystemTest extends TestCase
         $enResponse->assertStatus(200);
         $enResponse->assertSee('dir="ltr"', false);
         $enResponse->assertSee('lang="en"', false);
-        $enResponse->assertSee('Engineered to Scale');
+        $enResponse->assertSee('A Bigger Vision');
         $enResponse->assertSee('All Sectors');
 
         // 3. French switch and render
@@ -237,7 +253,7 @@ class OxTechSystemTest extends TestCase
         $frResponse->assertStatus(200);
         $frResponse->assertSee('dir="ltr"', false);
         $frResponse->assertSee('lang="fr"', false);
-        $frResponse->assertSee('Ingénierie Haute Performance');
+        $frResponse->assertSee('Une Vision Plus Grande');
         $frResponse->assertSee('Tous les Secteurs');
 
         // 4. Arabic default render has RTL

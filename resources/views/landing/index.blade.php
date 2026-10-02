@@ -50,44 +50,142 @@
         $txt = $showcaseTexts[$locale] ?? $showcaseTexts['ar'];
     @endphp
 
-    <!-- 3D Product Scroll Showcase (AR / EN / FR) -->
-    <div class="showcase-root {{ $locale === 'ar' ? 'is-rtl' : 'is-ltr' }}" id="showcaseRoot" dir="{{ $locale === 'ar' ? 'rtl' : 'ltr' }}">
+    <!-- =========================================
+         HERO SECTION (SAUDI × EGYPT MASTER)
+         ========================================= -->
+    <section class="ox-hero" id="hero">
+        <div class="ox-hero-overlay"></div>
 
-        <!-- Intro -->
-        <section class="intro">
-            <h1>{{ $txt['intro'] }}</h1>
-        </section>
+        <!-- Islamic Arabesque Corner Tracery Patterns -->
+        <div class="arabesque-corner corner-top-right"></div>
+        <div class="arabesque-corner corner-top-left"></div>
+        <div class="arabesque-corner corner-bottom-right"></div>
+        <div class="arabesque-corner corner-bottom-left"></div>
 
-        <!-- Pinned Product Overview -->
-        <section class="product-overview" id="productOverview">
-            <div class="header-1">
-                <h1>{{ $txt['header_1'] }}</h1>
-            </div>
-            <div class="header-2">
-                <h1>{{ $txt['header_2'] }}</h1>
-            </div>
-            <div class="circular-mask"></div>
-            <div class="tooltips">
-                <div class="tooltip">
-                    <div class="icon"><ion-icon name="{{ $txt['t1_icon'] }}"></ion-icon></div>
-                    <div class="divider"></div>
-                    <div class="title"><h2>{{ $txt['t1_title'] }}</h2></div>
-                    <div class="description"><p>{{ $txt['t1_desc'] }}</p></div>
+        <div class="ox-hero-container">
+            <div class="ox-hero-content reveal">
+                @if($locale === 'ar')
+                    <h1 class="ox-hero-heading">
+                        كل مشروع<br/>
+                        <span class="text-green">رؤية أكبر</span>
+                    </h1>
+                    <p class="ox-hero-subtitle">
+                        في OxTech لا نبني برامج فقط<br/>
+                        نحن نبني عملك للمستقبل.
+                    </p>
+                @elseif($locale === 'fr')
+                    <h1 class="ox-hero-heading">
+                        Chaque Projet<br/>
+                        <span class="text-green">Une Vision Plus Grande</span>
+                    </h1>
+                    <p class="ox-hero-subtitle">
+                        Chez OxTech, nous ne concevons pas seulement des logiciels.<br/>
+                        Nous bâtissons votre entreprise pour l'avenir.
+                    </p>
+                @else
+                    <h1 class="ox-hero-heading">
+                        Every Project<br/>
+                        <span class="text-green">A Bigger Vision</span>
+                    </h1>
+                    <p class="ox-hero-subtitle">
+                        At OxTech, we don't just build software.<br/>
+                        We engineer your business for the future.
+                    </p>
+                @endif
+
+                <div class="ox-hero-actions">
+                    <a href="#consult" onclick="openConsultModal(); return false;" class="btn-primary ox-hero-btn-primary">
+                        <span>{{ $locale === 'ar' ? 'ابدأ مشروعك' : ($locale === 'fr' ? 'Démarrer Votre Projet' : 'Start Your Project') }}</span>
+                        <span class="btn-arrow-icon">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </a>
+                    
+                    <button type="button" class="ox-hero-btn-video" onclick="document.querySelector('#stories')?.scrollIntoView({behavior:'smooth'})">
+                        <span class="play-circle-icon">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="6,4 20,12 6,20"></polygon>
+                            </svg>
+                        </span>
+                        <span>{{ $locale === 'ar' ? 'شاهد قصتنا' : ($locale === 'fr' ? 'Voir Notre Histoire' : 'Watch Our Story') }}</span>
+                    </button>
                 </div>
-                <div class="tooltip">
-                    <div class="icon"><ion-icon name="{{ $txt['t2_icon'] }}"></ion-icon></div>
-                    <div class="divider"></div>
-                    <div class="title"><h2>{{ $txt['t2_title'] }}</h2></div>
-                    <div class="description"><p>{{ $txt['t2_desc'] }}</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         STATS BAR (SAUDI × EGYPT MASTER)
+         ========================================= -->
+    <section class="stats ox-stats" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <!-- Stat 1: Completed Projects (+120 مشروع مكتمل) -->
+                <div class="stat">
+                    <div class="stat-icon-box">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 17l-5-5a2.5 2.5 0 0 1 0-3.5 2.5 2.5 0 0 1 3.5 0L12 11l2.5-2.5a2.5 2.5 0 0 1 3.5 0 2.5 2.5 0 0 1 0 3.5l-5 5"></path>
+                            <path d="M18 11l2.5 2.5a2.5 2.5 0 0 1 0 3.5l-5 5a2.5 2.5 0 0 1-3.5 0L9.5 19.5"></path>
+                            <path d="M2 13l4-4"></path>
+                            <path d="M22 13l-4-4"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">+120</div>
+                        <div class="stat-label">{{ $locale === 'ar' ? 'مشروع مكتمل' : ($locale === 'fr' ? 'Projets Réalisés' : 'Completed Projects') }}</div>
+                    </div>
+                </div>
+
+                <!-- Stat 2: Clients & Partners (+50 عميل وشريك) -->
+                <div class="stat">
+                    <div class="stat-icon-box">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">+50</div>
+                        <div class="stat-label">{{ $locale === 'ar' ? 'عميل وشريك' : ($locale === 'fr' ? 'Clients & Partenaires' : 'Clients & Partners') }}</div>
+                    </div>
+                </div>
+
+                <!-- Stat 3: Regional Hub (السعودية × مصر / فريق واحد .. رؤية أكبر) -->
+                <div class="stat">
+                    <div class="stat-icon-box">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number stat-title">{{ $locale === 'ar' ? 'السعودية × مصر' : ($locale === 'fr' ? 'Arabie × Égypte' : 'Saudi × Egypt') }}</div>
+                        <div class="stat-label">{{ $locale === 'ar' ? 'فريق واحد .. رؤية أكبر' : ($locale === 'fr' ? 'Une équipe .. Vision élargie' : 'One Team .. Bigger Vision') }}</div>
+                    </div>
+                </div>
+
+                <!-- Stat 4: 24/7 Support (24/7 دعم مستمر) -->
+                <div class="stat">
+                    <div class="stat-icon-box">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">{{ $locale === 'ar' ? 'دعم مستمر' : ($locale === 'fr' ? 'Support Continu' : 'Ongoing Support') }}</div>
+                    </div>
                 </div>
             </div>
-            <div class="model-container" data-model-url="{{ asset('assets/3d/model.glb') }}"></div>
-        </section>
-    </div>
+        </div>
+    </section>
 
     <!-- Brands & Partners Marquee Section (Matching Reference Card Design with Monochrome-to-Color Hover) -->
+    {{--
     <section class="brands-marquee-section">
-        <div class="brands-header reveal">
+        <!-- <div class="brands-header reveal">
             <p class="kicker">{{ $locale === 'ar' ? 'تكاملات وشراكات استراتيجية' : ($locale === 'fr' ? 'ÉCOSYSTÈME & INTÉGRATIONS' : 'ECOSYSTEM & INTEGRATIONS') }}</p>
             @if($locale === 'ar')
                 <h3>تكامل سلس مع <span class="accent-highlight">+80 شريك</span> عالمي ومحلي، لتلبية جميع احتياجاتك وتوسيع إمكانياتك بسهولة</h3>
@@ -99,7 +197,7 @@
                 <h3>Seamless integration with <span class="accent-highlight">+80 global & local partners</span>, to fulfill your needs and scale effortlessly.</h3>
                 <p class="brands-subtitle">Direct, unified integration with top enterprise ERPs, eCommerce engines, CRMs, and payment gateways for end-to-end operational automation.</p>
             @endif
-        </div>
+        </div> -->
 
         <div class="marquee-container">
             <!-- Row 1: Leftward Scroll (Moving Left) -->
@@ -274,14 +372,57 @@
             </div>
         </div>
     </section>
+    --}}
 
-    <!-- ─── Sadu Scalloped Fringe Divider into Festive Green Services ─── -->
-    <div class="sadu-divider" style="color: #129e38;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
+     <!-- Works & Projects Section -->
+    <section class="work section" id="work">
+        <div class="work-top reveal">
+            <div>
+                <p class="kicker">SELECTED WORK</p>
+                <h2>{{ __('أعمالنا تتكلم') }}<br/><span>{{ __('بأثرها.') }}</span></h2>
+            </div>
+            <p>{{ __('فلتر المشاريع حسب السوق أو القطاع، واستكشف كيف حوّلنا التحديات التشغيلية إلى تجارب رقمية واضحة ومربحة.') }}</p>
+        </div>
 
+        <div class="filters reveal">
+            <div class="filter-group" id="countries">
+                <button class="active" data-filter="all">{{ __('كل الدول') }}</button>
+                @foreach($countries as $c)
+                    <button data-filter="{{ $c->country_code }}">{{ __($c->country_name) }}</button>
+                @endforeach
+            </div>
+            <div class="filter-group dark" id="sectors">
+                <button class="active" data-sector="all">{{ __('كل التخصصات') }}</button>
+                @foreach($sectors as $s)
+                    <button data-sector="{{ $s->sector_slug }}">{{ __($s->sector_name) }}</button>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="projects" id="projects">
+            @forelse($projects as $index => $project)
+                <article class="project {{ $project->is_big ? 'big' : '' }} {{ $project->country_code }} {{ $project->sector_slug }} reveal">
+                    <a href="{{ route('projects.show', $project->slug) }}" class="project-link-card">
+                        <div class="project-visual {{ $project->gradient_class }}">
+                            <span>{{ $project->number_badge ?? sprintf('%02d', $index + 1) }}</span>
+                            <b>{{ $project->title }}</b>
+                            <i>{{ $project->subtitle }}</i>
+                        </div>
+                        <div>
+                            <small>{{ __($project->country_name) }} · {{ __($project->sector_name) }}</small>
+                            <h3>{{ $project->short_description ?? $project->summary }}</h3>
+                            @if($project->impact_stat)
+                                <p>{{ $project->impact_stat }}</p>
+                            @endif
+                        </div>
+                    </a>
+                </article>
+            @empty
+                <p style="grid-column: 1/-1; text-align: center; color: #587069; padding: 40px;">{{ __('لا توجد مشاريع مضافة حالياً.') }}</p>
+            @endforelse
+        </div>
+    </section>
+  
     <!-- Services & Sectors Showcase Section (Split Layout with Vibrant 3D Isometric Cards) -->
     <section class="services section" id="services">
         <div class="services-wrapper">
@@ -543,6 +684,13 @@
         </div>
     </section>
 
+  <!-- ─── Sadu Scalloped Fringe Divider into Festive Green Services ─── -->
+    <div class="sadu-divider" style="color: #129e38;">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
     <!-- ─── Sadu Chevron Zigzag Divider into Work & Projects (Light Style) ─── -->
     <div class="sadu-divider" style="color: #f7f9f6;">
         <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
@@ -550,54 +698,7 @@
         </svg>
     </div>
 
-    <!-- Works & Projects Section -->
-    <section class="work section" id="work">
-        <div class="work-top reveal">
-            <div>
-                <p class="kicker">SELECTED WORK</p>
-                <h2>{{ __('أعمالنا تتكلم') }}<br/><span>{{ __('بأثرها.') }}</span></h2>
-            </div>
-            <p>{{ __('فلتر المشاريع حسب السوق أو القطاع، واستكشف كيف حوّلنا التحديات التشغيلية إلى تجارب رقمية واضحة ومربحة.') }}</p>
-        </div>
-
-        <div class="filters reveal">
-            <div class="filter-group" id="countries">
-                <button class="active" data-filter="all">{{ __('كل الدول') }}</button>
-                @foreach($countries as $c)
-                    <button data-filter="{{ $c->country_code }}">{{ __($c->country_name) }}</button>
-                @endforeach
-            </div>
-            <div class="filter-group dark" id="sectors">
-                <button class="active" data-sector="all">{{ __('كل التخصصات') }}</button>
-                @foreach($sectors as $s)
-                    <button data-sector="{{ $s->sector_slug }}">{{ __($s->sector_name) }}</button>
-                @endforeach
-            </div>
-        </div>
-
-        <div class="projects" id="projects">
-            @forelse($projects as $index => $project)
-                <article class="project {{ $project->is_big ? 'big' : '' }} {{ $project->country_code }} {{ $project->sector_slug }} reveal">
-                    <a href="{{ route('projects.show', $project->slug) }}" class="project-link-card">
-                        <div class="project-visual {{ $project->gradient_class }}">
-                            <span>{{ $project->number_badge ?? sprintf('%02d', $index + 1) }}</span>
-                            <b>{{ $project->title }}</b>
-                            <i>{{ $project->subtitle }}</i>
-                        </div>
-                        <div>
-                            <small>{{ __($project->country_name) }} · {{ __($project->sector_name) }}</small>
-                            <h3>{{ $project->short_description ?? $project->summary }}</h3>
-                            @if($project->impact_stat)
-                                <p>{{ $project->impact_stat }}</p>
-                            @endif
-                        </div>
-                    </a>
-                </article>
-            @empty
-                <p style="grid-column: 1/-1; text-align: center; color: #587069; padding: 40px;">{{ __('لا توجد مشاريع مضافة حالياً.') }}</p>
-            @endforelse
-        </div>
-    </section>
+   
 
     <!-- ─── Sadu Chevron Zigzag Divider into Models ─── -->
     <div class="sadu-divider" style="color: #0a241f;">
