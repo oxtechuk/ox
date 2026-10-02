@@ -423,263 +423,347 @@
         </div>
     </section>
   
-    <!-- Services & Sectors Showcase Section (Split Layout with Vibrant 3D Isometric Cards) -->
-    <section class="services section" id="services">
-        <div class="services-wrapper">
-            <!-- Text & Info Column (Right side in RTL) -->
-            <div class="services-info-col reveal">
-                <p class="kicker">{{ $locale === 'ar' ? 'القطاعات والحلول الموجهة' : ($locale === 'fr' ? 'SECTEURS & IMPACT' : 'TARGET SECTORS & SOLUTIONS') }}</p>
-                @if($locale === 'ar')
-                    <h2 class="services-main-title">من يستفيد من<br/><span class="services-highlight">حلول أوكس؟</span></h2>
-                    <p class="services-lead">أوكس يخدم مختلف القطاعات التشغيلية الحيوية، ويمنح كل دور الأدوات البرمجية الذكية التي يحتاجها للنجاح والريادة.</p>
-                    <p class="services-desc">من الأبراج والشركات الكبرى إلى المجمعات التجارية والمرافق والمنشآت الذكية، كل العمليات تجري في منصة موحّدة ذكية، فائقة الأمان وسهلة الاستخدام.</p>
-                @elseif($locale === 'fr')
-                    <h2 class="services-main-title">Qui bénéficie des<br/><span class="services-highlight">solutions OX ?</span></h2>
-                    <p class="services-lead">OX dessert les secteurs opérationnels stratégiques en fournissant les outils logiciels nécessaires pour accélérer la croissance.</p>
-                    <p class="services-desc">Des tours d'affaires aux hôpitaux, hôtels et entités publiques—toutes vos opérations réunies dans une plateforme intelligente et hautement sécurisée.</p>
-                @else
-                    <h2 class="services-main-title">Who Benefits from<br/><span class="services-highlight">OX Solutions?</span></h2>
-                    <p class="services-lead">OX empowers high-impact operational sectors with cutting-edge digital infrastructure and enterprise software tailored for scalable growth.</p>
-                    <p class="services-desc">From commercial towers to hotels, government facilities and smart complexes—all operations united in a secure, intelligent, and seamless platform.</p>
-                @endif
+    <!-- =========================================
+         OUR SERVICES SECTION (MASTER THEME)
+         ========================================= -->
+    <section class="ox-services-section" id="services">
+        <!-- Arabesque Corner Motifs -->
+        <div class="services-arabesque corner-top-right"></div>
+        <div class="services-arabesque corner-top-left"></div>
 
-                <div class="services-cta-wrap">
-                    <a href="javascript:void(0)" onclick="openConsultModal()" class="services-cta-btn">
-                        <span>{{ $locale === 'ar' ? 'اطلب استشارة تقنية لقطاعك' : ($locale === 'fr' ? 'Demander une consultation' : 'Request Sector Consultation') }}</span>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </a>
-                </div>
+        <div class="container services-header-wrap reveal">
+            <div class="services-header-text">
+                <span class="services-kicker">{{ $locale === 'ar' ? 'خدماتنا' : ($locale === 'fr' ? 'Nos Services' : 'Our Services') }}</span>
+                <h2 class="services-title">
+                    {{ $locale === 'ar' ? 'أعمالنا تتكلم' : ($locale === 'fr' ? 'Nos Réalisations' : 'Our Work Speaks') }}<br/>
+                    <span class="text-green">{{ $locale === 'ar' ? 'بأثرها.' : ($locale === 'fr' ? 'Par leur impact.' : 'With Impact.') }}</span>
+                </h2>
+                <p class="services-subtitle">
+                    {{ $locale === 'ar' ? 'حلول رقمية متكاملة تساعدك على النمو وتحقيق أهدافك.' : ($locale === 'fr' ? 'Des solutions numériques complètes pour propulser votre croissance et atteindre vos objectifs.' : 'End-to-end digital solutions engineered to scale your growth and achieve your strategic vision.') }}
+                </p>
             </div>
 
-            <!-- Dark Device Panel with Colorful Cards (Left side in RTL) -->
-            <div class="services-panel-col reveal">
-                <div class="services-showcase-panel">
-                    <!-- Top Bar inside Panel -->
-                    <div class="panel-top-bar">
-                        <div class="panel-tag">
-                            <span class="panel-tag-bar"></span>
-                            <span class="panel-tag-text">{{ $locale === 'ar' ? 'القطاعات التي نحدث فيها الأثر' : ($locale === 'fr' ? 'Secteurs à Fort Impact' : 'Sectors Where We Drive Real Impact') }}</span>
-                        </div>
-                        <div class="panel-slider-arrows">
-                            <button type="button" class="slider-arrow-btn" id="sectorSlidePrev" aria-label="Previous" title="السابق">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </button>
-                            <button type="button" class="slider-arrow-btn" id="sectorSlideNext" aria-label="Next" title="التالي">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                            </button>
-                        </div>
-                    </div>
+            <div class="services-slider-nav">
+                <button type="button" class="services-nav-btn prev" id="servicesPrev" aria-label="{{ $locale === 'ar' ? 'السابق' : 'Previous' }}" onclick="scrollServices(1)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="{{ $locale === 'ar' ? '9 18 15 12 9 6' : '15 18 9 12 15 6' }}"></polyline>
+                    </svg>
+                </button>
+                <button type="button" class="services-nav-btn next" id="servicesNext" aria-label="{{ $locale === 'ar' ? 'التالي' : 'Next' }}" onclick="scrollServices(-1)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
 
-                    <!-- Cards Slider Track -->
-                    <div class="services-cards-viewport" id="servicesViewport">
-                        <div class="services-cards-track" id="servicesCardsTrack">
-                            <!-- Card 1: Facility & Ops Management (Royal Blue) -->
-                            <div class="service-sector-card card-blue" data-index="0">
-                                <div class="sector-card-header">
-                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'شركات إدارة المرافق والخدمات التشغيلية' : ($locale === 'fr' ? 'Gestion des Installations & Opérations' : 'Facility Management & Operations') }}</h4>
-                                </div>
-                                <div class="sector-card-graphic">
-                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
-                                        <!-- Isometric Grid Floor -->
-                                        <path d="M10 110L100 150L190 110L100 70Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
-                                        <!-- Isometric 3D Clipboard Base -->
-                                        <path d="M60 48L140 18L170 82L90 112Z" fill="#1e40af" stroke="#60a5fa" stroke-width="1.5"/>
-                                        <path d="M60 48L90 112L85 116L55 52Z" fill="#172554"/>
-                                        <path d="M90 112L170 82L165 86L85 116Z" fill="#1e3a8a"/>
-                                        <!-- White Sheet on Clipboard -->
-                                        <path d="M72 50L135 26L158 78L95 102Z" fill="#f8fafc"/>
-                                        <path d="M85 54L125 38" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
-                                        <path d="M88 64L135 46" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
-                                        <path d="M92 74L142 55" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
-                                        <!-- 3D Isometric Blue Gear -->
-                                        <g transform="translate(100, 58)">
-                                            <ellipse cx="20" cy="20" rx="26" ry="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
-                                            <ellipse cx="20" cy="20" rx="12" ry="7.5" fill="#1e40af"/>
-                                            <circle cx="20" cy="20" r="4" fill="#ffffff"/>
-                                        </g>
-                                        <!-- 3D Glowing Cursor Pointer -->
-                                        <path d="M130 92L142 118L132 122L126 108L116 114Z" fill="#ffffff" stroke="#2563eb" stroke-width="2" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.4))"/>
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <!-- Card 2: Hospitality & Hotels (Sky / Cyan Blue) -->
-                            <div class="service-sector-card card-cyan" data-index="1">
-                                <div class="sector-card-header">
-                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'الضيافة والفنادق والمنشآت الذكية' : ($locale === 'fr' ? 'Hôtellerie & Établissements Intelligents' : 'Hospitality & Smart Hotels') }}</h4>
-                                </div>
-                                <div class="sector-card-graphic">
-                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
-                                        <!-- Isometric Grid Floor -->
-                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
-                                        <!-- Isometric Hotel Building Left Facade -->
-                                        <path d="M70 42L105 60V126L70 108Z" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
-                                        <!-- Isometric Hotel Building Right Facade -->
-                                        <path d="M105 60L145 38V104L105 126Z" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5"/>
-                                        <!-- Hotel Roof -->
-                                        <path d="M70 42L110 20L145 38L105 60Z" fill="#38bdf8"/>
-                                        <!-- Neon HOTEL Sign on Roof -->
-                                        <rect x="92" y="14" width="36" height="12" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.5"/>
-                                        <text x="110" y="23" text-anchor="middle" font-family="var(--font-latin)" font-weight="900" font-size="8" fill="#0284c7">HOTEL</text>
-                                        <!-- Windows Left -->
-                                        <rect x="76" y="54" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
-                                        <rect x="76" y="74" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
-                                        <rect x="76" y="94" width="10" height="12" rx="2" fill="#e0f2fe" opacity="0.9"/>
-                                        <!-- Windows Right -->
-                                        <rect x="120" y="50" width="12" height="12" rx="2" fill="#bae6fd" opacity="0.9"/>
-                                        <rect x="120" y="70" width="12" height="12" rx="2" fill="#bae6fd" opacity="0.9"/>
-                                        <!-- Room 302 Keycard badge -->
-                                        <g transform="translate(130, 88)">
-                                            <rect x="0" y="0" width="46" height="26" rx="5" fill="#ffffff" stroke="#0284c7" stroke-width="1.5" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.3))"/>
-                                            <text x="23" y="16" text-anchor="middle" font-family="var(--font-latin)" font-weight="800" font-size="7" fill="#0369a1">ROOM 302</text>
-                                            <circle cx="9" cy="13" r="2" fill="#22c55e"/>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <!-- Card 3: Government & Public Entities (Deep Indigo) -->
-                            <div class="service-sector-card card-indigo" data-index="2">
-                                <div class="sector-card-header">
-                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'الجهات الحكومية والخدمية' : ($locale === 'fr' ? 'Secteur Public & Gouvernement' : 'Government & Public Entities') }}</h4>
-                                </div>
-                                <div class="sector-card-graphic">
-                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
-                                        <!-- Isometric Grid Floor -->
-                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
-                                        <!-- Stepped Isometric Plinth -->
-                                        <path d="M45 110L100 135L155 110L100 85Z" fill="#312e81" stroke="#818cf8" stroke-width="1.5"/>
-                                        <path d="M45 110L100 135V142L45 117Z" fill="#1e1b4b"/>
-                                        <path d="M100 135L155 110V117L100 142Z" fill="#1e1b4b"/>
-                                        <!-- Neoclassical Columns -->
-                                        <rect x="62" y="70" width="8" height="34" rx="2" fill="#e0e7ff" stroke="#6366f1" stroke-width="1"/>
-                                        <rect x="80" y="76" width="8" height="34" rx="2" fill="#e0e7ff" stroke="#6366f1" stroke-width="1"/>
-                                        <rect x="112" y="76" width="8" height="34" rx="2" fill="#c7d2fe" stroke="#6366f1" stroke-width="1"/>
-                                        <rect x="130" y="70" width="8" height="34" rx="2" fill="#c7d2fe" stroke="#6366f1" stroke-width="1"/>
-                                        <!-- Classical Pediment / Roof -->
-                                        <path d="M50 72L100 50L150 72Z" fill="#4338ca" stroke="#818cf8" stroke-width="1.5"/>
-                                        <!-- Central Dome with Spire -->
-                                        <path d="M78 50C78 32 122 32 122 50Z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
-                                        <line x1="100" y1="32" x2="100" y2="20" stroke="#BDFF45" stroke-width="3" stroke-linecap="round"/>
-                                        <circle cx="100" cy="18" r="3" fill="#BDFF45"/>
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <!-- Card 4: Omnichannel & eCommerce (Royal Violet) -->
-                            <div class="service-sector-card card-violet" data-index="3">
-                                <div class="sector-card-header">
-                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'التجارة والمنصات متعددة القنوات' : ($locale === 'fr' ? 'Commerce Omnicanal & Plateformes' : 'Omnichannel Retail & eCommerce') }}</h4>
-                                </div>
-                                <div class="sector-card-graphic">
-                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
-                                        <!-- Isometric Grid Floor -->
-                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
-                                        <!-- Storefront Base -->
-                                        <path d="M55 70L100 92L145 70L100 48Z" fill="#6d28d9" stroke="#a78bfa" stroke-width="1.5"/>
-                                        <path d="M55 70L100 92V124L55 102Z" fill="#4c1d95"/>
-                                        <path d="M100 92L145 70V102L100 124Z" fill="#5b21b6"/>
-                                        <!-- Glass Window with Product Glow -->
-                                        <path d="M63 76L95 91V115L63 100Z" fill="#ddd6fe" opacity="0.85"/>
-                                        <!-- Awning / Canopy Stripes -->
-                                        <path d="M48 66L100 40L152 66L100 92Z" fill="#c084fc"/>
-                                        <path d="M55 70L100 48L112 54L67 76Z" fill="#ffffff" opacity="0.8"/>
-                                        <path d="M85 84L130 62L142 68L97 90Z" fill="#ffffff" opacity="0.8"/>
-                                        <!-- 3D Floating Shopping Parcel & Credit Card -->
-                                        <g transform="translate(115, 84)">
-                                            <!-- Parcel Box -->
-                                            <path d="M15 10L35 0L50 12L30 22Z" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
-                                            <path d="M15 10L30 22V36L15 24Z" fill="#d97706"/>
-                                            <path d="M30 22L50 12V24L30 36Z" fill="#b45309"/>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <!-- Card 5: Smart Healthcare & MedTech (Emerald Teal) -->
-                            <div class="service-sector-card card-teal" data-index="4">
-                                <div class="sector-card-header">
-                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'الرعاية الصحية والمستشفيات الذكية' : ($locale === 'fr' ? 'Santé Connectée & Hôpitaux' : 'Smart Healthcare & MedTech') }}</h4>
-                                </div>
-                                <div class="sector-card-graphic">
-                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
-                                        <!-- Isometric Grid Floor -->
-                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
-                                        <!-- Medical Facility Block -->
-                                        <path d="M60 52L105 72L145 52L100 32Z" fill="#059669" stroke="#34d399" stroke-width="1.5"/>
-                                        <path d="M60 52L105 72V120L60 100Z" fill="#047857"/>
-                                        <path d="M105 72L145 52V100L105 120Z" fill="#065f46"/>
-                                        <!-- Glowing Medical Cross on Facade -->
-                                        <rect x="78" y="74" width="8" height="24" rx="2" fill="#ffffff"/>
-                                        <rect x="70" y="82" width="24" height="8" rx="2" fill="#ffffff"/>
-                                        <!-- Floating 3D ECG / Heartbeat Monitor -->
-                                        <g transform="translate(112, 70)">
-                                            <rect x="0" y="0" width="54" height="36" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="2" filter="drop-shadow(0 6px 12px rgba(0,0,0,0.4))"/>
-                                            <path d="M6 18H16L21 8L27 28L33 14L38 22H48" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <!-- Card 6: Education & EdTech (Warm Amber) -->
-                            <div class="service-sector-card card-amber" data-index="5">
-                                <div class="sector-card-header">
-                                    <h4 class="sector-card-title">{{ $locale === 'ar' ? 'التعليم والجامعات والأكاديميات' : ($locale === 'fr' ? 'Éducation & Académies Numériques' : 'Higher Education & EdTech') }}</h4>
-                                </div>
-                                <div class="sector-card-graphic">
-                                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="isometric-svg">
-                                        <!-- Isometric Grid Floor -->
-                                        <path d="M10 115L100 155L190 115L100 75Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-dasharray="3 3"/>
-                                        <!-- Stack of 3D Books Base -->
-                                        <path d="M60 90L100 110L145 88L105 68Z" fill="#b45309" stroke="#f59e0b" stroke-width="1.5"/>
-                                        <path d="M60 90L100 110V118L60 98Z" fill="#78350f"/>
-                                        <path d="M100 110L145 88V96L100 118Z" fill="#fef3c7"/>
-                                        <!-- Book 2 -->
-                                        <path d="M65 76L105 96L142 76L102 56Z" fill="#d97706" stroke="#fbbf24" stroke-width="1.5"/>
-                                        <!-- Graduation Cap (Mortarboard) -->
-                                        <path d="M50 48L100 24L150 48L100 72Z" fill="#1e293b" stroke="#fbbf24" stroke-width="2"/>
-                                        <path d="M78 62V78C78 88 122 88 122 78V62Z" fill="#0f172a"/>
-                                        <!-- Gold Tassel -->
-                                        <path d="M100 48L138 60V76" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
-                                        <circle cx="138" cy="78" r="3" fill="#f59e0b"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Bar inside Panel -->
-                    <div class="panel-bottom-bar">
-                        <!-- Navigation Dots Indicator -->
-                        <div class="panel-slider-dots" id="sectorDots">
-                            <span class="dot active" data-index="0"></span>
-                            <span class="dot" data-index="1"></span>
-                            <span class="dot" data-index="2"></span>
-                            <span class="dot" data-index="3"></span>
-                            <span class="dot" data-index="4"></span>
-                            <span class="dot" data-index="5"></span>
-                        </div>
-
-                        <!-- Trust Guarantee Badge -->
-                        <div class="panel-trust-badge">
-                            <div class="trust-badge-icon">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                    <path d="M9 12l2 2 4-4"></path>
+        <div class="container">
+            <div class="ox-services-grid" id="servicesGrid">
+                <!-- Card 1: Mobile Apps (تطبيقات الموبايل) -->
+                <article class="ox-service-card reveal" onclick="openConsultModal()">
+                    <div class="service-card-aura"></div>
+                    <div class="service-card-body">
+                        <div class="service-card-content">
+                            <div class="service-card-icon-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="5" y="2" width="14" height="20" rx="3"></rect>
+                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
                                 </svg>
                             </div>
-                            <p class="trust-badge-text">
-                                @if($locale === 'ar')
-                                    مهما كان نوع منشأتك .. أوكس هو شريكك الذكي لإدارة كل التفاصيل بثقة من <strong>منصة واحدة آمنة ومبنية بأعلى المعايير العالمية</strong>
-                                @elseif($locale === 'fr')
-                                    Quelle que soit votre organisation .. OX orchestre tous vos flux en toute confiance sur <strong>une plateforme unifiée et sécurisée</strong>
-                                @else
-                                    Whatever your enterprise scale .. OX is your intelligent partner to orchestrate operations from <strong>a unified, world-class secure platform</strong>
-                                @endif
-                            </p>
+                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'تطبيقات الموبايل' : ($locale === 'fr' ? 'Applications Mobiles' : 'Mobile Apps') }}</h3>
+                        </div>
+                        <div class="service-card-visual">
+                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 3D Perspective Smartphone Body -->
+                                <g transform="rotate(-6 80 65)">
+                                    <rect x="42" y="10" width="76" height="110" rx="14" fill="#030E0C" stroke="#1D8A68" stroke-width="2.5" filter="drop-shadow(0 10px 18px rgba(0,0,0,0.6))"/>
+                                    <!-- Inner Display Glass -->
+                                    <rect x="47" y="16" width="66" height="98" rx="10" fill="linear-gradient(180deg, #092823 0%, #051613 100%)"/>
+                                    <!-- Notch / Dynamic Island -->
+                                    <rect x="68" y="20" width="24" height="4" rx="2" fill="#020807"/>
+                                    <!-- App Header Widget -->
+                                    <rect x="53" y="30" width="54" height="22" rx="5" fill="rgba(29, 138, 104, 0.25)" stroke="rgba(29, 138, 104, 0.4)" stroke-width="1"/>
+                                    <circle cx="62" cy="41" r="5" fill="#1D8A68"/>
+                                    <rect x="71" y="37" width="28" height="3" rx="1.5" fill="#ffffff"/>
+                                    <rect x="71" y="43" width="18" height="2.5" rx="1" fill="#719489"/>
+                                    <!-- Metric Wave Graph -->
+                                    <path d="M53 78 Q 66 62, 76 72 T 102 58" fill="none" stroke="#2EE59D" stroke-width="2.5" stroke-linecap="round"/>
+                                    <path d="M53 78 Q 66 62, 76 72 T 102 58 L 102 86 L 53 86 Z" fill="rgba(46, 229, 157, 0.12)"/>
+                                    <!-- Action Button Row -->
+                                    <rect x="53" y="94" width="24" height="12" rx="4" fill="#1D8A68"/>
+                                    <rect x="83" y="94" width="24" height="12" rx="4" fill="rgba(255,255,255,0.08)"/>
+                                </g>
+                            </svg>
                         </div>
                     </div>
-                </div>
+                    <div class="service-card-pill">
+                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'تطبيقات مبتكرة لعملك' : ($locale === 'fr' ? 'Solutions mobiles innovantes' : 'Innovative Mobile Apps') }}</span>
+                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </div>
+                </article>
+
+                <!-- Card 2: Odoo System (نظام Odoo) -->
+                <article class="ox-service-card reveal" onclick="openConsultModal()">
+                    <div class="service-card-aura"></div>
+                    <div class="service-card-body">
+                        <div class="service-card-content">
+                            <div class="service-card-icon-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="14" width="7" height="7"></rect>
+                                    <rect x="3" y="14" width="7" height="7"></rect>
+                                </svg>
+                            </div>
+                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'نظام Odoo' : 'Odoo ERP' }}</h3>
+                        </div>
+                        <div class="service-card-visual">
+                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Monitor Stand & Base -->
+                                <path d="M72 104L88 104L84 92L76 92Z" fill="#1E3E37"/>
+                                <rect x="64" y="104" width="32" height="4" rx="2" fill="#2E5C52"/>
+                                <!-- 3D Workstation Monitor -->
+                                <rect x="25" y="16" width="110" height="76" rx="8" fill="#041210" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 20px rgba(0,0,0,0.6))"/>
+                                <rect x="29" y="20" width="102" height="68" rx="5" fill="#08241F"/>
+                                <!-- Odoo Top Nav Bar -->
+                                <rect x="29" y="20" width="102" height="12" fill="#0B3029"/>
+                                <circle cx="36" cy="26" r="2.5" fill="#714B67"/>
+                                <circle cx="43" cy="26" r="2.5" fill="#00A09D"/>
+                                <circle cx="50" cy="26" r="2.5" fill="#C8A96B"/>
+                                <!-- Odoo App Icons Grid (Accounting, Sales, Inventory, CRM) -->
+                                <rect x="35" y="38" width="18" height="14" rx="3" fill="#714B67"/>
+                                <rect x="58" y="38" width="18" height="14" rx="3" fill="#00A09D"/>
+                                <rect x="81" y="38" width="18" height="14" rx="3" fill="#1D8A68"/>
+                                <rect x="104" y="38" width="18" height="14" rx="3" fill="#C8A96B"/>
+                                <!-- Analytics / Data Table Rows -->
+                                <rect x="35" y="58" width="87" height="6" rx="2" fill="rgba(255,255,255,0.08)"/>
+                                <rect x="35" y="68" width="87" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
+                                <rect x="35" y="77" width="55" height="5" rx="2" fill="rgba(46,229,157,0.2)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-card-pill">
+                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'حلول متكاملة لإدارة أعمالك' : ($locale === 'fr' ? 'Gestion d\'entreprise unifiée' : 'Integrated Enterprise Management') }}</span>
+                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </div>
+                </article>
+
+                <!-- Card 3: Websites (مواقع ويب) -->
+                <article class="ox-service-card reveal" onclick="openConsultModal()">
+                    <div class="service-card-aura"></div>
+                    <div class="service-card-body">
+                        <div class="service-card-content">
+                            <div class="service-card-icon-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'مواقع ويب' : ($locale === 'fr' ? 'Sites Web' : 'Websites') }}</h3>
+                        </div>
+                        <div class="service-card-visual">
+                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Laptop Screen (Isometric) -->
+                                <g transform="translate(18, 12)">
+                                    <rect x="15" y="6" width="94" height="60" rx="5" fill="#041210" stroke="#1D8A68" stroke-width="2"/>
+                                    <rect x="18" y="10" width="88" height="52" rx="3" fill="#092823"/>
+                                    <!-- Browser Header -->
+                                    <rect x="18" y="10" width="88" height="9" fill="#0E352E"/>
+                                    <circle cx="23" cy="14.5" r="1.5" fill="#ff5f56"/>
+                                    <circle cx="28" cy="14.5" r="1.5" fill="#ffbd2e"/>
+                                    <circle cx="33" cy="14.5" r="1.5" fill="#27c93f"/>
+                                    <!-- Web Hero Content -->
+                                    <rect x="24" y="24" width="46" height="5" rx="1.5" fill="#ffffff"/>
+                                    <rect x="24" y="32" width="68" height="3" rx="1" fill="#719489"/>
+                                    <rect x="24" y="38" width="50" height="3" rx="1" fill="#719489"/>
+                                    <!-- CTA Button on Screen -->
+                                    <rect x="24" y="46" width="22" height="8" rx="2" fill="#1D8A68"/>
+                                    <!-- Floating Card on Web -->
+                                    <rect x="76" y="24" width="24" height="30" rx="3" fill="#123B33" stroke="#2EE59D" stroke-width="1"/>
+                                    <!-- Laptop Base / Keyboard Deck -->
+                                    <path d="M4 68L120 68L110 88L14 88Z" fill="#0F332C" stroke="#1D8A68" stroke-width="1.5"/>
+                                    <rect x="46" y="74" width="32" height="8" rx="2" fill="#051714"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-card-pill">
+                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'مواقع احترافية سريعة وآمنة' : ($locale === 'fr' ? 'Sites rapides et sécurisés' : 'High-Performance Websites') }}</span>
+                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </div>
+                </article>
+
+                <!-- Card 4: Digital Marketing (التسويق الرقمي) -->
+                <article class="ox-service-card reveal" onclick="openConsultModal()">
+                    <div class="service-card-aura"></div>
+                    <div class="service-card-body">
+                        <div class="service-card-content">
+                            <div class="service-card-icon-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </div>
+                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'التسويق الرقمي' : ($locale === 'fr' ? 'Marketing Digital' : 'Digital Marketing') }}</h3>
+                        </div>
+                        <div class="service-card-visual">
+                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Curved Isometric Marketing Screen -->
+                                <g transform="translate(18, 14)">
+                                    <path d="M10 20 C40 10, 80 10, 115 20 L115 88 C80 80, 40 80, 10 88 Z" fill="#051916" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.5))"/>
+                                    <!-- Inner Display Graph -->
+                                    <!-- Bar Chart Columns -->
+                                    <rect x="24" y="58" width="8" height="20" rx="2" fill="rgba(29, 138, 104, 0.4)"/>
+                                    <rect x="38" y="48" width="8" height="30" rx="2" fill="rgba(29, 138, 104, 0.6)"/>
+                                    <rect x="52" y="38" width="8" height="40" rx="2" fill="rgba(29, 138, 104, 0.8)"/>
+                                    <rect x="66" y="28" width="8" height="50" rx="2" fill="#1D8A68"/>
+                                    <rect x="80" y="22" width="8" height="56" rx="2" fill="#2EE59D"/>
+                                    <!-- Skyrocketing Trend Line -->
+                                    <path d="M22 66 Q 50 48, 70 34 T 98 18" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+                                    <circle cx="98" cy="18" r="4" fill="#2EE59D" stroke="#ffffff" stroke-width="1.5"/>
+                                    <!-- Floating Target / Growth Badge -->
+                                    <g transform="translate(90, 52)">
+                                        <circle cx="14" cy="14" r="14" fill="#1D8A68" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.4))"/>
+                                        <path d="M9 14L12 17L19 10" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-card-pill">
+                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'وصول أكبر لعملائك' : ($locale === 'fr' ? 'Portée & conversion maximales' : 'Maximized Customer Reach') }}</span>
+                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </div>
+                </article>
+
+                <!-- Card 5: Custom Systems (أنظمة مخصصة) -->
+                <article class="ox-service-card reveal" onclick="openConsultModal()">
+                    <div class="service-card-aura"></div>
+                    <div class="service-card-body">
+                        <div class="service-card-content">
+                            <div class="service-card-icon-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="16 18 22 12 16 6"></polyline>
+                                    <polyline points="8 6 2 12 8 18"></polyline>
+                                </svg>
+                            </div>
+                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'أنظمة مخصصة' : ($locale === 'fr' ? 'Systèmes Sur-Mesure' : 'Custom Systems') }}</h3>
+                        </div>
+                        <div class="service-card-visual">
+                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 3D Perspective Slate Tablet with IDE -->
+                                <g transform="translate(20, 10)">
+                                    <rect x="22" y="6" width="82" height="96" rx="10" fill="#04120F" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.6))"/>
+                                    <!-- IDE Top Bar -->
+                                    <rect x="26" y="10" width="74" height="12" rx="3" fill="#08221D"/>
+                                    <circle cx="32" cy="16" r="2" fill="#2EE59D"/>
+                                    <circle cx="38" cy="16" r="2" fill="#C8A96B"/>
+                                    <!-- Code Lines with Syntax Coloring -->
+                                    <rect x="32" y="28" width="22" height="3" rx="1.5" fill="#2EE59D"/>
+                                    <rect x="58" y="28" width="32" height="3" rx="1.5" fill="#ffffff"/>
+                                    <rect x="38" y="36" width="46" height="3" rx="1.5" fill="#C8A96B"/>
+                                    <rect x="38" y="44" width="34" height="3" rx="1.5" fill="#719489"/>
+                                    <rect x="38" y="52" width="48" height="3" rx="1.5" fill="#2EE59D"/>
+                                    <rect x="32" y="60" width="18" height="3" rx="1.5" fill="#ffffff"/>
+                                    <!-- Microchip / Server Nodes -->
+                                    <rect x="32" y="70" width="62" height="24" rx="4" fill="rgba(29, 138, 104, 0.15)" stroke="rgba(29, 138, 104, 0.4)" stroke-width="1"/>
+                                    <circle cx="44" cy="82" r="4" fill="#1D8A68"/>
+                                    <line x1="48" y1="82" x2="62" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                    <circle cx="66" cy="82" r="4" fill="#2EE59D"/>
+                                    <line x1="70" y1="82" x2="80" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                    <circle cx="84" cy="82" r="4" fill="#1D8A68"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-card-pill">
+                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'حلول تناسب احتياجاتك' : ($locale === 'fr' ? 'Solutions sur-mesure pour vous' : 'Tailored Software Solutions') }}</span>
+                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </div>
+                </article>
+
+                <!-- Card 6: UI/UX Design (تصميم UI/UX) -->
+                <article class="ox-service-card reveal" onclick="openConsultModal()">
+                    <div class="service-card-aura"></div>
+                    <div class="service-card-body">
+                        <div class="service-card-content">
+                            <div class="service-card-icon-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                    <polyline points="2 17 12 22 22 17"></polyline>
+                                    <polyline points="2 12 12 17 22 12"></polyline>
+                                </svg>
+                            </div>
+                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'تصميم UI/UX' : 'UI/UX Design' }}</h3>
+                        </div>
+                        <div class="service-card-visual">
+                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Dual Overlapping Floating Mobile Mockups -->
+                                <!-- Back Phone -->
+                                <g transform="rotate(-18 50 65) translate(15, 0)">
+                                    <rect x="25" y="15" width="52" height="85" rx="10" fill="#041210" stroke="#1D8A68" stroke-width="1.5" opacity="0.8"/>
+                                    <rect x="28" y="20" width="46" height="75" rx="7" fill="#08221D"/>
+                                    <circle cx="51" cy="35" r="9" fill="rgba(29, 138, 104, 0.4)"/>
+                                    <rect x="36" y="52" width="30" height="4" rx="2" fill="#719489"/>
+                                </g>
+                                <!-- Front Phone with Glowing Interface -->
+                                <g transform="rotate(8 95 65) translate(45, 0)">
+                                    <rect x="25" y="15" width="56" height="92" rx="11" fill="#020908" stroke="#2EE59D" stroke-width="2" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.7))"/>
+                                    <rect x="28" y="20" width="50" height="82" rx="8" fill="linear-gradient(180deg, #092B24 0%, #041411 100%)"/>
+                                    <!-- UI Header Avatar -->
+                                    <circle cx="38" cy="32" r="5" fill="#2EE59D"/>
+                                    <rect x="47" y="30" width="24" height="4" rx="2" fill="#ffffff"/>
+                                    <!-- UI Interactive Slider Card -->
+                                    <rect x="33" y="44" width="40" height="24" rx="5" fill="rgba(255,255,255,0.08)" stroke="rgba(46, 229, 157, 0.3)" stroke-width="1"/>
+                                    <!-- Toggle Switch -->
+                                    <rect x="37" y="76" width="22" height="10" rx="5" fill="#1D8A68"/>
+                                    <circle cx="53" cy="81" r="3.5" fill="#ffffff"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-card-pill">
+                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'تصميم يجذب ويحول' : ($locale === 'fr' ? 'Expériences fluides et engageantes' : 'Design That Converts') }}</span>
+                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </div>
+                </article>
+
+                <!-- Card 7: Maintenance & Support (الصيانة والدعم) -->
+                <article class="ox-service-card reveal" onclick="openConsultModal()">
+                    <div class="service-card-aura"></div>
+                    <div class="service-card-body">
+                        <div class="service-card-content">
+                            <div class="service-card-icon-badge">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'الصيانة والدعم' : ($locale === 'fr' ? 'Maintenance & Support' : 'Support & Maintenance') }}</h3>
+                        </div>
+                        <div class="service-card-visual">
+                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 3D Glowing Mechanical Cyber-Gear System -->
+                                <g transform="translate(80, 65)">
+                                    <!-- Outer Concentric Pulse Rings -->
+                                    <circle cx="0" cy="0" r="48" stroke="rgba(29, 138, 104, 0.25)" stroke-width="1.5" stroke-dasharray="4 4"/>
+                                    <circle cx="0" cy="0" r="40" stroke="rgba(46, 229, 157, 0.35)" stroke-width="1.5"/>
+                                    <!-- Main 3D Gear Body -->
+                                    <path d="M-8 -36 L8 -36 L12 -28 L24 -24 L30 -30 L40 -20 L34 -14 L36 -2 L46 2 L46 14 L36 18 L34 30 L40 36 L30 46 L24 40 L12 44 L8 52 L-8 52 L-12 44 L-24 40 L-30 46 L-40 36 L-34 30 L-36 18 L-46 14 L-46 2 L-36 -2 L-34 -14 L-40 -20 L-30 -30 L-24 -24 L-12 -28 Z" fill="#041411" stroke="#2EE59D" stroke-width="2.5" filter="drop-shadow(0 6px 16px rgba(46,229,157,0.3))"/>
+                                    <!-- Inner Cybernetic Core -->
+                                    <circle cx="0" cy="0" r="18" fill="#092823" stroke="#1D8A68" stroke-width="2"/>
+                                    <circle cx="0" cy="0" r="9" fill="#2EE59D"/>
+                                    <!-- Heartbeat Pulse Line through Core -->
+                                    <path d="M-28 0 H-12 L-6 -8 L0 10 L6 -6 L12 0 H28" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="service-card-pill">
+                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'دعم مستمر لعملك' : ($locale === 'fr' ? 'Accompagnement continu 24/7' : 'Continuous 24/7 Support') }}</span>
+                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -1344,7 +1428,18 @@
         });
     }
 
-    // Hero Slider - removed (section replaced by 3D showcase)
+    // Services Section Slider Navigation
+    window.scrollServices = function(direction) {
+        const grid = document.getElementById('servicesGrid');
+        if (!grid) return;
+        const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+        const card = grid.querySelector('.ox-service-card');
+        const scrollAmount = card ? (card.offsetWidth + 24) : 360;
+        grid.scrollBy({
+            left: isRtl ? (direction * scrollAmount) : (direction * scrollAmount),
+            behavior: 'smooth'
+        });
+    };
 </script>
 
 <!-- Ionicons v7 Web Components (self-hosted) -->

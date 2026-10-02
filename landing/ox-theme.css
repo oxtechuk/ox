@@ -797,3 +797,339 @@ html[lang="en"] .stat-number {
     border-bottom: none;
   }
 }
+
+/* =========================================
+   OUR SERVICES SECTION (MASTER THEME)
+   ========================================= */
+
+.ox-services-section {
+  padding: 95px 0 115px;
+  background-color: var(--ox-ivory);
+  color: var(--ox-carbon);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Arabesque Top Corner Motifs for Services */
+.services-arabesque {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image:
+    repeating-linear-gradient(45deg, var(--ox-carbon) 0, var(--ox-carbon) 1px, transparent 0, transparent 14px),
+    repeating-linear-gradient(-45deg, var(--ox-carbon) 0, var(--ox-carbon) 1px, transparent 0, transparent 14px);
+  z-index: 1;
+}
+
+.services-arabesque.corner-top-right {
+  top: 0;
+  right: 0;
+  mask-image: radial-gradient(circle at 100% 0%, black 50%, transparent 85%);
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, black 50%, transparent 85%);
+}
+
+.services-arabesque.corner-top-left {
+  top: 0;
+  left: 0;
+  mask-image: radial-gradient(circle at 0% 0%, black 50%, transparent 85%);
+  -webkit-mask-image: radial-gradient(circle at 0% 0%, black 50%, transparent 85%);
+}
+
+.services-header-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 45px;
+  position: relative;
+  z-index: 2;
+}
+
+.services-kicker {
+  display: inline-block;
+  font-family: var(--font-ar);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ox-emerald);
+  margin-bottom: 8px;
+}
+
+.services-title {
+  font-family: var(--font-ar);
+  font-size: clamp(34px, 4.4vw, 54px);
+  font-weight: 800;
+  line-height: 1.22;
+  color: var(--ox-carbon);
+  margin: 0 0 14px;
+}
+
+.services-title .text-green {
+  color: var(--ox-emerald) !important;
+}
+
+.services-subtitle {
+  font-family: var(--font-ar);
+  font-size: 16.5px;
+  color: #556761;
+  line-height: 1.7;
+  max-width: 620px;
+  margin: 0;
+}
+
+/* Nav Carousel Buttons */
+.services-slider-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.services-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ox-white);
+  border: 1px solid rgba(7, 27, 25, 0.12);
+  color: var(--ox-carbon);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(7, 27, 25, 0.06);
+  transition: all var(--transition);
+}
+
+.services-nav-btn:hover {
+  background: var(--ox-emerald);
+  border-color: var(--ox-emerald);
+  color: var(--ox-white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(29, 138, 104, 0.25);
+}
+
+/* 3-Column Services Grid matching the screenshot */
+.ox-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Service Card Design */
+.ox-service-card {
+  background: linear-gradient(135deg, #092621 0%, #061A17 100%);
+  border: 1px solid var(--ox-border);
+  border-radius: 20px;
+  min-height: 250px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 22px 20px;
+  box-shadow: 0 10px 30px rgba(7, 27, 25, 0.1);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ox-service-card:hover {
+  transform: translateY(-7px);
+  border-color: var(--ox-emerald);
+  box-shadow: 0 20px 45px rgba(7, 27, 25, 0.2), 0 0 30px rgba(29, 138, 104, 0.22);
+}
+
+/* Ambient Circuit Grid Background on Card */
+.service-card-aura {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 25% 45%, rgba(29, 138, 104, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 75% 30%, rgba(29, 138, 104, 0.08) 0%, transparent 50%);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.ox-service-card:hover .service-card-aura {
+  opacity: 1;
+}
+
+/* Main Top Row inside Card */
+.service-card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+/* Right Content: Category Icon & Title in RTL */
+.service-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.service-card-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(29, 138, 104, 0.15);
+  border: 1px solid rgba(29, 138, 104, 0.35);
+  display: grid;
+  place-items: center;
+  color: var(--ox-emerald);
+  margin-bottom: 12px;
+  transition: all var(--transition);
+}
+
+.ox-service-card:hover .service-card-icon-badge {
+  background: var(--ox-emerald);
+  color: var(--ox-white);
+  transform: scale(1.05);
+}
+
+.service-card-title {
+  font-family: var(--font-ar);
+  font-size: 23px;
+  font-weight: 800;
+  color: var(--ox-white);
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* Left Graphic / Visual Illustration */
+.service-card-visual {
+  width: 155px;
+  height: 120px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.4s ease;
+}
+
+.ox-service-card:hover .service-card-visual {
+  transform: scale(1.04) translateY(-2px);
+}
+
+.service-card-visual svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+}
+
+/* Bottom Floating Pill Badge */
+.service-card-pill {
+  position: relative;
+  z-index: 2;
+  background: var(--ox-ivory);
+  color: var(--ox-carbon);
+  border-radius: var(--radius-full);
+  padding: 7px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: max-content;
+  max-width: 90%;
+  margin-top: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(7, 27, 25, 0.08);
+  transition: all var(--transition);
+  align-self: flex-start;
+  flex-direction: row-reverse;
+}
+
+html[dir="ltr"] .service-card-pill {
+  flex-direction: row;
+}
+
+.service-card-pill-text {
+  font-family: var(--font-ar);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ox-carbon);
+  white-space: nowrap;
+}
+
+.service-card-pill-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ox-carbon);
+  display: grid;
+  place-items: center;
+  color: var(--ox-carbon);
+  font-size: 11px;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.ox-service-card:hover .service-card-pill {
+  background: var(--ox-white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ox-service-card:hover .service-card-pill-btn {
+  background: var(--ox-emerald);
+  border-color: var(--ox-emerald);
+  color: var(--ox-white);
+  transform: scale(1.08);
+}
+
+/* Responsive Rules for Services */
+@media (max-width: 992px) {
+  .ox-services-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 24px;
+    gap: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ox-emerald) transparent;
+  }
+
+  .ox-services-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .ox-services-grid::-webkit-scrollbar-thumb {
+    background: var(--ox-emerald);
+    border-radius: 4px;
+  }
+
+  .ox-service-card {
+    min-width: 320px;
+    max-width: 360px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .services-header-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .service-card-visual {
+    width: 125px;
+    height: 100px;
+  }
+
+  .service-card-title {
+    font-size: 20px;
+  }
+}
+
