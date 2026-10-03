@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DigitalProduct;
+use App\Models\ProductCategory;
 use App\Models\Project;
 use App\Models\SiteContent;
 use App\Models\Testimonial;
@@ -20,6 +22,20 @@ class HomeController extends Controller
             ->get();
 
         $siteContents = SiteContent::all()->pluck('value', 'key')->toArray();
+
+        // Digital Products & Categories for services section
+        $digitalProducts = DigitalProduct::where('status', 'active')
+            ->with('category')
+            ->orderByDesc('is_featured')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $productCategories = ProductCategory::where('is_active', true)
+            ->withCount(['digitalProducts' => function ($q) {
+                $q->where('status', 'active');
+            }])
+            ->orderBy('sort_order', 'asc')
+            ->get();
 
         // Extract unique countries and sectors for filters
         $countries = Project::select('country_code', 'country_name')
@@ -48,7 +64,9 @@ class HomeController extends Controller
             'storiesJson',
             'siteContents',
             'countries',
-            'sectors'
+            'sectors',
+            'digitalProducts',
+            'productCategories'
         ));
     }
 }

@@ -411,312 +411,192 @@
         </div>
 
         <div class="container">
+            @if(isset($productCategories) && $productCategories->count() > 0)
+                <div class="services-category-tabs reveal">
+                    <button type="button" class="services-tab-btn active" data-cat="all" onclick="filterServicesGrid('all', this)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>{{ $locale === 'ar' ? 'كافة الحلول والأنظمة' : ($locale === 'fr' ? 'Toutes les solutions' : 'All Solutions') }}</span>
+                    </button>
+                    @foreach($productCategories as $cat)
+                        <button type="button" class="services-tab-btn" data-cat="{{ $cat->slug }}" onclick="filterServicesGrid('{{ $cat->slug }}', this)">
+                            <span>{{ $cat->name }}</span>
+                            @if(($cat->digital_products_count ?? 0) > 0)
+                                <span class="tab-count">{{ $cat->digital_products_count }}</span>
+                            @endif
+                        </button>
+                    @endforeach
+                </div>
+            @endif
+
             <div class="ox-services-grid" id="servicesGrid">
-                <!-- Card 1: Mobile Apps (تطبيقات الموبايل) -->
-                <article class="ox-service-card reveal" onclick="openConsultModal()">
-                    <div class="service-card-aura"></div>
-                    <div class="service-card-body">
-                        <div class="service-card-content">
-                            <div class="service-card-icon-badge">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="5" y="2" width="14" height="20" rx="3"></rect>
-                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                                </svg>
+                @forelse($digitalProducts as $product)
+                    <article class="ox-service-card reveal" data-category="{{ $product->category?->slug ?? 'general' }}" onclick="window.location.href='{{ route('store.product', $product->slug) }}'">
+                        <div class="service-card-aura"></div>
+                        <div class="service-card-body">
+                            <div class="service-card-content">
+                                <div class="service-card-top-meta">
+                                    <div class="service-card-icon-badge">
+                                        @if($product->category?->icon === 'calculator')
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                                                <line x1="8" y1="6" x2="16" y2="6"></line>
+                                                <line x1="16" y1="14" x2="16" y2="18"></line>
+                                                <path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path>
+                                                <path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path>
+                                            </svg>
+                                        @elseif($product->category?->icon === 'bullhorn')
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                            </svg>
+                                        @elseif($product->category?->icon === 'users-gear')
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="9" cy="7" r="4"></circle>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                            </svg>
+                                        @else
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                                            </svg>
+                                        @endif
+                                    </div>
+                                    @if($product->category)
+                                        <span class="service-category-tag">{{ $product->category->name }}</span>
+                                    @endif
+                                </div>
+                                <h3 class="service-card-title">{{ $product->name }}</h3>
+                                <p class="service-card-tagline">{{ $product->tagline ?: Str::limit($product->description, 110) }}</p>
                             </div>
-                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'تطبيقات الموبايل' : ($locale === 'fr' ? 'Applications Mobiles' : 'Mobile Apps') }}</h3>
-                        </div>
-                        <div class="service-card-visual">
-                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- 3D Perspective Smartphone Body -->
-                                <g transform="rotate(-6 80 65)">
-                                    <rect x="42" y="10" width="76" height="110" rx="14" fill="#030E0C" stroke="#1D8A68" stroke-width="2.5" filter="drop-shadow(0 10px 18px rgba(0,0,0,0.6))"/>
-                                    <!-- Inner Display Glass -->
-                                    <rect x="47" y="16" width="66" height="98" rx="10" fill="linear-gradient(180deg, #092823 0%, #051613 100%)"/>
-                                    <!-- Notch / Dynamic Island -->
-                                    <rect x="68" y="20" width="24" height="4" rx="2" fill="#020807"/>
-                                    <!-- App Header Widget -->
-                                    <rect x="53" y="30" width="54" height="22" rx="5" fill="rgba(29, 138, 104, 0.25)" stroke="rgba(29, 138, 104, 0.4)" stroke-width="1"/>
-                                    <circle cx="62" cy="41" r="5" fill="#1D8A68"/>
-                                    <rect x="71" y="37" width="28" height="3" rx="1.5" fill="#ffffff"/>
-                                    <rect x="71" y="43" width="18" height="2.5" rx="1" fill="#719489"/>
-                                    <!-- Metric Wave Graph -->
-                                    <path d="M53 78 Q 66 62, 76 72 T 102 58" fill="none" stroke="#2EE59D" stroke-width="2.5" stroke-linecap="round"/>
-                                    <path d="M53 78 Q 66 62, 76 72 T 102 58 L 102 86 L 53 86 Z" fill="rgba(46, 229, 157, 0.12)"/>
-                                    <!-- Action Button Row -->
-                                    <rect x="53" y="94" width="24" height="12" rx="4" fill="#1D8A68"/>
-                                    <rect x="83" y="94" width="24" height="12" rx="4" fill="rgba(255,255,255,0.08)"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="service-card-pill">
-                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'تطبيقات مبتكرة لعملك' : ($locale === 'fr' ? 'Solutions mobiles innovantes' : 'Innovative Mobile Apps') }}</span>
-                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
-                    </div>
-                </article>
 
-                <!-- Card 2: Odoo System (نظام Odoo) -->
-                <article class="ox-service-card reveal" onclick="openConsultModal()">
-                    <div class="service-card-aura"></div>
-                    <div class="service-card-body">
-                        <div class="service-card-content">
-                            <div class="service-card-icon-badge">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="3" width="7" height="7"></rect>
-                                    <rect x="14" y="3" width="7" height="7"></rect>
-                                    <rect x="14" y="14" width="7" height="7"></rect>
-                                    <rect x="3" y="14" width="7" height="7"></rect>
-                                </svg>
+                            <div class="service-card-visual">
+                                @if($product->category?->slug === 'business-accounting' || Str::contains($product->slug, 'erp'))
+                                    <!-- 3D ERP Accounting & POS Workstation -->
+                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M72 104L88 104L84 92L76 92Z" fill="#1E3E37"/>
+                                        <rect x="64" y="104" width="32" height="4" rx="2" fill="#2E5C52"/>
+                                        <rect x="25" y="16" width="110" height="76" rx="8" fill="#041210" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 20px rgba(0,0,0,0.6))"/>
+                                        <rect x="29" y="20" width="102" height="68" rx="5" fill="#08241F"/>
+                                        <rect x="29" y="20" width="102" height="12" fill="#0B3029"/>
+                                        <circle cx="36" cy="26" r="2.5" fill="#714B67"/>
+                                        <circle cx="43" cy="26" r="2.5" fill="#00A09D"/>
+                                        <circle cx="50" cy="26" r="2.5" fill="#C8A96B"/>
+                                        <rect x="35" y="38" width="18" height="14" rx="3" fill="#714B67"/>
+                                        <rect x="58" y="38" width="18" height="14" rx="3" fill="#00A09D"/>
+                                        <rect x="81" y="38" width="18" height="14" rx="3" fill="#1D8A68"/>
+                                        <rect x="104" y="38" width="18" height="14" rx="3" fill="#C8A96B"/>
+                                        <rect x="35" y="58" width="87" height="6" rx="2" fill="rgba(255,255,255,0.08)"/>
+                                        <rect x="35" y="68" width="87" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
+                                        <rect x="35" y="77" width="55" height="5" rx="2" fill="rgba(46,229,157,0.2)"/>
+                                    </svg>
+                                @elseif($product->category?->slug === 'marketing-automation' || Str::contains($product->slug, ['bot', 'marketing']))
+                                    <!-- 3D Automation & Smart Marketing Rocket -->
+                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g transform="translate(18, 14)">
+                                            <path d="M10 20 C40 10, 80 10, 115 20 L115 88 C80 80, 40 80, 10 88 Z" fill="#051916" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.5))"/>
+                                            <rect x="24" y="58" width="8" height="20" rx="2" fill="rgba(29, 138, 104, 0.4)"/>
+                                            <rect x="38" y="48" width="8" height="30" rx="2" fill="rgba(29, 138, 104, 0.6)"/>
+                                            <rect x="52" y="38" width="8" height="40" rx="2" fill="rgba(29, 138, 104, 0.8)"/>
+                                            <rect x="66" y="28" width="8" height="50" rx="2" fill="#1D8A68"/>
+                                            <rect x="80" y="22" width="8" height="56" rx="2" fill="#2EE59D"/>
+                                            <path d="M22 66 Q 50 48, 70 34 T 98 18" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+                                            <circle cx="98" cy="18" r="4" fill="#2EE59D" stroke="#ffffff" stroke-width="1.5"/>
+                                            <g transform="translate(90, 52)">
+                                                <circle cx="14" cy="14" r="14" fill="#1D8A68" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.4))"/>
+                                                <path d="M9 14L12 17L19 10" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                @elseif($product->category?->slug === 'crm-customer-service' || Str::contains($product->slug, ['crm', 'helpdesk', 'desk']))
+                                    <!-- 3D Customer Care & OmniDesk Dashboard -->
+                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g transform="translate(18, 12)">
+                                            <rect x="15" y="6" width="94" height="60" rx="5" fill="#041210" stroke="#1D8A68" stroke-width="2"/>
+                                            <rect x="18" y="10" width="88" height="52" rx="3" fill="#092823"/>
+                                            <rect x="18" y="10" width="88" height="9" fill="#0E352E"/>
+                                            <circle cx="23" cy="14.5" r="1.5" fill="#ff5f56"/>
+                                            <circle cx="28" cy="14.5" r="1.5" fill="#ffbd2e"/>
+                                            <circle cx="33" cy="14.5" r="1.5" fill="#27c93f"/>
+                                            <rect x="24" y="24" width="46" height="5" rx="1.5" fill="#ffffff"/>
+                                            <rect x="24" y="32" width="68" height="3" rx="1" fill="#719489"/>
+                                            <rect x="24" y="38" width="50" height="3" rx="1" fill="#719489"/>
+                                            <rect x="24" y="46" width="22" height="8" rx="2" fill="#1D8A68"/>
+                                            <rect x="76" y="24" width="24" height="30" rx="3" fill="#123B33" stroke="#2EE59D" stroke-width="1"/>
+                                            <path d="M4 68L120 68L110 88L14 88Z" fill="#0F332C" stroke="#1D8A68" stroke-width="1.5"/>
+                                            <rect x="46" y="74" width="32" height="8" rx="2" fill="#051714"/>
+                                        </g>
+                                    </svg>
+                                @else
+                                    <!-- 3D Futuristic Cloud Architecture Slate -->
+                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g transform="translate(20, 10)">
+                                            <rect x="22" y="6" width="82" height="96" rx="10" fill="#04120F" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.6))"/>
+                                            <rect x="26" y="10" width="74" height="12" rx="3" fill="#08221D"/>
+                                            <circle cx="32" cy="16" r="2" fill="#2EE59D"/>
+                                            <circle cx="38" cy="16" r="2" fill="#C8A96B"/>
+                                            <rect x="32" y="28" width="22" height="3" rx="1.5" fill="#2EE59D"/>
+                                            <rect x="58" y="28" width="32" height="3" rx="1.5" fill="#ffffff"/>
+                                            <rect x="38" y="36" width="46" height="3" rx="1.5" fill="#C8A96B"/>
+                                            <rect x="38" y="44" width="34" height="3" rx="1.5" fill="#719489"/>
+                                            <rect x="38" y="52" width="48" height="3" rx="1.5" fill="#2EE59D"/>
+                                            <rect x="32" y="60" width="18" height="3" rx="1.5" fill="#ffffff"/>
+                                            <rect x="32" y="70" width="62" height="24" rx="4" fill="rgba(29, 138, 104, 0.15)" stroke="rgba(29, 138, 104, 0.4)" stroke-width="1"/>
+                                            <circle cx="44" cy="82" r="4" fill="#1D8A68"/>
+                                            <line x1="48" y1="82" x2="62" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                            <circle cx="66" cy="82" r="4" fill="#2EE59D"/>
+                                            <line x1="70" y1="82" x2="80" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
+                                            <circle cx="84" cy="82" r="4" fill="#1D8A68"/>
+                                        </g>
+                                    </svg>
+                                @endif
                             </div>
-                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'نظام Odoo' : 'Odoo ERP' }}</h3>
                         </div>
-                        <div class="service-card-visual">
-                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Monitor Stand & Base -->
-                                <path d="M72 104L88 104L84 92L76 92Z" fill="#1E3E37"/>
-                                <rect x="64" y="104" width="32" height="4" rx="2" fill="#2E5C52"/>
-                                <!-- 3D Workstation Monitor -->
-                                <rect x="25" y="16" width="110" height="76" rx="8" fill="#041210" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 20px rgba(0,0,0,0.6))"/>
-                                <rect x="29" y="20" width="102" height="68" rx="5" fill="#08241F"/>
-                                <!-- Odoo Top Nav Bar -->
-                                <rect x="29" y="20" width="102" height="12" fill="#0B3029"/>
-                                <circle cx="36" cy="26" r="2.5" fill="#714B67"/>
-                                <circle cx="43" cy="26" r="2.5" fill="#00A09D"/>
-                                <circle cx="50" cy="26" r="2.5" fill="#C8A96B"/>
-                                <!-- Odoo App Icons Grid (Accounting, Sales, Inventory, CRM) -->
-                                <rect x="35" y="38" width="18" height="14" rx="3" fill="#714B67"/>
-                                <rect x="58" y="38" width="18" height="14" rx="3" fill="#00A09D"/>
-                                <rect x="81" y="38" width="18" height="14" rx="3" fill="#1D8A68"/>
-                                <rect x="104" y="38" width="18" height="14" rx="3" fill="#C8A96B"/>
-                                <!-- Analytics / Data Table Rows -->
-                                <rect x="35" y="58" width="87" height="6" rx="2" fill="rgba(255,255,255,0.08)"/>
-                                <rect x="35" y="68" width="87" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
-                                <rect x="35" y="77" width="55" height="5" rx="2" fill="rgba(46,229,157,0.2)"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="service-card-pill">
-                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'حلول متكاملة لإدارة أعمالك' : ($locale === 'fr' ? 'Gestion d\'entreprise unifiée' : 'Integrated Enterprise Management') }}</span>
-                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
-                    </div>
-                </article>
 
-                <!-- Card 3: Websites (مواقع ويب) -->
-                <article class="ox-service-card reveal" onclick="openConsultModal()">
-                    <div class="service-card-aura"></div>
-                    <div class="service-card-body">
-                        <div class="service-card-content">
-                            <div class="service-card-icon-badge">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                                </svg>
+                        @if(!empty($product->features) && is_array($product->features))
+                            <div class="service-features-chips">
+                                @foreach(array_slice($product->features, 0, 3) as $feat)
+                                    <span class="service-chip">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2EE59D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <span>{{ $feat }}</span>
+                                    </span>
+                                @endforeach
                             </div>
-                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'مواقع ويب' : ($locale === 'fr' ? 'Sites Web' : 'Websites') }}</h3>
-                        </div>
-                        <div class="service-card-visual">
-                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Laptop Screen (Isometric) -->
-                                <g transform="translate(18, 12)">
-                                    <rect x="15" y="6" width="94" height="60" rx="5" fill="#041210" stroke="#1D8A68" stroke-width="2"/>
-                                    <rect x="18" y="10" width="88" height="52" rx="3" fill="#092823"/>
-                                    <!-- Browser Header -->
-                                    <rect x="18" y="10" width="88" height="9" fill="#0E352E"/>
-                                    <circle cx="23" cy="14.5" r="1.5" fill="#ff5f56"/>
-                                    <circle cx="28" cy="14.5" r="1.5" fill="#ffbd2e"/>
-                                    <circle cx="33" cy="14.5" r="1.5" fill="#27c93f"/>
-                                    <!-- Web Hero Content -->
-                                    <rect x="24" y="24" width="46" height="5" rx="1.5" fill="#ffffff"/>
-                                    <rect x="24" y="32" width="68" height="3" rx="1" fill="#719489"/>
-                                    <rect x="24" y="38" width="50" height="3" rx="1" fill="#719489"/>
-                                    <!-- CTA Button on Screen -->
-                                    <rect x="24" y="46" width="22" height="8" rx="2" fill="#1D8A68"/>
-                                    <!-- Floating Card on Web -->
-                                    <rect x="76" y="24" width="24" height="30" rx="3" fill="#123B33" stroke="#2EE59D" stroke-width="1"/>
-                                    <!-- Laptop Base / Keyboard Deck -->
-                                    <path d="M4 68L120 68L110 88L14 88Z" fill="#0F332C" stroke="#1D8A68" stroke-width="1.5"/>
-                                    <rect x="46" y="74" width="32" height="8" rx="2" fill="#051714"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="service-card-pill">
-                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'مواقع احترافية سريعة وآمنة' : ($locale === 'fr' ? 'Sites rapides et sécurisés' : 'High-Performance Websites') }}</span>
-                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
-                    </div>
-                </article>
+                        @endif
 
-                <!-- Card 4: Digital Marketing (التسويق الرقمي) -->
-                <article class="ox-service-card reveal" onclick="openConsultModal()">
-                    <div class="service-card-aura"></div>
-                    <div class="service-card-body">
-                        <div class="service-card-content">
-                            <div class="service-card-icon-badge">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                </svg>
-                            </div>
-                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'التسويق الرقمي' : ($locale === 'fr' ? 'Marketing Digital' : 'Digital Marketing') }}</h3>
-                        </div>
-                        <div class="service-card-visual">
-                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Curved Isometric Marketing Screen -->
-                                <g transform="translate(18, 14)">
-                                    <path d="M10 20 C40 10, 80 10, 115 20 L115 88 C80 80, 40 80, 10 88 Z" fill="#051916" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.5))"/>
-                                    <!-- Inner Display Graph -->
-                                    <!-- Bar Chart Columns -->
-                                    <rect x="24" y="58" width="8" height="20" rx="2" fill="rgba(29, 138, 104, 0.4)"/>
-                                    <rect x="38" y="48" width="8" height="30" rx="2" fill="rgba(29, 138, 104, 0.6)"/>
-                                    <rect x="52" y="38" width="8" height="40" rx="2" fill="rgba(29, 138, 104, 0.8)"/>
-                                    <rect x="66" y="28" width="8" height="50" rx="2" fill="#1D8A68"/>
-                                    <rect x="80" y="22" width="8" height="56" rx="2" fill="#2EE59D"/>
-                                    <!-- Skyrocketing Trend Line -->
-                                    <path d="M22 66 Q 50 48, 70 34 T 98 18" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
-                                    <circle cx="98" cy="18" r="4" fill="#2EE59D" stroke="#ffffff" stroke-width="1.5"/>
-                                    <!-- Floating Target / Growth Badge -->
-                                    <g transform="translate(90, 52)">
-                                        <circle cx="14" cy="14" r="14" fill="#1D8A68" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.4))"/>
-                                        <path d="M9 14L12 17L19 10" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </g>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="service-card-pill">
-                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'وصول أكبر لعملائك' : ($locale === 'fr' ? 'Portée & conversion maximales' : 'Maximized Customer Reach') }}</span>
-                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
-                    </div>
-                </article>
+                        <div class="service-card-bottom">
+                            @if($product->sale_price || $product->price)
+                                <div class="service-price-box">
+                                    <span class="service-price-amount">{{ number_format($product->sale_price ?? $product->price) }} <small>{{ $product->currency }}</small></span>
+                                    @if($product->sale_price && $product->sale_price < $product->price)
+                                        <del class="service-price-old">{{ number_format($product->price) }}</del>
+                                    @endif
+                                </div>
+                            @endif
 
-                <!-- Card 5: Custom Systems (أنظمة مخصصة) -->
-                <article class="ox-service-card reveal" onclick="openConsultModal()">
-                    <div class="service-card-aura"></div>
-                    <div class="service-card-body">
-                        <div class="service-card-content">
-                            <div class="service-card-icon-badge">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="16 18 22 12 16 6"></polyline>
-                                    <polyline points="8 6 2 12 8 18"></polyline>
-                                </svg>
+                            <div class="service-card-pill">
+                                <span class="service-card-pill-text">{{ $locale === 'ar' ? 'تفاصيل وحجز النظام' : ($locale === 'fr' ? 'Détails du système' : 'View System') }}</span>
+                                <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
                             </div>
-                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'أنظمة مخصصة' : ($locale === 'fr' ? 'Systèmes Sur-Mesure' : 'Custom Systems') }}</h3>
                         </div>
-                        <div class="service-card-visual">
-                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- 3D Perspective Slate Tablet with IDE -->
-                                <g transform="translate(20, 10)">
-                                    <rect x="22" y="6" width="82" height="96" rx="10" fill="#04120F" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.6))"/>
-                                    <!-- IDE Top Bar -->
-                                    <rect x="26" y="10" width="74" height="12" rx="3" fill="#08221D"/>
-                                    <circle cx="32" cy="16" r="2" fill="#2EE59D"/>
-                                    <circle cx="38" cy="16" r="2" fill="#C8A96B"/>
-                                    <!-- Code Lines with Syntax Coloring -->
-                                    <rect x="32" y="28" width="22" height="3" rx="1.5" fill="#2EE59D"/>
-                                    <rect x="58" y="28" width="32" height="3" rx="1.5" fill="#ffffff"/>
-                                    <rect x="38" y="36" width="46" height="3" rx="1.5" fill="#C8A96B"/>
-                                    <rect x="38" y="44" width="34" height="3" rx="1.5" fill="#719489"/>
-                                    <rect x="38" y="52" width="48" height="3" rx="1.5" fill="#2EE59D"/>
-                                    <rect x="32" y="60" width="18" height="3" rx="1.5" fill="#ffffff"/>
-                                    <!-- Microchip / Server Nodes -->
-                                    <rect x="32" y="70" width="62" height="24" rx="4" fill="rgba(29, 138, 104, 0.15)" stroke="rgba(29, 138, 104, 0.4)" stroke-width="1"/>
-                                    <circle cx="44" cy="82" r="4" fill="#1D8A68"/>
-                                    <line x1="48" y1="82" x2="62" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
-                                    <circle cx="66" cy="82" r="4" fill="#2EE59D"/>
-                                    <line x1="70" y1="82" x2="80" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
-                                    <circle cx="84" cy="82" r="4" fill="#1D8A68"/>
-                                </g>
-                            </svg>
-                        </div>
+                    </article>
+                @empty
+                    <!-- Fallback if no products seeded -->
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--ox-gray);">
+                        <p>{{ $locale === 'ar' ? 'جاري تحديث قائمة الأنظمة والحلول...' : 'Updating systems and solutions...' }}</p>
                     </div>
-                    <div class="service-card-pill">
-                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'حلول تناسب احتياجاتك' : ($locale === 'fr' ? 'Solutions sur-mesure pour vous' : 'Tailored Software Solutions') }}</span>
-                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
-                    </div>
-                </article>
+                @endforelse
+            </div>
 
-                <!-- Card 6: UI/UX Design (تصميم UI/UX) -->
-                <article class="ox-service-card reveal" onclick="openConsultModal()">
-                    <div class="service-card-aura"></div>
-                    <div class="service-card-body">
-                        <div class="service-card-content">
-                            <div class="service-card-icon-badge">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                    <polyline points="2 17 12 22 22 17"></polyline>
-                                    <polyline points="2 12 12 17 22 12"></polyline>
-                                </svg>
-                            </div>
-                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'تصميم UI/UX' : 'UI/UX Design' }}</h3>
-                        </div>
-                        <div class="service-card-visual">
-                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Dual Overlapping Floating Mobile Mockups -->
-                                <!-- Back Phone -->
-                                <g transform="rotate(-18 50 65) translate(15, 0)">
-                                    <rect x="25" y="15" width="52" height="85" rx="10" fill="#041210" stroke="#1D8A68" stroke-width="1.5" opacity="0.8"/>
-                                    <rect x="28" y="20" width="46" height="75" rx="7" fill="#08221D"/>
-                                    <circle cx="51" cy="35" r="9" fill="rgba(29, 138, 104, 0.4)"/>
-                                    <rect x="36" y="52" width="30" height="4" rx="2" fill="#719489"/>
-                                </g>
-                                <!-- Front Phone with Glowing Interface -->
-                                <g transform="rotate(8 95 65) translate(45, 0)">
-                                    <rect x="25" y="15" width="56" height="92" rx="11" fill="#020908" stroke="#2EE59D" stroke-width="2" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.7))"/>
-                                    <rect x="28" y="20" width="50" height="82" rx="8" fill="linear-gradient(180deg, #092B24 0%, #041411 100%)"/>
-                                    <!-- UI Header Avatar -->
-                                    <circle cx="38" cy="32" r="5" fill="#2EE59D"/>
-                                    <rect x="47" y="30" width="24" height="4" rx="2" fill="#ffffff"/>
-                                    <!-- UI Interactive Slider Card -->
-                                    <rect x="33" y="44" width="40" height="24" rx="5" fill="rgba(255,255,255,0.08)" stroke="rgba(46, 229, 157, 0.3)" stroke-width="1"/>
-                                    <!-- Toggle Switch -->
-                                    <rect x="37" y="76" width="22" height="10" rx="5" fill="#1D8A68"/>
-                                    <circle cx="53" cy="81" r="3.5" fill="#ffffff"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="service-card-pill">
-                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'تصميم يجذب ويحول' : ($locale === 'fr' ? 'Expériences fluides et engageantes' : 'Design That Converts') }}</span>
-                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
-                    </div>
-                </article>
-
-                <!-- Card 7: Maintenance & Support (الصيانة والدعم) -->
-                <article class="ox-service-card reveal" onclick="openConsultModal()">
-                    <div class="service-card-aura"></div>
-                    <div class="service-card-body">
-                        <div class="service-card-content">
-                            <div class="service-card-icon-badge">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-                                </svg>
-                            </div>
-                            <h3 class="service-card-title">{{ $locale === 'ar' ? 'الصيانة والدعم' : ($locale === 'fr' ? 'Maintenance & Support' : 'Support & Maintenance') }}</h3>
-                        </div>
-                        <div class="service-card-visual">
-                            <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- 3D Glowing Mechanical Cyber-Gear System -->
-                                <g transform="translate(80, 65)">
-                                    <!-- Outer Concentric Pulse Rings -->
-                                    <circle cx="0" cy="0" r="48" stroke="rgba(29, 138, 104, 0.25)" stroke-width="1.5" stroke-dasharray="4 4"/>
-                                    <circle cx="0" cy="0" r="40" stroke="rgba(46, 229, 157, 0.35)" stroke-width="1.5"/>
-                                    <!-- Main 3D Gear Body -->
-                                    <path d="M-8 -36 L8 -36 L12 -28 L24 -24 L30 -30 L40 -20 L34 -14 L36 -2 L46 2 L46 14 L36 18 L34 30 L40 36 L30 46 L24 40 L12 44 L8 52 L-8 52 L-12 44 L-24 40 L-30 46 L-40 36 L-34 30 L-36 18 L-46 14 L-46 2 L-36 -2 L-34 -14 L-40 -20 L-30 -30 L-24 -24 L-12 -28 Z" fill="#041411" stroke="#2EE59D" stroke-width="2.5" filter="drop-shadow(0 6px 16px rgba(46,229,157,0.3))"/>
-                                    <!-- Inner Cybernetic Core -->
-                                    <circle cx="0" cy="0" r="18" fill="#092823" stroke="#1D8A68" stroke-width="2"/>
-                                    <circle cx="0" cy="0" r="9" fill="#2EE59D"/>
-                                    <!-- Heartbeat Pulse Line through Core -->
-                                    <path d="M-28 0 H-12 L-6 -8 L0 10 L6 -6 L12 0 H28" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="service-card-pill">
-                        <span class="service-card-pill-text">{{ $locale === 'ar' ? 'دعم مستمر لعملك' : ($locale === 'fr' ? 'Accompagnement continu 24/7' : 'Continuous 24/7 Support') }}</span>
-                        <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
-                    </div>
-                </article>
+            <div class="services-footer-cta reveal">
+                <a href="{{ route('store.index') }}" class="services-store-link">
+                    <span>{{ $locale === 'ar' ? 'استكشف كافة الحلول والأنظمة الرقمية في المتجر' : ($locale === 'fr' ? 'Explorer toutes les solutions dans la boutique' : 'Explore All Digital Systems in Store') }}</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
@@ -931,214 +811,199 @@
         </div>
     </section>
 
-        <!-- ─── Partners Section: شركاؤنا هم الدليل ─── -->
-    <section class="ox-partners-section" id="stories">
-        <div class="services-arabesque corner-top-right"></div>
-        <div class="services-arabesque corner-top-left"></div>
+    <!-- ─── Partner Stories / Testimonials Section (Saudi Sadu Aesthetic & Inline Video Player) ─── -->
+    <section class="testimonials section" id="stories">
+        <!-- Sadu Corner Accents -->
+        <svg class="sadu-corner top-right" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="16" y="0" width="8" height="8" fill="#00E59B"/>
+            <rect x="0" y="16" width="8" height="8" fill="#00E59B"/>
+            <rect x="32" y="16" width="8" height="8" fill="#00E59B"/>
+            <rect x="16" y="32" width="8" height="8" fill="#00E59B"/>
+            <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
+            <rect x="8" y="8" width="8" height="8" fill="#C8A96B"/>
+            <rect x="24" y="8" width="8" height="8" fill="#C8A96B"/>
+            <rect x="8" y="24" width="8" height="8" fill="#C8A96B"/>
+            <rect x="24" y="24" width="8" height="8" fill="#C8A96B"/>
+        </svg>
+        <svg class="sadu-corner top-left" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="16" y="0" width="8" height="8" fill="#00E59B"/>
+            <rect x="0" y="16" width="8" height="8" fill="#00E59B"/>
+            <rect x="32" y="16" width="8" height="8" fill="#00E59B"/>
+            <rect x="16" y="32" width="8" height="8" fill="#00E59B"/>
+            <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
+            <rect x="8" y="8" width="8" height="8" fill="#C8A96B"/>
+            <rect x="24" y="8" width="8" height="8" fill="#C8A96B"/>
+            <rect x="8" y="24" width="8" height="8" fill="#C8A96B"/>
+            <rect x="24" y="24" width="8" height="8" fill="#C8A96B"/>
+        </svg>
+
         <div class="container">
-            <div class="partners-header-wrap">
-                <!-- Slider Nav on the Left -->
-                <div class="partners-slider-nav">
-                    <button type="button" class="partners-nav-btn prev" id="partnersPrev" aria-label="{{ $locale === 'ar' ? 'السابق' : 'Previous' }}" onclick="scrollPartners(1)">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="{{ $locale === 'ar' ? '9 18 15 12 9 6' : '15 18 9 12 15 6' }}"></polyline>
-                        </svg>
-                    </button>
-                    <button type="button" class="partners-nav-btn next" id="partnersNext" aria-label="{{ $locale === 'ar' ? 'التالي' : 'Next' }}" onclick="scrollPartners(-1)">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
-                        </svg>
-                    </button>
+            <div class="test-heading reveal">
+                <div class="sadu-badge-wrap">
+                    <!-- Sadu Ribbon Pattern Left -->
+                    <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="6" y="0" width="6" height="6" fill="#00E59B"/>
+                        <rect x="6" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
+                        <rect x="18" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="24" y="0" width="6" height="6" fill="#00E59B"/>
+                        <rect x="24" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
+                        <rect x="36" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="42" y="0" width="6" height="6" fill="#00E59B"/>
+                        <rect x="42" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
+                        <rect x="54" y="4" width="6" height="6" fill="#00E59B"/>
+                    </svg>
+
+                    <p class="kicker">{{ $locale === 'ar' ? 'شركاء النجاح' : ($locale === 'fr' ? 'HISTOIRES DE PARTENAIRES' : 'PARTNER STORIES') }}</p>
+
+                    <!-- Sadu Ribbon Pattern Right -->
+                    <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="6" y="0" width="6" height="6" fill="#00E59B"/>
+                        <rect x="6" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
+                        <rect x="18" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="24" y="0" width="6" height="6" fill="#00E59B"/>
+                        <rect x="24" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
+                        <rect x="36" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="42" y="0" width="6" height="6" fill="#00E59B"/>
+                        <rect x="42" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
+                        <rect x="54" y="4" width="6" height="6" fill="#00E59B"/>
+                    </svg>
                 </div>
 
-                <!-- Centered Headline & Subtitle -->
-                <div class="partners-header-center reveal">
-                    <h2 class="partners-title">
-                        {{ $locale === 'ar' ? 'شركاؤنا' : 'Our Partners' }}<br/>
-                        {{ $locale === 'ar' ? 'هم' : 'Are The' }} <span class="text-green">{{ $locale === 'ar' ? 'الدليل.' : 'Proof.' }}</span>
-                    </h2>
-                    <p class="partners-subtitle">
-                        {{ $locale === 'ar' ? 'شركات ومؤسسات وثقت في حلولنا' : 'Leading companies and institutions that trust our digital solutions' }}
-                    </p>
-                </div>
+                <h2>{{ $locale === 'ar' ? 'شركاؤنا' : 'Our Partners' }}<br/>{{ $locale === 'ar' ? 'هم' : 'Are The' }} <span>{{ $locale === 'ar' ? 'الـدليـل.' : 'Proof.' }}</span></h2>
+                <p>{{ $locale === 'ar' ? 'قصص حقيقية من شركاء بنوا معنا منتجات رقمية أحدثت نقلة نوعية في تجربة عملائهم ونمو أعمالهم.' : 'Real stories from visionary partners who built category-defining digital products with us.' }}</p>
             </div>
 
-            <!-- Partners Logos Grid / Track -->
-            <div class="ox-partners-grid" id="partnersGrid">
-                <!-- Card 1: Saudi Government Entity (جهة حكومية) -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Saudi National Emblem: Palm Tree and Crossed Swords -->
-                            <g transform="translate(90, 30)" stroke="#071B19" fill="#071B19">
-                                <!-- Palm Tree Trunk & Fronds -->
-                                <path d="M0 0 V-18" stroke-width="2.5" stroke-linecap="round"/>
-                                <path d="M0 -18 C-4 -26 -16 -24 -22 -18 C-16 -16 -6 -17 0 -18 Z"/>
-                                <path d="M0 -18 C4 -26 16 -24 22 -18 C16 -16 6 -17 0 -18 Z"/>
-                                <path d="M0 -18 C-3 -28 -10 -30 -14 -25 C-10 -23 -4 -21 0 -18 Z"/>
-                                <path d="M0 -18 C3 -28 10 -30 14 -25 C10 -23 4 -21 0 -18 Z"/>
-                                <path d="M0 -18 C0 -30 -4 -32 0 -34 C4 -32 0 -30 0 -18 Z"/>
-                                <!-- Crossed Curved Scimitars / Swords -->
-                                <path d="M-18 6 C-8 12 8 8 18 -4" stroke-width="2" fill="none" stroke-linecap="round"/>
-                                <path d="M18 6 C8 12 -8 8 -18 -4" stroke-width="2" fill="none" stroke-linecap="round"/>
-                                <!-- Sword Hilts -->
-                                <circle cx="-19" cy="7" r="1.5"/>
-                                <circle cx="19" cy="7" r="1.5"/>
-                                <line x1="-16" y1="4" x2="-20" y2="8" stroke-width="1.8"/>
-                                <line x1="16" y1="4" x2="20" y2="8" stroke-width="1.8"/>
-                            </g>
-                            <!-- Text: جهة حكومية -->
-                            <text x="90" y="68" font-family="'Cairo', sans-serif" font-size="14" font-weight="800" fill="#071B19" text-anchor="middle">جهة حكومية</text>
-                        </svg>
+            @if(isset($testimonials) && $testimonials->count() > 0)
+                <div class="video-stage reveal" aria-label="فيديوهات آراء الشركاء">
+                    @foreach($testimonials as $tIndex => $t)
+                        @php
+                            $isCenter = ($tIndex === 0);
+                            $class = $isCenter ? 'active-video' : ($tIndex === 1 ? 'side-video next' : 'side-video previous');
+                            $hasCustomPoster = !empty($t->poster_url);
+                        @endphp
+                        <div class="video-card {{ $class }}" id="video-card-{{ $tIndex }}" data-video="{{ $tIndex }}" 
+                             onclick="handleCardStageClick({{ $tIndex }})">
+                            
+                            <!-- Thumbnail / Poster Layer -->
+                            <div class="card-thumb-layer" id="card-thumb-{{ $tIndex }}" 
+                                 style="@if($hasCustomPoster) background-image: url('{{ $t->poster_url }}'); @endif">
+                                
+                                <!-- Sadu Geometric Pattern Artwork -->
+                                <div class="card-sadu-art">
+                                    <svg width="180" height="180" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="70" y="10" width="20" height="20" fill="#C8A96B"/>
+                                        <rect x="70" y="130" width="20" height="20" fill="#C8A96B"/>
+                                        <rect x="10" y="70" width="20" height="20" fill="#C8A96B"/>
+                                        <rect x="130" y="70" width="20" height="20" fill="#C8A96B"/>
+
+                                        <rect x="50" y="30" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="90" y="30" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="30" y="50" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="110" y="50" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="30" y="90" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="110" y="90" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="50" y="110" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="90" y="110" width="20" height="20" fill="#00E59B"/>
+
+                                        <rect x="70" y="50" width="20" height="20" fill="#ffffff"/>
+                                        <rect x="50" y="70" width="20" height="20" fill="#ffffff"/>
+                                        <rect x="90" y="70" width="20" height="20" fill="#ffffff"/>
+                                        <rect x="70" y="90" width="20" height="20" fill="#ffffff"/>
+                                        <rect x="70" y="70" width="20" height="20" fill="#00E59B"/>
+                                    </svg>
+                                </div>
+
+                                <!-- Top Bar: Badge & Expand Button -->
+                                <div class="card-top-bar">
+                                    <span class="video-no">{{ $t->number_badge ?? sprintf('%02d', $tIndex + 1) }}</span>
+                                    <button type="button" class="expand-btn" title="توسيع ملء الشاشة" 
+                                            onclick="event.stopPropagation(); triggerCardFullscreen({{ $tIndex }})">
+                                        ⛶
+                                    </button>
+                                </div>
+
+                                <!-- Center Glowing Play Button -->
+                                <div class="card-center-play">
+                                    <div class="play-ring" title="تشغيل الفيديو داخل الكارت"
+                                         onclick="event.stopPropagation(); startCardVideo({{ $tIndex }})">
+                                        ▶
+                                    </div>
+                                </div>
+
+                                <!-- Bottom Media Player Controls & Partner Info -->
+                                <div class="card-media-footer">
+                                    <div class="card-partner-info">
+                                        <b>{{ $t->partner_name }}</b>
+                                        <small>{{ $t->partner_role }}</small>
+                                    </div>
+                                    <div class="player-timeline">
+                                        <div class="player-timeline-fill" id="timeline-fill-{{ $tIndex }}"></div>
+                                    </div>
+                                    <div class="player-sub-controls">
+                                        <span>◀◀</span>
+                                        <span style="color:var(--lime, #00E59B); font-size:13px;">▶</span>
+                                        <span>▶▶</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Active Inline Video Frame Layer -->
+                            <div class="card-video-frame" id="card-video-frame-{{ $tIndex }}">
+                                <div class="frame-overlay-controls">
+                                    <button type="button" class="frame-btn" title="إغلاق والعودة" 
+                                            onclick="event.stopPropagation(); closeCardVideo({{ $tIndex }})">
+                                        ✕
+                                    </button>
+                                    <button type="button" class="frame-btn" title="تكبير ملء الشاشة" 
+                                            onclick="event.stopPropagation(); triggerCardFullscreen({{ $tIndex }})">
+                                        ⛶
+                                    </button>
+                                </div>
+                                @if($t->video_src)
+                                    <video id="native-video-{{ $tIndex }}" 
+                                           playsinline 
+                                           controls 
+                                           preload="metadata" 
+                                           src="{{ $t->video_src }}" 
+                                           style="width:100%; height:100%; object-fit:cover;"></video>
+                                @else
+                                    <div style="display:grid; place-items:center; height:100%; color:#00E59B; padding:20px; text-align:center;">
+                                        <span>جاري تجهيز فيديو التجربة...</span>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="quote reveal">
+                    <span class="quote-mark">“</span>
+                    <blockquote id="quote-text">{{ $testimonials[0]->quote }}</blockquote>
+                    <div>
+                        <b id="quote-name">{{ $testimonials[0]->partner_name }}</b>
+                        <small id="quote-role">{{ $testimonials[0]->partner_role }} · {{ $testimonials[0]->partner_country }}</small>
                     </div>
                 </div>
 
-                <!-- Card 2: SDAIA (الهيئة السعودية للبيانات والذكاء الاصطناعي) -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- SDAIA Isometric 3D Node Cube -->
-                            <g transform="translate(36, 40)">
-                                <!-- Top Facet Nodes (Teal / Emerald) -->
-                                <circle cx="0" cy="-20" r="3" fill="#1D8A68"/>
-                                <circle cx="-12" cy="-14" r="3" fill="#2EE59D"/>
-                                <circle cx="12" cy="-14" r="3" fill="#2EE59D"/>
-                                <circle cx="0" cy="-8" r="3.5" fill="#146049"/>
-                                <line x1="0" y1="-20" x2="-12" y2="-14" stroke="#2EE59D" stroke-width="1.2"/>
-                                <line x1="0" y1="-20" x2="12" y2="-14" stroke="#2EE59D" stroke-width="1.2"/>
-                                <line x1="-12" y1="-14" x2="0" y2="-8" stroke="#1D8A68" stroke-width="1.2"/>
-                                <line x1="12" y1="-14" x2="0" y2="-8" stroke="#1D8A68" stroke-width="1.2"/>
-                                <!-- Left Facet Nodes (Cyan / Blue) -->
-                                <circle cx="-12" cy="4" r="3" fill="#16758A"/>
-                                <circle cx="0" cy="10" r="3" fill="#0D505E"/>
-                                <line x1="-12" y1="-14" x2="-12" y2="4" stroke="#16758A" stroke-width="1.2"/>
-                                <line x1="0" y1="-8" x2="0" y2="10" stroke="#0D505E" stroke-width="1.2"/>
-                                <line x1="-12" y1="4" x2="0" y2="10" stroke="#16758A" stroke-width="1.2"/>
-                                <!-- Right Facet Nodes (Amber / Orange) -->
-                                <circle cx="12" cy="4" r="3" fill="#D97706"/>
-                                <line x1="12" y1="-14" x2="12" y2="4" stroke="#D97706" stroke-width="1.2"/>
-                                <line x1="0" y1="10" x2="12" y2="4" stroke="#D97706" stroke-width="1.2"/>
-                                <circle cx="0" cy="0" r="2" fill="#071B19"/>
-                            </g>
-                            <!-- Text: SDAIA & Arabic Subtitle -->
-                            <text x="75" y="36" font-family="'Poppins', sans-serif" font-size="20" font-weight="900" fill="#071B19" letter-spacing="1">SDAIA</text>
-                            <text x="75" y="52" font-family="'Cairo', sans-serif" font-size="9" font-weight="700" fill="#4B6058">الهيئة السعودية للبيانات</text>
-                            <text x="75" y="63" font-family="'Cairo', sans-serif" font-size="9" font-weight="700" fill="#4B6058">والذكاء الاصطناعي</text>
-                        </svg>
-                    </div>
+                <div class="story-controls reveal">
+                    <button id="story-prev" type="button" aria-label="{{ $locale === 'ar' ? 'القصة السابقة' : 'Previous Story' }}">←</button>
+                    <span><b id="story-count">01</b> / {{ sprintf('%02d', $testimonials->count()) }}</span>
+                    <button id="story-next" type="button" aria-label="{{ $locale === 'ar' ? 'القصة التالية' : 'Next Story' }}">→</button>
                 </div>
-
-                <!-- Card 3: Ministry of Health (وزارة الصحة) -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Official MOH Stylized Palm & Health Arcs -->
-                            <g transform="translate(100, 26)">
-                                <!-- Palm Crown -->
-                                <path d="M0 -3 V-15" stroke="#1D8A68" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M0 -15 C-4 -20 -10 -18 -14 -14 C-10 -13 -4 -14 0 -15 Z" fill="#1D8A68"/>
-                                <path d="M0 -15 C4 -20 10 -18 14 -14 C10 -13 4 -14 0 -15 Z" fill="#1D8A68"/>
-                                <path d="M0 -15 C-2 -22 -6 -23 -8 -20 C-6 -18 -2 -17 0 -15 Z" fill="#1D8A68"/>
-                                <path d="M0 -15 C2 -22 6 -23 8 -20 C6 -18 2 -17 0 -15 Z" fill="#1D8A68"/>
-                                <!-- Dynamic Health Interlocking Curved Ribbon -->
-                                <path d="M-18 -4 C-12 -12 0 6 18 -4" stroke="#87754B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                                <path d="M-18 4 C-8 -6 8 12 18 4" stroke="#1D8A68" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                            </g>
-                            <!-- Text: وزارة الصحة / Ministry of Health -->
-                            <text x="100" y="55" font-family="'Cairo', sans-serif" font-size="14" font-weight="800" fill="#071B19" text-anchor="middle">وزارة الصحة</text>
-                            <text x="100" y="68" font-family="'Poppins', sans-serif" font-size="8" font-weight="600" fill="#71857E" text-anchor="middle" letter-spacing="0.5">Ministry of Health</text>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Card 4: Elm (علم) -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Elm Dynamic Node Monogram 'ع' -->
-                            <g transform="translate(62, 38)">
-                                <circle cx="-16" cy="6" r="6" fill="#071B19"/>
-                                <circle cx="-4" cy="-10" r="5" fill="#146049"/>
-                                <circle cx="10" cy="-6" r="6" fill="#1D8A68"/>
-                                <circle cx="14" cy="10" r="4.5" fill="#2EE59D"/>
-                                <path d="M-16 6 Q -4 10 10 -6" stroke="#071B19" stroke-width="3" fill="none"/>
-                                <path d="M-4 -10 Q 6 -16 10 -6" stroke="#1D8A68" stroke-width="3" fill="none"/>
-                                <path d="M10 -6 Q 16 2 14 10" stroke="#2EE59D" stroke-width="2.5" fill="none"/>
-                            </g>
-                            <!-- Typography: علم / Elm -->
-                            <g transform="translate(100, 32)">
-                                <text x="0" y="8" font-family="'Cairo', sans-serif" font-size="22" font-weight="900" fill="#071B19">علم</text>
-                                <text x="2" y="24" font-family="'Poppins', sans-serif" font-size="11" font-weight="800" fill="#1D8A68" letter-spacing="1">Elm</text>
-                            </g>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Card 5: Monsha'at (منشآت) -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 190 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Monsha'at Rounded Emerald Stems -->
-                            <g transform="translate(48, 40)">
-                                <rect x="-18" y="-12" width="6" height="24" rx="3" fill="#1D8A68"/>
-                                <rect x="-8" y="-18" width="6" height="30" rx="3" fill="#2EE59D"/>
-                                <rect x="2" y="-14" width="6" height="26" rx="3" fill="#146049"/>
-                                <rect x="12" y="-8" width="6" height="20" rx="3" fill="#C8A96B"/>
-                            </g>
-                            <text x="80" y="38" font-family="'Cairo', sans-serif" font-size="18" font-weight="800" fill="#071B19">منشآت</text>
-                            <text x="80" y="52" font-family="'Poppins', sans-serif" font-size="9" font-weight="700" fill="#60766F" letter-spacing="0.5">MONSHA'AT</text>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Card 6: Tadawul (تداول السعودية) -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 190 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Tadawul Financial Curve -->
-                            <g transform="translate(45, 40)">
-                                <path d="M-15 10 C-5 14 5 -12 18 -10" stroke="#0072CE" stroke-width="4" stroke-linecap="round" fill="none"/>
-                                <path d="M-10 14 C0 18 10 -4 20 -4" stroke="#1D8A68" stroke-width="3" stroke-linecap="round" fill="none"/>
-                                <circle cx="18" cy="-10" r="3" fill="#0072CE"/>
-                            </g>
-                            <text x="76" y="37" font-family="'Cairo', sans-serif" font-size="17" font-weight="800" fill="#071B19">تداول السعودية</text>
-                            <text x="76" y="52" font-family="'Poppins', sans-serif" font-size="9" font-weight="700" fill="#0072CE" letter-spacing="0.5">Saudi Exchange</text>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Card 7: stc pay -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 170 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="25" y="18" width="120" height="44" rx="12" fill="#4F008C"/>
-                            <text x="50" y="46" font-family="'Poppins', sans-serif" font-size="18" font-weight="900" fill="#ffffff" letter-spacing="0.5">stc</text>
-                            <rect x="88" y="27" width="46" height="26" rx="6" fill="#00C48C"/>
-                            <text x="96" y="45" font-family="'Poppins', sans-serif" font-size="13" font-weight="800" fill="#4F008C">pay</text>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Card 8: Mawani (موانئ) -->
-                <div class="ox-partner-card reveal">
-                    <div class="partner-logo-wrap">
-                        <svg viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g transform="translate(45, 40)">
-                                <path d="M-15 4 C-8 -8 8 -8 15 4 C8 0 -8 0 -15 4 Z" fill="#0C4A60"/>
-                                <path d="M-18 10 C-10 2 10 2 18 10 C10 6 -10 6 -18 10 Z" fill="#00A3E0"/>
-                                <circle cx="0" cy="-12" r="4" fill="#0C4A60"/>
-                            </g>
-                            <text x="75" y="38" font-family="'Cairo', sans-serif" font-size="18" font-weight="800" fill="#071B19">موانئ</text>
-                            <text x="75" y="52" font-family="'Poppins', sans-serif" font-size="9" font-weight="700" fill="#0C4A60" letter-spacing="0.5">MAWANI</text>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+            @endif
         </div>
     </section>
 
     <!-- ─── Divider into Saudi Roots & Story Section ─── -->
-    <div class="sadu-divider" style="color: #071B19; background-color: var(--ox-ivory);">
+    <div class="sadu-divider" style="color: #0D2925; background-color: #071B19;">
         <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
             <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
         </svg>
@@ -1448,38 +1313,81 @@
 }
 </script>
 <link rel="stylesheet" href="{{ asset('assets/product-scroll.css') }}">
+<noscript>
+    <style>
+        .reveal { opacity: 1 !important; transform: none !important; }
+    </style>
+</noscript>
 @endpush
 
 @push('scripts')
 <script>
-    // Reveal animation
-    const observer = new IntersectionObserver(e => e.forEach(x => {
-        if (x.isIntersecting) x.target.classList.add('visible');
-    }), { threshold: .12 });
+    // 1. Reveal on scroll animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.05, rootMargin: '0px 0px 80px 0px' });
+    
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Portfolio filters
-    let country = 'all', sector = 'all';
-    const cards = [...document.querySelectorAll('.project')];
-    function filter() {
-        cards.forEach(card => card.classList.toggle('hidden', !(country === 'all' || card.classList.contains(country)) || !(sector === 'all' || card.classList.contains(sector))));
+    // Instant & Scroll Fallback: ensure any elements in or near viewport are always visible
+    function ensureRevealed() {
+        const threshold = window.innerHeight + 120;
+        document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= threshold) {
+                el.classList.add('visible');
+            }
+        });
     }
-    document.querySelectorAll('#countries button').forEach(b => b.onclick = () => {
-        country = b.dataset.filter;
-        document.querySelectorAll('#countries button').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        filter();
-    });
-    document.querySelectorAll('#sectors button').forEach(b => b.onclick = () => {
-        sector = b.dataset.sector;
-        document.querySelectorAll('#sectors button').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        filter();
-    });
 
-    // Testimonials Data from Controller
-    const storiesData = {!! $storiesJson !!};
+    ensureRevealed();
+    window.addEventListener('scroll', ensureRevealed, { passive: true });
+    window.addEventListener('resize', ensureRevealed, { passive: true });
+    setTimeout(ensureRevealed, 100);
+    setTimeout(ensureRevealed, 400);
+    setTimeout(ensureRevealed, 1200);
+    // Ultimate fail-safe: reveal everything after 2.5s in case observer is blocked
+    setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 2500);
 
+    // 2. Services Section Slider Navigation
+    window.scrollServices = function(direction) {
+        const grid = document.getElementById('servicesGrid');
+        if (!grid) return;
+        const card = grid.querySelector('.ox-service-card');
+        const scrollAmount = card ? (card.offsetWidth + 24) : 360;
+        grid.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    // 3. Services Category Filtering
+    window.filterServicesGrid = function(categorySlug, btn) {
+        const grid = document.getElementById('servicesGrid');
+        if (!grid) return;
+        const buttons = document.querySelectorAll('.services-tab-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        const cards = grid.querySelectorAll('.ox-service-card');
+        cards.forEach(card => {
+            const cardCat = card.getAttribute('data-category');
+            if (categorySlug === 'all' || cardCat === categorySlug) {
+                card.style.display = '';
+                card.classList.add('visible');
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        grid.scrollTo({ left: 0, behavior: 'smooth' });
+    };
+
+    // 4. Partner Stories Video Stage Controller
+    const storiesData = {!! $storiesJson ?? '[]' !!};
     let currentStory = 0;
     const videoCards = [...document.querySelectorAll('.video-card')];
 
@@ -1497,17 +1405,20 @@
         });
     });
 
-    function showStory(n) {
+    window.showStory = function(n) {
         if (!storiesData || storiesData.length === 0) return;
         
-        // Pause and reset any playing video
         pauseAllCardVideos();
 
         currentStory = (n + storiesData.length) % storiesData.length;
-        document.querySelector('#quote-text').textContent = storiesData[currentStory][0];
-        document.querySelector('#quote-name').textContent = storiesData[currentStory][1];
-        document.querySelector('#quote-role').textContent = storiesData[currentStory][2];
-        document.querySelector('#story-count').textContent = `0${currentStory + 1}`;
+        const qText = document.querySelector('#quote-text');
+        const qName = document.querySelector('#quote-name');
+        const qRole = document.querySelector('#quote-role');
+        const sCount = document.querySelector('#story-count');
+        if (qText) qText.textContent = storiesData[currentStory][0];
+        if (qName) qName.textContent = storiesData[currentStory][1];
+        if (qRole) qRole.textContent = storiesData[currentStory][2];
+        if (sCount) sCount.textContent = `0${currentStory + 1}`;
 
         videoCards.forEach((card, i) => {
             const count = videoCards.length;
@@ -1519,17 +1430,17 @@
             }
             card.className = `video-card ${cls}`;
         });
-    }
+    };
 
-    function handleCardStageClick(index) {
+    window.handleCardStageClick = function(index) {
         if (currentStory === index) {
             startCardVideo(index);
         } else {
             showStory(index);
         }
-    }
+    };
 
-    function startCardVideo(index) {
+    window.startCardVideo = function(index) {
         if (currentStory !== index) {
             showStory(index);
         }
@@ -1537,11 +1448,19 @@
         const vid = document.getElementById(`native-video-${index}`);
         if (frame && vid) {
             frame.classList.add('playing');
-            vid.play().catch(e => console.log('Autoplay prevented:', e));
+            vid.currentTime = 0;
+            const playPromise = vid.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(e => {
+                    console.log('Audio autoplay prevented, retrying muted:', e);
+                    vid.muted = true;
+                    vid.play().catch(err => console.error('Video error:', err));
+                });
+            }
         }
-    }
+    };
 
-    function closeCardVideo(index) {
+    window.closeCardVideo = function(index) {
         const frame = document.getElementById(`card-video-frame-${index}`);
         const vid = document.getElementById(`native-video-${index}`);
         if (vid) {
@@ -1550,17 +1469,17 @@
         if (frame) {
             frame.classList.remove('playing');
         }
-    }
+    };
 
-    function pauseAllCardVideos() {
+    window.pauseAllCardVideos = function() {
         document.querySelectorAll('.card-video-frame').forEach((frame, idx) => {
             frame.classList.remove('playing');
             const vid = document.getElementById(`native-video-${idx}`);
             if (vid) vid.pause();
         });
-    }
+    };
 
-    function triggerCardFullscreen(index) {
+    window.triggerCardFullscreen = function(index) {
         startCardVideo(index);
         const vid = document.getElementById(`native-video-${index}`);
         const frame = document.getElementById(`card-video-frame-${index}`);
@@ -1575,19 +1494,20 @@
                 target.msRequestFullscreen();
             }
         }
-    }
+    };
 
-    const prevBtn = document.querySelector('#story-prev');
-    const nextBtn = document.querySelector('#story-next');
-    if (prevBtn) prevBtn.onclick = () => showStory(currentStory - 1);
-    if (nextBtn) nextBtn.onclick = () => showStory(currentStory + 1);
+    const prevStoryBtn = document.querySelector('#story-prev');
+    const nextStoryBtn = document.querySelector('#story-next');
+    if (prevStoryBtn) prevStoryBtn.onclick = () => showStory(currentStory - 1);
+    if (nextStoryBtn) nextStoryBtn.onclick = () => showStory(currentStory + 1);
 
-    // Interactive Pills for Inline Form
+    // 5. Interactive Pills for Consultation Form
     document.querySelectorAll('#projectTypePills .pill-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('#projectTypePills .pill-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            document.getElementById('selectedProjectType').value = this.dataset.val;
+            const hiddenInput = document.getElementById('selectedProjectType');
+            if (hiddenInput) hiddenInput.value = this.dataset.val;
         });
     });
 
@@ -1595,11 +1515,12 @@
         btn.addEventListener('click', function() {
             document.querySelectorAll('#budgetPills .pill-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
-            document.getElementById('selectedBudget').value = this.dataset.val;
+            const hiddenBudget = document.getElementById('selectedBudget');
+            if (hiddenBudget) hiddenBudget.value = this.dataset.val;
         });
     });
 
-    // Smoothly focus consultation form from CTA button
+    // 6. Focus consultation form from CTA button
     function focusConsultForm() {
         const nameInput = document.getElementById('consult_name');
         if (nameInput) {
@@ -1617,7 +1538,7 @@
     }
     window.focusConsultForm = focusConsultForm;
 
-    // Fast AJAX submission for Inline Form
+    // 7. Consultation Form AJAX submission
     const inlineForm = document.getElementById('inlineConsultationForm');
     const inlineSubmitBtn = document.getElementById('inlineSubmitBtn');
     const inlineFormContent = document.getElementById('inlineFormContent');
@@ -1626,8 +1547,11 @@
     if (inlineForm) {
         inlineForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            inlineSubmitBtn.disabled = true;
-            inlineSubmitBtn.querySelector('span').textContent = "{{ $locale === 'ar' ? 'جاري إرسال الطلب...' : ($locale === 'fr' ? 'Envoi en cours...' : 'Sending Request...') }}";
+            if (inlineSubmitBtn) {
+                inlineSubmitBtn.disabled = true;
+                const span = inlineSubmitBtn.querySelector('span');
+                if (span) span.textContent = "{{ $locale === 'ar' ? 'جاري إرسال الطلب...' : ($locale === 'fr' ? 'Envoi en cours...' : 'Sending Request...') }}";
+            }
 
             const formData = new FormData(this);
 
@@ -1642,20 +1566,23 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    inlineFormContent.style.display = 'none';
-                    inlineSuccessBox.style.display = 'block';
+                    if (inlineFormContent) inlineFormContent.style.display = 'none';
+                    if (inlineSuccessBox) inlineSuccessBox.style.display = 'block';
                     if (data.message) {
-                        document.getElementById('successMsgText').textContent = data.message;
+                        const msgEl = document.getElementById('successMsgText');
+                        if (msgEl) msgEl.textContent = data.message;
                     }
                 } else {
                     alert("{{ __('حدث خطأ أثناء الإرسال، يرجى التحقق من البيانات والمحاولة مجدداً.') }}");
-                    inlineSubmitBtn.disabled = false;
-                    inlineSubmitBtn.querySelector('span').textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
+                    if (inlineSubmitBtn) {
+                        inlineSubmitBtn.disabled = false;
+                        const span = inlineSubmitBtn.querySelector('span');
+                        if (span) span.textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
+                    }
                 }
             })
             .catch(err => {
                 console.error(err);
-                // Fallback to regular form submit if AJAX fails
                 inlineForm.submit();
             });
         });
@@ -1667,11 +1594,13 @@
         if (inlineSuccessBox) inlineSuccessBox.style.display = 'none';
         if (inlineSubmitBtn) {
             inlineSubmitBtn.disabled = false;
-            inlineSubmitBtn.querySelector('span').textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
+            const span = inlineSubmitBtn.querySelector('span');
+            if (span) span.textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
         }
     }
+    window.resetInlineForm = resetInlineForm;
 
-    // Live Character Counter for Inline Form
+    // 8. Live Character Counter for Consultation Form
     const inlineMsg = document.querySelector('#inlineConsultationForm textarea[name="message"]');
     const inlineMsgCounter = document.getElementById('inlineMsgCounter');
     if (inlineMsg && inlineMsgCounter) {
@@ -1684,30 +1613,6 @@
             }
         });
     }
-
-    // Services Section Slider Navigation
-    window.scrollServices = function(direction) {
-        const grid = document.getElementById('servicesGrid');
-        if (!grid) return;
-        const card = grid.querySelector('.ox-service-card');
-        const scrollAmount = card ? (card.offsetWidth + 24) : 360;
-        grid.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth'
-        });
-    };
-
-    // Partners Section Slider Navigation
-    window.scrollPartners = function(direction) {
-        const grid = document.getElementById('partnersGrid');
-        if (!grid) return;
-        const card = grid.querySelector('.ox-partner-card');
-        const scrollAmount = card ? (card.offsetWidth + 22) : 260;
-        grid.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth'
-        });
-    };
 </script>
 
 <!-- Ionicons v7 Web Components (self-hosted) -->

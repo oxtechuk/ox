@@ -30,9 +30,14 @@ class Testimonial extends Model
     public function getPosterUrlAttribute(): string
     {
         if ($this->poster_image) {
-            return str_starts_with($this->poster_image, 'http')
-                ? $this->poster_image
-                : asset('storage/'.$this->poster_image);
+            if (str_starts_with($this->poster_image, 'http')) {
+                return $this->poster_image;
+            }
+            if (str_starts_with($this->poster_image, 'assets/')) {
+                return asset($this->poster_image);
+            }
+
+            return asset('storage/'.$this->poster_image);
         }
 
         return '';
@@ -41,9 +46,14 @@ class Testimonial extends Model
     public function getVideoSrcAttribute(): string
     {
         if ($this->video_url) {
-            return str_starts_with($this->video_url, 'http')
-                ? $this->video_url
-                : asset('storage/'.$this->video_url);
+            if (str_starts_with($this->video_url, 'http')) {
+                return $this->video_url;
+            }
+            if (str_starts_with($this->video_url, 'assets/')) {
+                return asset($this->video_url);
+            }
+
+            return asset('storage/'.$this->video_url);
         }
 
         return '';

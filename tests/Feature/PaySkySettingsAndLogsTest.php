@@ -8,7 +8,7 @@ use App\Models\PaymentLog;
 use App\Models\SiteSetting;
 use App\Models\User;
 use App\Services\PaySkyService;
-use Database\Seeders\DigitalProductSeeder;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,7 +22,7 @@ class PaySkySettingsAndLogsTest extends TestCase
     {
         parent::setUp();
 
-        $this->seed(DigitalProductSeeder::class);
+        $this->seed(DatabaseSeeder::class);
 
         $this->admin = User::firstOrCreate(
             ['email' => 'admin@ox-tech.sa'],

@@ -8,7 +8,7 @@ use App\Models\DownloadToken;
 use App\Models\Order;
 use App\Models\ProductLandingPage;
 use App\Models\User;
-use Database\Seeders\DigitalProductSeeder;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -22,8 +22,8 @@ class DigitalStoreAndCheckoutTest extends TestCase
     {
         parent::setUp();
 
-        // Seed basic products
-        $this->seed(DigitalProductSeeder::class);
+        // Seed database
+        $this->seed(DatabaseSeeder::class);
     }
 
     public function test_store_index_page_is_accessible(): void
