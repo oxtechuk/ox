@@ -1250,227 +1250,179 @@
 
     @yield('content')
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         Ultra-Premium Executive Regional Footer with Saudi Cultural Tapestry
-         ═══════════════════════════════════════════════════════════════ -->
-    <footer class="ox-premium-footer">
-        <!-- Top Luminous Specular Accent Bar -->
-        <div class="footer-glow-bar"></div>
+    <!-- ===============================================================
+         COMPONENT 1: Four Pillars Strip (Saudi x Egypt Synergy)
+         =============================================================== -->
+    <section class="ox-pillars-component" id="oxPillarsComponent">
+        <!-- Arabesque Watermark Patterns on Far Edges -->
+        <div class="ox-footer-arabesque ox-footer-arabesque-right" aria-hidden="true"></div>
+        <div class="ox-footer-arabesque ox-footer-arabesque-left" aria-hidden="true"></div>
 
-        <!-- Pre-Footer Action Ribbon -->
-        <div class="footer-pre-banner">
-            <div class="footer-pre-banner-inner">
-                <div class="footer-pre-text">
-                    <h3 class="footer-pre-title">
-                        {{ $currentLocale === 'ar' ? 'هل تخطط لإطلاق أو توسيع منصتك الرقمية القادمة؟' : ($currentLocale === 'fr' ? 'Prêt à concevoir votre prochaine plateforme digitale ?' : 'Ready to engineer your next scalable digital product?') }}
-                    </h3>
-                    <p class="footer-pre-sub">
-                        <span class="footer-live-badge"><span class="footer-live-dot"></span> {{ $currentLocale === 'ar' ? 'متاحون لاستقبال مشاريع جديدة' : ($currentLocale === 'fr' ? 'Disponibles pour nouveaux projets' : 'Available for new projects') }}</span>
-                        <span>{{ $currentLocale === 'ar' ? 'فرقنا الهندسية في الرياض ودبي والقاهرة جاهزة للتعاون معك.' : ($currentLocale === 'fr' ? 'Nos équipes à Riyad, Dubaï et Le Caire sont à votre écoute.' : 'Our teams in Riyadh, Dubai & Cairo are ready to collaborate.') }}</span>
+        <!-- Upper Highlights Strip (4 Pillars) -->
+        <div class="ox-footer-highlights">
+            <div class="ox-footer-highlights-inner">
+                <!-- Pillar 1: Dual-Market Expertise (Far Right in RTL) -->
+                <div class="ox-highlight-item">
+                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
+                        <!-- Dual Market Badge SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L19.5 5.5V11.5C19.5 16.5 16 20.5 12 22C8 20.5 4.5 16.5 4.5 11.5V5.5L12 2Z"></path>
+                            <circle cx="12" cy="12" r="3.5"></circle>
+                            <path d="M12 8.5V7M12 17v-1.5M8.5 12H7M17 12h-1.5"></path>
+                        </svg>
+                    </div>
+                    <h4 class="ox-highlight-title">
+                        {{ $currentLocale === 'ar' ? 'خبرة في السوقين' : ($currentLocale === 'fr' ? 'Double Expertise' : 'Dual-Market Expertise') }}
+                    </h4>
+                    <p class="ox-highlight-sub">
+                        {{ $currentLocale === 'ar' ? 'السعودي والمصري' : ($currentLocale === 'fr' ? 'Marchés Saoudien & Égyptien' : 'Saudi & Egyptian Markets') }}
                     </p>
                 </div>
-                <div>
-                    <button onclick="openConsultModal()" class="pill-btn-lime" style="padding: 10px 24px; font-size: 13px;">
-                        {{ $currentLocale === 'ar' ? 'احجز جلسة استشارية أولية ⚡' : ($currentLocale === 'fr' ? 'Réserver une session ⚡' : 'Book a Discovery Call ⚡') }}
-                    </button>
+
+                <!-- Pillar 2: Continuous Support (Second from Right in RTL) -->
+                <div class="ox-highlight-item">
+                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
+                        <!-- Headset Support SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="ox-highlight-title">
+                        {{ $currentLocale === 'ar' ? 'دعم مستمر' : ($currentLocale === 'fr' ? 'Support Continu' : 'Continuous Support') }}
+                    </h4>
+                    <p class="ox-highlight-sub">
+                        {{ $currentLocale === 'ar' ? 'قبل وبعد الإطلاق' : ($currentLocale === 'fr' ? 'Avant et Après Lancement' : 'Pre & Post-Launch') }}
+                    </p>
+                </div>
+
+                <!-- Pillar 3: Tailored Solutions (Third from Right in RTL) -->
+                <div class="ox-highlight-item">
+                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
+                        <!-- 3D Modular Cube SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h4 class="ox-highlight-title">
+                        {{ $currentLocale === 'ar' ? 'حلول مخصصة' : ($currentLocale === 'fr' ? 'Solutions Sur Mesure' : 'Tailored Solutions') }}
+                    </h4>
+                    <p class="ox-highlight-sub">
+                        {{ $currentLocale === 'ar' ? 'حسب احتياجاتك' : ($currentLocale === 'fr' ? 'Adaptées à Vos Besoins' : 'Customized To Your Needs') }}
+                    </p>
+                </div>
+
+                <!-- Pillar 4: Rapid Execution (Far Left in RTL) -->
+                <div class="ox-highlight-item">
+                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
+                        <!-- Stopwatch Speed Timer SVG -->
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="13" r="8"></circle>
+                            <polyline points="12 9 12 13 15 15"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="5"></line>
+                            <line x1="10" y1="2" x2="14" y2="2"></line>
+                        </svg>
+                    </div>
+                    <h4 class="ox-highlight-title">
+                        {{ $currentLocale === 'ar' ? 'سرعة في التنفيذ' : ($currentLocale === 'fr' ? 'Exécution Rapide' : 'Rapid Execution') }}
+                    </h4>
+                    <p class="ox-highlight-sub">
+                        {{ $currentLocale === 'ar' ? 'نلتزم بوقت وجودة' : ($currentLocale === 'fr' ? 'Respect Délais & Qualité' : 'Committed To Time & Quality') }}
+                    </p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Main 4-Column Luxury Grid -->
-        <div class="footer-main-container">
-            <!-- Col 1: Brand & Regional Identity -->
-            <div class="footer-card">
-                <a class="logo" href="{{ route('home') }}" style="margin-bottom: 14px; display: inline-flex;">
-                    @if(!empty($siteSettings['site_logo_footer']))
-                        <img src="{{ $siteSettings['site_logo_footer'] }}" alt="OX Tech" style="max-height: 38px;">
-                    @else
-                        OX<span>.</span><small>{{ $siteSettings['site_name'] ?? 'TECH STUDIO' }}</small>
-                    @endif
+    <!-- ===============================================================
+         COMPONENT 2: Main Navigation Bar (Under Component 1)
+         =============================================================== -->
+    <footer class="ox-modern-footer" id="oxModernFooter">
+        <!-- Arabesque Watermark Patterns on Far Edges -->
+        <div class="ox-footer-arabesque ox-footer-arabesque-right" aria-hidden="true"></div>
+        <div class="ox-footer-arabesque ox-footer-arabesque-left" aria-hidden="true"></div>
+
+        <div class="ox-footer-main">
+            <div class="ox-footer-main-inner">
+                <!-- Brand / Logo (Left) -->
+                <a href="{{ route('home') }}" class="ox-footer-logo-brand" aria-label="OxTech Home">
+                    <span class="ox-footer-logo-text">O<span class="ox-logo-accent">x</span>Tech</span>
+                    <span class="ox-footer-tagline">
+                        <span>TECHNOLOGY</span>
+                        <span>FOR A BETTER TOMORROW</span>
+                    </span>
                 </a>
-                <p style="font-size: 13px; color: #a4b8b2; line-height: 1.8; margin: 0 0 16px;">
-                    @if($currentLocale === 'ar')
-                        {{ $siteSettings['footer_about_text'] ?? 'بيت برمجيات وتقنية رائد متخصص في بناء وتطوير المنصات السحابية، الأنظمة المؤسسية، والحلول الرقمية الذكية في السعودية ومصر والإمارات.' }}
-                    @elseif($currentLocale === 'fr')
-                        Maison d'ingénierie logicielle d'élite dédiée au développement de plateformes cloud, d'architectures SaaS et de solutions d'intelligence artificielle en Arabie Saoudite, en Égypte et aux EAU.
-                    @else
-                        Premier software engineering studio building high-performance enterprise platforms, custom cloud applications, and AI integrations across Saudi Arabia, Egypt, and the UAE.
-                    @endif
-                </p>
-                
-                <!-- Regional Trust Badge -->
-                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(18, 158, 56, 0.1); border: 1px solid rgba(18, 158, 56, 0.25); padding: 5px 12px; border-radius: 8px; margin-bottom: 12px; width: fit-content;">
-                    <span style="font-size: 13px;">🇸🇦</span>
-                    <span style="font-size: 11px; font-weight: 700; color: #d8fae5;">{{ $currentLocale === 'ar' ? 'سجل تجاري معتمد · الرياض' : 'Registered Tech House · Riyadh' }}</span>
-                </div>
 
-                <!-- Custom Luxury Social Media Badges -->
-                <div class="footer-social-strip">
-                    @if(!empty($siteSettings['social_x']))
-                        <a href="{{ $siteSettings['social_x'] }}" target="_blank" class="footer-social-btn" title="X / Twitter" aria-label="X">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </a>
-                    @endif
-                    @if(!empty($siteSettings['social_linkedin']))
-                        <a href="{{ $siteSettings['social_linkedin'] }}" target="_blank" class="footer-social-btn" title="LinkedIn" aria-label="LinkedIn">
+                <!-- Navigation Links (Center) -->
+                <nav class="ox-footer-nav" aria-label="Footer Navigation">
+                    <a href="{{ route('home') }}#consult" class="ox-footer-nav-link">
+                        {{ $currentLocale === 'ar' ? 'تواصل معنا' : ($currentLocale === 'fr' ? 'Contact' : 'Contact Us') }}
+                    </a>
+                    <a href="{{ route('home') }}#about" class="ox-footer-nav-link">
+                        {{ $currentLocale === 'ar' ? 'من نحن' : ($currentLocale === 'fr' ? 'À Propos' : 'About Us') }}
+                    </a>
+                    <a href="{{ route('home') }}#work" class="ox-footer-nav-link">
+                        {{ $currentLocale === 'ar' ? 'أعمالنا' : ($currentLocale === 'fr' ? 'Réalisations' : 'Portfolio') }}
+                    </a>
+                    <a href="{{ route('home') }}#services" class="ox-footer-nav-link">
+                        {{ $currentLocale === 'ar' ? 'خدماتنا' : ($currentLocale === 'fr' ? 'Services' : 'Services') }}
+                    </a>
+                    <a href="{{ route('home') }}#home" class="ox-footer-nav-link active">
+                        {{ $currentLocale === 'ar' ? 'الرئيسية' : ($currentLocale === 'fr' ? 'Accueil' : 'Home') }}
+                    </a>
+                </nav>
+
+                <!-- Socials & Domain Group (Right) -->
+                <div class="ox-footer-end-group">
+                    <div class="ox-footer-socials">
+                        <!-- LinkedIn -->
+                        <a href="{{ $siteSettings['social_linkedin'] ?? 'https://linkedin.com' }}" target="_blank" rel="noopener noreferrer" class="ox-footer-social-link" title="LinkedIn" aria-label="LinkedIn">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         </a>
-                    @endif
-                    @if(!empty($siteSettings['social_instagram']))
-                        <a href="{{ $siteSettings['social_instagram'] }}" target="_blank" class="footer-social-btn" title="Instagram" aria-label="Instagram">
+                        <!-- Instagram -->
+                        <a href="{{ $siteSettings['social_instagram'] ?? 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer" class="ox-footer-social-link" title="Instagram" aria-label="Instagram">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         </a>
-                    @endif
-                    @if(!empty($siteSettings['social_tiktok']))
-                        <a href="{{ $siteSettings['social_tiktok'] }}" target="_blank" class="footer-social-btn" title="TikTok" aria-label="TikTok">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                        <!-- Facebook -->
+                        <a href="{{ $siteSettings['social_facebook'] ?? 'https://facebook.com' }}" target="_blank" rel="noopener noreferrer" class="ox-footer-social-link" title="Facebook" aria-label="Facebook">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         </a>
-                    @endif
-                    @if(!empty($siteSettings['social_snapchat']))
-                        <a href="{{ $siteSettings['social_snapchat'] }}" target="_blank" class="footer-social-btn" title="Snapchat" aria-label="Snapchat">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.01 0c-4.48 0-7.85 3.37-7.85 7.85 0 .76.12 1.5.35 2.19-.8.25-1.61.64-2.13 1.25-.49.57-.6 1.25-.33 1.92.3.74.96 1.18 1.76 1.34.13.43.43.78.85 1.01-.2.43-.51.84-.96 1.19-.85.67-1.99 1.13-2.6 1.96-.34.46-.38.99-.12 1.5.33.64 1.07.96 1.98.96.96 0 1.99-.37 2.87-.79.35.34.78.61 1.28.81-.3.73-.83 1.55-1.71 1.95-.57.26-.95.66-.99 1.18-.04.49.25.96.79 1.27.69.39 1.62.47 2.65.22.86-.21 1.73-.64 2.59-1.08.7.35 1.45.54 2.22.54s1.52-.19 2.22-.54c.86.44 1.73.87 2.59 1.08 1.03.25 1.96.17 2.65-.22.54-.31.83-.78.79-1.27-.04-.52-.42-.92-.99-1.18-.88-.4-1.41-1.22-1.71-1.95.5-.2.93-.47 1.28-.81.88.42 1.91.79 2.87.79.91 0 1.65-.32 1.98-.96.26-.51.22-1.04-.12-1.5-.61-.83-1.75-1.29-2.6-1.96-.45-.35-.76-.76-.96-1.19.42-.23.72-.58.85-1.01.8-.16 1.46-.6 1.76-1.34.27-.67.16-1.35-.33-1.92-.52-.61-1.33-1-2.13-1.25.23-.69.35-1.43.35-2.19 0-4.48-3.37-7.85-7.85-7.85z"/></svg>
+                        <!-- X (Twitter) -->
+                        <a href="{{ $siteSettings['social_x'] ?? 'https://x.com' }}" target="_blank" rel="noopener noreferrer" class="ox-footer-social-link" title="X" aria-label="X">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         </a>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Col 2: Regional Studios -->
-            <div class="footer-card">
-                <h4 class="footer-card-title">
-                    <span style="color: var(--lime);">📍</span>
-                    {{ $currentLocale === 'ar' ? 'مكاتبنا واستوديوهاتنا' : ($currentLocale === 'fr' ? 'Bureaux & Studios' : 'Regional Studios') }}
-                </h4>
-                
-                <!-- Riyadh -->
-                <div class="footer-office-item">
-                    <div class="footer-office-header">
-                        <span>🇸🇦 {{ $currentLocale === 'ar' ? 'الرياض' : 'Riyadh' }}</span>
-                        <span class="footer-office-badge">{{ $currentLocale === 'ar' ? 'المقر الرئيسي' : 'HQ' }}</span>
                     </div>
-                    <p class="footer-office-addr">{{ $siteSettings['office_riyadh_address'] ?? ($currentLocale === 'ar' ? 'طريق الملك فهد، حي الصحافة' : 'King Fahd Road, Al-Sahafah') }}</p>
-                </div>
 
-                <!-- Cairo -->
-                <div class="footer-office-item">
-                    <div class="footer-office-header">
-                        <span>🇪🇬 {{ $currentLocale === 'ar' ? 'القاهرة' : 'Cairo' }}</span>
-                        <span class="footer-office-badge" style="background: rgba(22,98,196,0.18); border-color: rgba(22,98,196,0.3); color: #93c5fd;">{{ $currentLocale === 'ar' ? 'مركز التطوير' : 'Dev Hub' }}</span>
-                    </div>
-                    <p class="footer-office-addr">{{ $siteSettings['office_cairo_address'] ?? ($currentLocale === 'ar' ? 'التجمع الخامس، شارع التسعين الشمالي' : 'Fifth Settlement, North 90th St') }}</p>
-                </div>
+                    <!-- Vertical Separator between Socials and Domain -->
+                    <div class="ox-footer-end-divider" aria-hidden="true"></div>
 
-                <!-- Dubai -->
-                <div class="footer-office-item">
-                    <div class="footer-office-header">
-                        <span>🇦🇪 {{ $currentLocale === 'ar' ? 'دبي' : 'Dubai' }}</span>
-                        <span class="footer-office-badge" style="background: rgba(156,124,61,0.2); border-color: rgba(156,124,61,0.4); color: #fde047;">{{ $currentLocale === 'ar' ? 'استشارات النمو' : 'Growth' }}</span>
-                    </div>
-                    <p class="footer-office-addr">{{ $siteSettings['office_dubai_address'] ?? ($currentLocale === 'ar' ? 'أبراج بحيرات جميرا (JLT)، دبي' : 'JLT Towers, Dubai') }}</p>
-                </div>
-            </div>
-
-            <!-- Col 3: Ecosystem Links -->
-            <div class="footer-card">
-                <h4 class="footer-card-title">
-                    <span style="color: var(--lime);">⚡</span>
-                    {{ $currentLocale === 'ar' ? 'روابط المنصة' : ($currentLocale === 'fr' ? 'Navigation' : 'Ecosystem') }}
-                </h4>
-                <div class="footer-links-list">
-                    <a href="{{ route('home') }}#work" class="footer-link-item">
-                        <span style="color: var(--lime); font-size: 10px;">✦</span>
-                        <span>{{ $currentLocale === 'ar' ? 'مشاريعنا وأعمالنا' : ($currentLocale === 'fr' ? 'Nos Projets' : 'Our Selected Work') }}</span>
+                    <!-- Domain Link -->
+                    <a href="https://oxtech.uk" target="_blank" rel="noopener noreferrer" class="ox-footer-domain">
+                        oxtech.uk
                     </a>
-                    <a href="{{ route('home') }}#services" class="footer-link-item">
-                        <span style="color: var(--lime); font-size: 10px;">✦</span>
-                        <span>{{ $currentLocale === 'ar' ? 'الخدمات والحلول' : ($currentLocale === 'fr' ? 'Solutions Cloud' : 'Services & Architecture') }}</span>
-                    </a>
-                    <a href="{{ route('home') }}#stories" class="footer-link-item">
-                        <span style="color: var(--lime); font-size: 10px;">✦</span>
-                        <span>{{ $currentLocale === 'ar' ? 'قصص نجاح الشركاء' : ($currentLocale === 'fr' ? 'Témoignages Clients' : 'Client Success Stories') }}</span>
-                    </a>
-                    <a href="{{ route('home') }}#about" class="footer-link-item">
-                        <span style="color: var(--lime); font-size: 10px;">✦</span>
-                        <span>{{ $currentLocale === 'ar' ? 'عن OX Tech وتاريخنا' : ($currentLocale === 'fr' ? 'À Propos de Nous' : 'About OX Tech') }}</span>
-                    </a>
-                    <a href="{{ route('seo.sitemap') }}" target="_blank" class="footer-link-item">
-                        <span style="color: var(--lime); font-size: 10px;">✦</span>
-                        <span>{{ $currentLocale === 'ar' ? 'خريطة الموقع (Sitemap)' : 'Sitemap.xml' }}</span>
-                    </a>
-                    <a href="{{ route('admin.login') }}" class="footer-link-item" style="color: var(--lime); font-weight: 700; margin-top: 6px;">
-                        <span>🔒</span>
-                        <span>{{ $currentLocale === 'ar' ? 'بوابة الإدارة المشفرة' : 'Admin Portal' }}</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Col 4: Executive Direct Contact -->
-            <div class="footer-card">
-                <h4 class="footer-card-title">
-                    <span style="color: var(--lime);">📞</span>
-                    {{ $currentLocale === 'ar' ? 'تواصل مباشر' : ($currentLocale === 'fr' ? 'Contact Direct' : 'Direct Contact') }}
-                </h4>
-                
-                <a href="mailto:{{ $siteSettings['contact_email_primary'] ?? 'info@ox-tech.sa' }}" class="footer-contact-row">
-                    <span class="footer-contact-icon">📧</span>
-                    <div style="display: flex; flex-direction: column;">
-                        <span style="font-size: 10px; color: #94a8a2;">{{ $currentLocale === 'ar' ? 'البريد الرسمي' : 'Official Email' }}</span>
-                        <strong style="color: #60a5fa; font-size: 12px;">{{ $siteSettings['contact_email_primary'] ?? 'info@ox-tech.sa' }}</strong>
-                    </div>
-                </a>
-
-                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? '966500000000') }}" target="_blank" rel="noopener noreferrer" class="footer-contact-row">
-                    <span class="footer-contact-icon" style="color: #25D366;">💬</span>
-                    <div style="display: flex; flex-direction: column;">
-                        <span style="font-size: 10px; color: #94a8a2;">{{ $currentLocale === 'ar' ? 'واتساب الإدارة' : 'WhatsApp Desk' }}</span>
-                        <strong style="color: var(--lime); font-size: 12px;">{{ $siteSettings['contact_phone_primary'] ?? '+966 50 000 0000' }}</strong>
-                    </div>
-                </a>
-
-                <div style="margin-top: auto; padding-top: 8px;">
-                    <button onclick="openConsultModal()" class="pill-btn-lime" style="width: 100%; justify-content: center; font-size: 12px; padding: 11px 18px;">
-                        {{ $currentLocale === 'ar' ? 'احجز استشارتك الآن ⚡' : ($currentLocale === 'fr' ? 'Réserver Consultation ⚡' : 'Book Consultation ⚡') }}
-                    </button>
-                    <p style="font-size: 10px; color: #8fa099; text-align: center; margin: 8px 0 0;">
-                        {{ $currentLocale === 'ar' ? '⚡ استجابة استشارية خلال يوم عمل واحد' : ($currentLocale === 'fr' ? '⚡ Réponse sous 24h ouvrées' : '⚡ Response within 1 business day') }}
-                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Central Cultural Heritage Emblem ("عزنا بطبعنا") -->
-        <div class="footer-emblem-wrap">
-            <div class="footer-emblem">
-                <span class="footer-emblem-stars">❖ ❖ ❖</span>
-                <span class="footer-emblem-text">
-                    {{ $currentLocale === 'ar' ? 'OX TECH SOFTWARE HOUSE · عراقة سعودية معاصرة · ابتكار رقمي مستمر' : 'OX TECH SOFTWARE HOUSE · CONTEMPORARY SAUDI HERITAGE · CONTINUOUS DIGITAL INNOVATION' }}
-                </span>
-                <span class="footer-emblem-stars">❖ ❖ ❖</span>
-            </div>
-        </div>
+        <!-- Horizontal Hairline Divider -->
+        <div class="ox-footer-divider" aria-hidden="true"></div>
 
-        <!-- Bottom Legal & Compliance Strip -->
-        <div class="footer-bottom-bar">
-            <div>
+        <!-- ===============================================================
+             COMPONENT 3: Bottom Copyright Row (Under Component 2)
+             =============================================================== -->
+        <div class="ox-footer-bottom">
+            <p class="ox-footer-copy">
                 @if($currentLocale === 'ar')
-                    {{ $siteSettings['footer_copyright'] ?? ('جميع الحقوق محفوظة © ' . date('Y') . ' لشركة OX Tech Software House.') }}
+                    <span>جميع الحقوق محفوظة</span>
+                    <span dir="ltr">OxTech &copy; 2025</span>
                 @elseif($currentLocale === 'fr')
-                    Tous droits réservés © {{ date('Y') }} OX Tech Software House.
+                    <span dir="ltr">&copy; 2025 OxTech. Tous droits réservés.</span>
                 @else
-                    All rights reserved © {{ date('Y') }} OX Tech Software House.
+                    <span dir="ltr">&copy; 2025 OxTech. All rights reserved.</span>
                 @endif
-            </div>
-
-            <!-- Regional Payment / Security Indicators -->
-            <div style="display: inline-flex; align-items: center; gap: 14px; font-size: 11px; color: #8ca39e;">
-                <span>🔒 SSL Encrypted</span>
-                <span>⚡ High-Availability Cloud</span>
-                <span>🇸🇦 Saudi Cloud Verified</span>
-            </div>
-
-            <a href="#home" class="footer-back-to-top" aria-label="Back to Top">
-                <span>{{ $currentLocale === 'ar' ? 'العودة للأعلى' : 'Back to top' }}</span>
-                <span>↑</span>
-            </a>
+            </p>
         </div>
     </footer>
 

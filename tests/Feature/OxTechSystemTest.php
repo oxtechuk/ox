@@ -51,7 +51,7 @@ class OxTechSystemTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('OX');
         $response->assertSee('أعمالنا');
-        $response->assertSee('مِرسال');
+        $response->assertSee('خدماتنا');
     }
 
     public function test_project_details_page_loads_with_required_fields(): void
@@ -246,7 +246,7 @@ class OxTechSystemTest extends TestCase
         $enResponse->assertSee('dir="ltr"', false);
         $enResponse->assertSee('lang="en"', false);
         $enResponse->assertSee('A Bigger Vision');
-        $enResponse->assertSee('All Sectors');
+        $enResponse->assertSee('Our Services');
 
         // 3. French switch and render
         $frResponse = $this->withSession(['locale' => 'fr'])->get('/');
@@ -254,7 +254,7 @@ class OxTechSystemTest extends TestCase
         $frResponse->assertSee('dir="ltr"', false);
         $frResponse->assertSee('lang="fr"', false);
         $frResponse->assertSee('Une Vision Plus Grande');
-        $frResponse->assertSee('Tous les Secteurs');
+        $frResponse->assertSee('Nos Services');
 
         // 4. Arabic default render has RTL
         $arResponse = $this->withSession(['locale' => 'ar'])->get('/');

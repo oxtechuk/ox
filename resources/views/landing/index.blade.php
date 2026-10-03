@@ -374,54 +374,7 @@
     </section>
     --}}
 
-     <!-- Works & Projects Section -->
-    <section class="work section" id="work">
-        <div class="work-top reveal">
-            <div>
-                <p class="kicker">SELECTED WORK</p>
-                <h2>{{ __('أعمالنا تتكلم') }}<br/><span>{{ __('بأثرها.') }}</span></h2>
-            </div>
-            <p>{{ __('فلتر المشاريع حسب السوق أو القطاع، واستكشف كيف حوّلنا التحديات التشغيلية إلى تجارب رقمية واضحة ومربحة.') }}</p>
-        </div>
 
-        <div class="filters reveal">
-            <div class="filter-group" id="countries">
-                <button class="active" data-filter="all">{{ __('كل الدول') }}</button>
-                @foreach($countries as $c)
-                    <button data-filter="{{ $c->country_code }}">{{ __($c->country_name) }}</button>
-                @endforeach
-            </div>
-            <div class="filter-group dark" id="sectors">
-                <button class="active" data-sector="all">{{ __('كل التخصصات') }}</button>
-                @foreach($sectors as $s)
-                    <button data-sector="{{ $s->sector_slug }}">{{ __($s->sector_name) }}</button>
-                @endforeach
-            </div>
-        </div>
-
-        <div class="projects" id="projects">
-            @forelse($projects as $index => $project)
-                <article class="project {{ $project->is_big ? 'big' : '' }} {{ $project->country_code }} {{ $project->sector_slug }} reveal">
-                    <a href="{{ route('projects.show', $project->slug) }}" class="project-link-card">
-                        <div class="project-visual {{ $project->gradient_class }}">
-                            <span>{{ $project->number_badge ?? sprintf('%02d', $index + 1) }}</span>
-                            <b>{{ $project->title }}</b>
-                            <i>{{ $project->subtitle }}</i>
-                        </div>
-                        <div>
-                            <small>{{ __($project->country_name) }} · {{ __($project->sector_name) }}</small>
-                            <h3>{{ $project->short_description ?? $project->summary }}</h3>
-                            @if($project->impact_stat)
-                                <p>{{ $project->impact_stat }}</p>
-                            @endif
-                        </div>
-                    </a>
-                </article>
-            @empty
-                <p style="grid-column: 1/-1; text-align: center; color: #587069; padding: 40px;">{{ __('لا توجد مشاريع مضافة حالياً.') }}</p>
-            @endforelse
-        </div>
-    </section>
   
     <!-- =========================================
          OUR SERVICES SECTION (MASTER THEME)
@@ -768,422 +721,710 @@
         </div>
     </section>
 
-  <!-- ─── Sadu Scalloped Fringe Divider into Festive Green Services ─── -->
-    <div class="sadu-divider" style="color: #129e38;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
-
-    <!-- ─── Sadu Chevron Zigzag Divider into Work & Projects (Light Style) ─── -->
-    <div class="sadu-divider" style="color: #f7f9f6;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,0 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
-
-   
-
-    <!-- ─── Sadu Chevron Zigzag Divider into Models ─── -->
-    <div class="sadu-divider" style="color: #0a241f;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,0 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 l15,22 15,-22 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
-
-    <!-- Models Section -->
-    <section class="models section">
-        <div class="intro reveal">
-            <p class="kicker">BUILT FOR BOTH</p>
-            <h2>{{ __('نشتغل مع') }} <span>B2B</span><br/>{{ __('ونفهم') }} <span>B2C.</span></h2>
-        </div>
-        <div class="model-grid">
-            <article class="reveal">
-                <span>B2B</span>
-                <h3>{{ __('نرتب العمل المعقد.') }}</h3>
-                <p>{{ __('أنظمة داخلية، لوحات تحكم، منصات شركاء وتكاملات تجعل فرقك أسرع وأكثر وضوحًا.') }}</p>
-                <ul>
-                    <li>{{ __('تقليل العمل اليدوي') }}</li>
-                    <li>{{ __('بيانات في مكان واحد') }}</li>
-                    <li>{{ __('دعم نمو الفريق') }}</li>
-                </ul>
-            </article>
-            <article class="reveal">
-                <span>B2C</span>
-                <h3>{{ __('نصنع تجربة يُحبها العميل.') }}</h3>
-                <p>{{ __('متاجر وتطبيقات ومنتجات خفيفة وسريعة، من لحظة الاكتشاف وحتى عودة العميل.') }}</p>
-                <ul>
-                    <li>{{ __('تجربة شراء سلسة') }}</li>
-                    <li>{{ __('هوية تترك أثرًا') }}</li>
-                    <li>{{ __('تحويل ومبيعات أعلى') }}</li>
-                </ul>
-            </article>
-        </div>
-    </section>
-
-    <!-- ─── Sadu Scalloped Fringe Divider into Electric Purple Stories ─── -->
-    <div class="sadu-divider" style="color: #311e9e;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 q20,24 40,0 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
-
-    <!-- Partner Stories / Testimonials Section (Saudi Sadu Aesthetic & Inline Video Player) -->
-    <section class="testimonials section" id="stories">
-        <!-- Sadu Corner Accents -->
-        <svg class="sadu-corner top-right" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="0" width="8" height="8" fill="#BDFF45"/>
-            <rect x="0" y="16" width="8" height="8" fill="#BDFF45"/>
-            <rect x="32" y="16" width="8" height="8" fill="#BDFF45"/>
-            <rect x="16" y="32" width="8" height="8" fill="#BDFF45"/>
-            <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
-            <rect x="8" y="8" width="8" height="8" fill="#9490E8"/>
-            <rect x="24" y="8" width="8" height="8" fill="#9490E8"/>
-            <rect x="8" y="24" width="8" height="8" fill="#9490E8"/>
-            <rect x="24" y="24" width="8" height="8" fill="#9490E8"/>
-        </svg>
-        <svg class="sadu-corner top-left" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="0" width="8" height="8" fill="#BDFF45"/>
-            <rect x="0" y="16" width="8" height="8" fill="#BDFF45"/>
-            <rect x="32" y="16" width="8" height="8" fill="#BDFF45"/>
-            <rect x="16" y="32" width="8" height="8" fill="#BDFF45"/>
-            <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
-            <rect x="8" y="8" width="8" height="8" fill="#9490E8"/>
-            <rect x="24" y="8" width="8" height="8" fill="#9490E8"/>
-            <rect x="8" y="24" width="8" height="8" fill="#9490E8"/>
-            <rect x="24" y="24" width="8" height="8" fill="#9490E8"/>
-        </svg>
-
-        <div class="test-heading reveal">
-            <div class="sadu-badge-wrap">
-                <!-- Sadu Ribbon Pattern Left -->
-                <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="4" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="6" y="0" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="6" y="8" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="18" y="4" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="24" y="0" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="24" y="8" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="36" y="4" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="42" y="0" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="42" y="8" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="54" y="4" width="6" height="6" fill="#BDFF45"/>
-                </svg>
-
-                <p class="kicker">PARTNER STORIES</p>
-
-                <!-- Sadu Ribbon Pattern Right -->
-                <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="4" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="6" y="0" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="6" y="8" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="18" y="4" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="24" y="0" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="24" y="8" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="36" y="4" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="42" y="0" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="42" y="8" width="6" height="6" fill="#BDFF45"/>
-                    <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
-                    <rect x="54" y="4" width="6" height="6" fill="#BDFF45"/>
-                </svg>
-            </div>
-
-            <h2>{{ __('شركاؤنا') }}<br/>{{ __('هم') }} <span>{{ __('الـدليـل.') }}</span></h2>
-            <p>{{ __('قصص حقيقية من شركاء بنوا معنا منتجات رقمية أحدثت نقلة نوعية في تجربة عملائهم ونمو أعمالهم.') }}</p>
-        </div>
-
-        @if($testimonials->count() > 0)
-            <div class="video-stage reveal" aria-label="فيديوهات آراء الشركاء">
-                @foreach($testimonials as $tIndex => $t)
-                    @php
-                        $isCenter = ($tIndex === 0);
-                        $class = $isCenter ? 'active-video' : ($tIndex === 1 ? 'side-video next' : 'side-video previous');
-                        $hasCustomPoster = !empty($t->poster_url);
-                    @endphp
-                    <div class="video-card {{ $class }}" id="video-card-{{ $tIndex }}" data-video="{{ $tIndex }}" 
-                         onclick="handleCardStageClick({{ $tIndex }})">
-                        
-                        <!-- Thumbnail / Poster Layer -->
-                        <div class="card-thumb-layer" id="card-thumb-{{ $tIndex }}" 
-                             style="@if($hasCustomPoster) background-image: url('{{ $t->poster_url }}'); @endif">
-                            
-                            <!-- Sadu Geometric Pattern Artwork (Shown if default or subtle overlay) -->
-                            <div class="card-sadu-art">
-                                <svg width="180" height="180" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Sadu Diamond Star Pattern -->
-                                    <rect x="70" y="10" width="20" height="20" fill="#9490E8"/>
-                                    <rect x="70" y="130" width="20" height="20" fill="#9490E8"/>
-                                    <rect x="10" y="70" width="20" height="20" fill="#9490E8"/>
-                                    <rect x="130" y="70" width="20" height="20" fill="#9490E8"/>
-
-                                    <rect x="50" y="30" width="20" height="20" fill="#BDFF45"/>
-                                    <rect x="90" y="30" width="20" height="20" fill="#BDFF45"/>
-                                    <rect x="30" y="50" width="20" height="20" fill="#BDFF45"/>
-                                    <rect x="110" y="50" width="20" height="20" fill="#BDFF45"/>
-                                    <rect x="30" y="90" width="20" height="20" fill="#BDFF45"/>
-                                    <rect x="110" y="90" width="20" height="20" fill="#BDFF45"/>
-                                    <rect x="50" y="110" width="20" height="20" fill="#BDFF45"/>
-                                    <rect x="90" y="110" width="20" height="20" fill="#BDFF45"/>
-
-                                    <rect x="70" y="50" width="20" height="20" fill="#ffffff"/>
-                                    <rect x="50" y="70" width="20" height="20" fill="#ffffff"/>
-                                    <rect x="90" y="70" width="20" height="20" fill="#ffffff"/>
-                                    <rect x="70" y="90" width="20" height="20" fill="#ffffff"/>
-                                    <rect x="70" y="70" width="20" height="20" fill="#BDFF45"/>
-                                </svg>
-                            </div>
-
-                            <!-- Top Bar: Badge & Expand Button -->
-                            <div class="card-top-bar">
-                                <span class="video-no">{{ $t->number_badge ?? sprintf('%02d', $tIndex + 1) }}</span>
-                                <button type="button" class="expand-btn" title="توسيع ملء الشاشة" 
-                                        onclick="event.stopPropagation(); triggerCardFullscreen({{ $tIndex }})">
-                                    ⛶
-                                </button>
-                            </div>
-
-                            <!-- Center Glowing Play Button -->
-                            <div class="card-center-play">
-                                <div class="play-ring" title="تشغيل الفيديو داخل الكارت"
-                                     onclick="event.stopPropagation(); startCardVideo({{ $tIndex }})">
-                                    ▶
-                                </div>
-                            </div>
-
-                            <!-- Bottom Media Player Controls & Partner Info -->
-                            <div class="card-media-footer">
-                                <div class="card-partner-info">
-                                    <b>{{ $t->partner_name }}</b>
-                                    <small>{{ $t->partner_role }}</small>
-                                </div>
-                                <div class="player-timeline">
-                                    <div class="player-timeline-fill" id="timeline-fill-{{ $tIndex }}"></div>
-                                </div>
-                                <div class="player-sub-controls">
-                                    <span>◀◀</span>
-                                    <span style="color:var(--lime); font-size:13px;">▶</span>
-                                    <span>▶▶</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Active Inline Video Frame Layer -->
-                        <div class="card-video-frame" id="card-video-frame-{{ $tIndex }}">
-                            <div class="frame-overlay-controls">
-                                <button type="button" class="frame-btn" title="إغلاق والعودة" 
-                                        onclick="event.stopPropagation(); closeCardVideo({{ $tIndex }})">
-                                    ✕
-                                </button>
-                                <button type="button" class="frame-btn" title="تكبير ملء الشاشة" 
-                                        onclick="event.stopPropagation(); triggerCardFullscreen({{ $tIndex }})">
-                                    ⛶
-                                </button>
-                            </div>
-                            @if($t->video_src)
-                                <video id="native-video-{{ $tIndex }}" 
-                                       playsinline 
-                                       controls 
-                                       preload="metadata" 
-                                       src="{{ $t->video_src }}" 
-                                       style="width:100%; height:100%; object-fit:cover;"></video>
-                            @else
-                                <div style="display:grid; place-items:center; height:100%; color:#BDFF45; padding:20px; text-align:center;">
-                                    <span>جاري تجهيز فيديو التجربة...</span>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-         
-
-            <div class="story-controls reveal">
-                <button id="story-prev" aria-label="القصة السابقة">←</button>
-                <span><b id="story-count">01</b> / {{ sprintf('%02d', $testimonials->count()) }}</span>
-                <button id="story-next" aria-label="القصة التالية">→</button>
-            </div>
-        @endif
-    </section>
-
-    <!-- ─── Traditional Mud-Brick Battlement Divider into Desert Gold About ─── -->
-    <div class="sadu-divider" style="color: #9c7c3d;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
-
-    <!-- About & Roots Section -->
-    <section class="about section" id="about">
-        <div class="about-visual reveal">
-            <img src="{{ asset('assets/ox-saudi-story.png') }}" alt="بداية OX Tech في بيئة سعودية معاصرة" loading="lazy" decoding="async" width="600" height="700"/>
-            <div class="heritage-mark">{{ __('جذور سعودية') }}<br/><span>{{ __('رؤية رقمية') }}</span></div>
-        </div>
-        <div class="about-copy reveal">
-            <p class="kicker">OUR STORY · ROOTED IN SAUDI</p>
-            <h2>{{ $siteContents['about_story_title'] ?? __('بدأنا من السعودية. وكبرنا بثقة شركائنا.') }}</h2>
-            <p>{{ $siteContents['about_story_p'] ?? __('في 2021 بدأنا كفريق صغير يؤمن أن التقنية لازم تفهم الناس والسوق قبل أي شيء. أول مشاريعنا كانت لفرق سعودية طموحة تحتاج حلولًا أسرع وأوضح—ومن هناك تعلّمنا أن أفضل المنتجات تبدأ من الاستماع الجيد.') }}</p>
-            
-            <div class="journey">
-                <article>
-                    <b>2021</b>
-                    <div>
-                        <strong>{{ __('البداية في الرياض') }}</strong>
-                        <small>{{ __('فريق صغير، أول شريك، ووعد واحد: نبني منتجًا يُعتمد عليه.') }}</small>
-                    </div>
-                </article>
-                <article>
-                    <b>2023</b>
-                    <div>
-                        <strong>{{ __('من فكرة إلى بيت برمجيات') }}</strong>
-                        <small>{{ __('توسعنا في المتاجر والمنصات والتطبيقات لفرق في السعودية والإمارات ومصر.') }}</small>
-                    </div>
-                </article>
-                <article>
-                    <b>اليوم</b>
-                    <div>
-                        <strong>{{ __('شريك نمو طويل المدى') }}</strong>
-                        <small>{{ __('ندعم الإطلاق، التشغيل، والتحسين المستمر لمنتجات تظل قوية مع نمو الأعمال.') }}</small>
-                    </div>
-                </article>
-            </div>
-
-            <div class="numbers">
-                <span><b>5+</b> {{ __('سنوات خبرة') }}</span>
-                <span><b>48+</b> {{ __('منتج أُطلق') }}</span>
-                <span><b>24/7</b> {{ __('دعم فني') }}</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- ─── Traditional Battlement Divider into Consultation ─── -->
-    <div class="sadu-divider" style="color: #06131f;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
-
-    <!-- Ultra-Luxurious Inline Consultation Section -->
-    <section class="consult-section" id="consult">
-        <div class="consult-wrap">
-            <!-- Left Info Column -->
-            <div class="consult-intro reveal">
-                <p class="kicker" style="display: inline-flex; align-items: center; gap: 8px;">
-                    <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--lime); display: inline-block; box-shadow: 0 0 10px var(--lime);"></span>
-                    LET'S BUILD SOMETHING GREAT
-                </p>
-                <h2>{{ $siteContents['consult_title'] ?? __('عندك فكرة؟') }}<br/><span>{{ __('خلّينا نرتّبها ونبنيها.') }}</span></h2>
-                <div class="consult-direct-box" style="display: flex; flex-direction: column; gap: 14px; margin-top: 25px;">
-                    <div class="direct-info">
-                        <small style="color: #94b8ac;">{{ __('تفضل التواصل المباشر السريع؟') }}</small>
-                        <strong style="color: #fff; font-size: 15px; display: block; margin-top: 2px;">{{ $siteContents['contact_email'] ?? 'hello@oxtech.studio' }}</strong>
-                    </div>
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <a href="mailto:{{ $siteContents['contact_email'] ?? 'hello@oxtech.studio' }}" class="pill-btn-purple">
-                            <span>{{ __('راسلنا إيميل') }}</span>
-                            <b>↗</b>
-                        </a>
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? '966500000000') }}" target="_blank" class="pill-btn-lime">
-                            <span>{{ __('محادثة واتساب') }}</span>
-                            <b>💬</b>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Interactive Form Card -->
-            <div class="consult-form-card reveal">
-                <div id="inlineFormContent">
-                    <form action="{{ route('consultation.store') }}" method="POST" id="inlineConsultationForm">
-                        @csrf
-                        <!-- Anti-Spam Bot Trap (Honeypot & Time-Trap) -->
-                        <input type="text" name="hp_check" value="" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
-                        <input type="hidden" name="_form_load_time" value="{{ time() }}">
-
-                        <!-- Project Type Pills -->
-                        <div class="form-section-title">
-                            <span>01</span> {{ __('اختر نوع المشروع أو الخدمة المطلوبة:') }}
-                        </div>
-                        <div class="pills-grid" id="projectTypePills">
-                            <button type="button" class="pill-btn active" data-val="منصات ومواقع">{{ __('منصات ومواقع ويب') }}</button>
-                            <button type="button" class="pill-btn" data-val="متاجر إلكترونية">{{ __('متجر إلكتروني متكامل') }}</button>
-                            <button type="button" class="pill-btn" data-val="تطبيقات ومنتجات">{{ __('تطبيق جوال iOS / Android') }}</button>
-                            <button type="button" class="pill-btn" data-val="أنظمة SaaS مخصصة">{{ __('نظام سحابي / SaaS') }}</button>
-                            <button type="button" class="pill-btn" data-val="تكاملات وأتمتة">{{ __('تكاملات وأتمتة عمل') }}</button>
-                        </div>
-                        <input type="hidden" name="project_type" id="selectedProjectType" value="منصات ومواقع">
-
-                        <!-- Personal / Contact Details -->
-                        <div class="form-section-title">
-                            <span>02</span> {{ __('بيانات التواصل الأساسية:') }}
-                        </div>
-                        <div class="input-row">
-                            <div class="consult-field">
-                                <label>{{ __('الاسم الكريم') }} *</label>
-                                <input type="text" name="name" class="consult-input" placeholder="{{ $locale === 'ar' ? 'مثال: عبدالله الراجحي' : 'e.g. John Doe' }}" maxlength="70" required>
-                            </div>
-                            <div class="consult-field">
-                                <label>{{ __('رقم الجوال / واتساب *') }}</label>
-                                <input type="text" name="phone" class="consult-input" placeholder="+966 50 000 0000" dir="ltr" style="text-align: right;" maxlength="30" required>
-                            </div>
-                        </div>
-
-                        <div class="input-row">
-                            <div class="consult-field">
-                                <label>{{ __('البريد الإلكتروني') }} *</label>
-                                <input type="email" name="email" class="consult-input" placeholder="name@company.com" maxlength="100" required>
-                            </div>
-                            <div class="consult-field">
-                                <label>{{ __('اسم الشركة أو الجهة (اختياري)') }}</label>
-                                <input type="text" name="company_name" class="consult-input" placeholder="{{ $locale === 'ar' ? 'مثال: شركة نمو الرقمية' : 'e.g. Acme Tech' }}" maxlength="100">
-                            </div>
-                        </div>
-
-                        <!-- Budget Range Pills -->
-                        <div class="form-section-title" style="margin-top: 10px;">
-                            <span>03</span> {{ __('الميزانية التقديرية المتوقعة:') }}
-                        </div>
-                        <div class="pills-grid" id="budgetPills">
-                            <button type="button" class="pill-btn" data-val="أقل من $10,000">{{ __('أقل من $10k') }}</button>
-                            <button type="button" class="pill-btn active" data-val="$10,000 - $25,000">$10,000 - $25,000</button>
-                            <button type="button" class="pill-btn" data-val="$25,000 - $50,000">$25,000 - $50,000</button>
-                            <button type="button" class="pill-btn" data-val="أكثر من $50,000">{{ $locale === 'ar' ? 'أكثر من $50,000' : '> $50,000' }}</button>
-                        </div>
-                        <input type="hidden" name="budget" id="selectedBudget" value="$10,000 - $25,000">
-
-                        <!-- Message -->
-                        <div class="consult-field">
-                            <label>{{ __('أخبرنا باختصار عن فكرتك أو التحدي التقني *') }}</label>
-                            <textarea name="message" class="consult-textarea" rows="3" placeholder="{{ __('ما هو الهدف الأساسي من المشروع؟ ومن هم عملاؤك المستهدفون؟') }}" minlength="10" maxlength="1000" required></textarea>
-                            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #8fa099; margin-top: 4px;">
-                                <span>{{ __('الحد الأدنى 10 أحرف') }}</span>
-                                <span id="inlineMsgCounter">0 / 1000 {{ __('حرف') }}</span>
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" class="submit-consult-btn" id="inlineSubmitBtn">
-                            <span>{{ __('إرسال وتأكيد طلب الاستشارة') }}</span>
-                            <b style="font-size: 18px;">{{ $locale === 'ar' ? '←' : '→' }}</b>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Success Celebration Screen -->
-                <div class="consult-success-box" id="inlineSuccessBox">
-                    <div class="success-icon-badge">✓</div>
-                    <h3>{{ __('تم استلام طلبك بنجاح!') }}</h3>
-                    <p id="successMsgText">
-                        {{ __('شكرًا لاهتمامك بالعمل معنا. تم إرسال تفاصيل فكرتك إلى فريقنا التقني، وسيتواصل معك مهندس المشروع خلال 24 ساعة لترتيب موعد الاستشارة.') }}
+  <!-- ─── Beneficiaries Section: من يستفيد من حلول OxTech؟ ─── -->
+    <section class="ox-beneficiaries-section" id="beneficiaries">
+        <div class="ox-beneficiaries-pattern"></div>
+        <div class="ox-beneficiaries-skyline"></div>
+        <div class="container">
+            <div class="ox-beneficiaries-grid">
+                <!-- Right Side in RTL: Content & Checklist -->
+                <div class="ox-beneficiaries-content reveal">
+                    <span class="ox-beneficiaries-kicker">{{ $locale === 'ar' ? 'خدماتنا' : 'SECTORS & EXPERTISE' }}</span>
+                    <h2 class="ox-beneficiaries-heading">
+                        {{ $locale === 'ar' ? 'من يستفيد' : 'Who Benefits From' }}<br/>
+                        {{ $locale === 'ar' ? 'من حلول' : 'Solutions by' }} <span class="brand-tag">OxTech</span>{{ $locale === 'ar' ? '؟' : '?' }}
+                    </h2>
+                    <p class="ox-beneficiaries-desc">
+                        {{ $locale === 'ar' ? 'نوفر حلول رقمية تناسب مختلف القطاعات والأحجام، من الشركات الناشئة إلى المؤسسات الكبيرة.' : 'We engineer robust digital architectures built for diverse industries and scales, from high-growth startups to enterprise institutions.' }}
                     </p>
-                    <button type="button" class="pill-btn active" onclick="resetInlineForm()" style="padding: 12px 28px; font-size: 12px;">
-                        {{ __('إرسال طلب استشارة آخر') }}
+                    <ul class="ox-beneficiaries-checklist">
+                        <li class="ox-checklist-item">
+                            <span class="ox-check-icon">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span>{{ $locale === 'ar' ? 'القطاع الحكومي' : 'Government Sector' }}</span>
+                        </li>
+                        <li class="ox-checklist-item">
+                            <span class="ox-check-icon">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span>{{ $locale === 'ar' ? 'القطاع الخاص' : 'Private Sector' }}</span>
+                        </li>
+                        <li class="ox-checklist-item">
+                            <span class="ox-check-icon">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span>{{ $locale === 'ar' ? 'الشركات والمؤسسات' : 'Enterprises & Corporations' }}</span>
+                        </li>
+                        <li class="ox-checklist-item">
+                            <span class="ox-check-icon">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span>{{ $locale === 'ar' ? 'القطاع التعليمي' : 'Educational Sector' }}</span>
+                        </li>
+                        <li class="ox-checklist-item">
+                            <span class="ox-check-icon">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                            <span>{{ $locale === 'ar' ? 'القطاع التجاري' : 'Commercial Sector' }}</span>
+                        </li>
+                    </ul>
+                    <a href="#consult" class="ox-beneficiaries-cta" onclick="openConsultModal(); return false;">
+                        <span>{{ $locale === 'ar' ? 'اكتشف الحلول المناسبة لك' : 'Discover Solutions For You' }}</span>
+                        <span class="ox-cta-arrow">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Left Side in RTL: Tablet Showcase with 4 Sector Cards -->
+                <div class="ox-tablet-wrapper reveal">
+                    <div class="ox-tablet-frame">
+                        <div class="ox-tablet-camera"></div>
+                        <div class="ox-tablet-screen">
+                            <!-- Card 1: E-Commerce (التجارة الإلكترونية) -->
+                            <article class="ox-tablet-card" onclick="openConsultModal()">
+                                <div class="tablet-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'التجارة الإلكترونية' : 'E-Commerce' }}</h3>
+                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'حلول تجارة متعددة القنوات وبوابات دفع وتكاملات دفع وشحن مرنة' : 'Omnichannel commerce platforms with secure payment gateways and logistics.' }}</p>
+                                <div class="tablet-card-btn">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </article>
+
+                            <!-- Card 2: Startups (الشركات الناشئة) -->
+                            <article class="ox-tablet-card" onclick="openConsultModal()">
+                                <div class="tablet-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                </div>
+                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'الشركات الناشئة' : 'Startups' }}</h3>
+                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'إطلاق سريع ونمو متواصل وتطوير منتجات رقمية مرنة قابلة للتوسع' : 'Rapid MVP development, agile scaling, and modern cloud architectures.' }}</p>
+                                <div class="tablet-card-btn">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </article>
+
+                            <!-- Card 3: Enterprises & Companies (المؤسسات والشركات) -->
+                            <article class="ox-tablet-card" onclick="openConsultModal()">
+                                <div class="tablet-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                                        <line x1="9" y1="6" x2="9.01" y2="6"></line>
+                                        <line x1="15" y1="6" x2="15.01" y2="6"></line>
+                                        <line x1="9" y1="10" x2="9.01" y2="10"></line>
+                                        <line x1="15" y1="10" x2="15.01" y2="10"></line>
+                                        <line x1="9" y1="14" x2="9.01" y2="14"></line>
+                                        <line x1="15" y1="14" x2="15.01" y2="14"></line>
+                                        <line x1="9" y1="18" x2="15" y2="18"></line>
+                                    </svg>
+                                </div>
+                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'المؤسسات والشركات' : 'Enterprises' }}</h3>
+                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'حلول أتمتة وإدارة متقدمة لرفع الكفاءة التشغيلية والربط المؤسسي' : 'Operational workflows, ERP integrations, and enterprise data management.' }}</p>
+                                <div class="tablet-card-btn">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </article>
+
+                            <!-- Card 4: Government Solutions (حلول حكومية وشبه حكومية) -->
+                            <article class="ox-tablet-card" onclick="openConsultModal()">
+                                <div class="tablet-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18"></path>
+                                        <path d="M3 10h18"></path>
+                                        <path d="M5 6l7-3 7 3"></path>
+                                        <path d="M4 10v11"></path>
+                                        <path d="M20 10v11"></path>
+                                        <path d="M8 14v4"></path>
+                                        <path d="M12 14v4"></path>
+                                        <path d="M16 14v4"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'حلول حكومية وشبه حكومية' : 'Gov & Semi-Gov' }}</h3>
+                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'أنظمة رقمية آمنة ومعتمدة متوافقة مع أعلى الضوابط الوطنية' : 'High-security compliant systems meeting the highest national digital standards.' }}</p>
+                                <div class="tablet-card-btn">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── B2B & B2C Modern Models Section ─── -->
+    <section class="ox-models-section" id="models">
+        <div class="container">
+            <div class="ox-models-grid">
+                <!-- Right Side in RTL: Main Headline -->
+                <div class="ox-models-header reveal">
+                    <h2 class="ox-models-title">
+                        {{ $locale === 'ar' ? 'نشتغل مع' : 'We Build For' }} <span class="tag-b2b">B2B</span><br/>
+                        {{ $locale === 'ar' ? 'ونفهم' : 'And Master' }} <span class="tag-b2c">B2C.</span>
+                    </h2>
+                </div>
+
+                <!-- Left Side in RTL: Two Distinct Feature Cards -->
+                <div class="ox-models-cards reveal">
+                    <!-- Card 1 (Dark Emerald): حلول للشركات والمؤسسات -->
+                    <article class="ox-model-card card-dark" onclick="openConsultModal()">
+                        <div>
+                            <h3 class="model-card-title">{{ $locale === 'ar' ? 'حلول للشركات والمؤسسات' : 'Enterprise & Corporate' }}</h3>
+                            <p class="model-card-desc">{{ $locale === 'ar' ? 'أنظمة مخصصة تلبي احتياجات القطاعات الكبيرة' : 'Tailored enterprise architectures engineered for large-scale operations and complex workflows.' }}</p>
+                        </div>
+                        <div class="model-card-arrow">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 (Light Ivory): حلول جاهزة لقطاعك الخاص -->
+                    <article class="ox-model-card card-light" onclick="openConsultModal()">
+                        <div>
+                            <h3 class="model-card-title">{{ $locale === 'ar' ? 'حلول جاهزة لقطاعك الخاص' : 'Turnkey Sector Solutions' }}</h3>
+                            <p class="model-card-desc">{{ $locale === 'ar' ? 'منصات وتطبيقات تساعدك على إدارة وتنمية أعمالك' : 'Ready-to-deploy platforms and apps empowering you to scale and manage your business.' }}</p>
+                        </div>
+                        <div class="model-card-arrow">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- ─── Partners Section: شركاؤنا هم الدليل ─── -->
+    <section class="ox-partners-section" id="stories">
+        <div class="services-arabesque corner-top-right"></div>
+        <div class="services-arabesque corner-top-left"></div>
+        <div class="container">
+            <div class="partners-header-wrap">
+                <!-- Slider Nav on the Left -->
+                <div class="partners-slider-nav">
+                    <button type="button" class="partners-nav-btn prev" id="partnersPrev" aria-label="{{ $locale === 'ar' ? 'السابق' : 'Previous' }}" onclick="scrollPartners(-1)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
                     </button>
+                    <button type="button" class="partners-nav-btn next" id="partnersNext" aria-label="{{ $locale === 'ar' ? 'التالي' : 'Next' }}" onclick="scrollPartners(1)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Centered Headline & Subtitle -->
+                <div class="partners-header-center reveal">
+                    <h2 class="partners-title">
+                        {{ $locale === 'ar' ? 'شركاؤنا' : 'Our Partners' }}<br/>
+                        {{ $locale === 'ar' ? 'هم' : 'Are The' }} <span class="text-green">{{ $locale === 'ar' ? 'الدليل.' : 'Proof.' }}</span>
+                    </h2>
+                    <p class="partners-subtitle">
+                        {{ $locale === 'ar' ? 'شركات ومؤسسات وثقت في حلولنا' : 'Leading companies and institutions that trust our digital solutions' }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Partners Logos Grid / Track -->
+            <div class="ox-partners-grid" id="partnersGrid">
+                <!-- Card 1: Saudi Government Entity (جهة حكومية) -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Saudi National Emblem: Palm Tree and Crossed Swords -->
+                            <g transform="translate(90, 30)" stroke="#071B19" fill="#071B19">
+                                <!-- Palm Tree Trunk & Fronds -->
+                                <path d="M0 0 V-18" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M0 -18 C-4 -26 -16 -24 -22 -18 C-16 -16 -6 -17 0 -18 Z"/>
+                                <path d="M0 -18 C4 -26 16 -24 22 -18 C16 -16 6 -17 0 -18 Z"/>
+                                <path d="M0 -18 C-3 -28 -10 -30 -14 -25 C-10 -23 -4 -21 0 -18 Z"/>
+                                <path d="M0 -18 C3 -28 10 -30 14 -25 C10 -23 4 -21 0 -18 Z"/>
+                                <path d="M0 -18 C0 -30 -4 -32 0 -34 C4 -32 0 -30 0 -18 Z"/>
+                                <!-- Crossed Curved Scimitars / Swords -->
+                                <path d="M-18 6 C-8 12 8 8 18 -4" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                <path d="M18 6 C8 12 -8 8 -18 -4" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                <!-- Sword Hilts -->
+                                <circle cx="-19" cy="7" r="1.5"/>
+                                <circle cx="19" cy="7" r="1.5"/>
+                                <line x1="-16" y1="4" x2="-20" y2="8" stroke-width="1.8"/>
+                                <line x1="16" y1="4" x2="20" y2="8" stroke-width="1.8"/>
+                            </g>
+                            <!-- Text: جهة حكومية -->
+                            <text x="90" y="68" font-family="'Cairo', sans-serif" font-size="14" font-weight="800" fill="#071B19" text-anchor="middle">جهة حكومية</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 2: SDAIA (الهيئة السعودية للبيانات والذكاء الاصطناعي) -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- SDAIA Isometric 3D Node Cube -->
+                            <g transform="translate(36, 40)">
+                                <!-- Top Facet Nodes (Teal / Emerald) -->
+                                <circle cx="0" cy="-20" r="3" fill="#1D8A68"/>
+                                <circle cx="-12" cy="-14" r="3" fill="#2EE59D"/>
+                                <circle cx="12" cy="-14" r="3" fill="#2EE59D"/>
+                                <circle cx="0" cy="-8" r="3.5" fill="#146049"/>
+                                <line x1="0" y1="-20" x2="-12" y2="-14" stroke="#2EE59D" stroke-width="1.2"/>
+                                <line x1="0" y1="-20" x2="12" y2="-14" stroke="#2EE59D" stroke-width="1.2"/>
+                                <line x1="-12" y1="-14" x2="0" y2="-8" stroke="#1D8A68" stroke-width="1.2"/>
+                                <line x1="12" y1="-14" x2="0" y2="-8" stroke="#1D8A68" stroke-width="1.2"/>
+                                <!-- Left Facet Nodes (Cyan / Blue) -->
+                                <circle cx="-12" cy="4" r="3" fill="#16758A"/>
+                                <circle cx="0" cy="10" r="3" fill="#0D505E"/>
+                                <line x1="-12" y1="-14" x2="-12" y2="4" stroke="#16758A" stroke-width="1.2"/>
+                                <line x1="0" y1="-8" x2="0" y2="10" stroke="#0D505E" stroke-width="1.2"/>
+                                <line x1="-12" y1="4" x2="0" y2="10" stroke="#16758A" stroke-width="1.2"/>
+                                <!-- Right Facet Nodes (Amber / Orange) -->
+                                <circle cx="12" cy="4" r="3" fill="#D97706"/>
+                                <line x1="12" y1="-14" x2="12" y2="4" stroke="#D97706" stroke-width="1.2"/>
+                                <line x1="0" y1="10" x2="12" y2="4" stroke="#D97706" stroke-width="1.2"/>
+                                <circle cx="0" cy="0" r="2" fill="#071B19"/>
+                            </g>
+                            <!-- Text: SDAIA & Arabic Subtitle -->
+                            <text x="75" y="36" font-family="'Poppins', sans-serif" font-size="20" font-weight="900" fill="#071B19" letter-spacing="1">SDAIA</text>
+                            <text x="75" y="52" font-family="'Cairo', sans-serif" font-size="9" font-weight="700" fill="#4B6058">الهيئة السعودية للبيانات</text>
+                            <text x="75" y="63" font-family="'Cairo', sans-serif" font-size="9" font-weight="700" fill="#4B6058">والذكاء الاصطناعي</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 3: Ministry of Health (وزارة الصحة) -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Official MOH Stylized Palm & Health Arcs -->
+                            <g transform="translate(100, 26)">
+                                <!-- Palm Crown -->
+                                <path d="M0 -3 V-15" stroke="#1D8A68" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M0 -15 C-4 -20 -10 -18 -14 -14 C-10 -13 -4 -14 0 -15 Z" fill="#1D8A68"/>
+                                <path d="M0 -15 C4 -20 10 -18 14 -14 C10 -13 4 -14 0 -15 Z" fill="#1D8A68"/>
+                                <path d="M0 -15 C-2 -22 -6 -23 -8 -20 C-6 -18 -2 -17 0 -15 Z" fill="#1D8A68"/>
+                                <path d="M0 -15 C2 -22 6 -23 8 -20 C6 -18 2 -17 0 -15 Z" fill="#1D8A68"/>
+                                <!-- Dynamic Health Interlocking Curved Ribbon -->
+                                <path d="M-18 -4 C-12 -12 0 6 18 -4" stroke="#87754B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <path d="M-18 4 C-8 -6 8 12 18 4" stroke="#1D8A68" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                            </g>
+                            <!-- Text: وزارة الصحة / Ministry of Health -->
+                            <text x="100" y="55" font-family="'Cairo', sans-serif" font-size="14" font-weight="800" fill="#071B19" text-anchor="middle">وزارة الصحة</text>
+                            <text x="100" y="68" font-family="'Poppins', sans-serif" font-size="8" font-weight="600" fill="#71857E" text-anchor="middle" letter-spacing="0.5">Ministry of Health</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 4: Elm (علم) -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Elm Dynamic Node Monogram 'ع' -->
+                            <g transform="translate(62, 38)">
+                                <circle cx="-16" cy="6" r="6" fill="#071B19"/>
+                                <circle cx="-4" cy="-10" r="5" fill="#146049"/>
+                                <circle cx="10" cy="-6" r="6" fill="#1D8A68"/>
+                                <circle cx="14" cy="10" r="4.5" fill="#2EE59D"/>
+                                <path d="M-16 6 Q -4 10 10 -6" stroke="#071B19" stroke-width="3" fill="none"/>
+                                <path d="M-4 -10 Q 6 -16 10 -6" stroke="#1D8A68" stroke-width="3" fill="none"/>
+                                <path d="M10 -6 Q 16 2 14 10" stroke="#2EE59D" stroke-width="2.5" fill="none"/>
+                            </g>
+                            <!-- Typography: علم / Elm -->
+                            <g transform="translate(100, 32)">
+                                <text x="0" y="8" font-family="'Cairo', sans-serif" font-size="22" font-weight="900" fill="#071B19">علم</text>
+                                <text x="2" y="24" font-family="'Poppins', sans-serif" font-size="11" font-weight="800" fill="#1D8A68" letter-spacing="1">Elm</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 5: Monsha'at (منشآت) -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 190 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Monsha'at Rounded Emerald Stems -->
+                            <g transform="translate(48, 40)">
+                                <rect x="-18" y="-12" width="6" height="24" rx="3" fill="#1D8A68"/>
+                                <rect x="-8" y="-18" width="6" height="30" rx="3" fill="#2EE59D"/>
+                                <rect x="2" y="-14" width="6" height="26" rx="3" fill="#146049"/>
+                                <rect x="12" y="-8" width="6" height="20" rx="3" fill="#C8A96B"/>
+                            </g>
+                            <text x="80" y="38" font-family="'Cairo', sans-serif" font-size="18" font-weight="800" fill="#071B19">منشآت</text>
+                            <text x="80" y="52" font-family="'Poppins', sans-serif" font-size="9" font-weight="700" fill="#60766F" letter-spacing="0.5">MONSHA'AT</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 6: Tadawul (تداول السعودية) -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 190 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Tadawul Financial Curve -->
+                            <g transform="translate(45, 40)">
+                                <path d="M-15 10 C-5 14 5 -12 18 -10" stroke="#0072CE" stroke-width="4" stroke-linecap="round" fill="none"/>
+                                <path d="M-10 14 C0 18 10 -4 20 -4" stroke="#1D8A68" stroke-width="3" stroke-linecap="round" fill="none"/>
+                                <circle cx="18" cy="-10" r="3" fill="#0072CE"/>
+                            </g>
+                            <text x="76" y="37" font-family="'Cairo', sans-serif" font-size="17" font-weight="800" fill="#071B19">تداول السعودية</text>
+                            <text x="76" y="52" font-family="'Poppins', sans-serif" font-size="9" font-weight="700" fill="#0072CE" letter-spacing="0.5">Saudi Exchange</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 7: stc pay -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 170 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="25" y="18" width="120" height="44" rx="12" fill="#4F008C"/>
+                            <text x="50" y="46" font-family="'Poppins', sans-serif" font-size="18" font-weight="900" fill="#ffffff" letter-spacing="0.5">stc</text>
+                            <rect x="88" y="27" width="46" height="26" rx="6" fill="#00C48C"/>
+                            <text x="96" y="45" font-family="'Poppins', sans-serif" font-size="13" font-weight="800" fill="#4F008C">pay</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 8: Mawani (موانئ) -->
+                <div class="ox-partner-card reveal">
+                    <div class="partner-logo-wrap">
+                        <svg viewBox="0 0 180 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="translate(45, 40)">
+                                <path d="M-15 4 C-8 -8 8 -8 15 4 C8 0 -8 0 -15 4 Z" fill="#0C4A60"/>
+                                <path d="M-18 10 C-10 2 10 2 18 10 C10 6 -10 6 -18 10 Z" fill="#00A3E0"/>
+                                <circle cx="0" cy="-12" r="4" fill="#0C4A60"/>
+                            </g>
+                            <text x="75" y="38" font-family="'Cairo', sans-serif" font-size="18" font-weight="800" fill="#071B19">موانئ</text>
+                            <text x="75" y="52" font-family="'Poppins', sans-serif" font-size="9" font-weight="700" fill="#0C4A60" letter-spacing="0.5">MAWANI</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Divider into Saudi Roots & Story Section ─── -->
+    <div class="sadu-divider" style="color: #071B19; background-color: var(--ox-ivory);">
+        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
+            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
+        </svg>
+    </div>
+
+    <!-- =========================================
+         ABOUT / SAUDI ROOTS (نحن من السعودية، وكبرنا بثقة شركائنا)
+         ========================================= -->
+    <section class="ox-about-section" id="about">
+        <!-- Background Elements: Riyadh Skyline Fade (Left) & Islamic Arabesque Tracery (Right) -->
+        <div class="ox-about-skyline" style="background-image: url('{{ asset('assets/ox-riyadh-skyline-fade.jpg') }}');"></div>
+        <div class="ox-about-arabesque"></div>
+
+        <div class="ox-container">
+            <div class="ox-about-grid">
+                <!-- Content Column (Right in RTL) -->
+                <div class="ox-about-content reveal">
+                    <h2 class="ox-about-title">
+                        {{ __('نحن من السعودية،') }}<br>
+                        {{ __('وكبرنا بثقة شركائنا.') }}
+                    </h2>
+
+                    <p class="ox-about-desc">
+                        {{ __('نفخر بأن نكون جزءًا من رحلة التحول الرقمي في المملكة ونعمل مع شركاء يشاركوننا الطموح.') }}
+                    </p>
+
+                    <ul class="ox-about-checklist">
+                        <li class="ox-about-check-item">
+                            <span class="check-item-icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <span class="check-item-text">{{ __('خبرة في السوق السعودي') }}</span>
+                        </li>
+                        <li class="ox-about-check-item">
+                            <span class="check-item-icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <span class="check-item-text">{{ __('فهم عميق لاحتياجات القطاعات') }}</span>
+                        </li>
+                        <li class="ox-about-check-item">
+                            <span class="check-item-icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <span class="check-item-text">{{ __('التزام بالجودة والابتكار') }}</span>
+                        </li>
+                    </ul>
+
+                    <button type="button" class="ox-about-cta-btn" onclick="openStoryVideoModal()">
+                        <span>{{ __('شاهد قصتنا') }}</span>
+                        <span class="cta-play-circle">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5.14v14l11-7-11-7z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Video Card Column (Left in RTL) -->
+                <div class="ox-about-video-wrap reveal">
+                    <div class="ox-video-card" onclick="openStoryVideoModal()" role="button" tabindex="0" aria-label="{{ __('مشاهدة قصة نجاح OX Tech') }}">
+                        <img src="{{ asset('assets/ox-saudi-founder-video.jpg') }}" alt="شاهد قصة نجاح OX Tech في السعودية" class="ox-video-img" loading="lazy">
+                        <div class="ox-video-overlay"></div>
+                        
+                        <!-- Glassmorphism Play Button in Center -->
+                        <div class="ox-video-play-btn" aria-hidden="true">
+                            <span class="play-ripple"></span>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5.14v14l11-7-11-7z"/>
+                            </svg>
+                        </div>
+
+                        <!-- Bottom-Right Partner Badge inside Card -->
+                        <div class="ox-video-partner-badge">
+                            <div class="badge-title">{{ __('شركاؤنا') }}</div>
+                            <div class="badge-sub">{{ __('في نجاحنا') }}</div>
+                        </div>
+                    </div>
+                    <div class="ox-video-caption">{{ __('شاهد قصة النجاح') }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OxTech Story Video Modal -->
+    <div id="oxStoryVideoModal" class="ox-story-modal-overlay" onclick="closeStoryVideoModal(event)">
+        <div class="ox-story-modal-dialog" onclick="event.stopPropagation()">
+            <button type="button" class="ox-story-modal-close" onclick="closeStoryVideoModal()" aria-label="إغلاق">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="ox-story-video-container">
+                <div class="ox-story-video-frame">
+                    <img src="{{ asset('assets/ox-saudi-founder-video.jpg') }}" alt="قصة نجاح OX Tech في السعودية" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85);">
+                    <div class="ox-story-video-player-ui">
+                        <div class="player-header">
+                            <span class="player-badge">OX TECH · SAUDI ARABIA</span>
+                            <h4>{{ __('رحلتنا في التحول الرقمي بالمملكة') }}</h4>
+                        </div>
+                        <div class="player-controls">
+                            <div class="progress-bar"><div class="progress-fill"></div></div>
+                            <div class="controls-row">
+                                <span class="status-live">● {{ __('متاح للمشاهدة') }}</span>
+                                <a href="#consult" onclick="closeStoryVideoModal(); openConsultModal(); return false;" class="player-cta">{{ __('احجز استشارة مع فريقنا ←') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function openStoryVideoModal() {
+        var modal = document.getElementById('oxStoryVideoModal');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    function closeStoryVideoModal(e) {
+        var modal = document.getElementById('oxStoryVideoModal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeStoryVideoModal();
+    });
+    </script>
+
+    <!-- =========================================
+         MODERN CTA BANNER & FAST CONTACT (SAUDI × EGYPT)
+         ========================================= -->
+    <section class="ox-consult-section" id="consult">
+        <div class="ox-consult-banner reveal">
+            <!-- Background Artwork Layers -->
+            <div class="ox-consult-bg-art" aria-hidden="true"></div>
+            <div class="ox-consult-arabesque-art" aria-hidden="true"></div>
+            <div class="ox-consult-ambient-glow" aria-hidden="true"></div>
+
+            <div class="ox-consult-grid">
+                <!-- Right / Intro Content (RTL Leading) -->
+                <div class="ox-consult-info-col">
+                    @if($locale === 'ar')
+                        <h2 class="ox-consult-headline">
+                            عندك فكرة؟ خلّينا<br/>
+                            <span class="ox-mint-highlight">نبنيها معاً.</span>
+                        </h2>
+                        <p class="ox-consult-subtitle">
+                            سواء مشروع جديد أو تطوير لفكرة حالية<br/>
+                            فريقنا جاهز لمساعدتك.
+                        </p>
+                    @elseif($locale === 'fr')
+                        <h2 class="ox-consult-headline">
+                            Une idée en tête ?<br/>
+                            <span class="ox-mint-highlight">Bâtissons-la ensemble.</span>
+                        </h2>
+                        <p class="ox-consult-subtitle">
+                            Nouveau projet ou développement d'une idée existante,<br/>
+                            notre équipe est prête à vous propulser.
+                        </p>
+                    @else
+                        <h2 class="ox-consult-headline">
+                            Have an idea?<br/>
+                            <span class="ox-mint-highlight">Let's build it together.</span>
+                        </h2>
+                        <p class="ox-consult-subtitle">
+                            Whether a brand-new project or scaling an existing vision,<br/>
+                            our engineering team is ready to help you thrive.
+                        </p>
+                    @endif
+
+                    <div class="ox-consult-actions">
+                        <button type="button" onclick="focusConsultForm()" class="ox-consult-btn-primary">
+                            <span>{{ $locale === 'ar' ? 'ابدأ الآن' : ($locale === 'fr' ? 'Démarrer' : 'Start Now') }}</span>
+                            <span class="ox-consult-arrow-circle">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="{{ $locale === 'ar' ? 'M19 12H5M12 19l-7-7 7-7' : 'M5 12h14M12 5l7 7-7 7' }}"/>
+                                </svg>
+                            </span>
+                        </button>
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? '966500000000') }}?text={{ urlencode($locale === 'ar' ? 'مرحباً OX Tech، أود الاستفسار عن تطوير مشروع تقني' : 'Hello OX Tech, I would like to inquire about software development') }}" target="_blank" rel="noopener noreferrer" class="ox-consult-btn-secondary">
+                            <span>{{ $locale === 'ar' ? 'تواصل معنا' : ($locale === 'fr' ? 'Contactez-nous' : 'Contact Us') }}</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Left / Interactive Form Card (RTL Left) -->
+                <div class="ox-consult-form-col">
+                    <div class="ox-consult-form-card">
+                        <div id="inlineFormContent">
+                            <h3 class="ox-consult-card-title">
+                                {{ $locale === 'ar' ? 'تواصل معنا الآن' : ($locale === 'fr' ? 'Contactez-nous maintenant' : 'Get In Touch Now') }}
+                            </h3>
+
+                            <form action="{{ route('consultation.store') }}" method="POST" id="inlineConsultationForm">
+                                @csrf
+                                <!-- Anti-Spam Bot Trap (Honeypot & Time-Trap) -->
+                                <input type="text" name="hp_check" value="" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
+                                <input type="hidden" name="_form_load_time" value="{{ time() }}">
+
+                                <!-- Marketing Attribution Hidden Inputs -->
+                                <input type="hidden" name="utm_source" value="{{ session('attribution.utm_source', request('utm_source')) }}">
+                                <input type="hidden" name="utm_medium" value="{{ session('attribution.utm_medium', request('utm_medium')) }}">
+                                <input type="hidden" name="utm_campaign" value="{{ session('attribution.utm_campaign', request('utm_campaign')) }}">
+                                <input type="hidden" name="utm_term" value="{{ session('attribution.utm_term', request('utm_term')) }}">
+                                <input type="hidden" name="utm_content" value="{{ session('attribution.utm_content', request('utm_content')) }}">
+                                <input type="hidden" name="platform_detected" value="{{ session('attribution.platform_detected') }}">
+
+                                <!-- 2x2 Grid of Inputs -->
+                                <div class="ox-consult-row">
+                                    <div class="ox-consult-field-wrap">
+                                        <input type="text" name="name" id="consult_name" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'الاسم الكامل' : ($locale === 'fr' ? 'Nom Complet' : 'Full Name') }}" maxlength="70" required>
+                                    </div>
+                                    <div class="ox-consult-field-wrap">
+                                        <div class="ox-consult-select-wrap">
+                                            <select name="project_type" class="ox-consult-select" required>
+                                                <option value="" disabled selected hidden>{{ $locale === 'ar' ? 'نوع المشروع' : ($locale === 'fr' ? 'Type de Projet' : 'Project Type') }}</option>
+                                                <option value="تطبيقات جوال (iOS & Android)">{{ $locale === 'ar' ? 'تطبيق جوال iOS / Android' : 'Mobile App (iOS / Android)' }}</option>
+                                                <option value="منصات ومواقع ويب">{{ $locale === 'ar' ? 'منصات ومواقع ويب' : 'Web & Platforms' }}</option>
+                                                <option value="متجر إلكتروني متكامل">{{ $locale === 'ar' ? 'متجر إلكتروني متكامل' : 'E-Commerce Store' }}</option>
+                                                <option value="أنظمة SaaS وسحابية">{{ $locale === 'ar' ? 'أنظمة SaaS وسحابية' : 'Cloud / SaaS Solutions' }}</option>
+                                                <option value="حلول الذكاء الاصطناعي والأتمتة">{{ $locale === 'ar' ? 'حلول الذكاء الاصطناعي والأتمتة' : 'AI & Automation Solutions' }}</option>
+                                                <option value="استشارة وتخطيط تقني">{{ $locale === 'ar' ? 'استشارة وتخطيط تقني' : 'Technical Consultation' }}</option>
+                                            </select>
+                                            <span class="ox-consult-select-chevron">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M6 9l6 6 6-6"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ox-consult-row">
+                                    <div class="ox-consult-field-wrap">
+                                        <input type="email" name="email" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'البريد الإلكتروني' : ($locale === 'fr' ? 'Email Pro' : 'Business Email') }}" maxlength="100" required>
+                                    </div>
+                                    <div class="ox-consult-field-wrap">
+                                        <div class="ox-consult-select-wrap">
+                                            <select name="budget" class="ox-consult-select" required>
+                                                <option value="" disabled selected hidden>{{ $locale === 'ar' ? 'الميزانية التقديرية' : ($locale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</option>
+                                                <option value="أقل من $10,000">{{ $locale === 'ar' ? 'أقل من $10,000' : '< $10,000' }}</option>
+                                                <option value="$10,000 - $25,000">$10,000 - $25,000</option>
+                                                <option value="$25,000 - $50,000">$25,000 - $50,000</option>
+                                                <option value="أكثر من $50,000">{{ $locale === 'ar' ? 'أكثر من $50,000' : '> $50,000' }}</option>
+                                            </select>
+                                            <span class="ox-consult-select-chevron">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M6 9l6 6 6-6"/>
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Message Textarea -->
+                                <div class="ox-consult-field-wrap" style="margin-bottom: 12px;">
+                                    <textarea name="message" class="ox-consult-textarea" rows="3" placeholder="{{ $locale === 'ar' ? 'رسالتك لنا' : ($locale === 'fr' ? 'Votre message' : 'Your Message') }}" minlength="10" maxlength="1000" required></textarea>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="ox-consult-submit-btn" id="inlineSubmitBtn">
+                                    <span>{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Success Celebration Screen -->
+                        <div class="ox-consult-success-box" id="inlineSuccessBox">
+                            <div class="ox-consult-success-badge">✓</div>
+                            <h3>{{ $locale === 'ar' ? 'تم استلام طلبك بنجاح!' : ($locale === 'fr' ? 'Demande envoyée avec succès !' : 'Request Received Successfully!') }}</h3>
+                            <p id="successMsgText">
+                                {{ $locale === 'ar' ? 'شكرًا لتواصلك معنا. سنقوم بدراسة فكرتك والتواصل معك خلال 24 ساعة لمناقشة التفاصيل.' : ($locale === 'fr' ? 'Merci de nous avoir contactés. Nous reviendrons vers vous sous 24h.' : 'Thank you for reaching out. Our engineering team will review your scope and follow up within 24 hours.') }}
+                            </p>
+                            <button type="button" class="ox-consult-btn-secondary" onclick="resetInlineForm()" style="font-size: 13px; padding: 10px 24px; margin-top: 10px;">
+                                {{ $locale === 'ar' ? 'إرسال طلب آخر' : ($locale === 'fr' ? 'Envoyer un autre message' : 'Send Another Request') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1358,6 +1599,24 @@
         });
     });
 
+    // Smoothly focus consultation form from CTA button
+    function focusConsultForm() {
+        const nameInput = document.getElementById('consult_name');
+        if (nameInput) {
+            nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                nameInput.focus();
+                nameInput.style.borderColor = '#00e59b';
+                nameInput.style.boxShadow = '0 0 0 4px rgba(0, 229, 155, 0.25)';
+                setTimeout(() => {
+                    nameInput.style.borderColor = '';
+                    nameInput.style.boxShadow = '';
+                }, 1800);
+            }, 350);
+        }
+    }
+    window.focusConsultForm = focusConsultForm;
+
     // Fast AJAX submission for Inline Form
     const inlineForm = document.getElementById('inlineConsultationForm');
     const inlineSubmitBtn = document.getElementById('inlineSubmitBtn');
@@ -1368,7 +1627,7 @@
         inlineForm.addEventListener('submit', function(e) {
             e.preventDefault();
             inlineSubmitBtn.disabled = true;
-            inlineSubmitBtn.querySelector('span').textContent = "{{ __('جاري إرسال الطلب...') }}";
+            inlineSubmitBtn.querySelector('span').textContent = "{{ $locale === 'ar' ? 'جاري إرسال الطلب...' : ($locale === 'fr' ? 'Envoi en cours...' : 'Sending Request...') }}";
 
             const formData = new FormData(this);
 
@@ -1391,7 +1650,7 @@
                 } else {
                     alert("{{ __('حدث خطأ أثناء الإرسال، يرجى التحقق من البيانات والمحاولة مجدداً.') }}");
                     inlineSubmitBtn.disabled = false;
-                    inlineSubmitBtn.querySelector('span').textContent = "{{ __('إرسال وتأكيد طلب الاستشارة') }}";
+                    inlineSubmitBtn.querySelector('span').textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
                 }
             })
             .catch(err => {
@@ -1408,10 +1667,8 @@
         if (inlineSuccessBox) inlineSuccessBox.style.display = 'none';
         if (inlineSubmitBtn) {
             inlineSubmitBtn.disabled = false;
-            inlineSubmitBtn.querySelector('span').textContent = "{{ __('إرسال وتأكيد طلب الاستشارة') }}";
+            inlineSubmitBtn.querySelector('span').textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
         }
-        const inlineCounter = document.getElementById('inlineMsgCounter');
-        if (inlineCounter) inlineCounter.innerText = "0 / 1000 {{ __('حرف') }}";
     }
 
     // Live Character Counter for Inline Form

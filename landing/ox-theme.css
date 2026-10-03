@@ -1133,3 +1133,1991 @@ html[dir="ltr"] .service-card-pill {
   }
 }
 
+/* =========================================
+   BENEFICIARIES SECTION (من يستفيد من حلول OxTech؟)
+   ========================================= */
+
+.ox-beneficiaries-section {
+  position: relative;
+  background-color: var(--ox-carbon);
+  color: var(--ox-ivory);
+  padding: 100px 0 70px;
+  overflow: hidden;
+  border-top: 1px solid var(--ox-border);
+}
+
+.ox-beneficiaries-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(29, 138, 104, 0.04) 0, rgba(29, 138, 104, 0.04) 1px, transparent 0, transparent 20px),
+    repeating-linear-gradient(-45deg, rgba(29, 138, 104, 0.04) 0, rgba(29, 138, 104, 0.04) 1px, transparent 0, transparent 20px);
+  z-index: 1;
+}
+
+.ox-beneficiaries-skyline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 52%;
+  max-width: 740px;
+  background-image: url('ox-riyadh-skyline-fade.jpg');
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 1;
+  mask-image: linear-gradient(to right, black 35%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to right, black 35%, transparent 95%);
+}
+
+html[dir="ltr"] .ox-beneficiaries-skyline {
+  left: auto;
+  right: 0;
+  background-position: right center;
+  mask-image: linear-gradient(to left, black 35%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to left, black 35%, transparent 95%);
+}
+
+.ox-beneficiaries-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  align-items: center;
+  gap: 50px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Right Content: Kicker, Heading, Checklist, CTA */
+.ox-beneficiaries-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ox-beneficiaries-kicker {
+  font-family: var(--font-ar);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ox-emerald);
+  margin-bottom: 8px;
+}
+
+.ox-beneficiaries-heading {
+  font-family: var(--font-ar);
+  font-size: clamp(34px, 4vw, 50px);
+  font-weight: 900;
+  color: var(--ox-white);
+  line-height: 1.25;
+  margin: 0 0 18px;
+}
+
+.ox-beneficiaries-heading .brand-tag {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+  color: var(--ox-white);
+}
+
+.ox-beneficiaries-desc {
+  font-family: var(--font-ar);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ox-gray);
+  margin: 0 0 24px;
+  max-width: 520px;
+}
+
+.ox-beneficiaries-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.ox-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-ar);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ox-white);
+}
+
+.ox-check-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(46, 229, 157, 0.18);
+  border: 1.5px solid #2EE59D;
+  color: #2EE59D;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.ox-beneficiaries-cta {
+  background: var(--ox-emerald);
+  color: var(--ox-white);
+  font-family: var(--font-ar);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 13px 28px 13px 20px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(29, 138, 104, 0.35);
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.ox-beneficiaries-cta:hover {
+  background: #25a47c;
+  color: var(--ox-white);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(29, 138, 104, 0.5);
+}
+
+.ox-cta-arrow {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(7, 27, 25, 0.4);
+  color: var(--ox-white);
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.ox-beneficiaries-cta:hover .ox-cta-arrow {
+  transform: scale(1.1);
+}
+
+/* Tablet Showcase on the Left */
+.ox-tablet-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 660px;
+}
+
+.ox-tablet-frame {
+  background: #020908;
+  border: 10px solid #142e29;
+  border-radius: 28px;
+  padding: 16px;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(46, 229, 157, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.8);
+  position: relative;
+  backdrop-filter: blur(8px);
+}
+
+.ox-tablet-camera {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #0d2822;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ox-tablet-screen {
+  background: linear-gradient(145deg, #051a16 0%, #03100e 100%);
+  border-radius: 18px;
+  padding: 18px 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(29, 138, 104, 0.2);
+}
+
+.ox-tablet-card {
+  background: linear-gradient(180deg, rgba(13, 41, 37, 0.85) 0%, rgba(6, 22, 19, 0.95) 100%);
+  border: 1px solid rgba(29, 138, 104, 0.28);
+  border-radius: 14px;
+  padding: 18px 8px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  min-height: 240px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ox-tablet-card:hover {
+  transform: translateY(-4px);
+  border-color: #2EE59D;
+  background: linear-gradient(180deg, rgba(20, 58, 52, 0.95) 0%, rgba(9, 32, 28, 0.98) 100%);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(46, 229, 157, 0.25);
+}
+
+.tablet-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(29, 138, 104, 0.15);
+  border: 1px solid rgba(29, 138, 104, 0.3);
+  display: grid;
+  place-items: center;
+  color: #2EE59D;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.ox-tablet-card:hover .tablet-card-icon {
+  background: var(--ox-emerald);
+  color: var(--ox-white);
+  transform: scale(1.08);
+}
+
+.tablet-card-title {
+  font-family: var(--font-ar);
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ox-white);
+  line-height: 1.35;
+  margin: 0 0 6px;
+}
+
+.tablet-card-desc {
+  font-family: var(--font-ar);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--ox-gray);
+  margin: 0 0 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tablet-card-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(46, 229, 157, 0.5);
+  color: #2EE59D;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  margin-top: auto;
+  transition: all 0.3s ease;
+}
+
+.ox-tablet-card:hover .tablet-card-btn {
+  background: #2EE59D;
+  border-color: #2EE59D;
+  color: var(--ox-carbon);
+  transform: scale(1.12);
+}
+
+/* =========================================
+   MODELS / B2B & B2C SECTION (نشتغل مع B2B ونفهم B2C)
+   ========================================= */
+
+.ox-models-section {
+  position: relative;
+  background-color: var(--ox-carbon);
+  color: var(--ox-ivory);
+  padding: 30px 0 110px;
+  overflow: hidden;
+}
+
+.ox-models-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  align-items: center;
+  gap: 50px;
+  position: relative;
+  z-index: 2;
+}
+
+.ox-models-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ox-models-title {
+  font-family: var(--font-ar);
+  font-size: clamp(38px, 4.4vw, 56px);
+  font-weight: 900;
+  line-height: 1.25;
+  color: var(--ox-white);
+  margin: 0;
+}
+
+.ox-models-title span.tag-b2b,
+.ox-models-title span.tag-b2c {
+  color: var(--ox-white);
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+}
+
+.ox-models-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.ox-model-card {
+  border-radius: 20px;
+  padding: 30px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 210px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-decoration: none;
+}
+
+/* Card 1: Dark Emerald */
+.ox-model-card.card-dark {
+  background: linear-gradient(145deg, #0b2b24 0%, #061916 100%);
+  border: 1px solid rgba(29, 138, 104, 0.45);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.ox-model-card.card-dark:hover {
+  transform: translateY(-6px);
+  border-color: #2EE59D;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(46, 229, 157, 0.25);
+}
+
+.ox-model-card.card-dark .model-card-title {
+  color: var(--ox-white);
+}
+
+.ox-model-card.card-dark .model-card-desc {
+  color: var(--ox-gray);
+}
+
+.ox-model-card.card-dark .model-card-arrow {
+  border: 1.5px solid rgba(46, 229, 157, 0.6);
+  color: #2EE59D;
+}
+
+.ox-model-card.card-dark:hover .model-card-arrow {
+  background: #2EE59D;
+  border-color: #2EE59D;
+  color: var(--ox-carbon);
+}
+
+/* Card 2: Light Ivory */
+.ox-model-card.card-light {
+  background: var(--ox-ivory);
+  border: 1px solid rgba(200, 169, 107, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.ox-model-card.card-light:hover {
+  transform: translateY(-6px);
+  background: var(--ox-white);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), 0 0 25px rgba(243, 239, 229, 0.5);
+}
+
+.ox-model-card.card-light .model-card-title {
+  color: var(--ox-carbon);
+}
+
+.ox-model-card.card-light .model-card-desc {
+  color: #3b504b;
+}
+
+.ox-model-card.card-light .model-card-arrow {
+  border: 1.5px solid var(--ox-carbon);
+  color: var(--ox-carbon);
+}
+
+.ox-model-card.card-light:hover .model-card-arrow {
+  background: var(--ox-carbon);
+  color: var(--ox-ivory);
+}
+
+.model-card-title {
+  font-family: var(--font-ar);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0 0 10px;
+}
+
+.model-card-desc {
+  font-family: var(--font-ar);
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+
+.model-card-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+  font-size: 13px;
+}
+
+/* Responsive Rules for Beneficiaries & Models */
+@media (max-width: 992px) {
+  .ox-beneficiaries-grid,
+  .ox-models-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .ox-beneficiaries-skyline {
+    width: 100%;
+    opacity: 0.35;
+  }
+
+  .ox-tablet-screen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .ox-tablet-screen {
+    grid-template-columns: 1fr;
+  }
+
+  .ox-models-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   PARTNERS SECTION (شركاؤنا هم الدليل)
+   ========================================= */
+
+.ox-partners-section {
+  position: relative;
+  background-color: var(--ox-ivory);
+  color: var(--ox-carbon);
+  padding: 85px 0 95px;
+  overflow: hidden;
+}
+
+.partners-header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 44px;
+  position: relative;
+  z-index: 2;
+}
+
+.partners-header-center {
+  text-align: center;
+  margin: 0 auto;
+  transform: translateX(-40px);
+}
+
+html[dir="ltr"] .partners-header-center {
+  transform: translateX(40px);
+}
+
+.partners-title {
+  font-family: var(--font-ar);
+  font-size: clamp(34px, 4.2vw, 52px);
+  font-weight: 900;
+  line-height: 1.22;
+  color: var(--ox-carbon);
+  margin: 0 0 10px;
+}
+
+.partners-title .text-green {
+  color: var(--ox-emerald) !important;
+}
+
+.partners-subtitle {
+  font-family: var(--font-ar);
+  font-size: 17px;
+  font-weight: 600;
+  color: #556761;
+  margin: 0;
+}
+
+/* Nav Slider Buttons */
+.partners-slider-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.partners-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ox-white);
+  border: 1px solid rgba(7, 27, 25, 0.12);
+  color: var(--ox-carbon);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(7, 27, 25, 0.06);
+  transition: all var(--transition);
+}
+
+.partners-nav-btn:hover {
+  background: var(--ox-emerald);
+  border-color: var(--ox-emerald);
+  color: var(--ox-white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(29, 138, 104, 0.25);
+}
+
+/* Partners Logos Grid / Track */
+.ox-partners-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  position: relative;
+  z-index: 2;
+}
+
+.ox-partner-card {
+  background: #FAF7F0;
+  border: 1px solid rgba(7, 27, 25, 0.08);
+  border-radius: 18px;
+  min-height: 125px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(7, 27, 25, 0.03);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ox-partner-card:hover {
+  background: var(--ox-white);
+  transform: translateY(-5px);
+  border-color: rgba(29, 138, 104, 0.35);
+  box-shadow: 0 14px 35px rgba(7, 27, 25, 0.09), 0 0 20px rgba(29, 138, 104, 0.12);
+}
+
+.partner-logo-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.ox-partner-card:hover .partner-logo-wrap {
+  transform: scale(1.05);
+}
+
+.partner-logo-wrap svg {
+  max-width: 100%;
+  max-height: 72px;
+  height: auto;
+}
+
+@media (max-width: 992px) {
+  .partners-header-wrap {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .partners-header-center {
+    transform: none;
+  }
+
+  .ox-partners-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px;
+    gap: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ox-emerald) transparent;
+  }
+
+  .ox-partner-card {
+    min-width: 240px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+}
+
+
+
+/* =========================================
+   ABOUT / ROOTS IN SAUDI SECTION (نحن من السعودية، وكبرنا بثقة شركائنا)
+   ========================================= */
+
+.ox-about-section {
+  position: relative;
+  background-color: var(--ox-carbon);
+  color: var(--ox-ivory);
+  padding: 100px 0 110px;
+  overflow: hidden;
+}
+
+/* Background Skyline (Fading from left in RTL) */
+.ox-about-skyline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  max-width: 680px;
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  opacity: 0.42;
+  pointer-events: none;
+  z-index: 1;
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+html[dir="ltr"] .ox-about-skyline {
+  left: auto;
+  right: 0;
+  background-position: right center;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Background Arabesque Tracery (Right edge in RTL) */
+.ox-about-arabesque {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 340px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.22;
+  background-image: 
+    radial-gradient(circle at 100% 50%, rgba(29, 138, 104, 0.45) 0%, transparent 70%),
+    repeating-linear-gradient(45deg, rgba(29, 138, 104, 0.35) 0, rgba(29, 138, 104, 0.35) 1.5px, transparent 0, transparent 22px),
+    repeating-linear-gradient(-45deg, rgba(29, 138, 104, 0.35) 0, rgba(29, 138, 104, 0.35) 1.5px, transparent 0, transparent 22px);
+  mask-image: linear-gradient(to left, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, black 30%, transparent 100%);
+}
+
+html[dir="ltr"] .ox-about-arabesque {
+  right: auto;
+  left: 0;
+  mask-image: linear-gradient(to right, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 30%, transparent 100%);
+}
+
+/* Main Grid */
+.ox-about-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  align-items: center;
+  gap: 52px;
+  position: relative;
+  z-index: 2;
+}
+
+html[dir="ltr"] .ox-about-grid {
+  grid-template-columns: 0.88fr 1.12fr;
+}
+
+/* Content Column (Right in RTL) */
+.ox-about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: right;
+}
+
+html[dir="ltr"] .ox-about-content {
+  text-align: left;
+}
+
+.ox-about-title {
+  font-family: var(--font-ar);
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.28;
+  color: var(--ox-white);
+  margin: 0 0 20px;
+  letter-spacing: -0.5px;
+}
+
+.ox-about-desc {
+  font-family: var(--font-ar);
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.85;
+  color: var(--ox-gray);
+  margin: 0 0 34px;
+  max-width: 540px;
+}
+
+/* Checklist Items */
+.ox-about-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.ox-about-check-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.check-item-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #1D8A68;
+  color: #FFFFFF;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(29, 138, 104, 0.45);
+}
+
+.check-item-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.check-item-text {
+  font-family: var(--font-ar);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ox-white);
+  letter-spacing: -0.2px;
+}
+
+/* CTA Pill Button (شاهد قصتنا) */
+.ox-about-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: #1D8A68;
+  color: #071B19;
+  padding: 8px 10px 8px 28px;
+  border-radius: 999px;
+  font-family: var(--font-ar);
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(29, 138, 104, 0.35);
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html[dir="ltr"] .ox-about-cta-btn {
+  padding: 8px 28px 8px 10px;
+}
+
+.ox-about-cta-btn:hover {
+  background: #2EE59D;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(46, 229, 157, 0.45);
+  color: #071B19;
+}
+
+.cta-play-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #071B19;
+  color: #1D8A68;
+  display: grid;
+  place-items: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.ox-about-cta-btn:hover .cta-play-circle {
+  background: #071B19;
+  color: #2EE59D;
+  transform: scale(1.08);
+}
+
+.cta-play-circle svg {
+  width: 16px;
+  height: 16px;
+  margin-right: -2px; /* slight center optical compensation for play triangle in RTL */
+}
+
+/* Video Column (Left in RTL) */
+.ox-about-video-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.ox-video-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  min-height: 290px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(29, 138, 104, 0.18);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  background: #061916;
+}
+
+.ox-video-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(46, 229, 157, 0.45);
+  box-shadow: 0 32px 70px rgba(0, 0, 0, 0.7), 0 0 45px rgba(46, 229, 157, 0.25);
+}
+
+.ox-video-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ox-video-card:hover .ox-video-img {
+  transform: scale(1.04);
+}
+
+.ox-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 27, 25, 0.25) 0%, rgba(7, 27, 25, 0.1) 45%, rgba(7, 27, 25, 0.75) 100%);
+  pointer-events: none;
+}
+
+/* Glassmorphism Play Button in Center */
+.ox-video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(7, 27, 25, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  color: var(--ox-white);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  z-index: 3;
+}
+
+.play-ripple {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  animation: oxPlayPulse 2.4s infinite;
+  pointer-events: none;
+}
+
+@keyframes oxPlayPulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1.22); opacity: 0; }
+}
+
+.ox-video-card:hover .ox-video-play-btn {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: var(--ox-emerald);
+  border-color: #2EE59D;
+  box-shadow: 0 0 30px rgba(46, 229, 157, 0.55);
+}
+
+.ox-video-play-btn svg {
+  width: 24px;
+  height: 24px;
+  margin-left: 3px;
+}
+
+/* Badge at Bottom Right of the card */
+.ox-video-partner-badge {
+  position: absolute;
+  bottom: 22px;
+  right: 24px;
+  z-index: 2;
+  text-align: right;
+  color: var(--ox-white);
+  pointer-events: none;
+}
+
+html[dir="ltr"] .ox-video-partner-badge {
+  right: auto;
+  left: 24px;
+  text-align: left;
+}
+
+.ox-video-partner-badge .badge-title {
+  font-family: var(--font-ar);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+.ox-video-partner-badge .badge-sub {
+  font-family: var(--font-ar);
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+/* Subtle Caption below card */
+.ox-video-caption {
+  font-family: var(--font-ar);
+  font-size: 12px;
+  color: var(--ox-gray);
+  margin-top: 10px;
+  padding-right: 6px;
+  opacity: 0.8;
+}
+
+/* Story Video Modal */
+.ox-story-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 15, 13, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s ease;
+}
+
+.ox-story-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ox-story-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  background: #071B19;
+  border: 1px solid rgba(29, 138, 104, 0.45);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(29, 138, 104, 0.25);
+  transform: scale(0.94);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ox-story-modal-overlay.active .ox-story-modal-dialog {
+  transform: scale(1);
+}
+
+.ox-story-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.25s ease;
+}
+
+.ox-story-modal-close:hover {
+  background: var(--ox-emerald);
+  border-color: var(--ox-emerald);
+  transform: rotate(90deg);
+}
+
+.ox-story-video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.ox-story-video-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ox-story-video-player-ui {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 40%, rgba(7, 27, 25, 0.95) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.player-header .player-badge {
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #2EE59D;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.player-header h4 {
+  font-family: var(--font-ar);
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.player-controls .progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.player-controls .progress-fill {
+  width: 45%;
+  height: 100%;
+  background: #2EE59D;
+  box-shadow: 0 0 10px #2EE59D;
+}
+
+.player-controls .controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player-controls .status-live {
+  font-family: var(--font-ar);
+  font-size: 13px;
+  color: #2EE59D;
+  font-weight: 700;
+}
+
+.player-controls .player-cta {
+  font-family: var(--font-ar);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--ox-emerald);
+  padding: 8px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.player-controls .player-cta:hover {
+  background: #2EE59D;
+  color: var(--ox-carbon);
+}
+
+/* Responsive Rules for About Section */
+@media (max-width: 992px) {
+  .ox-about-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .ox-about-skyline {
+    width: 100%;
+    opacity: 0.25;
+  }
+
+  .ox-about-arabesque {
+    width: 180px;
+    opacity: 0.12;
+  }
+}
+
+/* =========================================
+   OX CTA BANNER & FAST INLINE CONTACT
+   (Saudi × Egypt Architectural Aesthetic)
+   ========================================= */
+
+.ox-consult-section {
+  position: relative;
+  padding: 40px 5vw 90px;
+  background: transparent;
+  overflow: hidden;
+}
+
+.ox-consult-banner {
+  position: relative;
+  max-width: 1360px;
+  margin: 0 auto;
+  background-color: #061713;
+  border-radius: 28px;
+  border: 1px solid rgba(0, 229, 155, 0.22);
+  box-shadow: 0 35px 90px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 229, 155, 0.08);
+  overflow: hidden;
+}
+
+/* Background Artwork Layer (Obelisk & Palm Tree on the Right in RTL) */
+.ox-consult-bg-art {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 58%;
+  min-width: 520px;
+  background-image: url('/assets/ox-consult-bg.jpg');
+  background-position: right center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.75) 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.75) 65%, transparent 100%);
+}
+
+html[dir="ltr"] .ox-consult-bg-art {
+  right: auto;
+  left: 0;
+  transform: scaleX(-1);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.75) 65%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.75) 65%, transparent 100%);
+}
+
+/* Islamic Arabesque Geometric Pattern on the Left in RTL */
+.ox-consult-arabesque-art {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 380px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L49 18 L68 12 L62 31 L80 40 L62 49 L68 68 L49 62 L40 80 L31 62 L12 68 L18 49 L0 40 L18 31 L12 12 L31 18 Z' fill='none' stroke='%2300e59b' stroke-width='1.2' stroke-opacity='0.55'/%3E%3Ccircle cx='40' cy='40' r='14' fill='none' stroke='%2300e59b' stroke-width='0.9' stroke-opacity='0.45'/%3E%3Cpath d='M0 0 L20 20 M80 0 L60 20 M80 80 L60 60 M0 80 L20 60' stroke='%2300e59b' stroke-width='1' stroke-opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, transparent 95%);
+}
+
+html[dir="ltr"] .ox-consult-arabesque-art {
+  left: auto;
+  right: 0;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 25%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 25%, transparent 95%);
+}
+
+.ox-consult-ambient-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 229, 155, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Banner Grid Layout */
+.ox-consult-grid {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  padding: 56px 60px;
+}
+
+/* Info Column (Headline, Subtitle, CTA buttons) */
+.ox-consult-info-col {
+  flex: 1 1 480px;
+  max-width: 520px;
+}
+
+.ox-consult-headline {
+  font-family: var(--font-ar);
+  font-size: clamp(32px, 3.8vw, 54px);
+  font-weight: 800;
+  line-height: 1.22;
+  color: #ffffff;
+  margin: 0 0 16px;
+  letter-spacing: -0.5px;
+}
+
+.ox-consult-headline .ox-mint-highlight {
+  color: #00e59b;
+  display: inline-block;
+  text-shadow: 0 0 35px rgba(0, 229, 155, 0.45);
+}
+
+.ox-consult-subtitle {
+  font-family: var(--font-ar);
+  font-size: clamp(14px, 1.15vw, 16.5px);
+  line-height: 1.85;
+  color: #8dafa4;
+  margin: 0 0 32px;
+}
+
+.ox-consult-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Primary Button: "ابدأ الآن" */
+.ox-consult-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #00e59b;
+  color: #041c16;
+  font-family: var(--font-ar);
+  font-weight: 800;
+  font-size: 15px;
+  padding: 10px 22px 10px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 22px rgba(0, 229, 155, 0.35);
+  border: none;
+  cursor: pointer;
+}
+
+html[dir="ltr"] .ox-consult-btn-primary {
+  padding: 10px 14px 10px 22px;
+}
+
+.ox-consult-btn-primary:hover {
+  background: #1bfdae;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(0, 229, 155, 0.55);
+  color: #031813;
+}
+
+.ox-consult-arrow-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #041c16;
+  color: #00e59b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.ox-consult-btn-primary:hover .ox-consult-arrow-circle {
+  transform: scale(1.08);
+}
+
+/* Secondary Button: "تواصل معنا" */
+.ox-consult-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background: rgba(6, 24, 20, 0.6);
+  border: 1.5px solid rgba(0, 229, 155, 0.4);
+  color: #ffffff;
+  font-family: var(--font-ar);
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 999px;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.ox-consult-btn-secondary:hover {
+  border-color: #00e59b;
+  background: rgba(0, 229, 155, 0.12);
+  color: #00e59b;
+  transform: translateY(-2px);
+}
+
+/* Form Column & Card */
+.ox-consult-form-col {
+  flex: 0 1 480px;
+  width: 100%;
+}
+
+.ox-consult-form-card {
+  background: rgba(10, 27, 23, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 229, 155, 0.22);
+  border-radius: 20px;
+  padding: 26px 26px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(0, 229, 155, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.ox-consult-card-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 18px;
+  text-align: right;
+  font-family: var(--font-ar);
+}
+
+html[dir="ltr"] .ox-consult-card-title {
+  text-align: left;
+}
+
+/* Inputs & Form Rows */
+.ox-consult-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ox-consult-input,
+.ox-consult-select {
+  width: 100%;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0 14px;
+  color: #ffffff;
+  font-family: var(--font-ar);
+  font-size: 13.5px;
+  outline: none;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.ox-consult-input::placeholder {
+  color: #6d8a81;
+}
+
+.ox-consult-input:focus,
+.ox-consult-select:focus,
+.ox-consult-textarea:focus {
+  border-color: #00e59b;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 3px rgba(0, 229, 155, 0.16);
+}
+
+.ox-consult-select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.ox-consult-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-left: 34px;
+  cursor: pointer;
+}
+
+html[dir="ltr"] .ox-consult-select {
+  padding-left: 14px;
+  padding-right: 34px;
+}
+
+.ox-consult-select-chevron {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #79988e;
+  display: flex;
+  align-items: center;
+}
+
+html[dir="ltr"] .ox-consult-select-chevron {
+  left: auto;
+  right: 12px;
+}
+
+.ox-consult-select option {
+  background: #0b221d;
+  color: #ffffff;
+  padding: 8px 12px;
+}
+
+.ox-consult-textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #ffffff;
+  font-family: var(--font-ar);
+  font-size: 13.5px;
+  outline: none;
+  resize: none;
+  min-height: 80px;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.ox-consult-textarea::placeholder {
+  color: #6d8a81;
+}
+
+.ox-consult-submit-btn {
+  width: 100%;
+  height: 48px;
+  background: #00e59b;
+  border: none;
+  border-radius: 12px;
+  color: #041c16;
+  font-family: var(--font-ar);
+  font-size: 15.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 18px rgba(0, 229, 155, 0.32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ox-consult-submit-btn:hover:not(:disabled) {
+  background: #1affb0;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 26px rgba(0, 229, 155, 0.5);
+}
+
+.ox-consult-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Success Celebration Box */
+.ox-consult-success-box {
+  display: none;
+  text-align: center;
+  padding: 24px 10px;
+}
+
+.ox-consult-success-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(0, 229, 155, 0.18);
+  border: 1.5px solid #00e59b;
+  color: #00e59b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin: 0 auto 14px;
+  box-shadow: 0 0 25px rgba(0, 229, 155, 0.35);
+}
+
+.ox-consult-success-box h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px;
+  font-family: var(--font-ar);
+}
+
+.ox-consult-success-box p {
+  font-size: 13.5px;
+  color: #92b1a7;
+  line-height: 1.7;
+  margin-bottom: 18px;
+  font-family: var(--font-ar);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 991px) {
+  .ox-consult-grid {
+    flex-direction: column;
+    padding: 40px 24px;
+    gap: 36px;
+  }
+  .ox-consult-info-col {
+    max-width: 100%;
+    text-align: center;
+  }
+  .ox-consult-actions {
+    justify-content: center;
+  }
+  .ox-consult-form-col {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  .ox-consult-bg-art {
+    width: 100%;
+    opacity: 0.28;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  }
+  .ox-consult-banner {
+    border-radius: 20px;
+    margin: 20px 0 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ox-consult-section {
+    padding: 20px 12px 60px;
+  }
+  .ox-consult-row {
+    grid-template-columns: 1fr;
+  }
+  .ox-consult-grid {
+    padding: 30px 16px;
+  }
+  .ox-consult-form-card {
+    padding: 20px 16px;
+  }
+}
+
+/* =========================================
+   OX MODERN FOOTER (Saudi × Egypt Master)
+   ========================================= */
+
+.ox-pillars-component {
+  display: block !important;
+  width: 100% !important;
+  clear: both !important;
+  position: relative;
+  background-color: #041411;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(0, 229, 155, 0.04) 0%, transparent 70%),
+    linear-gradient(180deg, #051815 0%, #030e0c 100%);
+  border-top: 1px solid rgba(0, 229, 155, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.ox-modern-footer {
+  display: block !important;
+  width: 100% !important;
+  clear: both !important;
+  position: relative;
+  background-color: #030e0c;
+  background-image: linear-gradient(180deg, #030e0c 0%, #020908 100%);
+  color: #ffffff;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Islamic Arabesque Corners for Footer */
+.ox-footer-arabesque {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 240px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0 L49 18 L68 12 L62 31 L80 40 L62 49 L68 68 L49 62 L40 80 L31 62 L12 68 L18 49 L0 40 L18 31 L12 12 L31 18 Z' fill='none' stroke='%2300e59b' stroke-width='1.2' stroke-opacity='0.55'/%3E%3Ccircle cx='40' cy='40' r='14' fill='none' stroke='%2300e59b' stroke-width='0.9' stroke-opacity='0.45'/%3E%3Cpath d='M0 0 L20 20 M80 0 L60 20 M80 80 L60 60 M0 80 L20 60' stroke='%2300e59b' stroke-width='1' stroke-opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 72px 72px;
+}
+
+.ox-footer-arabesque-right {
+  right: 0;
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, transparent 100%);
+}
+
+.ox-footer-arabesque-left {
+  left: 0;
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, transparent 100%);
+}
+
+/* ─── Upper Highlights Bar ─── */
+.ox-footer-highlights {
+  position: relative;
+  z-index: 2;
+  padding: 38px 5vw;
+}
+
+.ox-footer-highlights-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+}
+
+.ox-highlight-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 22px;
+  position: relative;
+}
+
+/* Faint waveform / crest silhouette backdrop */
+.ox-highlight-item::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 170px;
+  height: 100px;
+  background: radial-gradient(ellipse at center, rgba(0, 229, 155, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Dividing hairline between items */
+html[dir="rtl"] .ox-highlight-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html[dir="ltr"] .ox-highlight-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: auto;
+  right: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ox-highlight-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 229, 155, 0.08);
+  border: 1px solid rgba(0, 229, 155, 0.28);
+  color: #00e59b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 13px;
+  box-shadow: 0 0 16px rgba(0, 229, 155, 0.16);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.ox-highlight-item:hover .ox-highlight-icon-wrap {
+  transform: translateY(-2px) scale(1.06);
+  border-color: #00e59b;
+  box-shadow: 0 0 24px rgba(0, 229, 155, 0.45);
+}
+
+.ox-highlight-title {
+  font-family: var(--font-ar);
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 5px;
+  letter-spacing: -0.2px;
+  position: relative;
+  z-index: 1;
+}
+
+.ox-highlight-sub {
+  font-family: var(--font-ar);
+  font-size: 13px;
+  color: #799a90;
+  margin: 0;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+}
+
+/* Horizontal Hairline Divider */
+.ox-footer-divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── Main Footer Row ─── */
+.ox-footer-main {
+  position: relative;
+  z-index: 2;
+  padding: 30px 5vw;
+}
+
+.ox-footer-main-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  direction: ltr; /* Keeps Logo on the Left and Socials/Domain on the Right */
+}
+
+/* Brand / Logo */
+.ox-footer-logo-brand {
+  display: inline-flex;
+  flex-direction: column;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.ox-footer-logo-text {
+  font-family: var(--font-latin);
+  font-size: 27px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.ox-logo-accent {
+  color: #00e59b;
+  text-shadow: 0 0 12px rgba(0, 229, 155, 0.45);
+}
+
+.ox-footer-tagline {
+  font-family: var(--font-latin);
+  font-size: 7.5px;
+  font-weight: 700;
+  color: #7a9c91;
+  letter-spacing: 1.4px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+/* Center Navigation Links */
+.ox-footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  direction: ltr; /* Matches the left-to-right order in the screenshot */
+}
+
+.ox-footer-nav-link {
+  color: #d1e2dc;
+  text-decoration: none;
+  font-family: var(--font-ar);
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  position: relative;
+  padding: 6px 0;
+}
+
+.ox-footer-nav-link:hover {
+  color: #00e59b;
+}
+
+.ox-footer-nav-link.active {
+  color: #00e59b;
+}
+
+.ox-footer-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 2px;
+  right: 2px;
+  height: 2.5px;
+  background: #00e59b;
+  border-radius: 99px;
+  box-shadow: 0 0 10px rgba(0, 229, 155, 0.7);
+}
+
+/* Right End Group: Socials + Divider + Domain */
+.ox-footer-end-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.ox-footer-end-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.16);
+  margin: 0 2px;
+}
+
+
+.ox-footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ox-footer-social-link {
+  color: #d6e5df;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  opacity: 0.85;
+}
+
+.ox-footer-social-link:hover {
+  color: #00e59b;
+  opacity: 1;
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 6px rgba(0, 229, 155, 0.6));
+}
+
+.ox-footer-domain {
+  font-family: var(--font-latin);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #00e59b;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  letter-spacing: 0.2px;
+}
+
+.ox-footer-domain:hover {
+  color: #1effb2;
+  text-shadow: 0 0 14px rgba(0, 229, 155, 0.7);
+  transform: translateY(-1px);
+}
+
+/* ─── Bottom Copyright Row ─── */
+.ox-footer-bottom {
+  position: relative;
+  z-index: 2;
+  padding: 18px 5vw 22px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ox-footer-copy {
+  font-family: var(--font-ar);
+  font-size: 13px;
+  font-weight: 500;
+  color: #8daea5;
+  margin: 0;
+  letter-spacing: 0.15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  direction: rtl;
+  user-select: none;
+}
+
+html[lang='en'] .ox-footer-copy,
+html[lang='fr'] .ox-footer-copy {
+  direction: ltr;
+  font-family: var(--font-latin);
+}
+
+/* Responsive Rules */
+@media (max-width: 991px) {
+  .ox-footer-highlights-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 0;
+  }
+  .ox-highlight-item:nth-child(2)::after {
+    display: none;
+  }
+  .ox-footer-main-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  .ox-footer-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .ox-footer-end-group {
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 540px) {
+  .ox-footer-highlights-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .ox-highlight-item::after {
+    display: none !important;
+  }
+  .ox-footer-nav {
+    gap: 14px 18px;
+    font-size: 13.5px;
+  }
+}
+
+
