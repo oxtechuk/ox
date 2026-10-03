@@ -62,7 +62,7 @@
         <div class="arabesque-corner corner-bottom-right"></div>
         <div class="arabesque-corner corner-bottom-left"></div>
 
-        <div class="ox-hero-container">
+        <div class="container ox-hero-container">
             <div class="ox-hero-content reveal">
                 @if($locale === 'ar')
                     <h1 class="ox-hero-heading">
@@ -939,14 +939,14 @@
             <div class="partners-header-wrap">
                 <!-- Slider Nav on the Left -->
                 <div class="partners-slider-nav">
-                    <button type="button" class="partners-nav-btn prev" id="partnersPrev" aria-label="{{ $locale === 'ar' ? 'السابق' : 'Previous' }}" onclick="scrollPartners(-1)">
+                    <button type="button" class="partners-nav-btn prev" id="partnersPrev" aria-label="{{ $locale === 'ar' ? 'السابق' : 'Previous' }}" onclick="scrollPartners(1)">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
+                            <polyline points="{{ $locale === 'ar' ? '9 18 15 12 9 6' : '15 18 9 12 15 6' }}"></polyline>
                         </svg>
                     </button>
-                    <button type="button" class="partners-nav-btn next" id="partnersNext" aria-label="{{ $locale === 'ar' ? 'التالي' : 'Next' }}" onclick="scrollPartners(1)">
+                    <button type="button" class="partners-nav-btn next" id="partnersNext" aria-label="{{ $locale === 'ar' ? 'التالي' : 'Next' }}" onclick="scrollPartners(-1)">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
+                            <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
                         </svg>
                     </button>
                 </div>
@@ -1140,7 +1140,7 @@
     <!-- ─── Divider into Saudi Roots & Story Section ─── -->
     <div class="sadu-divider" style="color: #071B19; background-color: var(--ox-ivory);">
         <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
+            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
         </svg>
     </div>
 
@@ -1148,13 +1148,36 @@
          ABOUT / SAUDI ROOTS (نحن من السعودية، وكبرنا بثقة شركائنا)
          ========================================= -->
     <section class="ox-about-section" id="about">
-        <!-- Background Elements: Riyadh Skyline Fade (Left) & Islamic Arabesque Tracery (Right) -->
+        <!-- Background Elements: Riyadh Skyline Fade (Right) & Islamic Arabesque Tracery (Left) -->
         <div class="ox-about-skyline" style="background-image: url('{{ asset('assets/ox-riyadh-skyline-fade.jpg') }}');"></div>
         <div class="ox-about-arabesque"></div>
 
-        <div class="ox-container">
+        <div class="container ox-container">
             <div class="ox-about-grid">
-                <!-- Content Column (Right in RTL) -->
+                <!-- Video Card Column (Right in RTL) -->
+                <div class="ox-about-video-wrap reveal">
+                    <div class="ox-video-card" onclick="openStoryVideoModal()" role="button" tabindex="0" aria-label="{{ __('مشاهدة قصة نجاح OX Tech') }}">
+                        <img src="{{ asset('assets/ox-saudi-founder-video.jpg') }}" alt="شاهد قصة نجاح OX Tech في السعودية" class="ox-video-img" loading="lazy">
+                        <div class="ox-video-overlay"></div>
+                        
+                        <!-- Glassmorphism Play Button in Center -->
+                        <div class="ox-video-play-btn" aria-hidden="true">
+                            <span class="play-ripple"></span>
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5.14v14l11-7-11-7z"/>
+                            </svg>
+                        </div>
+
+                        <!-- Bottom-Right Partner Badge inside Card -->
+                        <div class="ox-video-partner-badge">
+                            <div class="badge-title">{{ __('شركاؤنا') }}</div>
+                            <div class="badge-sub">{{ __('في نجاحنا') }}</div>
+                        </div>
+                    </div>
+                    <div class="ox-video-caption">{{ __('شاهد قصة النجاح') }}</div>
+                </div>
+
+                <!-- Content Column (Left in RTL) -->
                 <div class="ox-about-content reveal">
                     <h2 class="ox-about-title">
                         {{ __('نحن من السعودية،') }}<br>
@@ -1200,29 +1223,6 @@
                             </svg>
                         </span>
                     </button>
-                </div>
-
-                <!-- Video Card Column (Left in RTL) -->
-                <div class="ox-about-video-wrap reveal">
-                    <div class="ox-video-card" onclick="openStoryVideoModal()" role="button" tabindex="0" aria-label="{{ __('مشاهدة قصة نجاح OX Tech') }}">
-                        <img src="{{ asset('assets/ox-saudi-founder-video.jpg') }}" alt="شاهد قصة نجاح OX Tech في السعودية" class="ox-video-img" loading="lazy">
-                        <div class="ox-video-overlay"></div>
-                        
-                        <!-- Glassmorphism Play Button in Center -->
-                        <div class="ox-video-play-btn" aria-hidden="true">
-                            <span class="play-ripple"></span>
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5.14v14l11-7-11-7z"/>
-                            </svg>
-                        </div>
-
-                        <!-- Bottom-Right Partner Badge inside Card -->
-                        <div class="ox-video-partner-badge">
-                            <div class="badge-title">{{ __('شركاؤنا') }}</div>
-                            <div class="badge-sub">{{ __('في نجاحنا') }}</div>
-                        </div>
-                    </div>
-                    <div class="ox-video-caption">{{ __('شاهد قصة النجاح') }}</div>
                 </div>
             </div>
         </div>
@@ -1689,11 +1689,22 @@
     window.scrollServices = function(direction) {
         const grid = document.getElementById('servicesGrid');
         if (!grid) return;
-        const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
         const card = grid.querySelector('.ox-service-card');
         const scrollAmount = card ? (card.offsetWidth + 24) : 360;
         grid.scrollBy({
-            left: isRtl ? (direction * scrollAmount) : (direction * scrollAmount),
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    };
+
+    // Partners Section Slider Navigation
+    window.scrollPartners = function(direction) {
+        const grid = document.getElementById('partnersGrid');
+        if (!grid) return;
+        const card = grid.querySelector('.ox-partner-card');
+        const scrollAmount = card ? (card.offsetWidth + 22) : 260;
+        grid.scrollBy({
+            left: direction * scrollAmount,
             behavior: 'smooth'
         });
     };

@@ -36,7 +36,7 @@
 
   /* ===== SPACING ===== */
   --section-padding: 100px;
-  --container-width: 1240px;
+  --container-width: 1280px;
 
   /* ===== RADIUS ===== */
   --radius-sm: 8px;
@@ -77,10 +77,12 @@ html[dir="ltr"] body {
   font-family: var(--font-en);
 }
 
-.container {
+.container,
+.ox-container {
   width: min(92%, var(--container-width));
   margin-left: auto;
   margin-right: auto;
+  box-sizing: border-box;
 }
 
 /* Typography Headings */
@@ -488,9 +490,11 @@ html[dir="ltr"] .ox-hero-overlay {
 .ox-hero-container {
   position: relative;
   z-index: 3;
-  width: min(94%, 1380px);
-  margin: auto;
+  width: min(92%, var(--container-width));
+  margin-left: auto;
+  margin-right: auto;
   padding: 40px 0 60px;
+  box-sizing: border-box;
 }
 
 .ox-hero-content {
@@ -880,31 +884,62 @@ html[lang="en"] .stat-number {
 
 /* Nav Carousel Buttons */
 .services-slider-nav {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+  position: relative;
+  z-index: 5;
 }
 
 .services-nav-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--ox-white);
-  border: 1px solid rgba(7, 27, 25, 0.12);
-  color: var(--ox-carbon);
-  display: grid;
-  place-items: center;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  background: var(--ox-white) !important;
+  border: 1px solid rgba(7, 27, 25, 0.12) !important;
+  color: var(--ox-carbon) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(7, 27, 25, 0.06);
-  transition: all var(--transition);
+  box-shadow: 0 4px 14px rgba(7, 27, 25, 0.08) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.services-nav-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+  stroke: currentColor !important;
+  stroke-width: 2.4 !important;
+  flex-shrink: 0 !important;
+  display: block !important;
 }
 
 .services-nav-btn:hover {
-  background: var(--ox-emerald);
-  border-color: var(--ox-emerald);
-  color: var(--ox-white);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(29, 138, 104, 0.25);
+  background: var(--ox-emerald) !important;
+  border-color: var(--ox-emerald) !important;
+  color: var(--ox-white) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 22px rgba(29, 138, 104, 0.3) !important;
+}
+
+.services-nav-btn:active {
+  transform: translateY(0) scale(0.96) !important;
+  box-shadow: 0 3px 8px rgba(29, 138, 104, 0.2) !important;
 }
 
 /* 3-Column Services Grid matching the screenshot */
@@ -1666,31 +1701,62 @@ html[dir="ltr"] .partners-header-center {
 
 /* Nav Slider Buttons */
 .partners-slider-nav {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+  position: relative;
+  z-index: 5;
 }
 
 .partners-nav-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--ox-white);
-  border: 1px solid rgba(7, 27, 25, 0.12);
-  color: var(--ox-carbon);
-  display: grid;
-  place-items: center;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  background: var(--ox-white) !important;
+  border: 1px solid rgba(7, 27, 25, 0.12) !important;
+  color: var(--ox-carbon) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(7, 27, 25, 0.06);
-  transition: all var(--transition);
+  box-shadow: 0 4px 14px rgba(7, 27, 25, 0.08) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.partners-nav-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+  stroke: currentColor !important;
+  stroke-width: 2.4 !important;
+  flex-shrink: 0 !important;
+  display: block !important;
 }
 
 .partners-nav-btn:hover {
-  background: var(--ox-emerald);
-  border-color: var(--ox-emerald);
-  color: var(--ox-white);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(29, 138, 104, 0.25);
+  background: var(--ox-emerald) !important;
+  border-color: var(--ox-emerald) !important;
+  color: var(--ox-white) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 22px rgba(29, 138, 104, 0.3) !important;
+}
+
+.partners-nav-btn:active {
+  transform: translateY(0) scale(0.96) !important;
+  box-shadow: 0 3px 8px rgba(29, 138, 104, 0.2) !important;
 }
 
 /* Partners Logos Grid / Track */
@@ -1786,69 +1852,71 @@ html[dir="ltr"] .partners-header-center {
   overflow: hidden;
 }
 
-/* Background Skyline (Fading from left in RTL) */
+/* Background Skyline (Fading from right in RTL, behind video) */
 .ox-about-skyline {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
+  right: 0;
+  left: auto;
   width: 50%;
   max-width: 680px;
   background-size: cover;
-  background-position: left center;
+  background-position: right center;
   background-repeat: no-repeat;
   opacity: 0.42;
   pointer-events: none;
   z-index: 1;
-  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
-  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
-}
-
-html[dir="ltr"] .ox-about-skyline {
-  left: auto;
-  right: 0;
-  background-position: right center;
   mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
   -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
 }
 
-/* Background Arabesque Tracery (Right edge in RTL) */
+html[dir="ltr"] .ox-about-skyline {
+  right: auto;
+  left: 0;
+  background-position: left center;
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Background Arabesque Tracery (Left edge in RTL, behind text) */
 .ox-about-arabesque {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 0;
+  left: 0;
+  right: auto;
   width: 340px;
   pointer-events: none;
   z-index: 1;
   opacity: 0.22;
   background-image: 
-    radial-gradient(circle at 100% 50%, rgba(29, 138, 104, 0.45) 0%, transparent 70%),
+    radial-gradient(circle at 0% 50%, rgba(29, 138, 104, 0.45) 0%, transparent 70%),
     repeating-linear-gradient(45deg, rgba(29, 138, 104, 0.35) 0, rgba(29, 138, 104, 0.35) 1.5px, transparent 0, transparent 22px),
     repeating-linear-gradient(-45deg, rgba(29, 138, 104, 0.35) 0, rgba(29, 138, 104, 0.35) 1.5px, transparent 0, transparent 22px);
-  mask-image: linear-gradient(to left, black 30%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to left, black 30%, transparent 100%);
+  mask-image: linear-gradient(to right, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 30%, transparent 100%);
 }
 
 html[dir="ltr"] .ox-about-arabesque {
-  right: auto;
-  left: 0;
-  mask-image: linear-gradient(to right, black 30%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, black 30%, transparent 100%);
+  left: auto;
+  right: 0;
+  mask-image: linear-gradient(to left, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, black 30%, transparent 100%);
 }
 
 /* Main Grid */
 .ox-about-grid {
   display: grid;
-  grid-template-columns: 1.12fr 0.88fr;
+  grid-template-columns: 0.9fr 1.1fr;
   align-items: center;
-  gap: 52px;
+  gap: clamp(70px, 8vw, 120px);
   position: relative;
   z-index: 2;
 }
 
 html[dir="ltr"] .ox-about-grid {
-  grid-template-columns: 0.88fr 1.12fr;
+  grid-template-columns: 1.1fr 0.9fr;
 }
 
 /* Content Column (Right in RTL) */
@@ -1978,12 +2046,13 @@ html[dir="ltr"] .ox-about-cta-btn {
   margin-right: -2px; /* slight center optical compensation for play triangle in RTL */
 }
 
-/* Video Column (Left in RTL) */
+/* Video Column (Right in RTL) */
 .ox-about-video-wrap {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  max-width: 530px;
 }
 
 .ox-video-card {
@@ -2275,6 +2344,14 @@ html[dir="ltr"] .ox-video-partner-badge {
     gap: 44px;
   }
 
+  .ox-about-content {
+    order: 1;
+  }
+
+  .ox-about-video-wrap {
+    order: 2;
+  }
+
   .ox-about-skyline {
     width: 100%;
     opacity: 0.25;
@@ -2293,20 +2370,21 @@ html[dir="ltr"] .ox-video-partner-badge {
 
 .ox-consult-section {
   position: relative;
-  padding: 40px 5vw 90px;
+  padding: 40px 0 90px;
   background: transparent;
   overflow: hidden;
 }
 
 .ox-consult-banner {
   position: relative;
-  max-width: 1360px;
+  width: min(92%, var(--container-width));
   margin: 0 auto;
   background-color: #061713;
   border-radius: 28px;
   border: 1px solid rgba(0, 229, 155, 0.22);
   box-shadow: 0 35px 90px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 229, 155, 0.08);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 /* Background Artwork Layer (Obelisk & Palm Tree on the Right in RTL) */
@@ -2712,13 +2790,13 @@ html[dir="ltr"] .ox-consult-select-chevron {
   }
   .ox-consult-banner {
     border-radius: 20px;
-    margin: 20px 0 40px;
+    margin: 20px auto 40px;
   }
 }
 
 @media (max-width: 480px) {
   .ox-consult-section {
-    padding: 20px 12px 60px;
+    padding: 20px 0 60px;
   }
   .ox-consult-row {
     grid-template-columns: 1fr;
@@ -2792,15 +2870,16 @@ html[dir="ltr"] .ox-consult-select-chevron {
 .ox-footer-highlights {
   position: relative;
   z-index: 2;
-  padding: 38px 5vw;
+  padding: 38px 0;
 }
 
 .ox-footer-highlights-inner {
-  max-width: 1320px;
+  width: min(92%, var(--container-width));
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
+  box-sizing: border-box;
 }
 
 .ox-highlight-item {
@@ -2895,7 +2974,8 @@ html[dir="ltr"] .ox-highlight-item:not(:last-child)::after {
 /* Horizontal Hairline Divider */
 .ox-footer-divider {
   height: 1px;
-  width: 100%;
+  width: min(92%, var(--container-width));
+  margin: 25px auto 0;
   background: rgba(255, 255, 255, 0.08);
   position: relative;
   z-index: 2;
@@ -2905,17 +2985,18 @@ html[dir="ltr"] .ox-highlight-item:not(:last-child)::after {
 .ox-footer-main {
   position: relative;
   z-index: 2;
-  padding: 30px 5vw;
+  padding: 30px 0 0;
 }
 
 .ox-footer-main-inner {
-  max-width: 1320px;
+  width: min(92%, var(--container-width));
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 30px;
   direction: ltr; /* Keeps Logo on the Left and Socials/Domain on the Right */
+  box-sizing: border-box;
 }
 
 /* Brand / Logo */
@@ -3053,11 +3134,14 @@ html[dir="ltr"] .ox-highlight-item:not(:last-child)::after {
 .ox-footer-bottom {
   position: relative;
   z-index: 2;
-  padding: 18px 5vw 22px;
+  width: min(92%, var(--container-width));
+  margin: 0 auto;
+  padding: 18px 0 22px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .ox-footer-copy {

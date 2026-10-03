@@ -313,14 +313,14 @@
             transition: all 0.2s ease;
         }
         .ox-page-link:hover {
-            background: rgba(189,255,69,0.15);
-            color: #BDFF45;
-            border-color: #BDFF45;
+            background: rgba(29, 138, 104, 0.15);
+            color: var(--ox-emerald);
+            border-color: var(--ox-emerald);
         }
         .ox-page-item.active .ox-page-link {
-            background: #BDFF45;
-            color: var(--navy);
-            border-color: #BDFF45;
+            background: var(--ox-emerald);
+            color: #ffffff;
+            border-color: var(--ox-emerald);
             font-weight: 800;
         }
         .ox-page-item.disabled .ox-page-link {
@@ -1260,7 +1260,7 @@
 
         <!-- Upper Highlights Strip (4 Pillars) -->
         <div class="ox-footer-highlights">
-            <div class="ox-footer-highlights-inner">
+            <div class="container ox-footer-highlights-inner">
                 <!-- Pillar 1: Dual-Market Expertise (Far Right in RTL) -->
                 <div class="ox-highlight-item">
                     <div class="ox-highlight-icon-wrap" aria-hidden="true">
@@ -1345,7 +1345,7 @@
         <div class="ox-footer-arabesque ox-footer-arabesque-left" aria-hidden="true"></div>
 
         <div class="ox-footer-main">
-            <div class="ox-footer-main-inner">
+            <div class="container ox-footer-main-inner">
                 <!-- Brand / Logo (Left) -->
                 <a href="{{ route('home') }}" class="ox-footer-logo-brand" aria-label="OxTech Home">
                     <span class="ox-footer-logo-text">O<span class="ox-logo-accent">x</span>Tech</span>
@@ -1412,7 +1412,7 @@
         <!-- ===============================================================
              COMPONENT 3: Bottom Copyright Row (Under Component 2)
              =============================================================== -->
-        <div class="ox-footer-bottom">
+        <div class="container ox-footer-bottom">
             <p class="ox-footer-copy">
                 @if($currentLocale === 'ar')
                     <span>جميع الحقوق محفوظة</span>

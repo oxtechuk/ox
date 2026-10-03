@@ -280,11 +280,11 @@ footer:not(.ox-premium-footer):not(.ox-modern-footer) small{grid-column:span 2}
     opacity: .9
 }
 
-.previous {
+.video-card.previous {
     transform: rotateY(36deg) scale(.84) translateZ(-40px)
 }
 
-.next {
+.video-card.next {
     transform: rotateY(-36deg) scale(.84) translateZ(-40px)
 }
 
@@ -613,11 +613,11 @@ blockquote {
         border-radius: 16px
     }
 
-    .previous {
+    .video-card.previous {
         transform: rotateY(25deg) scale(.85) translateX(-15px)
     }
 
-    .next {
+    .video-card.next {
         transform: rotateY(-25deg) scale(.85) translateX(15px)
     }
 
