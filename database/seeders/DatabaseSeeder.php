@@ -617,5 +617,8 @@ class DatabaseSeeder extends Seeder
                 'notes' => 'تحويل بنكي - الدفعة المقدمة والدفعة الثانية',
             ]
         );
+
+        // 7. Digital Products & Product Categories
+        $this->call(DigitalProductSeeder::class);
     }
 }
