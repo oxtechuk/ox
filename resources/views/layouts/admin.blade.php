@@ -8,7 +8,9 @@
         }
         return asset(ltrim($path, '/'));
     };
-    $adminLogo = $resolveLogo($siteSettings['site_logo_main'] ?? null) ?: $resolveLogo($siteSettings['site_logo_footer'] ?? null);
+    $adminLogo = $resolveLogo($siteSettings['site_logo_main'] ?? null)
+        ?: $resolveLogo($siteSettings['site_logo_dark'] ?? null)
+        ?: $resolveLogo($siteSettings['site_logo_footer'] ?? null);
     $adminFavicon = $resolveLogo($siteSettings['site_favicon'] ?? null);
     $siteName = $siteSettings['site_name'] ?? 'OX Tech';
 @endphp
