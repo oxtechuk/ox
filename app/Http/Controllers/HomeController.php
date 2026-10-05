@@ -17,13 +17,17 @@ class HomeController extends Controller
             ->orderBy('id', 'desc')
             ->get();
 
+        if ($projects->isEmpty()) {
+            $projects = Project::orderBy('order')->orderBy('id', 'desc')->get();
+        }
+
         $testimonials = Testimonial::where('is_active', true)
             ->orderBy('order')
             ->get();
 
         $siteContents = SiteContent::all()->pluck('value', 'key')->toArray();
 
-        // Digital Products & Categories for services section
+        // Digital Products & Categories
         $digitalProducts = DigitalProduct::where('status', 'active')
             ->with('category')
             ->orderByDesc('is_featured')
@@ -37,11 +41,37 @@ class HomeController extends Controller
             ->orderBy('sort_order', 'asc')
             ->get();
 
-        // Extract unique countries and sectors for filters
+        // Country flags mapping
+        $flagEmojis = [
+            'sa' => '🇸🇦',
+            'ae' => '🇦🇪',
+            'eg' => '🇪🇬',
+            'kw' => '🇰🇼',
+            'qa' => '🇶🇦',
+            'om' => '🇴🇲',
+            'bh' => '🇧🇭',
+            'jo' => '🇯🇴',
+            'de' => '🇩🇪',
+            'se' => '🇸🇪',
+            'gb' => '🇬🇧',
+            'uk' => '🇬🇧',
+            'us' => '🇺🇸',
+            'ru' => '🇷🇺',
+            'iq' => '🇮🇶',
+            'fr' => '🇫🇷',
+        ];
+
+        // Extract unique countries with flags and sectors for filters
         $countries = Project::select('country_code', 'country_name')
             ->distinct()
             ->whereNotNull('country_code')
-            ->get();
+            ->get()
+            ->map(function ($c) use ($flagEmojis) {
+                $code = strtolower($c->country_code);
+                $c->flag = $flagEmojis[$code] ?? '🌐';
+
+                return $c;
+            });
 
         $sectors = Project::select('sector_slug', 'sector_name')
             ->distinct()

@@ -112,76 +112,6 @@
         </div>
     </section>
 
-    <!-- =========================================
-         STATS BAR (SAUDI × EGYPT MASTER)
-         ========================================= -->
-    <section class="stats ox-stats" id="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <!-- Stat 1: Completed Projects (+120 مشروع مكتمل) -->
-                <div class="stat">
-                    <div class="stat-icon-box">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 17l-5-5a2.5 2.5 0 0 1 0-3.5 2.5 2.5 0 0 1 3.5 0L12 11l2.5-2.5a2.5 2.5 0 0 1 3.5 0 2.5 2.5 0 0 1 0 3.5l-5 5"></path>
-                            <path d="M18 11l2.5 2.5a2.5 2.5 0 0 1 0 3.5l-5 5a2.5 2.5 0 0 1-3.5 0L9.5 19.5"></path>
-                            <path d="M2 13l4-4"></path>
-                            <path d="M22 13l-4-4"></path>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number">+120</div>
-                        <div class="stat-label">{{ $locale === 'ar' ? 'مشروع مكتمل' : ($locale === 'fr' ? 'Projets Réalisés' : 'Completed Projects') }}</div>
-                    </div>
-                </div>
-
-                <!-- Stat 2: Clients & Partners (+50 عميل وشريك) -->
-                <div class="stat">
-                    <div class="stat-icon-box">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number">+50</div>
-                        <div class="stat-label">{{ $locale === 'ar' ? 'عميل وشريك' : ($locale === 'fr' ? 'Clients & Partenaires' : 'Clients & Partners') }}</div>
-                    </div>
-                </div>
-
-                <!-- Stat 3: Regional Hub (السعودية × مصر / فريق واحد .. رؤية أكبر) -->
-                <div class="stat">
-                    <div class="stat-icon-box">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number stat-title">{{ $locale === 'ar' ? 'السعودية × مصر' : ($locale === 'fr' ? 'Arabie × Égypte' : 'Saudi × Egypt') }}</div>
-                        <div class="stat-label">{{ $locale === 'ar' ? 'فريق واحد .. رؤية أكبر' : ($locale === 'fr' ? 'Une équipe .. Vision élargie' : 'One Team .. Bigger Vision') }}</div>
-                    </div>
-                </div>
-
-                <!-- Stat 4: 24/7 Support (24/7 دعم مستمر) -->
-                <div class="stat">
-                    <div class="stat-icon-box">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">{{ $locale === 'ar' ? 'دعم مستمر' : ($locale === 'fr' ? 'Support Continu' : 'Ongoing Support') }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Brands & Partners Marquee Section (Matching Reference Card Design with Monochrome-to-Color Hover) -->
     {{--
     <section class="brands-marquee-section">
@@ -379,388 +309,330 @@
     <!-- =========================================
          OUR SERVICES SECTION (MASTER THEME)
          ========================================= -->
-    <section class="ox-services-section" id="services">
+        <section class="ox-services-section ox-portfolio-showcase" id="work">
+        <span id="services" style="display:block; position:relative; top:-90px; visibility:hidden;"></span>
         <!-- Arabesque Corner Motifs -->
         <div class="services-arabesque corner-top-right"></div>
         <div class="services-arabesque corner-top-left"></div>
 
         <div class="container services-header-wrap reveal">
             <div class="services-header-text">
-                <span class="services-kicker">{{ $locale === 'ar' ? 'خدماتنا' : ($locale === 'fr' ? 'Nos Services' : 'Our Services') }}</span>
+                <span class="services-kicker">
+                    <span class="ox-kicker-dot"></span>
+                    {{ $locale === 'ar' ? 'سابقة أعمالنا · Portfolio' : ($locale === 'fr' ? 'Nos Réalisations · Portfolio' : 'Our Portfolio & Case Studies') }}
+                </span>
                 <h2 class="services-title">
-                    {{ $locale === 'ar' ? 'أعمالنا تتكلم' : ($locale === 'fr' ? 'Nos Réalisations' : 'Our Work Speaks') }}<br/>
-                    <span class="text-green">{{ $locale === 'ar' ? 'بأثرها.' : ($locale === 'fr' ? 'Par leur impact.' : 'With Impact.') }}</span>
+                    {{ $locale === 'ar' ? 'مشاريع حقيقية تصنع' : ($locale === 'fr' ? 'Des Projets Réels à Fort' : 'Real Projects Engineered for') }}<br/>
+                    <span class="text-green">{{ $locale === 'ar' ? 'أثراً ملموساً ونمواً متسارعاً.' : ($locale === 'fr' ? 'Impact et Croissance.' : 'Scalable Impact.') }}</span>
                 </h2>
                 <p class="services-subtitle">
-                    {{ $locale === 'ar' ? 'حلول رقمية متكاملة تساعدك على النمو وتحقيق أهدافك.' : ($locale === 'fr' ? 'Des solutions numériques complètes pour propulser votre croissance et atteindre vos objectifs.' : 'End-to-end digital solutions engineered to scale your growth and achieve your strategic vision.') }}
+                    {{ $locale === 'ar' ? 'استكشف نماذج من أعمالنا وحلولنا البرمجية التي قمنا بتطويرها لشركاء النجاح عبر مختلف الدول والقطاعات مع قياس دقيق للأثر والنتائج.' : ($locale === 'fr' ? 'Explorez nos projets et solutions logicielles développés pour nos partenaires à travers différents pays et secteurs.' : 'Explore custom platforms, SaaS, and mobile applications engineered for our partners across various regions and industries.') }}
                 </p>
-            </div>
-
-            <div class="services-slider-nav">
-                <button type="button" class="services-nav-btn prev" id="servicesPrev" aria-label="{{ $locale === 'ar' ? 'السابق' : 'Previous' }}" onclick="scrollServices(1)">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="{{ $locale === 'ar' ? '9 18 15 12 9 6' : '15 18 9 12 15 6' }}"></polyline>
-                    </svg>
-                </button>
-                <button type="button" class="services-nav-btn next" id="servicesNext" aria-label="{{ $locale === 'ar' ? 'التالي' : 'Next' }}" onclick="scrollServices(-1)">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
-                    </svg>
-                </button>
             </div>
         </div>
 
         <div class="container">
-            @if(isset($productCategories) && $productCategories->count() > 0)
-                <div class="services-category-tabs reveal">
-                    <button type="button" class="services-tab-btn active" data-cat="all" onclick="filterServicesGrid('all', this)">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                        <span>{{ $locale === 'ar' ? 'كافة الحلول والأنظمة' : ($locale === 'fr' ? 'Toutes les solutions' : 'All Solutions') }}</span>
+            <!-- ─── Dual-Filter Bar (Category + Country with Flags) ─── -->
+            <div class="portfolio-filter-container reveal">
+                <!-- Level 1: Category / Sector Tabs -->
+                <div class="portfolio-category-tabs">
+                    <button type="button" class="portfolio-cat-btn active" data-cat="all" onclick="filterPortfolio('cat', 'all', this)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span>{{ $locale === 'ar' ? 'جميع المجالات' : ($locale === 'fr' ? 'Tous les secteurs' : 'All Sectors') }}</span>
+                        <span class="filter-count">{{ $projects->count() }}</span>
                     </button>
-                    @foreach($productCategories as $cat)
-                        <button type="button" class="services-tab-btn" data-cat="{{ $cat->slug }}" onclick="filterServicesGrid('{{ $cat->slug }}', this)">
-                            <span>{{ $cat->name }}</span>
-                            @if(($cat->digital_products_count ?? 0) > 0)
-                                <span class="tab-count">{{ $cat->digital_products_count }}</span>
+                    @foreach($sectors as $sec)
+                        @php
+                            $secCount = $projects->where('sector_slug', $sec->sector_slug)->count();
+                        @endphp
+                        <button type="button" class="portfolio-cat-btn" data-cat="{{ $sec->sector_slug }}" onclick="filterPortfolio('cat', '{{ $sec->sector_slug }}', this)">
+                            <span>{{ $sec->sector_name }}</span>
+                            @if($secCount > 0)
+                                <span class="filter-count">{{ $secCount }}</span>
                             @endif
                         </button>
                     @endforeach
                 </div>
-            @endif
 
-            <div class="ox-services-grid" id="servicesGrid">
-                @forelse($digitalProducts as $product)
-                    <article class="ox-service-card reveal" data-category="{{ $product->category?->slug ?? 'general' }}" onclick="window.location.href='{{ route('store.product', $product->slug) }}'">
-                        <div class="service-card-aura"></div>
-                        <div class="service-card-body">
-                            <div class="service-card-content">
-                                <div class="service-card-top-meta">
-                                    <div class="service-card-icon-badge">
-                                        @if($product->category?->icon === 'calculator')
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
-                                                <line x1="8" y1="6" x2="16" y2="6"></line>
-                                                <line x1="16" y1="14" x2="16" y2="18"></line>
-                                                <path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path>
-                                                <path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path>
-                                            </svg>
-                                        @elseif($product->category?->icon === 'bullhorn')
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                                            </svg>
-                                        @elseif($product->category?->icon === 'users-gear')
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                <circle cx="9" cy="7" r="4"></circle>
-                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                            </svg>
-                                        @else
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                                            </svg>
-                                        @endif
-                                    </div>
-                                    @if($product->category)
-                                        <span class="service-category-tag">{{ $product->category->name }}</span>
-                                    @endif
-                                </div>
-                                <h3 class="service-card-title">{{ $product->name }}</h3>
-                                <p class="service-card-tagline">{{ $product->tagline ?: Str::limit($product->description, 110) }}</p>
-                            </div>
+                <!-- Level 2: Country Flag Pills -->
+                <div class="portfolio-country-filter">
+                    <div class="country-filter-label">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <span>{{ $locale === 'ar' ? 'الدولة:' : ($locale === 'fr' ? 'Pays:' : 'Country:') }}</span>
+                    </div>
+                    <div class="country-pills-list">
+                        <button type="button" class="country-pill-btn active" data-country="all" onclick="filterPortfolio('country', 'all', this)">
+                            <span class="flag-icon">🌐</span>
+                            <span>{{ $locale === 'ar' ? 'جميع الدول' : ($locale === 'fr' ? 'Tous pays' : 'All Countries') }}</span>
+                        </button>
+                        @foreach($countries as $country)
+                            <button type="button" class="country-pill-btn" data-country="{{ strtolower($country->country_code) }}" onclick="filterPortfolio('country', '{{ strtolower($country->country_code) }}', this)">
+                                <span class="flag-icon">{{ $country->flag ?? '🌐' }}</span>
+                                <span>{{ $country->country_name }}</span>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
 
-                            <div class="service-card-visual">
-                                @if($product->category?->slug === 'business-accounting' || Str::contains($product->slug, 'erp'))
-                                    <!-- 3D ERP Accounting & POS Workstation -->
-                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M72 104L88 104L84 92L76 92Z" fill="#1E3E37"/>
-                                        <rect x="64" y="104" width="32" height="4" rx="2" fill="#2E5C52"/>
-                                        <rect x="25" y="16" width="110" height="76" rx="8" fill="#041210" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 20px rgba(0,0,0,0.6))"/>
-                                        <rect x="29" y="20" width="102" height="68" rx="5" fill="#08241F"/>
-                                        <rect x="29" y="20" width="102" height="12" fill="#0B3029"/>
-                                        <circle cx="36" cy="26" r="2.5" fill="#714B67"/>
-                                        <circle cx="43" cy="26" r="2.5" fill="#00A09D"/>
-                                        <circle cx="50" cy="26" r="2.5" fill="#C8A96B"/>
-                                        <rect x="35" y="38" width="18" height="14" rx="3" fill="#714B67"/>
-                                        <rect x="58" y="38" width="18" height="14" rx="3" fill="#00A09D"/>
-                                        <rect x="81" y="38" width="18" height="14" rx="3" fill="#1D8A68"/>
-                                        <rect x="104" y="38" width="18" height="14" rx="3" fill="#C8A96B"/>
-                                        <rect x="35" y="58" width="87" height="6" rx="2" fill="rgba(255,255,255,0.08)"/>
-                                        <rect x="35" y="68" width="87" height="6" rx="2" fill="rgba(255,255,255,0.05)"/>
-                                        <rect x="35" y="77" width="55" height="5" rx="2" fill="rgba(46,229,157,0.2)"/>
-                                    </svg>
-                                @elseif($product->category?->slug === 'marketing-automation' || Str::contains($product->slug, ['bot', 'marketing']))
-                                    <!-- 3D Automation & Smart Marketing Rocket -->
-                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g transform="translate(18, 14)">
-                                            <path d="M10 20 C40 10, 80 10, 115 20 L115 88 C80 80, 40 80, 10 88 Z" fill="#051916" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.5))"/>
-                                            <rect x="24" y="58" width="8" height="20" rx="2" fill="rgba(29, 138, 104, 0.4)"/>
-                                            <rect x="38" y="48" width="8" height="30" rx="2" fill="rgba(29, 138, 104, 0.6)"/>
-                                            <rect x="52" y="38" width="8" height="40" rx="2" fill="rgba(29, 138, 104, 0.8)"/>
-                                            <rect x="66" y="28" width="8" height="50" rx="2" fill="#1D8A68"/>
-                                            <rect x="80" y="22" width="8" height="56" rx="2" fill="#2EE59D"/>
-                                            <path d="M22 66 Q 50 48, 70 34 T 98 18" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
-                                            <circle cx="98" cy="18" r="4" fill="#2EE59D" stroke="#ffffff" stroke-width="1.5"/>
-                                            <g transform="translate(90, 52)">
-                                                <circle cx="14" cy="14" r="14" fill="#1D8A68" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.4))"/>
-                                                <path d="M9 14L12 17L19 10" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                @elseif($product->category?->slug === 'crm-customer-service' || Str::contains($product->slug, ['crm', 'helpdesk', 'desk']))
-                                    <!-- 3D Customer Care & OmniDesk Dashboard -->
-                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g transform="translate(18, 12)">
-                                            <rect x="15" y="6" width="94" height="60" rx="5" fill="#041210" stroke="#1D8A68" stroke-width="2"/>
-                                            <rect x="18" y="10" width="88" height="52" rx="3" fill="#092823"/>
-                                            <rect x="18" y="10" width="88" height="9" fill="#0E352E"/>
-                                            <circle cx="23" cy="14.5" r="1.5" fill="#ff5f56"/>
-                                            <circle cx="28" cy="14.5" r="1.5" fill="#ffbd2e"/>
-                                            <circle cx="33" cy="14.5" r="1.5" fill="#27c93f"/>
-                                            <rect x="24" y="24" width="46" height="5" rx="1.5" fill="#ffffff"/>
-                                            <rect x="24" y="32" width="68" height="3" rx="1" fill="#719489"/>
-                                            <rect x="24" y="38" width="50" height="3" rx="1" fill="#719489"/>
-                                            <rect x="24" y="46" width="22" height="8" rx="2" fill="#1D8A68"/>
-                                            <rect x="76" y="24" width="24" height="30" rx="3" fill="#123B33" stroke="#2EE59D" stroke-width="1"/>
-                                            <path d="M4 68L120 68L110 88L14 88Z" fill="#0F332C" stroke="#1D8A68" stroke-width="1.5"/>
-                                            <rect x="46" y="74" width="32" height="8" rx="2" fill="#051714"/>
-                                        </g>
-                                    </svg>
-                                @else
-                                    <!-- 3D Futuristic Cloud Architecture Slate -->
-                                    <svg viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g transform="translate(20, 10)">
-                                            <rect x="22" y="6" width="82" height="96" rx="10" fill="#04120F" stroke="#1D8A68" stroke-width="2" filter="drop-shadow(0 10px 20px rgba(0,0,0,0.6))"/>
-                                            <rect x="26" y="10" width="74" height="12" rx="3" fill="#08221D"/>
-                                            <circle cx="32" cy="16" r="2" fill="#2EE59D"/>
-                                            <circle cx="38" cy="16" r="2" fill="#C8A96B"/>
-                                            <rect x="32" y="28" width="22" height="3" rx="1.5" fill="#2EE59D"/>
-                                            <rect x="58" y="28" width="32" height="3" rx="1.5" fill="#ffffff"/>
-                                            <rect x="38" y="36" width="46" height="3" rx="1.5" fill="#C8A96B"/>
-                                            <rect x="38" y="44" width="34" height="3" rx="1.5" fill="#719489"/>
-                                            <rect x="38" y="52" width="48" height="3" rx="1.5" fill="#2EE59D"/>
-                                            <rect x="32" y="60" width="18" height="3" rx="1.5" fill="#ffffff"/>
-                                            <rect x="32" y="70" width="62" height="24" rx="4" fill="rgba(29, 138, 104, 0.15)" stroke="rgba(29, 138, 104, 0.4)" stroke-width="1"/>
-                                            <circle cx="44" cy="82" r="4" fill="#1D8A68"/>
-                                            <line x1="48" y1="82" x2="62" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
-                                            <circle cx="66" cy="82" r="4" fill="#2EE59D"/>
-                                            <line x1="70" y1="82" x2="80" y2="82" stroke="#2EE59D" stroke-width="1.5" stroke-dasharray="2 2"/>
-                                            <circle cx="84" cy="82" r="4" fill="#1D8A68"/>
-                                        </g>
-                                    </svg>
+            <!-- ─── Portfolio Cards Grid with High-Res Thumbnails ─── -->
+            <div class="ox-portfolio-grid" id="portfolioGrid">
+                @forelse($projects as $project)
+                    @php
+                        $countryLower = strtolower($project->country_code ?? '');
+                        $projectSector = $project->sector_slug ?? 'general';
+                        $projectImg = $project->display_image;
+                    @endphp
+                    <article class="ox-portfolio-card reveal" 
+                             data-category="{{ $projectSector }}" 
+                             data-country="{{ $countryLower }}"
+                             onclick="window.location.href='{{ route('projects.show', $project->slug) }}'">
+                        
+                        <!-- Thumbnail Visual Media -->
+                        <div class="portfolio-card-media">
+                            <img src="{{ $projectImg }}" 
+                                 alt="{{ $project->title }}" 
+                                 loading="lazy" 
+                                 class="portfolio-card-img" />
+                            <div class="portfolio-card-overlay"></div>
+                            
+                            <!-- Top Floating Badges: Country with Flag & Sector -->
+                            <div class="portfolio-badges-top">
+                                <span class="portfolio-country-badge">
+                                    <span class="badge-flag">{{ $project->country_flag }}</span>
+                                    <span>{{ $project->country_name }}</span>
+                                </span>
+                                @if($project->sector_name)
+                                    <span class="portfolio-sector-badge">{{ $project->sector_name }}</span>
                                 @endif
                             </div>
+
+                            @if($project->impact_stat)
+                                <div class="portfolio-impact-chip">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                        <polyline points="17 6 23 6 23 12"></polyline>
+                                    </svg>
+                                    <span>{{ $project->impact_stat }}</span>
+                                </div>
+                            @endif
                         </div>
 
-                        @if(!empty($product->features) && is_array($product->features))
-                            <div class="service-features-chips">
-                                @foreach(array_slice($product->features, 0, 3) as $feat)
-                                    <span class="service-chip">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2EE59D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        <span>{{ $feat }}</span>
-                                    </span>
-                                @endforeach
+                        <!-- Card Body -->
+                        <div class="portfolio-card-body">
+                            <div class="portfolio-card-head">
+                                @if($project->client_name)
+                                    <span class="portfolio-client-name">{{ $project->client_name }}</span>
+                                @endif
+                                <h3 class="portfolio-card-title">{{ $project->title }}</h3>
+                                <p class="portfolio-card-desc">
+                                    {{ $project->short_description ?: Str::limit($project->summary, 95) }}
+                                </p>
                             </div>
-                        @endif
 
-                        <div class="service-card-bottom">
-                            @if($product->sale_price || $product->price)
-                                <div class="service-price-box">
-                                    <span class="service-price-amount">{{ number_format($product->sale_price ?? $product->price) }} <small>{{ $product->currency }}</small></span>
-                                    @if($product->sale_price && $product->sale_price < $product->price)
-                                        <del class="service-price-old">{{ number_format($product->price) }}</del>
-                                    @endif
+                            <!-- Technologies Tags -->
+                            @if(!empty($project->technologies) && is_array($project->technologies))
+                                <div class="portfolio-tech-tags">
+                                    @foreach(array_slice($project->technologies, 0, 4) as $tech)
+                                        <span class="tech-tag">{{ $tech }}</span>
+                                    @endforeach
                                 </div>
                             @endif
 
-                            <div class="service-card-pill">
-                                <span class="service-card-pill-text">{{ $locale === 'ar' ? 'تفاصيل وحجز النظام' : ($locale === 'fr' ? 'Détails du système' : 'View System') }}</span>
-                                <span class="service-card-pill-btn">{{ $locale === 'ar' ? '←' : '→' }}</span>
+                            <!-- Bottom Action / CTA -->
+                            <div class="portfolio-card-foot">
+                                <span class="portfolio-view-text">
+                                    {{ $locale === 'ar' ? 'عرض تفاصيل المشروع' : ($locale === 'fr' ? 'Voir le projet' : 'View Case Study') }}
+                                </span>
+                                <span class="portfolio-view-btn" aria-label="{{ $locale === 'ar' ? 'تفاصيل' : 'Details' }}">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
+                                    </svg>
+                                </span>
                             </div>
                         </div>
                     </article>
                 @empty
-                    <!-- Fallback if no products seeded -->
-                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--ox-gray);">
-                        <p>{{ $locale === 'ar' ? 'جاري تحديث قائمة الأنظمة والحلول...' : 'Updating systems and solutions...' }}</p>
+                    <div class="portfolio-empty-state">
+                        <p>{{ $locale === 'ar' ? 'لا توجد مشاريع مضافة حالياً.' : 'No projects found.' }}</p>
                     </div>
                 @endforelse
             </div>
 
-            <div class="services-footer-cta reveal">
-                <a href="{{ route('store.index') }}" class="services-store-link">
-                    <span>{{ $locale === 'ar' ? 'استكشف كافة الحلول والأنظمة الرقمية في المتجر' : ($locale === 'fr' ? 'Explorer toutes les solutions dans la boutique' : 'Explore All Digital Systems in Store') }}</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
-                    </svg>
-                </a>
+            <!-- Empty Filter Result Alert -->
+            <div id="portfolioNoResults" class="portfolio-no-results" style="display: none;">
+                <div class="no-results-icon">🔍</div>
+                <h4>{{ $locale === 'ar' ? 'لم نجد مشاريع تطابق هذه الفلترة' : 'No matching projects found' }}</h4>
+                <p>{{ $locale === 'ar' ? 'جرّب اختيار تصنيف أو دولة أخرى، أو تصفح كافة مشاريعنا.' : 'Try selecting another category or country' }}</p>
+                <button type="button" class="btn-primary" onclick="resetPortfolioFilter()" style="margin-top:15px; font-size:13px; padding:10px 24px;">
+                    {{ $locale === 'ar' ? 'عرض جميع المشاريع' : 'Show All Projects' }}
+                </button>
             </div>
         </div>
     </section>
 
-  <!-- ─── Beneficiaries Section: من يستفيد من حلول OxTech؟ ─── -->
+    <!-- ─── Services & Software House / 4 Categories Showcase ─── -->
     <section class="ox-beneficiaries-section" id="beneficiaries">
         <div class="ox-beneficiaries-pattern"></div>
         <div class="ox-beneficiaries-skyline"></div>
         <div class="container">
-            <div class="ox-beneficiaries-grid">
-                <!-- Right Side in RTL: Content & Checklist -->
-                <div class="ox-beneficiaries-content reveal">
-                    <span class="ox-beneficiaries-kicker">{{ $locale === 'ar' ? 'خدماتنا' : 'SECTORS & EXPERTISE' }}</span>
-                    <h2 class="ox-beneficiaries-heading">
-                        {{ $locale === 'ar' ? 'من يستفيد' : 'Who Benefits From' }}<br/>
-                        {{ $locale === 'ar' ? 'من حلول' : 'Solutions by' }} <span class="brand-tag">OxTech</span>{{ $locale === 'ar' ? '؟' : '?' }}
-                    </h2>
-                    <p class="ox-beneficiaries-desc">
-                        {{ $locale === 'ar' ? 'نوفر حلول رقمية تناسب مختلف القطاعات والأحجام، من الشركات الناشئة إلى المؤسسات الكبيرة.' : 'We engineer robust digital architectures built for diverse industries and scales, from high-growth startups to enterprise institutions.' }}
-                    </p>
-                    <ul class="ox-beneficiaries-checklist">
-                        <li class="ox-checklist-item">
-                            <span class="ox-check-icon">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </span>
-                            <span>{{ $locale === 'ar' ? 'القطاع الحكومي' : 'Government Sector' }}</span>
-                        </li>
-                        <li class="ox-checklist-item">
-                            <span class="ox-check-icon">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </span>
-                            <span>{{ $locale === 'ar' ? 'القطاع الخاص' : 'Private Sector' }}</span>
-                        </li>
-                        <li class="ox-checklist-item">
-                            <span class="ox-check-icon">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </span>
-                            <span>{{ $locale === 'ar' ? 'الشركات والمؤسسات' : 'Enterprises & Corporations' }}</span>
-                        </li>
-                        <li class="ox-checklist-item">
-                            <span class="ox-check-icon">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </span>
-                            <span>{{ $locale === 'ar' ? 'القطاع التعليمي' : 'Educational Sector' }}</span>
-                        </li>
-                        <li class="ox-checklist-item">
-                            <span class="ox-check-icon">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </span>
-                            <span>{{ $locale === 'ar' ? 'القطاع التجاري' : 'Commercial Sector' }}</span>
-                        </li>
-                    </ul>
-                    <a href="#consult" class="ox-beneficiaries-cta" onclick="openConsultModal(); return false;">
-                        <span>{{ $locale === 'ar' ? 'اكتشف الحلول المناسبة لك' : 'Discover Solutions For You' }}</span>
-                        <span class="ox-cta-arrow">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </span>
-                    </a>
+            <!-- Header matching the reference image: Large, modern, focused -->
+            <div class="ox-services-cards-header reveal">
+                <div class="ox-white-label-pill">
+                    <span class="pill-dot"></span>
+                    <span>{{ $locale === 'ar' ? 'بيت برمجيات متكامل · شريك White-Label معتمد' : ($locale === 'fr' ? 'Software House Intégrale · Partenaire White-Label' : 'Full Software House · Certified White-Label Partner') }}</span>
                 </div>
+                <h2 class="ox-services-cards-title">
+                    @if($locale === 'ar')
+                        نبني الأساس البرمجي الراسخ<br />
+                        لنجاح واستدامة أعمالك.
+                    @elseif($locale === 'fr')
+                        Bâtir les fondations durables<br />
+                        de votre succès numérique.
+                    @else
+                        Creating the foundation<br />
+                        for your sustained success.
+                    @endif
+                </h2>
+                <p class="ox-services-cards-desc">
+                    @if($locale === 'ar')
+                        نقدم حلولاً هندسية متقدمة ونعمل كفريقك التقني الخفي (White-Label) لإنجاز مشاريع عملائك بأعلى معايير السرية والابتكار.
+                    @elseif($locale === 'fr')
+                        Ingénierie logicielle sur mesure et équipe White-Label dédiée sous accords stricts de confidentialité.
+                    @else
+                        Engineering high-performance custom digital platforms and operating silently as your dedicated White-Label squad.
+                    @endif
+                </p>
+            </div>
 
-                <!-- Left Side in RTL: Tablet Showcase with 4 Sector Cards -->
-                <div class="ox-tablet-wrapper reveal">
-                    <div class="ox-tablet-frame">
-                        <div class="ox-tablet-camera"></div>
-                        <div class="ox-tablet-screen">
-                            <!-- Card 1: E-Commerce (التجارة الإلكترونية) -->
-                            <article class="ox-tablet-card" onclick="openConsultModal()">
-                                <div class="tablet-card-icon">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                                        <path d="M16 10a4 4 0 0 1-8 0"></path>
-                                    </svg>
-                                </div>
-                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'التجارة الإلكترونية' : 'E-Commerce' }}</h3>
-                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'حلول تجارة متعددة القنوات وبوابات دفع وتكاملات دفع وشحن مرنة' : 'Omnichannel commerce platforms with secure payment gateways and logistics.' }}</p>
-                                <div class="tablet-card-btn">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </div>
-                            </article>
+            <!-- 4-Card Luxury Grid matching reference image -->
+            <div class="ox-services-cards-grid reveal">
+                <!-- Card 1: Web & SaaS Platforms -->
+                <article class="ox-service-card-item" onclick="openConsultModal()">
+                    <img src="{{ asset('assets/services/service-web.jpg') }}" alt="{{ $locale === 'ar' ? 'تطوير الويب والسحاب' : 'Web & SaaS Platforms' }}" class="ox-service-card-bg" loading="lazy">
+                    <div class="ox-service-card-overlay"></div>
+                    
+                    <div class="ox-service-card-top">
+                        <span class="ox-service-card-tag">Web & SaaS</span>
+                        <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'تطوير الويب والسحاب' : ($locale === 'fr' ? 'Web & Plateformes SaaS' : 'Web & SaaS Platforms') }}</h3>
+                    </div>
 
-                            <!-- Card 2: Startups (الشركات الناشئة) -->
-                            <article class="ox-tablet-card" onclick="openConsultModal()">
-                                <div class="tablet-card-icon">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
-                                </div>
-                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'الشركات الناشئة' : 'Startups' }}</h3>
-                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'إطلاق سريع ونمو متواصل وتطوير منتجات رقمية مرنة قابلة للتوسع' : 'Rapid MVP development, agile scaling, and modern cloud architectures.' }}</p>
-                                <div class="tablet-card-btn">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </div>
-                            </article>
-
-                            <!-- Card 3: Enterprises & Companies (المؤسسات والشركات) -->
-                            <article class="ox-tablet-card" onclick="openConsultModal()">
-                                <div class="tablet-card-icon">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-                                        <line x1="9" y1="6" x2="9.01" y2="6"></line>
-                                        <line x1="15" y1="6" x2="15.01" y2="6"></line>
-                                        <line x1="9" y1="10" x2="9.01" y2="10"></line>
-                                        <line x1="15" y1="10" x2="15.01" y2="10"></line>
-                                        <line x1="9" y1="14" x2="9.01" y2="14"></line>
-                                        <line x1="15" y1="14" x2="15.01" y2="14"></line>
-                                        <line x1="9" y1="18" x2="15" y2="18"></line>
-                                    </svg>
-                                </div>
-                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'المؤسسات والشركات' : 'Enterprises' }}</h3>
-                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'حلول أتمتة وإدارة متقدمة لرفع الكفاءة التشغيلية والربط المؤسسي' : 'Operational workflows, ERP integrations, and enterprise data management.' }}</p>
-                                <div class="tablet-card-btn">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </div>
-                            </article>
-
-                            <!-- Card 4: Government Solutions (حلول حكومية وشبه حكومية) -->
-                            <article class="ox-tablet-card" onclick="openConsultModal()">
-                                <div class="tablet-card-icon">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M3 21h18"></path>
-                                        <path d="M3 10h18"></path>
-                                        <path d="M5 6l7-3 7 3"></path>
-                                        <path d="M4 10v11"></path>
-                                        <path d="M20 10v11"></path>
-                                        <path d="M8 14v4"></path>
-                                        <path d="M12 14v4"></path>
-                                        <path d="M16 14v4"></path>
-                                    </svg>
-                                </div>
-                                <h3 class="tablet-card-title">{{ $locale === 'ar' ? 'حلول حكومية وشبه حكومية' : 'Gov & Semi-Gov' }}</h3>
-                                <p class="tablet-card-desc">{{ $locale === 'ar' ? 'أنظمة رقمية آمنة ومعتمدة متوافقة مع أعلى الضوابط الوطنية' : 'High-security compliant systems meeting the highest national digital standards.' }}</p>
-                                <div class="tablet-card-btn">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </div>
-                            </article>
+                    <div class="ox-service-card-bottom">
+                        <p class="ox-service-card-desc">
+                            {{ $locale === 'ar' ? 'بناء منصات سحابية وبوابات SaaS تفاعلية فائقة السرعة والأمان، بمعمارية برمجية قابلة للتوسع اللانهائي.' : ($locale === 'fr' ? 'Plateformes cloud et SaaS hautement sécurisées et scalables.' : 'Scalable cloud architectures, SaaS platforms, and enterprise portals engineered for speed and security.') }}
+                        </p>
+                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
                         </div>
                     </div>
+                </article>
+
+                <!-- Card 2: Mobile Applications -->
+                <article class="ox-service-card-item" onclick="openConsultModal()">
+                    <img src="{{ asset('assets/services/service-mobile.jpg') }}" alt="{{ $locale === 'ar' ? 'تطبيقات الجوال الذكية' : 'Mobile Applications' }}" class="ox-service-card-bg" loading="lazy">
+                    <div class="ox-service-card-overlay"></div>
+                    
+                    <div class="ox-service-card-top">
+                        <span class="ox-service-card-tag">iOS & Android</span>
+                        <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'تطبيقات الجوال الذكية' : ($locale === 'fr' ? 'Applications Mobiles' : 'Mobile Applications') }}</h3>
+                    </div>
+
+                    <div class="ox-service-card-bottom">
+                        <p class="ox-service-card-desc">
+                            {{ $locale === 'ar' ? 'تطبيقات جوال سلسة ومتطورة بأحدث التقنيات (Flutter & Native) تضمن تجربة مستخدم استثنائية وأداء فائق السرعة.' : ($locale === 'fr' ? 'Applications fluides et performantes (Flutter & Native).' : 'High-performance iOS & Android mobile apps engineered with Flutter and Native frameworks.') }}
+                        </p>
+                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3: Digital E-Commerce -->
+                <article class="ox-service-card-item" onclick="openConsultModal()">
+                    <img src="{{ asset('assets/services/service-ecommerce.jpg') }}" alt="{{ $locale === 'ar' ? 'المتاجر والتجارة الرقمية' : 'Digital E-Commerce' }}" class="ox-service-card-bg" loading="lazy">
+                    <div class="ox-service-card-overlay"></div>
+                    
+                    <div class="ox-service-card-top">
+                        <span class="ox-service-card-tag">E-Commerce</span>
+                        <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'المتاجر والتجارة الرقمية' : ($locale === 'fr' ? 'E-Commerce & Boutiques' : 'Digital E-Commerce') }}</h3>
+                    </div>
+
+                    <div class="ox-service-card-bottom">
+                        <p class="ox-service-card-desc">
+                            {{ $locale === 'ar' ? 'متاجر مخصصة متكاملة مع بوابات الدفع والشحن والأنظمة المحاسبية، مصممة لتحقيق أعلى معدلات التحويل.' : ($locale === 'fr' ? 'Boutiques en ligne optimisées avec passerelles de paiement et logistique.' : 'Custom digital commerce stores integrated with multi-currency gateways and automated fulfillment.') }}
+                        </p>
+                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4: Enterprise, Odoo & Desktop -->
+                <article class="ox-service-card-item" onclick="openConsultModal()">
+                    <img src="{{ asset('assets/services/service-enterprise.jpg') }}" alt="{{ $locale === 'ar' ? 'أنظمة أودو والمؤسسات' : 'Enterprise & Odoo ERP' }}" class="ox-service-card-bg" loading="lazy">
+                    <div class="ox-service-card-overlay"></div>
+                    
+                    <div class="ox-service-card-top">
+                        <span class="ox-service-card-tag">ERP & Desktop</span>
+                        <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'أنظمة أودو والمؤسسات' : ($locale === 'fr' ? 'Systèmes Odoo & ERP' : 'Enterprise & Odoo ERP') }}</h3>
+                    </div>
+
+                    <div class="ox-service-card-bottom">
+                        <p class="ox-service-card-desc">
+                            {{ $locale === 'ar' ? 'تطبيق وتخصيص دورات Odoo ERP الشاملة والربط الضريبي (ZATCA)، مع برمجيات Windows ونقاط البيع POS دون إنترنت.' : ($locale === 'fr' ? 'Intégration Odoo ERP complète et logiciels POS offline.' : 'Full-cycle Odoo ERP customization, e-invoicing compliance, and offline-first desktop POS systems.') }}
+                        </p>
+                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Bottom Trust & Action Banner -->
+            <div class="ox-services-bottom-trust reveal">
+                <div class="ox-trust-features">
+                    <div class="ox-trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        <span>{{ $locale === 'ar' ? 'اتفاقيات سرية تامة (NDA) وتسليم باسمك 100%' : ($locale === 'fr' ? 'Accords NDA stricts & livraison sous votre marque' : 'Strict NDAs & 100% Branded Deliverables') }}</span>
+                    </div>
+                    <div class="ox-trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>{{ $locale === 'ar' ? 'كود نظيف ومعمارية قابلة للتوسع السحابي' : ($locale === 'fr' ? 'Code propre & architecture cloud scalable' : 'Clean Code & Scalable Cloud Architecture') }}</span>
+                    </div>
+                    <div class="ox-trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>{{ $locale === 'ar' ? 'مرونة العمل: بنظام المشروع أو فريق مخصص' : ($locale === 'fr' ? 'Engagement flexible: au projet ou équipe dédiée' : 'Flexible Engagement: Per-Project or Dedicated Squad') }}</span>
+                    </div>
                 </div>
+
+                <a href="#consult" class="ox-services-trust-cta" onclick="openConsultModal(); return false;">
+                    <span>{{ $locale === 'ar' ? 'ابدأ مشروعك أو شراكتك البرمجية' : ($locale === 'fr' ? 'Démarrer votre projet' : 'Start Your Project or Partnership') }}</span>
+                    <span>{{ $locale === 'ar' ? '←' : '→' }}</span>
+                </a>
             </div>
         </div>
     </section>
@@ -984,14 +856,7 @@
                     @endforeach
                 </div>
 
-                <div class="quote reveal">
-                    <span class="quote-mark">“</span>
-                    <blockquote id="quote-text">{{ $testimonials[0]->quote }}</blockquote>
-                    <div>
-                        <b id="quote-name">{{ $testimonials[0]->partner_name }}</b>
-                        <small id="quote-role">{{ $testimonials[0]->partner_role }} · {{ $testimonials[0]->partner_country }}</small>
-                    </div>
-                </div>
+               
 
                 <div class="story-controls reveal">
                     <button id="story-prev" type="button" aria-label="{{ $locale === 'ar' ? 'القصة السابقة' : 'Previous Story' }}">←</button>
@@ -1353,37 +1218,65 @@
     // Ultimate fail-safe: reveal everything after 2.5s in case observer is blocked
     setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 2500);
 
-    // 2. Services Section Slider Navigation
-    window.scrollServices = function(direction) {
-        const grid = document.getElementById('servicesGrid');
-        if (!grid) return;
-        const card = grid.querySelector('.ox-service-card');
-        const scrollAmount = card ? (card.offsetWidth + 24) : 360;
-        grid.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth'
-        });
-    };
+    // 2. Dual Portfolio Filter (Category + Country with Flags)
+    let currentPortfolioCat = 'all';
+    let currentPortfolioCountry = 'all';
 
-    // 3. Services Category Filtering
-    window.filterServicesGrid = function(categorySlug, btn) {
-        const grid = document.getElementById('servicesGrid');
-        if (!grid) return;
-        const buttons = document.querySelectorAll('.services-tab-btn');
-        buttons.forEach(b => b.classList.remove('active'));
-        if (btn) btn.classList.add('active');
+    window.filterPortfolio = function(type, value, btn) {
+        if (type === 'cat') {
+            currentPortfolioCat = value;
+            document.querySelectorAll('.portfolio-cat-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+        } else if (type === 'country') {
+            currentPortfolioCountry = value;
+            document.querySelectorAll('.country-pill-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+        }
 
-        const cards = grid.querySelectorAll('.ox-service-card');
+        const cards = document.querySelectorAll('.ox-portfolio-card');
+        let visibleCount = 0;
+
         cards.forEach(card => {
             const cardCat = card.getAttribute('data-category');
-            if (categorySlug === 'all' || cardCat === categorySlug) {
-                card.style.display = '';
-                card.classList.add('visible');
+            const cardCountry = card.getAttribute('data-country');
+
+            const matchCat = (currentPortfolioCat === 'all' || cardCat === currentPortfolioCat);
+            const matchCountry = (currentPortfolioCountry === 'all' || cardCountry === currentPortfolioCountry);
+
+            if (matchCat && matchCountry) {
+                card.style.display = 'flex';
+                visibleCount++;
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, 20);
             } else {
-                card.style.display = 'none';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(12px) scale(0.98)';
+                setTimeout(() => {
+                    if (card.style.opacity === '0') {
+                        card.style.display = 'none';
+                    }
+                }, 200);
             }
         });
-        grid.scrollTo({ left: 0, behavior: 'smooth' });
+
+        const noRes = document.getElementById('portfolioNoResults');
+        if (noRes) {
+            noRes.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    };
+
+    window.resetPortfolioFilter = function() {
+        currentPortfolioCat = 'all';
+        currentPortfolioCountry = 'all';
+        document.querySelectorAll('.portfolio-cat-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
+        });
+        document.querySelectorAll('.country-pill-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-country') === 'all');
+        });
+        filterPortfolio('cat', 'all', null);
     };
 
     // 4. Partner Stories Video Stage Controller

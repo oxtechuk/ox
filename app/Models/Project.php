@@ -64,12 +64,41 @@ class Project extends Model
         return $this->gradient_class ?: 'store';
     }
 
+    public function getCountryFlagAttribute(): string
+    {
+        $flags = [
+            'sa' => '🇸🇦',
+            'ae' => '🇦🇪',
+            'eg' => '🇪🇬',
+            'kw' => '🇰🇼',
+            'qa' => '🇶🇦',
+            'om' => '🇴🇲',
+            'bh' => '🇧🇭',
+            'jo' => '🇯🇴',
+            'de' => '🇩🇪',
+            'se' => '🇸🇪',
+            'gb' => '🇬🇧',
+            'uk' => '🇬🇧',
+            'us' => '🇺🇸',
+            'ru' => '🇷🇺',
+            'iq' => '🇮🇶',
+            'fr' => '🇫🇷',
+        ];
+
+        return $flags[strtolower($this->country_code ?? '')] ?? '🌐';
+    }
+
     public function getDisplayImageAttribute(): string
     {
         if ($this->hero_image) {
-            return str_starts_with($this->hero_image, 'http')
-                ? $this->hero_image
-                : asset('storage/'.$this->hero_image);
+            if (str_starts_with($this->hero_image, 'http')) {
+                return $this->hero_image;
+            }
+            if (str_starts_with($this->hero_image, 'assets/')) {
+                return asset($this->hero_image);
+            }
+
+            return asset('storage/'.$this->hero_image);
         }
 
         return asset('assets/ox-saudi-story.png');
