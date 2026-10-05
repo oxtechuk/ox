@@ -88,6 +88,24 @@ class Project extends Model
         return $flags[strtolower($this->country_code ?? '')] ?? '🌐';
     }
 
+    public function getCountryFlagUrlAttribute(): ?string
+    {
+        $code = strtolower($this->country_code ?? '');
+        if ($code === 'uk') {
+            $code = 'gb';
+        }
+        if (! $code) {
+            return null;
+        }
+
+        $relativePath = "assets/flags/{$code}.webp";
+        if (file_exists(public_path($relativePath))) {
+            return asset($relativePath);
+        }
+
+        return null;
+    }
+
     public function getDisplayImageAttribute(): string
     {
         if ($this->hero_image) {

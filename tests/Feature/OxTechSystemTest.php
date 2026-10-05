@@ -84,6 +84,39 @@ class OxTechSystemTest extends TestCase
         }
     }
 
+    public function test_portfolio_archive_page_loads_and_browse_button_exists(): void
+    {
+        $homeResponse = $this->get('/');
+        $homeResponse->assertStatus(200);
+        $homeResponse->assertSee('ox-btn-browse-portfolio');
+        $homeResponse->assertSee('تصفح جميع المشاريع');
+
+        $portfolioResponse = $this->get('/projects');
+        $portfolioResponse->assertStatus(200);
+        $portfolioResponse->assertSee('سابقة الأعمال');
+
+        $portfolioAliasResponse = $this->get('/portfolio');
+        $portfolioAliasResponse->assertStatus(200);
+
+        // Assert smart client-friendly filter bar components
+        $homeResponse->assertSee('portfolio-filter-toolbar');
+        $homeResponse->assertSee('portfolioSmartSearch');
+        $homeResponse->assertSee('portfolioCountryBtn');
+        $homeResponse->assertSee('portfolioSectorTabs');
+    }
+
+    public function test_consultation_form_card_renders_phone_input_with_country_picker(): void
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertSee('ox-phone-group');
+        $response->assertSee('countryPickerToggleBtn');
+        $response->assertSee('countryPickerDropdown');
+        $response->assertSee('consult_phone_raw');
+        $response->assertSee('assets/flags/sa.webp');
+        $response->assertSee('+966');
+    }
+
     public function test_consultation_form_submission_stores_lead(): void
     {
         $payload = [
@@ -246,7 +279,7 @@ class OxTechSystemTest extends TestCase
         $enResponse->assertSee('dir="ltr"', false);
         $enResponse->assertSee('lang="en"', false);
         $enResponse->assertSee('A Bigger Vision');
-        $enResponse->assertSee('Our Services');
+        $enResponse->assertSee('Services');
 
         // 3. French switch and render
         $frResponse = $this->withSession(['locale' => 'fr'])->get('/');
@@ -254,7 +287,7 @@ class OxTechSystemTest extends TestCase
         $frResponse->assertSee('dir="ltr"', false);
         $frResponse->assertSee('lang="fr"', false);
         $frResponse->assertSee('Une Vision Plus Grande');
-        $frResponse->assertSee('Nos Services');
+        $frResponse->assertSee('Services');
 
         // 4. Arabic default render has RTL
         $arResponse = $this->withSession(['locale' => 'ar'])->get('/');

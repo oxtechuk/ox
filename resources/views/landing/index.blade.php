@@ -333,47 +333,122 @@
 
         <div class="container">
             <!-- ─── Dual-Filter Bar (Category + Country with Flags) ─── -->
-            <div class="portfolio-filter-container reveal">
-                <!-- Level 1: Category / Sector Tabs -->
-                <div class="portfolio-category-tabs">
-                    <button type="button" class="portfolio-cat-btn active" data-cat="all" onclick="filterPortfolio('cat', 'all', this)">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="14" width="7" height="7"></rect>
-                            <rect x="3" y="14" width="7" height="7"></rect>
+            <!-- ─── Smart Client-Friendly Filter Bar ─── -->
+            <div class="portfolio-filter-container reveal" id="portfolioFilterContainer">
+                <!-- Row 1: Smart Search & Country Dropdown & Actions -->
+                <div class="portfolio-filter-toolbar">
+                    <!-- Live Search Box -->
+                    <div class="portfolio-search-wrap">
+                        <svg class="portfolio-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <span>{{ $locale === 'ar' ? 'جميع المجالات' : ($locale === 'fr' ? 'Tous les secteurs' : 'All Sectors') }}</span>
-                        <span class="filter-count">{{ $projects->count() }}</span>
-                    </button>
-                    @foreach($sectors as $sec)
+                        <input type="text" id="portfolioSmartSearch" class="portfolio-search-input" 
+                               placeholder="{{ $locale === 'ar' ? 'ابحث عن فكرة أو مجال (مثال: متجر، سيارات، عيادة)...' : ($locale === 'fr' ? 'Rechercher une idée, secteur (ex: e-commerce, santé)...' : 'Search by idea or sector (e.g. store, booking, medical)...') }}" 
+                               autocomplete="off" 
+                               oninput="handlePortfolioSearch(this.value)">
+                        <button type="button" id="portfolioSearchClear" class="portfolio-search-clear" onclick="clearPortfolioSearch()" style="display:none;" title="{{ $locale === 'ar' ? 'مسح البحث' : 'Clear search' }}">✕</button>
+                    </div>
+
+                    <!-- Actions: Country Picker + Reset Button -->
+                    <div class="portfolio-toolbar-actions">
                         @php
-                            $secCount = $projects->where('sector_slug', $sec->sector_slug)->count();
+                            $saCountry = $countries->first(fn($c) => strtolower($c->country_code) === 'sa');
+                            $defaultCountryCode = 'sa';
+                            $defaultCountryName = $saCountry ? $saCountry->country_name : ($locale === 'ar' ? 'السعودية' : ($locale === 'fr' ? 'Arabie Saoudite' : 'Saudi Arabia'));
+                            $defaultFlagUrl = $saCountry?->flag_url ?? asset('assets/flags/sa.webp');
                         @endphp
-                        <button type="button" class="portfolio-cat-btn" data-cat="{{ $sec->sector_slug }}" onclick="filterPortfolio('cat', '{{ $sec->sector_slug }}', this)">
-                            <span>{{ $sec->sector_name }}</span>
-                            @if($secCount > 0)
-                                <span class="filter-count">{{ $secCount }}</span>
-                            @endif
+                        <!-- Country Dropdown Button (Default: Saudi Arabia) -->
+                        <div class="portfolio-country-dropdown-wrap" id="portfolioCountryWrap">
+                            <button type="button" class="portfolio-country-toggle-btn has-filter" id="portfolioCountryBtn" onclick="togglePortfolioCountryDropdown(event)" aria-haspopup="true" aria-expanded="false">
+                                <span class="country-toggle-flag" id="portfolioCurrentFlag">
+                                    <img src="{{ $defaultFlagUrl }}" class="country-toggle-flag-img" alt="{{ $defaultCountryName }}">
+                                </span>
+                                <span class="country-toggle-text" id="portfolioCurrentCountryText">{{ $defaultCountryName }}</span>
+                                <svg class="country-toggle-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </button>
+
+                            <div class="portfolio-country-menu" id="portfolioCountryMenu">
+                                <button type="button" class="country-menu-item country-pill-btn" data-country="all" onclick="selectPortfolioCountry('all', '{{ $locale === 'ar' ? 'جميع الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}', null)">
+                                    <span class="country-menu-flag">
+                                        <svg class="country-menu-globe-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                    </span>
+                                    <span class="country-menu-name">{{ $locale === 'ar' ? 'جميع الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}</span>
+                                    <span class="country-menu-count">{{ $projects->count() }}</span>
+                                </button>
+                                @foreach($countries as $country)
+                                    @php
+                                        $cLower = strtolower($country->country_code);
+                                        $cCount = $projects->filter(fn($p) => strtolower($p->country_code) === $cLower)->count();
+                                        $isDefaultActive = ($cLower === 'sa');
+                                    @endphp
+                                    <button type="button" class="country-menu-item country-pill-btn {{ $isDefaultActive ? 'active' : '' }}" data-country="{{ $cLower }}" onclick="selectPortfolioCountry('{{ $cLower }}', '{{ addslashes($country->country_name) }}', '{{ $country->flag_url }}')">
+                                        <span class="country-menu-flag">
+                                            @if(!empty($country->flag_url))
+                                                <img src="{{ $country->flag_url }}" class="country-menu-flag-img" alt="{{ $country->country_name }}" loading="lazy">
+                                            @else
+                                                <svg class="country-menu-globe-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                            @endif
+                                        </span>
+                                        <span class="country-menu-name">{{ $country->country_name }}</span>
+                                        @if($cCount > 0)
+                                            <span class="country-menu-count">{{ $cCount }}</span>
+                                        @endif
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Reset Filter Button (Shown when filters active) -->
+                        <button type="button" class="portfolio-reset-pill-btn" id="portfolioResetBtn" style="display:none;" onclick="resetPortfolioFilter()" title="{{ $locale === 'ar' ? 'إعادة تعيين الفلاتر' : 'Reset filters' }}">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                            <span>{{ $locale === 'ar' ? 'إلغاء الفلتر' : ($locale === 'fr' ? 'Réinitialiser' : 'Reset') }}</span>
                         </button>
-                    @endforeach
+                    </div>
                 </div>
 
-                <!-- Level 2: Country Flag Pills -->
-                <div class="portfolio-country-filter">
-                    <div class="country-filter-label">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        <span>{{ $locale === 'ar' ? 'الدولة:' : ($locale === 'fr' ? 'Pays:' : 'Country:') }}</span>
-                    </div>
-                    <div class="country-pills-list">
-                        <button type="button" class="country-pill-btn active" data-country="all" onclick="filterPortfolio('country', 'all', this)">
-                            <span class="flag-icon">🌐</span>
-                            <span>{{ $locale === 'ar' ? 'جميع الدول' : ($locale === 'fr' ? 'Tous pays' : 'All Countries') }}</span>
+                <!-- Row 2: Client-Friendly Business Sector Tabs (SVG Vector Icons, No Emojis) -->
+                <div class="portfolio-sector-tabs-wrap">
+                    <div class="portfolio-sector-tabs" id="portfolioSectorTabs">
+                        <button type="button" class="portfolio-sector-tab portfolio-cat-btn active" data-cat="all" onclick="selectPortfolioSector('all', this)">
+                            <span class="tab-icon">
+                                <svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                                    <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                                    <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                                    <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                                </svg>
+                            </span>
+                            <span class="tab-title">{{ $locale === 'ar' ? 'جميع المشاريع' : ($locale === 'fr' ? 'Tous les projets' : 'All Projects') }}</span>
+                            <span class="tab-badge">{{ $projects->count() }}</span>
                         </button>
-                        @foreach($countries as $country)
-                            <button type="button" class="country-pill-btn" data-country="{{ strtolower($country->country_code) }}" onclick="filterPortfolio('country', '{{ strtolower($country->country_code) }}', this)">
-                                <span class="flag-icon">{{ $country->flag ?? '🌐' }}</span>
-                                <span>{{ $country->country_name }}</span>
+
+                        @php
+                            $sectorSvgIcons = [
+                                'commerce' => '<svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>',
+                                'auto' => '<svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.7C1.4 11 1 11.9 1 12.8V16c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>',
+                                'health' => '<svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>',
+                                'logistics' => '<svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>',
+                            ];
+                            $defaultSectorSvg = '<svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>';
+                        @endphp
+
+                        @foreach($sectors as $sec)
+                            @php
+                                $sCount = $projects->where('sector_slug', $sec->sector_slug)->count();
+                                $iconSvg = $sectorSvgIcons[$sec->sector_slug] ?? $defaultSectorSvg;
+                            @endphp
+                            <button type="button" class="portfolio-sector-tab portfolio-cat-btn" data-cat="{{ $sec->sector_slug }}" onclick="selectPortfolioSector('{{ $sec->sector_slug }}', this)">
+                                <span class="tab-icon">{!! $iconSvg !!}</span>
+                                <span class="tab-title">{{ $sec->sector_name }}</span>
+                                @if($sCount > 0)
+                                    <span class="tab-badge">{{ $sCount }}</span>
+                                @endif
                             </button>
                         @endforeach
                     </div>
@@ -382,15 +457,18 @@
 
             <!-- ─── Portfolio Cards Grid with High-Res Thumbnails ─── -->
             <div class="ox-portfolio-grid" id="portfolioGrid">
-                @forelse($projects as $project)
+                @forelse($projects as $index => $project)
                     @php
                         $countryLower = strtolower($project->country_code ?? '');
                         $projectSector = $project->sector_slug ?? 'general';
                         $projectImg = $project->display_image;
+                        $isOverDesktopLimit = $index >= 9;
+                        $isOverMobileLimit = $index >= 6;
                     @endphp
-                    <article class="ox-portfolio-card reveal" 
+                    <article class="ox-portfolio-card reveal {{ $isOverDesktopLimit ? 'ox-limit-desktop-hide' : '' }} {{ $isOverMobileLimit ? 'ox-limit-mobile-hide' : '' }}" 
                              data-category="{{ $projectSector }}" 
                              data-country="{{ $countryLower }}"
+                             data-search="{{ mb_strtolower($project->title . ' ' . $project->sector_name . ' ' . $project->country_name . ' ' . $project->subtitle . ' ' . ($project->short_description ?? '') . ' ' . ($project->client_name ?? '')) }}"
                              onclick="window.location.href='{{ route('projects.show', $project->slug) }}'">
                         
                         <!-- Thumbnail Visual Media -->
@@ -404,23 +482,19 @@
                             <!-- Top Floating Badges: Country with Flag & Sector -->
                             <div class="portfolio-badges-top">
                                 <span class="portfolio-country-badge">
-                                    <span class="badge-flag">{{ $project->country_flag }}</span>
+                                    <span class="badge-flag">
+                                        @if($project->country_flag_url)
+                                            <img src="{{ $project->country_flag_url }}" class="badge-flag-img" alt="{{ $project->country_name }}" loading="lazy">
+                                        @else
+                                            {{ $project->country_flag }}
+                                        @endif
+                                    </span>
                                     <span>{{ $project->country_name }}</span>
                                 </span>
-                                @if($project->sector_name)
-                                    <span class="portfolio-sector-badge">{{ $project->sector_name }}</span>
-                                @endif
+                               
                             </div>
 
-                            @if($project->impact_stat)
-                                <div class="portfolio-impact-chip">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                                        <polyline points="17 6 23 6 23 12"></polyline>
-                                    </svg>
-                                    <span>{{ $project->impact_stat }}</span>
-                                </div>
-                            @endif
+                         
                         </div>
 
                         <!-- Card Body -->
@@ -464,6 +538,25 @@
                 @endforelse
             </div>
 
+            <!-- ─── Browse All Projects CTA Button ─── -->
+            <div class="ox-portfolio-browse-wrap reveal" id="portfolioBrowseWrap">
+                <a href="{{ route('projects.index') }}" class="ox-btn-browse-portfolio">
+                    <span class="btn-sparkle-dot">✦</span>
+                    <span class="btn-title">{{ $locale === 'ar' ? 'تصفح جميع المشاريع' : ($locale === 'fr' ? 'Consulter toutes nos réalisations' : 'Browse All Projects') }}</span>
+                    <span class="btn-arrow-wrap">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            @if($locale === 'ar')
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            @else
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            @endif
+                        </svg>
+                    </span>
+                </a>
+            </div>
+
             <!-- Empty Filter Result Alert -->
             <div id="portfolioNoResults" class="portfolio-no-results" style="display: none;">
                 <div class="no-results-icon">🔍</div>
@@ -483,10 +576,7 @@
         <div class="container">
             <!-- Header matching the reference image: Large, modern, focused -->
             <div class="ox-services-cards-header reveal">
-                <div class="ox-white-label-pill">
-                    <span class="pill-dot"></span>
-                    <span>{{ $locale === 'ar' ? 'بيت برمجيات متكامل · شريك White-Label معتمد' : ($locale === 'fr' ? 'Software House Intégrale · Partenaire White-Label' : 'Full Software House · Certified White-Label Partner') }}</span>
-                </div>
+              
                 <h2 class="ox-services-cards-title">
                     @if($locale === 'ar')
                         نبني الأساس البرمجي الراسخ<br />
@@ -605,35 +695,7 @@
                 </article>
             </div>
 
-            <!-- Bottom Trust & Action Banner -->
-            <div class="ox-services-bottom-trust reveal">
-                <div class="ox-trust-features">
-                    <div class="ox-trust-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                        <span>{{ $locale === 'ar' ? 'اتفاقيات سرية تامة (NDA) وتسليم باسمك 100%' : ($locale === 'fr' ? 'Accords NDA stricts & livraison sous votre marque' : 'Strict NDAs & 100% Branded Deliverables') }}</span>
-                    </div>
-                    <div class="ox-trust-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>{{ $locale === 'ar' ? 'كود نظيف ومعمارية قابلة للتوسع السحابي' : ($locale === 'fr' ? 'Code propre & architecture cloud scalable' : 'Clean Code & Scalable Cloud Architecture') }}</span>
-                    </div>
-                    <div class="ox-trust-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        <span>{{ $locale === 'ar' ? 'مرونة العمل: بنظام المشروع أو فريق مخصص' : ($locale === 'fr' ? 'Engagement flexible: au projet ou équipe dédiée' : 'Flexible Engagement: Per-Project or Dedicated Squad') }}</span>
-                    </div>
-                </div>
-
-                <a href="#consult" class="ox-services-trust-cta" onclick="openConsultModal(); return false;">
-                    <span>{{ $locale === 'ar' ? 'ابدأ مشروعك أو شراكتك البرمجية' : ($locale === 'fr' ? 'Démarrer votre projet' : 'Start Your Project or Partnership') }}</span>
-                    <span>{{ $locale === 'ar' ? '←' : '→' }}</span>
-                </a>
-            </div>
+          
         </div>
     </section>
 
@@ -687,10 +749,10 @@
     <section class="testimonials section" id="stories">
         <!-- Sadu Corner Accents -->
         <svg class="sadu-corner top-right" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="0" width="8" height="8" fill="#00E59B"/>
-            <rect x="0" y="16" width="8" height="8" fill="#00E59B"/>
-            <rect x="32" y="16" width="8" height="8" fill="#00E59B"/>
-            <rect x="16" y="32" width="8" height="8" fill="#00E59B"/>
+            <rect x="16" y="0" width="8" height="8" fill="#1D8A68"/>
+            <rect x="0" y="16" width="8" height="8" fill="#1D8A68"/>
+            <rect x="32" y="16" width="8" height="8" fill="#1D8A68"/>
+            <rect x="16" y="32" width="8" height="8" fill="#1D8A68"/>
             <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
             <rect x="8" y="8" width="8" height="8" fill="#C8A96B"/>
             <rect x="24" y="8" width="8" height="8" fill="#C8A96B"/>
@@ -698,10 +760,10 @@
             <rect x="24" y="24" width="8" height="8" fill="#C8A96B"/>
         </svg>
         <svg class="sadu-corner top-left" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="16" y="0" width="8" height="8" fill="#00E59B"/>
-            <rect x="0" y="16" width="8" height="8" fill="#00E59B"/>
-            <rect x="32" y="16" width="8" height="8" fill="#00E59B"/>
-            <rect x="16" y="32" width="8" height="8" fill="#00E59B"/>
+            <rect x="16" y="0" width="8" height="8" fill="#1D8A68"/>
+            <rect x="0" y="16" width="8" height="8" fill="#1D8A68"/>
+            <rect x="32" y="16" width="8" height="8" fill="#1D8A68"/>
+            <rect x="16" y="32" width="8" height="8" fill="#1D8A68"/>
             <rect x="16" y="16" width="8" height="8" fill="#ffffff"/>
             <rect x="8" y="8" width="8" height="8" fill="#C8A96B"/>
             <rect x="24" y="8" width="8" height="8" fill="#C8A96B"/>
@@ -714,38 +776,38 @@
                 <div class="sadu-badge-wrap">
                     <!-- Sadu Ribbon Pattern Left -->
                     <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="4" width="6" height="6" fill="#00E59B"/>
-                        <rect x="6" y="0" width="6" height="6" fill="#00E59B"/>
-                        <rect x="6" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="0" y="4" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="6" y="0" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="6" y="8" width="6" height="6" fill="#1D8A68"/>
                         <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
-                        <rect x="18" y="4" width="6" height="6" fill="#00E59B"/>
-                        <rect x="24" y="0" width="6" height="6" fill="#00E59B"/>
-                        <rect x="24" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="18" y="4" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="24" y="0" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="24" y="8" width="6" height="6" fill="#1D8A68"/>
                         <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
-                        <rect x="36" y="4" width="6" height="6" fill="#00E59B"/>
-                        <rect x="42" y="0" width="6" height="6" fill="#00E59B"/>
-                        <rect x="42" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="36" y="4" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="42" y="0" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="42" y="8" width="6" height="6" fill="#1D8A68"/>
                         <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
-                        <rect x="54" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="54" y="4" width="6" height="6" fill="#1D8A68"/>
                     </svg>
 
                     <p class="kicker">{{ $locale === 'ar' ? 'شركاء النجاح' : ($locale === 'fr' ? 'HISTOIRES DE PARTENAIRES' : 'PARTNER STORIES') }}</p>
 
                     <!-- Sadu Ribbon Pattern Right -->
                     <svg width="60" height="14" viewBox="0 0 60 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0" y="4" width="6" height="6" fill="#00E59B"/>
-                        <rect x="6" y="0" width="6" height="6" fill="#00E59B"/>
-                        <rect x="6" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="0" y="4" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="6" y="0" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="6" y="8" width="6" height="6" fill="#1D8A68"/>
                         <rect x="12" y="4" width="6" height="6" fill="#ffffff"/>
-                        <rect x="18" y="4" width="6" height="6" fill="#00E59B"/>
-                        <rect x="24" y="0" width="6" height="6" fill="#00E59B"/>
-                        <rect x="24" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="18" y="4" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="24" y="0" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="24" y="8" width="6" height="6" fill="#1D8A68"/>
                         <rect x="30" y="4" width="6" height="6" fill="#ffffff"/>
-                        <rect x="36" y="4" width="6" height="6" fill="#00E59B"/>
-                        <rect x="42" y="0" width="6" height="6" fill="#00E59B"/>
-                        <rect x="42" y="8" width="6" height="6" fill="#00E59B"/>
+                        <rect x="36" y="4" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="42" y="0" width="6" height="6" fill="#1D8A68"/>
+                        <rect x="42" y="8" width="6" height="6" fill="#1D8A68"/>
                         <rect x="48" y="4" width="6" height="6" fill="#ffffff"/>
-                        <rect x="54" y="4" width="6" height="6" fill="#00E59B"/>
+                        <rect x="54" y="4" width="6" height="6" fill="#1D8A68"/>
                     </svg>
                 </div>
 
@@ -776,20 +838,20 @@
                                         <rect x="10" y="70" width="20" height="20" fill="#C8A96B"/>
                                         <rect x="130" y="70" width="20" height="20" fill="#C8A96B"/>
 
-                                        <rect x="50" y="30" width="20" height="20" fill="#00E59B"/>
-                                        <rect x="90" y="30" width="20" height="20" fill="#00E59B"/>
-                                        <rect x="30" y="50" width="20" height="20" fill="#00E59B"/>
-                                        <rect x="110" y="50" width="20" height="20" fill="#00E59B"/>
-                                        <rect x="30" y="90" width="20" height="20" fill="#00E59B"/>
-                                        <rect x="110" y="90" width="20" height="20" fill="#00E59B"/>
-                                        <rect x="50" y="110" width="20" height="20" fill="#00E59B"/>
-                                        <rect x="90" y="110" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="50" y="30" width="20" height="20" fill="#1D8A68"/>
+                                        <rect x="90" y="30" width="20" height="20" fill="#1D8A68"/>
+                                        <rect x="30" y="50" width="20" height="20" fill="#1D8A68"/>
+                                        <rect x="110" y="50" width="20" height="20" fill="#1D8A68"/>
+                                        <rect x="30" y="90" width="20" height="20" fill="#1D8A68"/>
+                                        <rect x="110" y="90" width="20" height="20" fill="#1D8A68"/>
+                                        <rect x="50" y="110" width="20" height="20" fill="#1D8A68"/>
+                                        <rect x="90" y="110" width="20" height="20" fill="#1D8A68"/>
 
                                         <rect x="70" y="50" width="20" height="20" fill="#ffffff"/>
                                         <rect x="50" y="70" width="20" height="20" fill="#ffffff"/>
                                         <rect x="90" y="70" width="20" height="20" fill="#ffffff"/>
                                         <rect x="70" y="90" width="20" height="20" fill="#ffffff"/>
-                                        <rect x="70" y="70" width="20" height="20" fill="#00E59B"/>
+                                        <rect x="70" y="70" width="20" height="20" fill="#1D8A68"/>
                                     </svg>
                                 </div>
 
@@ -821,7 +883,7 @@
                                     </div>
                                     <div class="player-sub-controls">
                                         <span>◀◀</span>
-                                        <span style="color:var(--lime, #00E59B); font-size:13px;">▶</span>
+                                        <span style="color:var(--lime, #1D8A68); font-size:13px;">▶</span>
                                         <span>▶▶</span>
                                     </div>
                                 </div>
@@ -847,7 +909,7 @@
                                            src="{{ $t->video_src }}" 
                                            style="width:100%; height:100%; object-fit:cover;"></video>
                                 @else
-                                    <div style="display:grid; place-items:center; height:100%; color:#00E59B; padding:20px; text-align:center;">
+                                    <div style="display:grid; place-items:center; height:100%; color:#1D8A68; padding:20px; text-align:center;">
                                         <span>جاري تجهيز فيديو التجربة...</span>
                                     </div>
                                 @endif
@@ -1065,6 +1127,45 @@
                 <!-- Left / Interactive Form Card (RTL Left) -->
                 <div class="ox-consult-form-col">
                     <div class="ox-consult-form-card">
+                        @php
+                            $phoneCountries = [
+                                ['code' => 'sa', 'dial' => '+966', 'name_ar' => 'المملكة العربية السعودية', 'name_en' => 'Saudi Arabia'],
+                                ['code' => 'ae', 'dial' => '+971', 'name_ar' => 'الإمارات العربية المتحدة', 'name_en' => 'United Arab Emirates'],
+                                ['code' => 'eg', 'dial' => '+20',  'name_ar' => 'مصر', 'name_en' => 'Egypt'],
+                                ['code' => 'kw', 'dial' => '+965', 'name_ar' => 'الكويت', 'name_en' => 'Kuwait'],
+                                ['code' => 'qa', 'dial' => '+974', 'name_ar' => 'قطر', 'name_en' => 'Qatar'],
+                                ['code' => 'om', 'dial' => '+968', 'name_ar' => 'سلطنة عُمان', 'name_en' => 'Oman'],
+                                ['code' => 'bh', 'dial' => '+973', 'name_ar' => 'البحرين', 'name_en' => 'Bahrain'],
+                                ['code' => 'jo', 'dial' => '+962', 'name_ar' => 'الأردن', 'name_en' => 'Jordan'],
+                                ['code' => 'iq', 'dial' => '+964', 'name_ar' => 'العراق', 'name_en' => 'Iraq'],
+                                ['code' => 'gb', 'dial' => '+44',  'name_ar' => 'المملكة المتحدة', 'name_en' => 'United Kingdom'],
+                                ['code' => 'us', 'dial' => '+1',   'name_ar' => 'الولايات المتحدة', 'name_en' => 'United States'],
+                                ['code' => 'fr', 'dial' => '+33',  'name_ar' => 'فرنسا', 'name_en' => 'France'],
+                                ['code' => 'de', 'dial' => '+49',  'name_ar' => 'ألمانيا', 'name_en' => 'Germany'],
+                                ['code' => 'se', 'dial' => '+46',  'name_ar' => 'السويد', 'name_en' => 'Sweden'],
+                                ['code' => 'tr', 'dial' => '+90',  'name_ar' => 'تركيا', 'name_en' => 'Turkey'],
+                                ['code' => 'ma', 'dial' => '+212', 'name_ar' => 'المغرب', 'name_en' => 'Morocco'],
+                                ['code' => 'dz', 'dial' => '+213', 'name_ar' => 'الجزائر', 'name_en' => 'Algeria'],
+                                ['code' => 'tn', 'dial' => '+216', 'name_ar' => 'تونس', 'name_en' => 'Tunisia'],
+                                ['code' => 'lb', 'dial' => '+961', 'name_ar' => 'لبنان', 'name_en' => 'Lebanon'],
+                                ['code' => 'ye', 'dial' => '+967', 'name_ar' => 'اليمن', 'name_en' => 'Yemen'],
+                                ['code' => 'ps', 'dial' => '+970', 'name_ar' => 'فلسطين', 'name_en' => 'Palestine'],
+                                ['code' => 'sy', 'dial' => '+963', 'name_ar' => 'سوريا', 'name_en' => 'Syria'],
+                                ['code' => 'ly', 'dial' => '+218', 'name_ar' => 'ليبيا', 'name_en' => 'Libya'],
+                                ['code' => 'sd', 'dial' => '+249', 'name_ar' => 'السودان', 'name_en' => 'Sudan'],
+                                ['code' => 'ca', 'dial' => '+1',   'name_ar' => 'كندا', 'name_en' => 'Canada'],
+                                ['code' => 'ch', 'dial' => '+41',  'name_ar' => 'سويسرا', 'name_en' => 'Switzerland'],
+                                ['code' => 'nl', 'dial' => '+31',  'name_ar' => 'هولندا', 'name_en' => 'Netherlands'],
+                                ['code' => 'es', 'dial' => '+34',  'name_ar' => 'إسبانيا', 'name_en' => 'Spain'],
+                                ['code' => 'it', 'dial' => '+39',  'name_ar' => 'إيطاليا', 'name_en' => 'Italy'],
+                                ['code' => 'my', 'dial' => '+60',  'name_ar' => 'ماليزيا', 'name_en' => 'Malaysia'],
+                                ['code' => 'sg', 'dial' => '+65',  'name_ar' => 'سنغافورة', 'name_en' => 'Singapore'],
+                                ['code' => 'au', 'dial' => '+61',  'name_ar' => 'أستراليا', 'name_en' => 'Australia'],
+                            ];
+
+                            $defaultCountryCode = $locale === 'ar' ? 'sa' : ($locale === 'fr' ? 'fr' : 'gb');
+                            $defaultPhoneCountry = collect($phoneCountries)->firstWhere('code', $defaultCountryCode) ?? $phoneCountries[0];
+                        @endphp
                         <div id="inlineFormContent">
                             <h3 class="ox-consult-card-title">
                                 {{ $locale === 'ar' ? 'تواصل معنا الآن' : ($locale === 'fr' ? 'Contactez-nous maintenant' : 'Get In Touch Now') }}
@@ -1084,11 +1185,64 @@
                                 <input type="hidden" name="utm_content" value="{{ session('attribution.utm_content', request('utm_content')) }}">
                                 <input type="hidden" name="platform_detected" value="{{ session('attribution.platform_detected') }}">
 
-                                <!-- 2x2 Grid of Inputs -->
+                                <!-- Row 1: Name & Email -->
                                 <div class="ox-consult-row">
                                     <div class="ox-consult-field-wrap">
-                                        <input type="text" name="name" id="consult_name" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'الاسم الكامل' : ($locale === 'fr' ? 'Nom Complet' : 'Full Name') }}" maxlength="70" required>
+                                        <input type="text" name="name" id="consult_name" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'الاسم الكامل *' : ($locale === 'fr' ? 'Nom Complet *' : 'Full Name *') }}" maxlength="70" required>
                                     </div>
+                                    <div class="ox-consult-field-wrap">
+                                        <input type="email" name="email" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'البريد الإلكتروني *' : ($locale === 'fr' ? 'Email Pro *' : 'Business Email *') }}" maxlength="100" required>
+                                    </div>
+                                </div>
+
+                                <!-- Row 2: Phone with Country Code Picker -->
+                                <div class="ox-phone-group" id="consultPhoneGroup">
+                                    <input type="hidden" name="phone" id="consultFullPhone" value="">
+                                    <input type="hidden" id="selectedDialCode" value="{{ $defaultPhoneCountry['dial'] }}">
+                                    
+                                    <div class="ox-phone-input-wrap">
+                                        <button type="button" class="ox-phone-country-btn" id="countryPickerToggleBtn" onclick="toggleCountryPicker(event)" aria-haspopup="listbox" aria-expanded="false" title="{{ $locale === 'ar' ? 'اختر الدولة' : 'Select Country' }}">
+                                            <img id="selectedCountryFlag" src="{{ asset('assets/flags/' . $defaultPhoneCountry['code'] . '.webp') }}" alt="{{ $locale === 'ar' ? $defaultPhoneCountry['name_ar'] : $defaultPhoneCountry['name_en'] }}" class="ox-phone-flag-img" width="22" height="15" loading="lazy">
+                                            <span id="selectedCountryDial" class="ox-phone-dial-text">{{ $defaultPhoneCountry['dial'] }}</span>
+                                            <svg class="ox-phone-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M6 9l6 6 6-6"/>
+                                            </svg>
+                                        </button>
+
+                                        <span class="ox-phone-divider" aria-hidden="true"></span>
+
+                                        <input type="tel" id="consult_phone_raw" class="ox-phone-raw-input" placeholder="{{ $locale === 'ar' ? 'رقم الجوال (مثال: 50 123 4567)' : ($locale === 'fr' ? 'Numéro de mobile (ex: 6 12 34 56 78)' : 'Mobile number (e.g. 50 123 4567)') }}" autocomplete="tel" maxlength="20">
+                                    </div>
+
+                                    <!-- Country Dropdown Menu -->
+                                    <div class="ox-country-picker-dropdown" id="countryPickerDropdown" role="listbox">
+                                        <div class="ox-country-search-wrap">
+                                            <svg class="ox-country-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            </svg>
+                                            <input type="text" id="countrySearchInput" class="ox-country-search-input" placeholder="{{ $locale === 'ar' ? 'ابحث باسم الدولة أو كود الاتصال...' : ($locale === 'fr' ? 'Rechercher pays ou indicatif...' : 'Search country or dial code...') }}" autocomplete="off" oninput="filterCountryOptions(this.value)">
+                                        </div>
+
+                                        <div class="ox-country-options-list" id="countryOptionsList">
+                                            @foreach($phoneCountries as $country)
+                                                <button type="button" class="ox-country-option-item {{ $country['code'] === $defaultPhoneCountry['code'] ? 'selected' : '' }}" data-code="{{ $country['code'] }}" data-dial="{{ $country['dial'] }}" data-name-ar="{{ $country['name_ar'] }}" data-name-en="{{ $country['name_en'] }}" onclick="selectCountryCode('{{ $country['code'] }}', '{{ $country['dial'] }}', '{{ addslashes($locale === 'ar' ? $country['name_ar'] : $country['name_en']) }}', '{{ asset('assets/flags/' . $country['code'] . '.webp') }}')">
+                                                    <span class="ox-country-option-left">
+                                                        <img src="{{ asset('assets/flags/' . $country['code'] . '.webp') }}" class="ox-country-option-flag" width="20" height="14" alt="{{ $country['name_en'] }}" loading="lazy">
+                                                        <span class="ox-country-option-name">{{ $locale === 'ar' ? $country['name_ar'] : $country['name_en'] }}</span>
+                                                    </span>
+                                                    <span class="ox-country-option-dial">{{ $country['dial'] }}</span>
+                                                </button>
+                                            @endforeach
+                                            <div class="ox-country-no-results" id="countryNoResults" style="display: none;">
+                                                {{ $locale === 'ar' ? 'لا توجد نتائج مطابقة' : ($locale === 'fr' ? 'Aucun résultat trouvé' : 'No matching results') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Row 3: Project Type & Estimated Budget -->
+                                <div class="ox-consult-row">
                                     <div class="ox-consult-field-wrap">
                                         <div class="ox-consult-select-wrap">
                                             <select name="project_type" class="ox-consult-select" required>
@@ -1106,12 +1260,6 @@
                                                 </svg>
                                             </span>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="ox-consult-row">
-                                    <div class="ox-consult-field-wrap">
-                                        <input type="email" name="email" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'البريد الإلكتروني' : ($locale === 'fr' ? 'Email Pro' : 'Business Email') }}" maxlength="100" required>
                                     </div>
                                     <div class="ox-consult-field-wrap">
                                         <div class="ox-consult-select-wrap">
@@ -1178,6 +1326,310 @@
 }
 </script>
 <link rel="stylesheet" href="{{ asset('assets/product-scroll.css') }}">
+<style>
+    /* ─── Portfolio Grid Limits (3x3 = 9 Desktop, 6 Mobile) ─── */
+    @media (min-width: 769px) {
+        #portfolioGrid .ox-portfolio-card.ox-limit-desktop-hide {
+            display: none !important;
+        }
+    }
+    @media (max-width: 768px) {
+        #portfolioGrid .ox-portfolio-card.ox-limit-mobile-hide {
+            display: none !important;
+        }
+    }
+
+    /* ─── Browse All Projects CTA Button ─── */
+    .ox-portfolio-browse-wrap {
+        text-align: center;
+        margin-top: 48px;
+        position: relative;
+        z-index: 5;
+    }
+    .ox-btn-browse-portfolio {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        background: linear-gradient(135deg, rgba(12, 32, 50, 0.95) 0%, rgba(6, 17, 28, 0.98) 100%);
+        border: 1px solid rgba(189, 255, 69, 0.35);
+        color: #ffffff;
+        padding: 15px 36px;
+        border-radius: 50px;
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 24px rgba(189, 255, 69, 0.12);
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+    .ox-btn-browse-portfolio .btn-sparkle-dot {
+        color: var(--lime, #bdff45);
+        font-size: 14px;
+        animation: pulseSparkle 2s infinite ease-in-out;
+    }
+    .ox-btn-browse-portfolio .btn-arrow-wrap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(189, 255, 69, 0.15);
+        color: var(--lime, #bdff45);
+        transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+    .ox-btn-browse-portfolio:hover {
+        background: linear-gradient(135deg, rgba(189, 255, 69, 0.2) 0%, rgba(10, 31, 51, 0.98) 100%);
+        border-color: var(--lime, #bdff45);
+        color: #ffffff;
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 32px rgba(189, 255, 69, 0.3);
+    }
+    .ox-btn-browse-portfolio:hover .btn-arrow-wrap {
+        background: var(--lime, #bdff45);
+        color: #05121e;
+        transform: translateX(4px);
+    }
+    html[dir="rtl"] .ox-btn-browse-portfolio:hover .btn-arrow-wrap {
+        transform: translateX(-4px);
+    }
+    @keyframes pulseSparkle {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    @media (max-width: 680px) {
+        .ox-portfolio-browse-wrap {
+            margin-top: 32px;
+        }
+        .ox-btn-browse-portfolio {
+            width: 100%;
+            justify-content: center;
+            padding: 13px 20px;
+            font-size: 14px;
+        }
+    }
+
+    /* ─── Phone & Country Code Picker ─── */
+    .ox-phone-group {
+        position: relative;
+        margin-bottom: 12px;
+        width: 100%;
+    }
+    .ox-phone-input-wrap {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 46px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        transition: all 0.25s ease;
+        box-sizing: border-box;
+    }
+    .ox-phone-input-wrap:focus-within {
+        border-color: #1D8A68;
+        background: rgba(255, 255, 255, 0.07);
+        box-shadow: 0 0 0 3px rgba(0, 229, 155, 0.16);
+    }
+    .ox-phone-country-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 100%;
+        padding: 0 12px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 13.5px;
+        font-weight: 600;
+        flex-shrink: 0;
+        outline: none;
+        transition: background 0.2s ease;
+    }
+    .ox-phone-country-btn:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .ox-phone-flag-img {
+        width: 22px;
+        height: 15px;
+        object-fit: cover;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        flex-shrink: 0;
+    }
+    .ox-phone-dial-text {
+        font-family: 'SF Mono', Monaco, Consolas, monospace;
+        font-size: 13px;
+        color: #1D8A68;
+        letter-spacing: 0.5px;
+    }
+    .ox-phone-chevron {
+        color: #79988e;
+        transition: transform 0.25s ease;
+        flex-shrink: 0;
+    }
+    .ox-phone-country-btn.active .ox-phone-chevron {
+        transform: rotate(180deg);
+        color: #1D8A68;
+    }
+    .ox-phone-divider {
+        width: 1px;
+        height: 22px;
+        background: rgba(255, 255, 255, 0.12);
+        flex-shrink: 0;
+    }
+    .ox-phone-raw-input {
+        flex: 1;
+        height: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 13.5px;
+        padding: 0 14px;
+        box-sizing: border-box;
+    }
+    html[dir="rtl"] .ox-phone-raw-input {
+        text-align: right;
+        direction: ltr;
+    }
+    html[dir="ltr"] .ox-phone-raw-input {
+        text-align: left;
+        direction: ltr;
+    }
+    .ox-phone-raw-input::placeholder {
+        color: #6d8a81;
+    }
+
+    /* Country Dropdown */
+    .ox-country-picker-dropdown {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        z-index: 120;
+        background: rgba(9, 24, 20, 0.98);
+        border: 1px solid rgba(0, 229, 155, 0.35);
+        border-radius: 14px;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 229, 155, 0.12);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        display: none;
+        overflow: hidden;
+        animation: oxPickerFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ox-country-picker-dropdown.show {
+        display: block;
+    }
+    @keyframes oxPickerFade {
+        from { opacity: 0; transform: translateY(-6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .ox-country-search-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.02);
+    }
+    .ox-country-search-icon {
+        color: #6d8a81;
+        flex-shrink: 0;
+    }
+    .ox-country-search-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 13px;
+    }
+    .ox-country-search-input::placeholder {
+        color: #6d8a81;
+        font-size: 12.5px;
+    }
+    .ox-country-options-list {
+        max-height: 220px;
+        overflow-y: auto;
+        padding: 6px 0;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 229, 155, 0.3) transparent;
+    }
+    .ox-country-options-list::-webkit-scrollbar {
+        width: 6px;
+    }
+    .ox-country-options-list::-webkit-scrollbar-thumb {
+        background: rgba(0, 229, 155, 0.3);
+        border-radius: 4px;
+    }
+    .ox-country-option-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 9px 14px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #e2e8f0;
+        font-family: inherit;
+        font-size: 13px;
+        transition: background 0.15s ease, color 0.15s ease;
+        text-align: inherit;
+    }
+    .ox-country-option-item:hover {
+        background: rgba(0, 229, 155, 0.12);
+        color: #ffffff;
+    }
+    .ox-country-option-item.selected {
+        background: rgba(0, 229, 155, 0.18);
+        color: #1D8A68;
+        font-weight: 700;
+    }
+    .ox-country-option-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+    }
+    .ox-country-option-flag {
+        width: 20px;
+        height: 14px;
+        object-fit: cover;
+        border-radius: 2px;
+        flex-shrink: 0;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .ox-country-option-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .ox-country-option-dial {
+        font-family: 'SF Mono', Monaco, Consolas, monospace;
+        font-size: 12px;
+        color: #1D8A68;
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+        margin-left: 8px;
+    }
+    html[dir="rtl"] .ox-country-option-dial {
+        margin-left: 0;
+        margin-right: 8px;
+    }
+    .ox-country-no-results {
+        padding: 16px 14px;
+        text-align: center;
+        color: #8fa099;
+        font-size: 12.5px;
+    }
+</style>
 <noscript>
     <style>
         .reveal { opacity: 1 !important; transform: none !important; }
@@ -1218,38 +1670,136 @@
     // Ultimate fail-safe: reveal everything after 2.5s in case observer is blocked
     setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 2500);
 
-    // 2. Dual Portfolio Filter (Category + Country with Flags)
+    // 2. Smart Client-Friendly Portfolio Filter (Live Search + Sector Tabs + Country Dropdown)
     let currentPortfolioCat = 'all';
-    let currentPortfolioCountry = 'all';
+    let currentPortfolioCountry = 'sa';
+    let currentPortfolioSearch = '';
 
-    window.filterPortfolio = function(type, value, btn) {
-        if (type === 'cat') {
-            currentPortfolioCat = value;
-            document.querySelectorAll('.portfolio-cat-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-        } else if (type === 'country') {
-            currentPortfolioCountry = value;
-            document.querySelectorAll('.country-pill-btn').forEach(b => b.classList.remove('active'));
+    window.handlePortfolioSearch = function(query) {
+        currentPortfolioSearch = (query || '').trim().toLowerCase();
+        const clearBtn = document.getElementById('portfolioSearchClear');
+        if (clearBtn) {
+            clearBtn.style.display = currentPortfolioSearch.length > 0 ? 'inline-flex' : 'none';
+        }
+        applyPortfolioFilters();
+    };
+
+    window.clearPortfolioSearch = function() {
+        const input = document.getElementById('portfolioSmartSearch');
+        if (input) input.value = '';
+        currentPortfolioSearch = '';
+        const clearBtn = document.getElementById('portfolioSearchClear');
+        if (clearBtn) clearBtn.style.display = 'none';
+        applyPortfolioFilters();
+    };
+
+    window.selectPortfolioSector = function(sectorSlug, btn) {
+        currentPortfolioCat = sectorSlug;
+        document.querySelectorAll('.portfolio-sector-tab, .portfolio-cat-btn').forEach(t => t.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        applyPortfolioFilters();
+    };
+
+    window.togglePortfolioCountryDropdown = function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const menu = document.getElementById('portfolioCountryMenu');
+        const btn = document.getElementById('portfolioCountryBtn');
+        if (!menu) return;
+        const isOpen = menu.classList.contains('show');
+        if (isOpen) {
+            menu.classList.remove('show');
+            if (btn) btn.classList.remove('active');
+        } else {
+            menu.classList.add('show');
             if (btn) btn.classList.add('active');
         }
+    };
 
-        const cards = document.querySelectorAll('.ox-portfolio-card');
+    window.closePortfolioCountryDropdown = function() {
+        const menu = document.getElementById('portfolioCountryMenu');
+        const btn = document.getElementById('portfolioCountryBtn');
+        if (menu) menu.classList.remove('show');
+        if (btn) btn.classList.remove('active');
+    };
+
+    window.selectPortfolioCountry = function(code, name, flagUrl) {
+        currentPortfolioCountry = code;
+        
+        const textEl = document.getElementById('portfolioCurrentCountryText');
+        const flagEl = document.getElementById('portfolioCurrentFlag');
+        const toggleBtn = document.getElementById('portfolioCountryBtn');
+        
+        if (textEl) textEl.textContent = name;
+        if (flagEl) {
+            if (code === 'all' || !flagUrl) {
+                flagEl.innerHTML = '<svg class="country-toggle-flag-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>';
+            } else {
+                flagEl.innerHTML = `<img src="${flagUrl}" class="country-toggle-flag-img" alt="${name}">`;
+            }
+        }
+        if (toggleBtn) {
+            if (code !== 'all') {
+                toggleBtn.classList.add('has-filter');
+            } else {
+                toggleBtn.classList.remove('has-filter');
+            }
+        }
+
+        document.querySelectorAll('.country-menu-item, .country-pill-btn').forEach(item => {
+            if (item.getAttribute('data-country') === code) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        closePortfolioCountryDropdown();
+        applyPortfolioFilters();
+    };
+
+    window.applyPortfolioFilters = function() {
+        const isMobile = window.innerWidth <= 768;
+        const maxDisplayLimit = isMobile ? 6 : 9;
+        const cards = document.querySelectorAll('#portfolioGrid .ox-portfolio-card');
         let visibleCount = 0;
+        let matchedSoFar = 0;
+
+        const hasActiveFilter = (currentPortfolioCat !== 'all' || currentPortfolioCountry !== 'sa' || currentPortfolioSearch.length > 0);
+        const resetBtn = document.getElementById('portfolioResetBtn');
+        if (resetBtn) {
+            resetBtn.style.display = hasActiveFilter ? 'inline-flex' : 'none';
+        }
 
         cards.forEach(card => {
-            const cardCat = card.getAttribute('data-category');
-            const cardCountry = card.getAttribute('data-country');
+            card.classList.remove('ox-limit-desktop-hide', 'ox-limit-mobile-hide');
+
+            const cardCat = card.getAttribute('data-category') || '';
+            const cardCountry = (card.getAttribute('data-country') || '').toLowerCase();
+            const cardSearch = (card.getAttribute('data-search') || '').toLowerCase();
 
             const matchCat = (currentPortfolioCat === 'all' || cardCat === currentPortfolioCat);
             const matchCountry = (currentPortfolioCountry === 'all' || cardCountry === currentPortfolioCountry);
+            const matchSearch = (!currentPortfolioSearch || cardSearch.includes(currentPortfolioSearch));
 
-            if (matchCat && matchCountry) {
-                card.style.display = 'flex';
-                visibleCount++;
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0) scale(1)';
-                }, 20);
+            if (matchCat && matchCountry && matchSearch) {
+                matchedSoFar++;
+                if (matchedSoFar <= maxDisplayLimit) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0) scale(1)';
+                    }, 20);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(12px) scale(0.98)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 200);
+                }
             } else {
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(12px) scale(0.98)';
@@ -1265,19 +1815,57 @@
         if (noRes) {
             noRes.style.display = visibleCount === 0 ? 'block' : 'none';
         }
+
+        const browseWrap = document.getElementById('portfolioBrowseWrap');
+        if (browseWrap) {
+            browseWrap.style.display = visibleCount === 0 ? 'none' : 'block';
+        }
+    };
+
+    window.filterPortfolio = function(type, value, btn) {
+        if (type === 'cat') {
+            selectPortfolioSector(value, btn);
+        } else if (type === 'country') {
+            selectPortfolioCountry(value, value, null);
+        } else {
+            applyPortfolioFilters();
+        }
     };
 
     window.resetPortfolioFilter = function() {
         currentPortfolioCat = 'all';
-        currentPortfolioCountry = 'all';
-        document.querySelectorAll('.portfolio-cat-btn').forEach(b => {
+        currentPortfolioCountry = 'sa';
+        currentPortfolioSearch = '';
+        
+        const searchInput = document.getElementById('portfolioSmartSearch');
+        if (searchInput) searchInput.value = '';
+        const searchClear = document.getElementById('portfolioSearchClear');
+        if (searchClear) searchClear.style.display = 'none';
+
+        document.querySelectorAll('.portfolio-sector-tab, .portfolio-cat-btn').forEach(b => {
             b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
         });
-        document.querySelectorAll('.country-pill-btn').forEach(b => {
-            b.classList.toggle('active', b.getAttribute('data-country') === 'all');
-        });
-        filterPortfolio('cat', 'all', null);
+
+        selectPortfolioCountry('sa', '{{ addslashes($defaultCountryName) }}', '{{ $defaultFlagUrl }}');
     };
+
+    document.addEventListener('click', function(e) {
+        const wrap = document.getElementById('portfolioCountryWrap');
+        if (wrap && !wrap.contains(e.target)) {
+            closePortfolioCountryDropdown();
+        }
+    });
+
+    let portfolioResizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(portfolioResizeTimer);
+        portfolioResizeTimer = setTimeout(function() {
+            applyPortfolioFilters();
+        }, 150);
+    });
+
+    // Initial filter execution to apply default Saudi Arabia filter
+    applyPortfolioFilters();
 
     // 4. Partner Stories Video Stage Controller
     const storiesData = {!! $storiesJson ?? '[]' !!};
@@ -1420,7 +2008,7 @@
             nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
             setTimeout(() => {
                 nameInput.focus();
-                nameInput.style.borderColor = '#00e59b';
+                nameInput.style.borderColor = '#1D8A68';
                 nameInput.style.boxShadow = '0 0 0 4px rgba(0, 229, 155, 0.25)';
                 setTimeout(() => {
                     nameInput.style.borderColor = '';
@@ -1431,6 +2019,132 @@
     }
     window.focusConsultForm = focusConsultForm;
 
+    // 6.5 Country Code Picker & Phone Sync
+    const countryPickerToggleBtn = document.getElementById('countryPickerToggleBtn');
+    const countryPickerDropdown = document.getElementById('countryPickerDropdown');
+    const countrySearchInput = document.getElementById('countrySearchInput');
+    const consultPhoneRaw = document.getElementById('consult_phone_raw');
+    const consultFullPhone = document.getElementById('consultFullPhone');
+    const selectedDialCode = document.getElementById('selectedDialCode');
+    const selectedCountryFlag = document.getElementById('selectedCountryFlag');
+    const selectedCountryDial = document.getElementById('selectedCountryDial');
+
+    function toggleCountryPicker(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        if (!countryPickerDropdown) return;
+        const isOpen = countryPickerDropdown.classList.contains('show');
+        if (isOpen) {
+            closeCountryPicker();
+        } else {
+            countryPickerDropdown.classList.add('show');
+            if (countryPickerToggleBtn) {
+                countryPickerToggleBtn.classList.add('active');
+                countryPickerToggleBtn.setAttribute('aria-expanded', 'true');
+            }
+            if (countrySearchInput) {
+                countrySearchInput.value = '';
+                filterCountryOptions('');
+                setTimeout(() => countrySearchInput.focus(), 60);
+            }
+        }
+    }
+    window.toggleCountryPicker = toggleCountryPicker;
+
+    function closeCountryPicker() {
+        if (!countryPickerDropdown) return;
+        countryPickerDropdown.classList.remove('show');
+        if (countryPickerToggleBtn) {
+            countryPickerToggleBtn.classList.remove('active');
+            countryPickerToggleBtn.setAttribute('aria-expanded', 'false');
+        }
+    }
+    window.closeCountryPicker = closeCountryPicker;
+
+    function selectCountryCode(code, dial, name, flagUrl) {
+        if (selectedCountryFlag) {
+            selectedCountryFlag.src = flagUrl;
+            selectedCountryFlag.alt = name;
+        }
+        if (selectedCountryDial) {
+            selectedCountryDial.textContent = dial;
+        }
+        if (selectedDialCode) {
+            selectedDialCode.value = dial;
+        }
+
+        document.querySelectorAll('.ox-country-option-item').forEach(item => {
+            if (item.getAttribute('data-code') === code) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
+        });
+
+        syncConsultPhone();
+        closeCountryPicker();
+        if (consultPhoneRaw) {
+            consultPhoneRaw.focus();
+        }
+    }
+    window.selectCountryCode = selectCountryCode;
+
+    function filterCountryOptions(query) {
+        const q = (query || '').trim().toLowerCase();
+        const items = document.querySelectorAll('.ox-country-option-item');
+        const noResults = document.getElementById('countryNoResults');
+        let visibleCount = 0;
+
+        items.forEach(item => {
+            const nameAr = (item.getAttribute('data-name-ar') || '').toLowerCase();
+            const nameEn = (item.getAttribute('data-name-en') || '').toLowerCase();
+            const dial = (item.getAttribute('data-dial') || '').toLowerCase();
+            const code = (item.getAttribute('data-code') || '').toLowerCase();
+
+            if (!q || nameAr.includes(q) || nameEn.includes(q) || dial.includes(q) || code.includes(q)) {
+                item.style.display = 'flex';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        if (noResults) {
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    }
+    window.filterCountryOptions = filterCountryOptions;
+
+    function syncConsultPhone() {
+        if (!consultPhoneRaw || !consultFullPhone || !selectedDialCode) return;
+        const raw = consultPhoneRaw.value.trim();
+        if (raw.length > 0) {
+            consultFullPhone.value = `${selectedDialCode.value} ${raw}`;
+        } else {
+            consultFullPhone.value = '';
+        }
+    }
+    window.syncConsultPhone = syncConsultPhone;
+
+    if (consultPhoneRaw) {
+        consultPhoneRaw.addEventListener('input', syncConsultPhone);
+    }
+
+    document.addEventListener('click', function(e) {
+        const group = document.getElementById('consultPhoneGroup');
+        if (group && !group.contains(e.target)) {
+            closeCountryPicker();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeCountryPicker();
+        }
+    });
+
     // 7. Consultation Form AJAX submission
     const inlineForm = document.getElementById('inlineConsultationForm');
     const inlineSubmitBtn = document.getElementById('inlineSubmitBtn');
@@ -1440,6 +2154,8 @@
     if (inlineForm) {
         inlineForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            syncConsultPhone();
+
             if (inlineSubmitBtn) {
                 inlineSubmitBtn.disabled = true;
                 const span = inlineSubmitBtn.querySelector('span');
@@ -1483,6 +2199,9 @@
 
     function resetInlineForm() {
         if (inlineForm) inlineForm.reset();
+        if (consultPhoneRaw) consultPhoneRaw.value = '';
+        if (consultFullPhone) consultFullPhone.value = '';
+        closeCountryPicker();
         if (inlineFormContent) inlineFormContent.style.display = 'block';
         if (inlineSuccessBox) inlineSuccessBox.style.display = 'none';
         if (inlineSubmitBtn) {

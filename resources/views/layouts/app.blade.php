@@ -698,8 +698,27 @@
             font-weight: 800;
         }
         .ox-flag-emoji {
-            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
             line-height: 1;
+        }
+        .ox-flag-emoji .ox-flag-img,
+        .ox-lang-flag .ox-flag-img {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 3px;
+            display: inline-block;
+            vertical-align: middle;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+        }
+        .lang-menu-dropdown .ox-flag-emoji .ox-flag-img {
+            width: 18px;
+            height: 12px;
+            border-radius: 2px;
+            margin-inline-end: 6px;
         }
         .ox-lang-name {
             flex: 1;
@@ -1223,25 +1242,7 @@
                     @endif
                 </a>
 
-                <div class="navbar-controls">
-                    <div class="lang-switcher-dropdown">
-                        <a href="javascript:void(0)" class="ox-lang-pill" id="langBadgeBtn" onclick="toggleLangMenu(event)" title="Language">
-                            {{ strtoupper($currentLocale) }}
-                            <span style="font-size:8px; margin-inline-start:2px; opacity:0.75;">▼</span>
-                        </a>
-                        <div class="lang-menu-dropdown" id="langMenuDropdown">
-                            <a href="{{ route('lang.switch', 'ar') }}" class="{{ $currentLocale === 'ar' ? 'active' : '' }}"><span>🇸🇦 العربية</span> <small>AR</small></a>
-                            <a href="{{ route('lang.switch', 'en') }}" class="{{ $currentLocale === 'en' ? 'active' : '' }}"><span>🇬🇧 English</span> <small>EN</small></a>
-                            <a href="{{ route('lang.switch', 'fr') }}" class="{{ $currentLocale === 'fr' ? 'active' : '' }}"><span>🇫🇷 Français</span> <small>FR</small></a>
-                        </div>
-                    </div>
-
-                    <button class="ox-menu-toggle" id="mobileNavToggle" onclick="toggleMobileNav()" aria-label="القائمة">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
+              
             </div>
         </div>
     </header>
@@ -1302,82 +1303,7 @@
         <div class="ox-footer-arabesque ox-footer-arabesque-right" aria-hidden="true"></div>
         <div class="ox-footer-arabesque ox-footer-arabesque-left" aria-hidden="true"></div>
 
-        <!-- Upper Highlights Strip (4 Pillars) -->
-        <div class="ox-footer-highlights">
-            <div class="container ox-footer-highlights-inner">
-                <!-- Pillar 1: Dual-Market Expertise (Far Right in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <!-- Dual Market Badge SVG -->
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2L19.5 5.5V11.5C19.5 16.5 16 20.5 12 22C8 20.5 4.5 16.5 4.5 11.5V5.5L12 2Z"></path>
-                            <circle cx="12" cy="12" r="3.5"></circle>
-                            <path d="M12 8.5V7M12 17v-1.5M8.5 12H7M17 12h-1.5"></path>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">
-                        {{ $currentLocale === 'ar' ? 'خبرة في السوقين' : ($currentLocale === 'fr' ? 'Double Expertise' : 'Dual-Market Expertise') }}
-                    </h4>
-                    <p class="ox-highlight-sub">
-                        {{ $currentLocale === 'ar' ? 'السعودي والمصري' : ($currentLocale === 'fr' ? 'Marchés Saoudien & Égyptien' : 'Saudi & Egyptian Markets') }}
-                    </p>
-                </div>
-
-                <!-- Pillar 2: Continuous Support (Second from Right in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <!-- Headset Support SVG -->
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">
-                        {{ $currentLocale === 'ar' ? 'دعم مستمر' : ($currentLocale === 'fr' ? 'Support Continu' : 'Continuous Support') }}
-                    </h4>
-                    <p class="ox-highlight-sub">
-                        {{ $currentLocale === 'ar' ? 'قبل وبعد الإطلاق' : ($currentLocale === 'fr' ? 'Avant et Après Lancement' : 'Pre & Post-Launch') }}
-                    </p>
-                </div>
-
-                <!-- Pillar 3: Tailored Solutions (Third from Right in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <!-- 3D Modular Cube SVG -->
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">
-                        {{ $currentLocale === 'ar' ? 'حلول مخصصة' : ($currentLocale === 'fr' ? 'Solutions Sur Mesure' : 'Tailored Solutions') }}
-                    </h4>
-                    <p class="ox-highlight-sub">
-                        {{ $currentLocale === 'ar' ? 'حسب احتياجاتك' : ($currentLocale === 'fr' ? 'Adaptées à Vos Besoins' : 'Customized To Your Needs') }}
-                    </p>
-                </div>
-
-                <!-- Pillar 4: Rapid Execution (Far Left in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <!-- Stopwatch Speed Timer SVG -->
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="13" r="8"></circle>
-                            <polyline points="12 9 12 13 15 15"></polyline>
-                            <line x1="12" y1="2" x2="12" y2="5"></line>
-                            <line x1="10" y1="2" x2="14" y2="2"></line>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">
-                        {{ $currentLocale === 'ar' ? 'سرعة في التنفيذ' : ($currentLocale === 'fr' ? 'Exécution Rapide' : 'Rapid Execution') }}
-                    </h4>
-                    <p class="ox-highlight-sub">
-                        {{ $currentLocale === 'ar' ? 'نلتزم بوقت وجودة' : ($currentLocale === 'fr' ? 'Respect Délais & Qualité' : 'Committed To Time & Quality') }}
-                    </p>
-                </div>
-            </div>
-        </div>
+      
     </section>
 
     <!-- ===============================================================
@@ -1479,25 +1405,33 @@
         <!-- Language Switcher with Flag (Above WhatsApp) -->
         <div class="ox-floating-item ox-lang-widget" id="floatingLangWidget">
             <button type="button" class="ox-lang-trigger" id="floatingLangBtn" onclick="toggleFloatingLang(event)" aria-label="Language Selector" title="{{ $currentLocale === 'ar' ? 'تغيير اللغة' : ($currentLocale === 'fr' ? 'Changer de langue' : 'Switch Language') }}">
-                <span class="ox-lang-flag">{{ $currentLocale === 'ar' ? '🇸🇦' : ($currentLocale === 'fr' ? '🇫🇷' : '🇬🇧') }}</span>
+                <span class="ox-lang-flag">
+                    @if($currentLocale === 'ar')
+                        <img src="{{ asset('assets/flags/sa.webp') }}" class="ox-flag-img" alt="AR">
+                    @elseif($currentLocale === 'fr')
+                        <img src="{{ asset('assets/flags/fr.webp') }}" class="ox-flag-img" alt="FR">
+                    @else
+                        <img src="{{ asset('assets/flags/gb.webp') }}" class="ox-flag-img" alt="EN">
+                    @endif
+                </span>
                 <span class="ox-lang-text">{{ strtoupper($currentLocale) }}</span>
                 <svg class="ox-lang-arrow" width="9" height="5" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <div class="ox-lang-popover" id="floatingLangPopover">
                 <a href="{{ route('lang.switch', 'ar') }}" class="ox-lang-option {{ $currentLocale === 'ar' ? 'active' : '' }}">
-                    <span class="ox-flag-emoji">🇸🇦</span>
+                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/sa.webp') }}" class="ox-flag-img" alt="AR"></span>
                     <span class="ox-lang-name">العربية</span>
                     <span class="ox-lang-code">AR</span>
                     @if($currentLocale === 'ar')<span class="ox-active-dot"></span>@endif
                 </a>
                 <a href="{{ route('lang.switch', 'en') }}" class="ox-lang-option {{ $currentLocale === 'en' ? 'active' : '' }}">
-                    <span class="ox-flag-emoji">🇬🇧</span>
+                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/gb.webp') }}" class="ox-flag-img" alt="EN"></span>
                     <span class="ox-lang-name">English</span>
                     <span class="ox-lang-code">EN</span>
                     @if($currentLocale === 'en')<span class="ox-active-dot"></span>@endif
                 </a>
                 <a href="{{ route('lang.switch', 'fr') }}" class="ox-lang-option {{ $currentLocale === 'fr' ? 'active' : '' }}">
-                    <span class="ox-flag-emoji">🇫🇷</span>
+                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/fr.webp') }}" class="ox-flag-img" alt="FR"></span>
                     <span class="ox-lang-name">Français</span>
                     <span class="ox-lang-code">FR</span>
                     @if($currentLocale === 'fr')<span class="ox-active-dot"></span>@endif

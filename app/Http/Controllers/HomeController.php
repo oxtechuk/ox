@@ -68,7 +68,12 @@ class HomeController extends Controller
             ->get()
             ->map(function ($c) use ($flagEmojis) {
                 $code = strtolower($c->country_code);
+                if ($code === 'uk') {
+                    $code = 'gb';
+                }
                 $c->flag = $flagEmojis[$code] ?? '🌐';
+                $flagFile = "assets/flags/{$code}.webp";
+                $c->flag_url = file_exists(public_path($flagFile)) ? asset($flagFile) : null;
 
                 return $c;
             });
@@ -76,7 +81,9 @@ class HomeController extends Controller
         $sectors = Project::select('sector_slug', 'sector_name')
             ->distinct()
             ->whereNotNull('sector_slug')
-            ->get();
+            ->get()
+            ->unique('sector_slug')
+            ->values();
 
         $storiesJson = json_encode($testimonials->map(function ($t) {
             return [

@@ -71,7 +71,7 @@
             <p>موثوق من فرق طموحة في المنطقة وخارجها</p>
             <div><b>RASED</b><b>NEXA</b><b>مِرسال</b><b>VELA</b><b>GO<span>BOX</span></b><b>بِداية</b></div>
         </section>
-                <!-- =========================================
+        <!-- =========================================
              PORTFOLIO & CASE STUDIES SHOWCASE SECTION
              ========================================= -->
         <section class="ox-services-section ox-portfolio-showcase" id="work">
@@ -90,85 +90,143 @@
                             <span class="text-green">أثراً ملموساً ونمواً متسارعاً.</span>
                         </h2>
                         <p class="services-subtitle">
-                            استكشف نماذج من أعمالنا وحلولنا البرمجية التي قمنا بتطويرها لشركاء النجاح عبر مختلف الدول والقطاعات مع قياس دقيق للأثر والنتائج.
+                            استكشف نماذج من أعمالنا وحلولنا البرمجية التي قمنا بتطويرها لشركاء النجاح عبر مختلف الدول
+                            والقطاعات مع قياس دقيق للأثر والنتائج.
                         </p>
                     </div>
                 </div>
 
                 <!-- ─── Dual-Filter Bar (Category + Country with Flags) ─── -->
-                <div class="portfolio-filter-container reveal">
-                    <!-- Level 1: Category / Sector Tabs -->
-                    <div class="portfolio-category-tabs">
-                        <button type="button" class="portfolio-cat-btn active" data-cat="all" onclick="filterPortfolio('cat', 'all', this)">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="3" width="7" height="7"></rect>
-                                <rect x="14" y="3" width="7" height="7"></rect>
-                                <rect x="14" y="14" width="7" height="7"></rect>
-                                <rect x="3" y="14" width="7" height="7"></rect>
+                <!-- ─── Smart Client-Friendly Filter Bar ─── -->
+                <div class="portfolio-filter-container reveal" id="portfolioFilterContainer">
+                    <!-- Row 1: Smart Search & Country Dropdown & Actions -->
+                    <div class="portfolio-filter-toolbar">
+                        <div class="portfolio-search-wrap">
+                            <svg class="portfolio-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
-                            <span>جميع المجالات</span>
-                            <span class="filter-count">8</span>
-                        </button>
-                        <button type="button" class="portfolio-cat-btn" data-cat="commerce" onclick="filterPortfolio('cat', 'commerce', this)">
-                            <span>تجارة إلكترونية ومتاجر</span>
-                            <span class="filter-count">2</span>
-                        </button>
-                        <button type="button" class="portfolio-cat-btn" data-cat="auto" onclick="filterPortfolio('cat', 'auto', this)">
-                            <span>سيارات وحجوزات</span>
-                            <span class="filter-count">2</span>
-                        </button>
-                        <button type="button" class="portfolio-cat-btn" data-cat="health" onclick="filterPortfolio('cat', 'health', this)">
-                            <span>رعاية صحية وطبية</span>
-                            <span class="filter-count">2</span>
-                        </button>
-                        <button type="button" class="portfolio-cat-btn" data-cat="marine" onclick="filterPortfolio('cat', 'marine', this)">
-                            <span>أنظمة ولوجستيات ERP</span>
-                            <span class="filter-count">2</span>
-                        </button>
+                            <input type="text" id="portfolioSmartSearch" class="portfolio-search-input" 
+                                   placeholder="ابحث عن فكرة أو مجال (مثال: متجر، سيارات، عيادة)..." 
+                                   autocomplete="off" 
+                                   oninput="handlePortfolioSearch(this.value)">
+                            <button type="button" id="portfolioSearchClear" class="portfolio-search-clear" onclick="clearPortfolioSearch()" style="display:none;" title="مسح البحث">✕</button>
+                        </div>
+
+                        <div class="portfolio-toolbar-actions">
+                            <div class="portfolio-country-dropdown-wrap" id="portfolioCountryWrap">
+                                <button type="button" class="portfolio-country-toggle-btn has-filter" id="portfolioCountryBtn" onclick="togglePortfolioCountryDropdown(event)">
+                                    <span class="country-toggle-flag" id="portfolioCurrentFlag"><img src="/assets/flags/sa.webp" class="country-toggle-flag-img" alt="السعودية"></span>
+                                    <span class="country-toggle-text" id="portfolioCurrentCountryText">السعودية</span>
+                                    <svg class="country-toggle-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M6 9l6 6 6-6"/>
+                                    </svg>
+                                </button>
+
+                                <div class="portfolio-country-menu" id="portfolioCountryMenu">
+                                    <button type="button" class="country-menu-item" data-country="all" onclick="selectPortfolioCountry('all', 'جميع الدول', null)">
+                                        <span class="country-menu-flag">
+                                            <svg class="country-menu-globe-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                        </span>
+                                        <span class="country-menu-name">جميع الدول</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item active" data-country="sa" onclick="selectPortfolioCountry('sa', 'السعودية', '/assets/flags/sa.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/sa.webp" class="country-menu-flag-img" alt="السعودية"></span>
+                                        <span class="country-menu-name">السعودية</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item" data-country="ae" onclick="selectPortfolioCountry('ae', 'الإمارات', '/assets/flags/ae.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/ae.webp" class="country-menu-flag-img" alt="الإمارات"></span>
+                                        <span class="country-menu-name">الإمارات</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item" data-country="eg" onclick="selectPortfolioCountry('eg', 'مصر', '/assets/flags/eg.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/eg.webp" class="country-menu-flag-img" alt="مصر"></span>
+                                        <span class="country-menu-name">مصر</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item" data-country="jo" onclick="selectPortfolioCountry('jo', 'الأردن', '/assets/flags/jo.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/jo.webp" class="country-menu-flag-img" alt="الأردن"></span>
+                                        <span class="country-menu-name">الأردن</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item" data-country="de" onclick="selectPortfolioCountry('de', 'ألمانيا', '/assets/flags/de.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/de.webp" class="country-menu-flag-img" alt="ألمانيا"></span>
+                                        <span class="country-menu-name">ألمانيا</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item" data-country="se" onclick="selectPortfolioCountry('se', 'السويد', '/assets/flags/se.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/se.webp" class="country-menu-flag-img" alt="السويد"></span>
+                                        <span class="country-menu-name">السويد</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item" data-country="ru" onclick="selectPortfolioCountry('ru', 'روسيا', '/assets/flags/ru.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/ru.webp" class="country-menu-flag-img" alt="روسيا"></span>
+                                        <span class="country-menu-name">روسيا</span>
+                                    </button>
+                                    <button type="button" class="country-menu-item" data-country="iq" onclick="selectPortfolioCountry('iq', 'العراق', '/assets/flags/iq.webp')">
+                                        <span class="country-menu-flag"><img src="/assets/flags/iq.webp" class="country-menu-flag-img" alt="العراق"></span>
+                                        <span class="country-menu-name">العراق</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button type="button" class="portfolio-reset-pill-btn" id="portfolioResetBtn" style="display:none;" onclick="resetPortfolioFilter()" title="إعادة تعيين الفلاتر">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                                <span>إلغاء الفلتر</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Level 2: Country Flag Pills -->
-                    <div class="portfolio-country-filter">
-                        <div class="country-filter-label">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                            <span>الدولة:</span>
-                        </div>
-                        <div class="country-pills-list">
-                            <button type="button" class="country-pill-btn active" data-country="all" onclick="filterPortfolio('country', 'all', this)">
-                                <span class="flag-icon">🌐</span>
-                                <span>جميع الدول</span>
+                    <!-- Row 2: Business Sector Tabs (SVG Vector Icons, No Emojis) -->
+                    <div class="portfolio-sector-tabs-wrap">
+                        <div class="portfolio-sector-tabs" id="portfolioSectorTabs">
+                            <button type="button" class="portfolio-sector-tab portfolio-cat-btn active" data-cat="all" onclick="selectPortfolioSector('all', this)">
+                                <span class="tab-icon">
+                                    <svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                                    </svg>
+                                </span>
+                                <span class="tab-title">جميع المشاريع</span>
                             </button>
-                            <button type="button" class="country-pill-btn" data-country="sa" onclick="filterPortfolio('country', 'sa', this)">
-                                <span class="flag-icon">🇸🇦</span>
-                                <span>السعودية</span>
+                            <button type="button" class="portfolio-sector-tab portfolio-cat-btn" data-cat="commerce" onclick="selectPortfolioSector('commerce', this)">
+                                <span class="tab-icon">
+                                    <svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                    </svg>
+                                </span>
+                                <span class="tab-title">تجارة إلكترونية ومتاجر</span>
                             </button>
-                            <button type="button" class="country-pill-btn" data-country="ae" onclick="filterPortfolio('country', 'ae', this)">
-                                <span class="flag-icon">🇦🇪</span>
-                                <span>الإمارات</span>
+                            <button type="button" class="portfolio-sector-tab portfolio-cat-btn" data-cat="auto" onclick="selectPortfolioSector('auto', this)">
+                                <span class="tab-icon">
+                                    <svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.7C1.4 11 1 11.9 1 12.8V16c0 .6.4 1 1 1h2"></path>
+                                        <circle cx="7" cy="17" r="2"></circle>
+                                        <path d="M9 17h6"></path>
+                                        <circle cx="17" cy="17" r="2"></circle>
+                                    </svg>
+                                </span>
+                                <span class="tab-title">سيارات وحجوزات</span>
                             </button>
-                            <button type="button" class="country-pill-btn" data-country="eg" onclick="filterPortfolio('country', 'eg', this)">
-                                <span class="flag-icon">🇪🇬</span>
-                                <span>مصر</span>
+                            <button type="button" class="portfolio-sector-tab portfolio-cat-btn" data-cat="health" onclick="selectPortfolioSector('health', this)">
+                                <span class="tab-icon">
+                                    <svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                    </svg>
+                                </span>
+                                <span class="tab-title">رعاية صحية وطبية</span>
                             </button>
-                            <button type="button" class="country-pill-btn" data-country="jo" onclick="filterPortfolio('country', 'jo', this)">
-                                <span class="flag-icon">🇯🇴</span>
-                                <span>الأردن</span>
-                            </button>
-                            <button type="button" class="country-pill-btn" data-country="de" onclick="filterPortfolio('country', 'de', this)">
-                                <span class="flag-icon">🇩🇪</span>
-                                <span>ألمانيا</span>
-                            </button>
-                            <button type="button" class="country-pill-btn" data-country="se" onclick="filterPortfolio('country', 'se', this)">
-                                <span class="flag-icon">🇸🇪</span>
-                                <span>السويد</span>
-                            </button>
-                            <button type="button" class="country-pill-btn" data-country="ru" onclick="filterPortfolio('country', 'ru', this)">
-                                <span class="flag-icon">🇷🇺</span>
-                                <span>روسيا</span>
-                            </button>
-                            <button type="button" class="country-pill-btn" data-country="iq" onclick="filterPortfolio('country', 'iq', this)">
-                                <span class="flag-icon">🇮🇶</span>
-                                <span>العراق</span>
+                            <button type="button" class="portfolio-sector-tab portfolio-cat-btn" data-cat="logistics" onclick="selectPortfolioSector('logistics', this)">
+                                <span class="tab-icon">
+                                    <svg class="tab-icon-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                    </svg>
+                                </span>
+                                <span class="tab-title">لوجستيات وعمليات وشحن</span>
                             </button>
                         </div>
                     </div>
@@ -177,9 +235,11 @@
                 <!-- ─── Portfolio Cards Grid with High-Res Thumbnails ─── -->
                 <div class="ox-portfolio-grid" id="portfolioGrid">
                     <!-- Project 1: Mersal -->
-                    <article class="ox-portfolio-card reveal" data-category="commerce" data-country="sa" onclick="window.location.href='/projects/mersal-ecommerce'">
+                    <article class="ox-portfolio-card reveal" data-category="commerce" data-country="sa"
+                        onclick="window.location.href='/projects/mersal-ecommerce'">
                         <div class="portfolio-card-media">
-                            <img src="services/service-ecommerce.jpg" alt="مِرسال" loading="lazy" class="portfolio-card-img" />
+                            <img src="services/service-ecommerce.jpg" alt="مِرسال" loading="lazy"
+                                class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
                             <div class="portfolio-badges-top">
                                 <span class="portfolio-country-badge">
@@ -189,7 +249,11 @@
                                 <span class="portfolio-sector-badge">تجارة إلكترونية</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>+38% في معدل إتمام الطلب خلال 90 يومًا.</span>
                             </div>
                         </div>
@@ -197,7 +261,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">شركة مِرسال للتجارة والحلول اللوجستية</span>
                                 <h3 class="portfolio-card-title">مِرسال</h3>
-                                <p class="portfolio-card-desc">منصة بيع محلية، أسرع من قرار الشراء مع تكامل مباشر مع Apple Pay و Mada و Tabby.</p>
+                                <p class="portfolio-card-desc">منصة بيع محلية، أسرع من قرار الشراء مع تكامل مباشر مع
+                                    Apple Pay و Mada و Tabby.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel 11</span>
@@ -208,16 +273,21 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 2: DRIVE+ -->
-                    <article class="ox-portfolio-card reveal" data-category="auto" data-country="ae" onclick="window.location.href='/projects/drive-plus-auto'">
+                    <article class="ox-portfolio-card reveal" data-category="auto" data-country="ae"
+                        onclick="window.location.href='/projects/drive-plus-auto'">
                         <div class="portfolio-card-media">
-                            <img src="services/service-mobile.jpg" alt="DRIVE+" loading="lazy" class="portfolio-card-img" />
+                            <img src="services/service-mobile.jpg" alt="DRIVE+" loading="lazy"
+                                class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
                             <div class="portfolio-badges-top">
                                 <span class="portfolio-country-badge">
@@ -227,7 +297,11 @@
                                 <span class="portfolio-sector-badge">سيارات وحجوزات</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>-45% في وقت انتظار العميل بالمركز.</span>
                             </div>
                         </div>
@@ -235,7 +309,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">مجموعة درايف بلس للسيارات - دبي</span>
                                 <h3 class="portfolio-card-title">DRIVE+</h3>
-                                <p class="portfolio-card-desc">تجربة واحدة من الحجز إلى استلام المركبة مع إشعارات وتحديثات حية لحالة الصيانة.</p>
+                                <p class="portfolio-card-desc">تجربة واحدة من الحجز إلى استلام المركبة مع إشعارات
+                                    وتحديثات حية لحالة الصيانة.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel</span>
@@ -246,14 +321,18 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 3: Mada Health -->
-                    <article class="ox-portfolio-card reveal" data-category="health" data-country="eg" onclick="window.location.href='/projects/mada-health-app'">
+                    <article class="ox-portfolio-card reveal" data-category="health" data-country="eg"
+                        onclick="window.location.href='/projects/mada-health-app'">
                         <div class="portfolio-card-media">
                             <img src="services/service-web.jpg" alt="مَدى" loading="lazy" class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
@@ -265,7 +344,11 @@
                                 <span class="portfolio-sector-badge">رعاية صحية وطبية</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>+12,000 استشارة طبية ناجحة شهرياً.</span>
                             </div>
                         </div>
@@ -273,7 +356,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">شبكة عيادات مدى الصحية</span>
                                 <h3 class="portfolio-card-title">مَدى</h3>
-                                <p class="portfolio-card-desc">منصة مواعيد ومتابعة تجمع العيادة والمريض مع استشارات مرئية عالية الدقة مشفرة.</p>
+                                <p class="portfolio-card-desc">منصة مواعيد ومتابعة تجمع العيادة والمريض مع استشارات
+                                    مرئية عالية الدقة مشفرة.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel</span>
@@ -284,16 +368,21 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 4: PORTA Logistics -->
-                    <article class="ox-portfolio-card reveal" data-category="marine" data-country="de" onclick="window.location.href='/projects/porta-logistics-os'">
+                    <article class="ox-portfolio-card reveal" data-category="marine" data-country="de"
+                        onclick="window.location.href='/projects/porta-logistics-os'">
                         <div class="portfolio-card-media">
-                            <img src="services/service-enterprise.jpg" alt="PORTA" loading="lazy" class="portfolio-card-img" />
+                            <img src="services/service-enterprise.jpg" alt="PORTA" loading="lazy"
+                                class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
                             <div class="portfolio-badges-top">
                                 <span class="portfolio-country-badge">
@@ -303,7 +392,11 @@
                                 <span class="portfolio-sector-badge">أنظمة ولوجستيات ERP</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>أكثر من 50,000 حاوية مُدارة عبر النظام.</span>
                             </div>
                         </div>
@@ -311,7 +404,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">Porta Marine Logistics GmbH</span>
                                 <h3 class="portfolio-card-title">PORTA</h3>
-                                <p class="portfolio-card-desc">لوحة عمليات تمنح الفريق رؤية واضحة للشحنات وتتبع حركة الحاويات بالأقمار الصناعية.</p>
+                                <p class="portfolio-card-desc">لوحة عمليات تمنح الفريق رؤية واضحة للشحنات وتتبع حركة
+                                    الحاويات بالأقمار الصناعية.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel</span>
@@ -322,16 +416,21 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 5: Souqna -->
-                    <article class="ox-portfolio-card reveal" data-category="commerce" data-country="jo" onclick="window.location.href='/projects/souqna-marketplace'">
+                    <article class="ox-portfolio-card reveal" data-category="commerce" data-country="jo"
+                        onclick="window.location.href='/projects/souqna-marketplace'">
                         <div class="portfolio-card-media">
-                            <img src="services/service-ecommerce.jpg" alt="سوقنا" loading="lazy" class="portfolio-card-img" />
+                            <img src="services/service-ecommerce.jpg" alt="سوقنا" loading="lazy"
+                                class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
                             <div class="portfolio-badges-top">
                                 <span class="portfolio-country-badge">
@@ -341,7 +440,11 @@
                                 <span class="portfolio-sector-badge">تجارة إلكترونية ومتاجر</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>+150 تاجر نشط في أول شهر من الإطلاق.</span>
                             </div>
                         </div>
@@ -349,7 +452,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">سوقنا للتجارة الرقمية</span>
                                 <h3 class="portfolio-card-title">سوقنا</h3>
-                                <p class="portfolio-card-desc">سوق إلكتروني متعدد التجار يتيح لأصحاب المتاجر فتح فروعهم وإدارة مبيعاتهم مع نظام تسوية مالي آلي.</p>
+                                <p class="portfolio-card-desc">سوق إلكتروني متعدد التجار يتيح لأصحاب المتاجر فتح فروعهم
+                                    وإدارة مبيعاتهم مع نظام تسوية مالي آلي.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel</span>
@@ -360,16 +464,21 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 6: Nordic Care -->
-                    <article class="ox-portfolio-card reveal" data-category="health" data-country="se" onclick="window.location.href='/projects/nordic-care-portal'">
+                    <article class="ox-portfolio-card reveal" data-category="health" data-country="se"
+                        onclick="window.location.href='/projects/nordic-care-portal'">
                         <div class="portfolio-card-media">
-                            <img src="services/service-web.jpg" alt="NORDIC CARE" loading="lazy" class="portfolio-card-img" />
+                            <img src="services/service-web.jpg" alt="NORDIC CARE" loading="lazy"
+                                class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
                             <div class="portfolio-badges-top">
                                 <span class="portfolio-country-badge">
@@ -379,7 +488,11 @@
                                 <span class="portfolio-sector-badge">رعاية صحية وطبية</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>امتثال 100% لمعايير GDPR وحماية البيانات.</span>
                             </div>
                         </div>
@@ -387,7 +500,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">Nordic Care Health AB</span>
                                 <h3 class="portfolio-card-title">NORDIC CARE</h3>
-                                <p class="portfolio-card-desc">بوابة خدمات صحية بسيطة وآمنة لحجز الرعاية والزيارات المنزلية المتوافقة مع BankID.</p>
+                                <p class="portfolio-card-desc">بوابة خدمات صحية بسيطة وآمنة لحجز الرعاية والزيارات
+                                    المنزلية المتوافقة مع BankID.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel</span>
@@ -398,16 +512,21 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 7: Motive Fleet -->
-                    <article class="ox-portfolio-card reveal" data-category="auto" data-country="ru" onclick="window.location.href='/projects/motive-fleet-tools'">
+                    <article class="ox-portfolio-card reveal" data-category="auto" data-country="ru"
+                        onclick="window.location.href='/projects/motive-fleet-tools'">
                         <div class="portfolio-card-media">
-                            <img src="services/service-enterprise.jpg" alt="MOTIVE" loading="lazy" class="portfolio-card-img" />
+                            <img src="services/service-enterprise.jpg" alt="MOTIVE" loading="lazy"
+                                class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
                             <div class="portfolio-badges-top">
                                 <span class="portfolio-country-badge">
@@ -417,7 +536,11 @@
                                 <span class="portfolio-sector-badge">سيارات وحجوزات</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>-22% في استهلاك الوقود وتكاليف الصيانة.</span>
                             </div>
                         </div>
@@ -425,7 +548,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">Motive Logistics Group</span>
                                 <h3 class="portfolio-card-title">MOTIVE</h3>
-                                <p class="portfolio-card-desc">تحكم أفضل في أسطول الحركة اليومي وتتبع المسارات واستهلاك الوقود وجداول الصيانة.</p>
+                                <p class="portfolio-card-desc">تحكم أفضل في أسطول الحركة اليومي وتتبع المسارات واستهلاك
+                                    الوقود وجداول الصيانة.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel</span>
@@ -436,14 +560,18 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
                     </article>
 
                     <!-- Project 8: NAHR Marine -->
-                    <article class="ox-portfolio-card reveal" data-category="marine" data-country="iq" onclick="window.location.href='/projects/nahr-marine-tools'">
+                    <article class="ox-portfolio-card reveal" data-category="marine" data-country="iq"
+                        onclick="window.location.href='/projects/nahr-marine-tools'">
                         <div class="portfolio-card-media">
                             <img src="ox-saudi-story.png" alt="NAHR" loading="lazy" class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
@@ -455,7 +583,11 @@
                                 <span class="portfolio-sector-badge">أنظمة ولوجستيات ERP</span>
                             </div>
                             <div class="portfolio-impact-chip">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
                                 <span>تقليل زمن التخليص والمتابعة بنسبة 60%.</span>
                             </div>
                         </div>
@@ -463,7 +595,8 @@
                             <div class="portfolio-card-head">
                                 <span class="portfolio-client-name">نَهْر للخدمات البحرية والتجارة العامة</span>
                                 <h3 class="portfolio-card-title">NAHR</h3>
-                                <p class="portfolio-card-desc">تتبع الطلبات البحرية بدون تعقيد وإصدار بوالص الشحن الإلكترونية المعتمدة برمز QR.</p>
+                                <p class="portfolio-card-desc">تتبع الطلبات البحرية بدون تعقيد وإصدار بوالص الشحن
+                                    الإلكترونية المعتمدة برمز QR.</p>
                             </div>
                             <div class="portfolio-tech-tags">
                                 <span class="tech-tag">Laravel</span>
@@ -474,7 +607,10 @@
                             <div class="portfolio-card-foot">
                                 <span class="portfolio-view-text">عرض تفاصيل المشروع</span>
                                 <span class="portfolio-view-btn">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
                                 </span>
                             </div>
                         </div>
@@ -486,7 +622,8 @@
                     <div class="no-results-icon">🔍</div>
                     <h4>لم نجد مشاريع تطابق هذه الفلترة</h4>
                     <p>جرّب اختيار تصنيف أو دولة أخرى، أو تصفح كافة مشاريعنا.</p>
-                    <button type="button" class="btn-primary" onclick="resetPortfolioFilter()" style="margin-top:15px; font-size:13px; padding:10px 24px;">
+                    <button type="button" class="btn-primary" onclick="resetPortfolioFilter()"
+                        style="margin-top:15px; font-size:13px; padding:10px 24px;">
                         عرض جميع المشاريع
                     </button>
                 </div>
@@ -513,16 +650,14 @@
             <div class="container">
                 <!-- Header matching the reference image: Large, modern, focused -->
                 <div class="ox-services-cards-header reveal">
-                    <div class="ox-white-label-pill">
-                        <span class="pill-dot"></span>
-                        <span>بيت برمجيات متكامل · شريك White-Label معتمد</span>
-                    </div>
+
                     <h2 class="ox-services-cards-title">
                         نبني الأساس البرمجي الراسخ<br />
                         لنجاح واستدامة أعمالك.
                     </h2>
                     <p class="ox-services-cards-desc">
-                        نقدم حلولاً هندسية متقدمة ونعمل كفريقك التقني الخفي (White-Label) لإنجاز مشاريع عملائك بأعلى معايير السرية والابتكار.
+                        نقدم حلولاً هندسية متقدمة ونعمل كفريقك التقني الخفي (White-Label) لإنجاز مشاريع عملائك بأعلى
+                        معايير السرية والابتكار.
                     </p>
                 </div>
 
@@ -530,9 +665,10 @@
                 <div class="ox-services-cards-grid reveal">
                     <!-- Card 1: Web & SaaS Platforms -->
                     <article class="ox-service-card-item" onclick="openConsultModal()">
-                        <img src="assets/services/service-web.jpg" alt="تطوير الويب والسحاب" class="ox-service-card-bg" loading="lazy">
+                        <img src="assets/services/service-web.jpg" alt="تطوير الويب والسحاب" class="ox-service-card-bg"
+                            loading="lazy">
                         <div class="ox-service-card-overlay"></div>
-                        
+
                         <div class="ox-service-card-top">
                             <span class="ox-service-card-tag">Web & SaaS</span>
                             <h3 class="ox-service-card-title">تطوير الويب والسحاب</h3>
@@ -540,10 +676,12 @@
 
                         <div class="ox-service-card-bottom">
                             <p class="ox-service-card-desc">
-                                بناء منصات سحابية وبوابات SaaS تفاعلية فائقة السرعة والأمان، بمعمارية برمجية قابلة للتوسع اللانهائي.
+                                بناء منصات سحابية وبوابات SaaS تفاعلية فائقة السرعة والأمان، بمعمارية برمجية قابلة
+                                للتوسع اللانهائي.
                             </p>
                             <div class="ox-service-card-circle-btn" aria-label="استكشف الخدمة">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="7" y1="17" x2="17" y2="7"></line>
                                     <polyline points="7 7 17 7 17 17"></polyline>
                                 </svg>
@@ -553,9 +691,10 @@
 
                     <!-- Card 2: Mobile Applications -->
                     <article class="ox-service-card-item" onclick="openConsultModal()">
-                        <img src="assets/services/service-mobile.jpg" alt="تطبيقات الجوال الذكية" class="ox-service-card-bg" loading="lazy">
+                        <img src="assets/services/service-mobile.jpg" alt="تطبيقات الجوال الذكية"
+                            class="ox-service-card-bg" loading="lazy">
                         <div class="ox-service-card-overlay"></div>
-                        
+
                         <div class="ox-service-card-top">
                             <span class="ox-service-card-tag">iOS & Android</span>
                             <h3 class="ox-service-card-title">تطبيقات الجوال الذكية</h3>
@@ -563,10 +702,12 @@
 
                         <div class="ox-service-card-bottom">
                             <p class="ox-service-card-desc">
-                                تطبيقات جوال سلسة ومتطورة بأحدث التقنيات (Flutter & Native) تضمن تجربة مستخدم استثنائية وأداء فائق السرعة.
+                                تطبيقات جوال سلسة ومتطورة بأحدث التقنيات (Flutter & Native) تضمن تجربة مستخدم استثنائية
+                                وأداء فائق السرعة.
                             </p>
                             <div class="ox-service-card-circle-btn" aria-label="استكشف الخدمة">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="7" y1="17" x2="17" y2="7"></line>
                                     <polyline points="7 7 17 7 17 17"></polyline>
                                 </svg>
@@ -576,9 +717,10 @@
 
                     <!-- Card 3: Digital E-Commerce -->
                     <article class="ox-service-card-item" onclick="openConsultModal()">
-                        <img src="assets/services/service-ecommerce.jpg" alt="المتاجر والتجارة الرقمية" class="ox-service-card-bg" loading="lazy">
+                        <img src="assets/services/service-ecommerce.jpg" alt="المتاجر والتجارة الرقمية"
+                            class="ox-service-card-bg" loading="lazy">
                         <div class="ox-service-card-overlay"></div>
-                        
+
                         <div class="ox-service-card-top">
                             <span class="ox-service-card-tag">E-Commerce</span>
                             <h3 class="ox-service-card-title">المتاجر والتجارة الرقمية</h3>
@@ -586,10 +728,12 @@
 
                         <div class="ox-service-card-bottom">
                             <p class="ox-service-card-desc">
-                                متاجر مخصصة متكاملة مع بوابات الدفع والشحن والأنظمة المحاسبية، مصممة لتحقيق أعلى معدلات التحويل.
+                                متاجر مخصصة متكاملة مع بوابات الدفع والشحن والأنظمة المحاسبية، مصممة لتحقيق أعلى معدلات
+                                التحويل.
                             </p>
                             <div class="ox-service-card-circle-btn" aria-label="استكشف الخدمة">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="7" y1="17" x2="17" y2="7"></line>
                                     <polyline points="7 7 17 7 17 17"></polyline>
                                 </svg>
@@ -599,9 +743,10 @@
 
                     <!-- Card 4: Enterprise, Odoo & Desktop -->
                     <article class="ox-service-card-item" onclick="openConsultModal()">
-                        <img src="assets/services/service-enterprise.jpg" alt="أنظمة أودو والمؤسسات" class="ox-service-card-bg" loading="lazy">
+                        <img src="assets/services/service-enterprise.jpg" alt="أنظمة أودو والمؤسسات"
+                            class="ox-service-card-bg" loading="lazy">
                         <div class="ox-service-card-overlay"></div>
-                        
+
                         <div class="ox-service-card-top">
                             <span class="ox-service-card-tag">ERP & Desktop</span>
                             <h3 class="ox-service-card-title">أنظمة أودو والمؤسسات</h3>
@@ -609,10 +754,12 @@
 
                         <div class="ox-service-card-bottom">
                             <p class="ox-service-card-desc">
-                                تطبيق وتخصيص دورات Odoo ERP الشاملة والربط الضريبي (ZATCA)، مع برمجيات Windows ونقاط البيع POS دون إنترنت.
+                                تطبيق وتخصيص دورات Odoo ERP الشاملة والربط الضريبي (ZATCA)، مع برمجيات Windows ونقاط
+                                البيع POS دون إنترنت.
                             </p>
                             <div class="ox-service-card-circle-btn" aria-label="استكشف الخدمة">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="7" y1="17" x2="17" y2="7"></line>
                                     <polyline points="7 7 17 7 17 17"></polyline>
                                 </svg>
@@ -623,27 +770,7 @@
 
                 <!-- Bottom Trust & Action Banner -->
                 <div class="ox-services-bottom-trust reveal">
-                    <div class="ox-trust-features">
-                        <div class="ox-trust-item">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                            <span>اتفاقيات سرية تامة (NDA) وتسليم باسمك 100%</span>
-                        </div>
-                        <div class="ox-trust-item">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            <span>كود نظيف ومعمارية قابلة للتوسع السحابي</span>
-                        </div>
-                        <div class="ox-trust-item">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                            <span>مرونة العمل: بنظام المشروع أو فريق مخصص</span>
-                        </div>
-                    </div>
+
 
                     <a href="#consult" class="ox-services-trust-cta" onclick="openConsultModal(); return false;">
                         <span>ابدأ مشروعك أو شراكتك البرمجية</span>
@@ -659,49 +786,255 @@
                 <div class="ox-models-grid">
                     <!-- Right Side in RTL: Main Headline -->
                     <div class="ox-models-header reveal">
+                        <span class="ox-models-kicker">
+                            <span class="ox-kicker-dot"></span>
+                            نماذج العمل والشراكة · Business Models
+                        </span>
                         <h2 class="ox-models-title">
                             نشتغل مع <span class="tag-b2b">B2B</span><br />
                             ونفهم <span class="tag-b2c">B2C.</span>
                         </h2>
+                        <p class="ox-models-subtitle">
+                            سواء كنت تؤسس منظومة مؤسسية ضخمة لإدارة الشركات وسلاسل التوريد أو تطبيقاً استهلاكياً سريعاً يخاطب ملايين العملاء، نوفر لك المعمارية والتقنيات التي تقود السوق.
+                        </p>
                     </div>
 
-                    <!-- Left Side in RTL: Two Distinct Feature Cards -->
-                    <div class="ox-models-cards reveal">
-                        <!-- Card 1 (Dark Emerald): حلول للشركات والمؤسسات -->
-                        <article class="ox-model-card card-dark"
-                            onclick="document.querySelector('#consult')?.scrollIntoView({behavior:'smooth'})">
+                    <!-- Left Side in RTL: Two Distinct Interactive Feature Cards -->
+                    <div class="ox-models-cards reveal" role="tablist" aria-label="اختيار نموذج العمل">
+                        <!-- Card 1: B2B -->
+                        <button type="button" class="ox-model-card card-b2b active" id="modelCardB2B" role="tab" aria-selected="true" onclick="switchBusinessModel('b2b')">
+                            <div class="model-card-top">
+                                <span class="model-type-badge badge-b2b">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                    B2B · قطاع الشركات
+                                </span>
+                                <span class="model-active-indicator">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    المحدد
+                                </span>
+                            </div>
                             <div>
                                 <h3 class="model-card-title">حلول للشركات والمؤسسات</h3>
-                                <p class="model-card-desc">أنظمة مخصصة تلبي احتياجات القطاعات الكبيرة</p>
+                                <p class="model-card-desc">أنظمة مخصصة تلبي احتياجات القطاعات الكبيرة، سلاسل الإمداد، وأتمتة العمليات المعقدة.</p>
                             </div>
-                            <div class="model-card-arrow">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                    <polyline points="12 5 19 12 12 19"></polyline>
-                                </svg>
+                            <div class="model-card-foot">
+                                <span class="model-click-hint">استعراض الفوائد والشركاء ✦</span>
+                                <div class="model-card-arrow">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
                             </div>
-                        </article>
+                        </button>
 
-                        <!-- Card 2 (Light Ivory): حلول جاهزة لقطاعك الخاص -->
-                        <article class="ox-model-card card-light"
-                            onclick="document.querySelector('#consult')?.scrollIntoView({behavior:'smooth'})">
+                        <!-- Card 2: B2C -->
+                        <button type="button" class="ox-model-card card-b2c" id="modelCardB2C" role="tab" aria-selected="false" onclick="switchBusinessModel('b2c')">
+                            <div class="model-card-top">
+                                <span class="model-type-badge badge-b2c">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    B2C · قطاع الأفراد
+                                </span>
+                                <span class="model-active-indicator">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    المحدد
+                                </span>
+                            </div>
                             <div>
-                                <h3 class="model-card-title">حلول جاهزة لقطاعك الخاص</h3>
-                                <p class="model-card-desc">منصات وتطبيقات تساعدك على إدارة وتنمية أعمالك</p>
+                                <h3 class="model-card-title">حلول وتطبيقات المستهلك</h3>
+                                <p class="model-card-desc">تطبيقات جوال ومتاجر ذكية سريعة مصممة لإبهار المستخدم ومضاعفة المبيعات والولاء.</p>
                             </div>
-                            <div class="model-card-arrow">
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                    <polyline points="12 5 19 12 12 19"></polyline>
-                                </svg>
+                            <div class="model-card-foot">
+                                <span class="model-click-hint">استعراض الفوائد والعملاء ✦</span>
+                                <div class="model-card-arrow">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
                             </div>
-                        </article>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Panel -->
+                <div class="ox-model-interactive-panel reveal">
+                    <!-- Panel 1: B2B -->
+                    <div class="ox-model-panel-content active" id="modelPanelB2B" role="tabpanel">
+                        <div class="ox-model-info-box">
+                            <div class="ox-model-info-head">
+                                <span class="ox-model-info-kicker kicker-b2b">✦ نموذج الأعمال المؤسسية B2B</span>
+                                <h3 class="ox-model-info-title">بنية تحتية رقمية تمكّن الشركات من السيطرة التشغيلية وأتمتة سلاسل الإمداد</h3>
+                                <p class="ox-model-info-desc">نطور أنظمة B2B معقدة تضمن استقرار الأعمال وأتمتة سلاسل الإمداد، مع تكامل سلس مع المنظومات الحكومية والمصرفية وأنظمة تخطيط الموارد (ERP).</p>
+                            </div>
+
+                            <div class="ox-model-benefits-grid">
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2b">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                    </div>
+                                    <h4 class="benefit-title">أتمتة العمليات وخفض التكاليف</h4>
+                                    <p class="benefit-desc">تقليص المعاملات اليدوية بنسبة تفوق 40% وتسريع دورات التعاقد وإصدار الفواتير بدقة متناهية.</p>
+                                </div>
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2b">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                                    </div>
+                                    <h4 class="benefit-title">تكامل شامل مع أنظمة ERP & CRM</h4>
+                                    <p class="benefit-desc">ربط لحظي آمن مع SAP, Oracle, Odoo, Salesforce وبوابات الدفع البنكية المباشرة عبر APIs متقدمة.</p>
+                                </div>
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2b">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    </div>
+                                    <h4 class="benefit-title">أمان مصرفي وحوكمة الصلاحيات</h4>
+                                    <p class="benefit-desc">تشفير عالي المستوى 256-bit، إدارة أذونات وصلاحيات الأقسام بدقة متناهية وسجلات تدقيق كاملة.</p>
+                                </div>
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2b">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                    </div>
+                                    <h4 class="benefit-title">لوحات تحليلات تنفيذية حية (BI)</h4>
+                                    <p class="benefit-desc">مؤشرات أداء استراتيجية وتقارير لحظية توفر رؤى دقيقة تدعم صناع القرار في إدارة الموارد.</p>
+                                </div>
+                            </div>
+
+                            <!-- White Logos Marquee Strip: B2B Companies -->
+                            <div class="ox-model-marquee-box">
+                                <div class="ox-model-marquee-header">
+                                    <span class="ox-marquee-label">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                        شركات ومنظومات أعمال عالمية ومحلية تعتمد على تقنيات B2B
+                                    </span>
+                                    <span class="ox-marquee-pill">شركاء ومؤسسات</span>
+                                </div>
+                                <div class="ox-model-marquee-viewport">
+                                    <div class="ox-model-marquee-track">
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 110 30" class="ox-brand-svg" height="26"><path d="M17.5 7.2C15.3 7.2 13.5 8.2 12.2 9.8C10.9 8.2 9.1 7.2 6.9 7.2C3.1 7.2 0 10.3 0 14.1C0 18 3.1 21.1 6.9 21.1C9.1 21.1 11 20 12.2 18.4C13.5 20 15.3 21.1 17.5 21.1C21.4 21.1 24.5 18 24.5 14.1C24.5 10.3 21.4 7.2 17.5 7.2ZM6.9 18.6C4.5 18.6 2.5 16.6 2.5 14.1C2.5 11.7 4.5 9.7 6.9 9.7C8.6 9.7 10.1 10.7 10.8 12.2C10.4 12.8 10 13.4 9.6 14.1C8.8 15.4 7.9 16.9 6.9 18.6ZM17.5 18.6C16.5 16.9 15.6 15.4 14.8 14.1C14.4 13.4 14 12.8 13.6 12.2C14.3 10.7 15.8 9.7 17.5 9.7C20 9.7 22 11.7 22 14.1C22 16.6 20 18.6 17.5 18.6Z" fill="#000000"/><text x="32" y="19" font-family="sans-serif" font-weight="700" font-size="20" fill="#000000">Meta</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 165 30" class="ox-brand-svg" height="24"><path d="M12 3L21.5 8.5V19.5L12 25L2.5 19.5V8.5L12 3Z" stroke="#000000" stroke-width="2.5" stroke-linejoin="round" fill="none"/><circle cx="12" cy="14" r="3.5" fill="#000000"/><text x="29" y="19" font-family="sans-serif" font-weight="800" font-size="16" letter-spacing="0.5" fill="#000000">BLACKBOX.AI</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 130 30" class="ox-brand-svg" height="25"><g transform="translate(0, 2)"><path d="M23.5 13.8a6.3 6.3 0 0 0-.5-4.8 6.5 6.5 0 0 0-5.7-3.2h-.9A6.3 6.3 0 0 0 11.2 3a6.5 6.5 0 0 0-6.1 4.2 6.3 6.3 0 0 0-4 3 6.4 6.4 0 0 0 .5 6.4 6.3 6.3 0 0 0 .5 4.8 6.5 6.5 0 0 0 5.7 3.2h.9a6.3 6.3 0 0 0 5.2 2.8 6.5 6.5 0 0 0 6.1-4.2 6.3 6.3 0 0 0 4-3 6.4 6.4 0 0 0-.5-6.4z" stroke="#000000" stroke-width="1.8" fill="none"/><circle cx="12.5" cy="13" r="2" fill="#000000"/></g><text x="32" y="20" font-family="sans-serif" font-weight="700" font-size="18" fill="#000000">OpenAI</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 145 30" class="ox-brand-svg" height="22"><text x="0" y="20" font-family="sans-serif" font-weight="900" font-size="18" letter-spacing="3" fill="#000000">SPACE</text><path d="M102 7L116 23M102 23L116 7" stroke="#000000" stroke-width="3"/><path d="M108 5C118 7 132 12 142 22" stroke="#000000" stroke-width="2.2" fill="none"/></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 140 30" class="ox-brand-svg" height="22"><rect x="2" y="6" width="22" height="18" rx="9" stroke="#000000" stroke-width="3.5" fill="none"/><text x="32" y="21" font-family="sans-serif" font-weight="800" font-size="18" letter-spacing="2" fill="#000000">ORACLE</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 110 30" class="ox-brand-svg" height="24"><polygon points="4,24 4,6 30,6 40,24" fill="#000000"/><text x="10" y="20" font-family="sans-serif" font-weight="900" font-size="14" fill="#ffffff">SAP</text><text x="48" y="21" font-family="sans-serif" font-weight="800" font-size="16" fill="#000000">SE</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 110 30" class="ox-brand-svg" height="24"><text x="4" y="20" font-family="sans-serif" font-weight="900" font-size="20" fill="#000000">aws</text><path d="M6 24C24 29 42 26 48 22" stroke="#000000" stroke-width="2.5" fill="none"/><polygon points="50,20 46,24 51,25" fill="#000000"/></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 145 30" class="ox-brand-svg" height="23"><g transform="translate(2, 6)"><rect x="0" y="0" width="8" height="8" fill="#000000"/><rect x="10" y="0" width="8" height="8" fill="#000000"/><rect x="0" y="10" width="8" height="8" fill="#000000"/><rect x="10" y="10" width="8" height="8" fill="#000000"/></g><text x="28" y="21" font-family="sans-serif" font-weight="700" font-size="17" fill="#000000">Microsoft</text></svg></div>
+                                        <!-- Repeat Set -->
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 110 30" class="ox-brand-svg" height="26"><path d="M17.5 7.2C15.3 7.2 13.5 8.2 12.2 9.8C10.9 8.2 9.1 7.2 6.9 7.2C3.1 7.2 0 10.3 0 14.1C0 18 3.1 21.1 6.9 21.1C9.1 21.1 11 20 12.2 18.4C13.5 20 15.3 21.1 17.5 21.1C21.4 21.1 24.5 18 24.5 14.1C24.5 10.3 21.4 7.2 17.5 7.2ZM6.9 18.6C4.5 18.6 2.5 16.6 2.5 14.1C2.5 11.7 4.5 9.7 6.9 9.7C8.6 9.7 10.1 10.7 10.8 12.2C10.4 12.8 10 13.4 9.6 14.1C8.8 15.4 7.9 16.9 6.9 18.6ZM17.5 18.6C16.5 16.9 15.6 15.4 14.8 14.1C14.4 13.4 14 12.8 13.6 12.2C14.3 10.7 15.8 9.7 17.5 9.7C20 9.7 22 11.7 22 14.1C22 16.6 20 18.6 17.5 18.6Z" fill="#000000"/><text x="32" y="19" font-family="sans-serif" font-weight="700" font-size="20" fill="#000000">Meta</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 165 30" class="ox-brand-svg" height="24"><path d="M12 3L21.5 8.5V19.5L12 25L2.5 19.5V8.5L12 3Z" stroke="#000000" stroke-width="2.5" stroke-linejoin="round" fill="none"/><circle cx="12" cy="14" r="3.5" fill="#000000"/><text x="29" y="19" font-family="sans-serif" font-weight="800" font-size="16" letter-spacing="0.5" fill="#000000">BLACKBOX.AI</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 130 30" class="ox-brand-svg" height="25"><g transform="translate(0, 2)"><path d="M23.5 13.8a6.3 6.3 0 0 0-.5-4.8 6.5 6.5 0 0 0-5.7-3.2h-.9A6.3 6.3 0 0 0 11.2 3a6.5 6.5 0 0 0-6.1 4.2 6.3 6.3 0 0 0-4 3 6.4 6.4 0 0 0 .5 6.4 6.3 6.3 0 0 0 .5 4.8 6.5 6.5 0 0 0 5.7 3.2h.9a6.3 6.3 0 0 0 5.2 2.8 6.5 6.5 0 0 0 6.1-4.2 6.3 6.3 0 0 0 4-3 6.4 6.4 0 0 0-.5-6.4z" stroke="#000000" stroke-width="1.8" fill="none"/><circle cx="12.5" cy="13" r="2" fill="#000000"/></g><text x="32" y="20" font-family="sans-serif" font-weight="700" font-size="18" fill="#000000">OpenAI</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 145 30" class="ox-brand-svg" height="22"><text x="0" y="20" font-family="sans-serif" font-weight="900" font-size="18" letter-spacing="3" fill="#000000">SPACE</text><path d="M102 7L116 23M102 23L116 7" stroke="#000000" stroke-width="3"/><path d="M108 5C118 7 132 12 142 22" stroke="#000000" stroke-width="2.2" fill="none"/></svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel 2: B2C -->
+                    <div class="ox-model-panel-content" id="modelPanelB2C" role="tabpanel">
+                        <div class="ox-model-info-box">
+                            <div class="ox-model-info-head">
+                                <span class="ox-model-info-kicker kicker-b2c">✦ نموذج المستهلك النهائي B2C</span>
+                                <h3 class="ox-model-info-title">تجارب رقمية ساحرة للمستخدم النهائي تضمن التحويل الفوري وولاء العملاء</h3>
+                                <p class="ox-model-info-desc">في نموذج B2C، نصمم تطبيقات جوال ومتاجر ذكية سريعة كالبرق، تدعم خيارات الدفع المحلي الفوري (Apple Pay, مدى، تمارا، تابي)، مع استيعاب ملايين الزيارات والطلبات المتزامنة خلال مواسم الذروة.</p>
+                            </div>
+
+                            <div class="ox-model-benefits-grid">
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2c">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                                    </div>
+                                    <h4 class="benefit-title">تجربة مستخدم UI/UX فائقة السلاسة</h4>
+                                    <p class="benefit-desc">واجهات مصممة لتقليل خطوات الشراء إلى أقل من 3 نقرات، مع زمن تحميل أقل من 800ms لرفع التحويل.</p>
+                                </div>
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2c">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                    </div>
+                                    <h4 class="benefit-title">دفع فوري ومتعدد القنوات</h4>
+                                    <p class="benefit-desc">تكامل سلس مع Apple Pay, مدى، تمارا، تابي، وفيزا مع خوارزميات ذكية لمنع الاحتيال.</p>
+                                </div>
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2c">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                    </div>
+                                    <h4 class="benefit-title">إشعارات ذكية وبرامج ولاء</h4>
+                                    <p class="benefit-desc">إشعارات تفاعلية مخصصة لكل عميل، نقاط مكافآت وكوبونات ذكية تعزز القيمة الدائمة للعميل (LTV).</p>
+                                </div>
+                                <div class="ox-model-benefit-card">
+                                    <div class="benefit-icon-wrap benefit-icon-b2c">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                                    </div>
+                                    <h4 class="benefit-title">تحمل ملايين الزيارات (Auto-Scale)</h4>
+                                    <p class="benefit-desc">معمارية سحابية تتوسع تلقائياً لتتحمل ضغط حملات المشاهير ومواسم التخفيضات الكبرى بنجاح 100%.</p>
+                                </div>
+                            </div>
+
+                            <!-- White Logos Marquee Strip: B2C Brands -->
+                            <div class="ox-model-marquee-box">
+                                <div class="ox-model-marquee-header">
+                                    <span class="ox-marquee-label">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                        علامات تجارية وتطبيقات استهلاكية ومنصات عملاء رائدة B2C
+                                    </span>
+                                    <span class="ox-marquee-pill" style="color:#0284c7; background:#f0f9ff; border-color:#bae6fd;">تطبيقات وعملاء</span>
+                                </div>
+                                <div class="ox-model-marquee-viewport">
+                                    <div class="ox-model-marquee-track">
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 160 30" class="ox-brand-svg" height="22"><path d="M2.5 15C2.5 10.5 6.2 7 11 7H24L19 15H11C8.8 15 7 13.2 7 11" stroke="#000000" stroke-width="3.5" fill="none"/><path d="M7 21H18L23 13" stroke="#000000" stroke-width="3.5"/><text x="28" y="20.5" font-family="sans-serif" font-weight="900" font-size="17" letter-spacing="1" fill="#000000">DOORDASH</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 155 30" class="ox-brand-svg" height="24"><path d="M3 6L14 3L23 9L12 12L3 6ZM12 12L23 9V20L12 24V12ZM12 12V24L3 18V6L12 12Z" stroke="#000000" stroke-width="2" stroke-linejoin="round" fill="none"/><text x="32" y="20" font-family="sans-serif" font-weight="700" font-size="17" fill="#000000">Polymarket</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 170 30" class="ox-brand-svg" height="24"><path d="M11 5C11 5 4 14 4 18C4 22 7.1 25 11 25C14.9 25 18 22 18 18C18 14 11 5 11 5Z" fill="#000000"/><g transform="translate(25, 6)"><text x="0" y="9" font-family="sans-serif" font-weight="900" font-size="11" fill="#000000">The</text><text x="0" y="19" font-family="sans-serif" font-weight="900" font-size="12" fill="#000000">Weather</text><text x="54" y="19" font-family="sans-serif" font-weight="500" font-size="10" fill="#000000">Company</text></g></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 95 30" class="ox-brand-svg" height="22"><text x="4" y="21" font-family="sans-serif" font-weight="900" font-size="22" fill="#000000">Uber</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 110 30" class="ox-brand-svg" height="22"><circle cx="14" cy="15" r="10" fill="#000000"/><circle cx="14" cy="15" r="4.5" fill="#ffffff"/><text x="32" y="21" font-family="sans-serif" font-weight="900" font-size="20" letter-spacing="1" fill="#000000">noon</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 125 30" class="ox-brand-svg" height="23"><rect x="2" y="5" width="20" height="20" rx="6" fill="#000000"/><path d="M8 10L16 10M12 10L12 20" stroke="#ffffff" stroke-width="2.5"/><text x="28" y="21" font-family="sans-serif" font-weight="800" font-size="18" fill="#000000">jahez</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 160 30" class="ox-brand-svg" height="22"><circle cx="12" cy="15" r="9" fill="#000000"/><path d="M8 17L12 11L16 17" stroke="#ffffff" stroke-width="2.2"/><text x="28" y="21" font-family="sans-serif" font-weight="800" font-size="15" fill="#000000">hungerstation</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 110 30" class="ox-brand-svg" height="23"><text x="4" y="21" font-family="sans-serif" font-weight="900" font-size="21" fill="#000000">tabby</text></svg></div>
+                                        <!-- Repeat Set -->
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 160 30" class="ox-brand-svg" height="22"><path d="M2.5 15C2.5 10.5 6.2 7 11 7H24L19 15H11C8.8 15 7 13.2 7 11" stroke="#000000" stroke-width="3.5" fill="none"/><path d="M7 21H18L23 13" stroke="#000000" stroke-width="3.5"/><text x="28" y="20.5" font-family="sans-serif" font-weight="900" font-size="17" letter-spacing="1" fill="#000000">DOORDASH</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 155 30" class="ox-brand-svg" height="24"><path d="M3 6L14 3L23 9L12 12L3 6ZM12 12L23 9V20L12 24V12ZM12 12V24L3 18V6L12 12Z" stroke="#000000" stroke-width="2" stroke-linejoin="round" fill="none"/><text x="32" y="20" font-family="sans-serif" font-weight="700" font-size="17" fill="#000000">Polymarket</text></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 170 30" class="ox-brand-svg" height="24"><path d="M11 5C11 5 4 14 4 18C4 22 7.1 25 11 25C14.9 25 18 22 18 18C18 14 11 5 11 5Z" fill="#000000"/><g transform="translate(25, 6)"><text x="0" y="9" font-family="sans-serif" font-weight="900" font-size="11" fill="#000000">The</text><text x="0" y="19" font-family="sans-serif" font-weight="900" font-size="12" fill="#000000">Weather</text><text x="54" y="19" font-family="sans-serif" font-weight="500" font-size="10" fill="#000000">Company</text></g></svg></div>
+                                        <div class="ox-marquee-item"><svg viewBox="0 0 95 30" class="ox-brand-svg" height="22"><text x="4" y="21" font-family="sans-serif" font-weight="900" font-size="22" fill="#000000">Uber</text></svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <script>
+        function switchBusinessModel(model) {
+            var cardB2B = document.getElementById('modelCardB2B');
+            var cardB2C = document.getElementById('modelCardB2C');
+            var panelB2B = document.getElementById('modelPanelB2B');
+            var panelB2C = document.getElementById('modelPanelB2C');
+
+            if (model === 'b2b') {
+                if (cardB2B) {
+                    cardB2B.classList.add('active');
+                    cardB2B.setAttribute('aria-selected', 'true');
+                }
+                if (cardB2C) {
+                    cardB2C.classList.remove('active');
+                    cardB2C.setAttribute('aria-selected', 'false');
+                }
+                if (panelB2B) panelB2B.classList.add('active');
+                if (panelB2C) panelB2C.classList.remove('active');
+            } else {
+                if (cardB2C) {
+                    cardB2C.classList.add('active');
+                    cardB2C.setAttribute('aria-selected', 'true');
+                }
+                if (cardB2B) {
+                    cardB2B.classList.remove('active');
+                    cardB2B.setAttribute('aria-selected', 'false');
+                }
+                if (panelB2C) panelB2C.classList.add('active');
+                if (panelB2B) panelB2B.classList.remove('active');
+            }
+        }
+        window.switchBusinessModel = switchBusinessModel;
+        </script>
 
         <!-- ─── Partners Section: شركاؤنا هم الدليل ─── -->
         <section class="ox-partners-section" id="stories">
@@ -1094,71 +1427,7 @@
         <div class="ox-footer-arabesque ox-footer-arabesque-right" aria-hidden="true"></div>
         <div class="ox-footer-arabesque ox-footer-arabesque-left" aria-hidden="true"></div>
 
-        <!-- Upper Highlights Strip (4 Pillars) -->
-        <div class="ox-footer-highlights">
-            <div class="container ox-footer-highlights-inner">
-                <!-- Pillar 1: Dual-Market Expertise (Far Right in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2L19.5 5.5V11.5C19.5 16.5 16 20.5 12 22C8 20.5 4.5 16.5 4.5 11.5V5.5L12 2Z">
-                            </path>
-                            <circle cx="12" cy="12" r="3.5"></circle>
-                            <path d="M12 8.5V7M12 17v-1.5M8.5 12H7M17 12h-1.5"></path>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">خبرة في السوقين</h4>
-                    <p class="ox-highlight-sub">السعودي والمصري</p>
-                </div>
 
-                <!-- Pillar 2: Continuous Support (Second from Right in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                            <path
-                                d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">دعم مستمر</h4>
-                    <p class="ox-highlight-sub">قبل وبعد الإطلاق</p>
-                </div>
-
-                <!-- Pillar 3: Tailored Solutions (Third from Right in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                            </path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">حلول مخصصة</h4>
-                    <p class="ox-highlight-sub">حسب احتياجاتك</p>
-                </div>
-
-                <!-- Pillar 4: Rapid Execution (Far Left in RTL) -->
-                <div class="ox-highlight-item">
-                    <div class="ox-highlight-icon-wrap" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="13" r="8"></circle>
-                            <polyline points="12 9 12 13 15 15"></polyline>
-                            <line x1="12" y1="2" x2="12" y2="5"></line>
-                            <line x1="10" y1="2" x2="14" y2="2"></line>
-                        </svg>
-                    </div>
-                    <h4 class="ox-highlight-title">سرعة في التنفيذ</h4>
-                    <p class="ox-highlight-sub">نلتزم بوقت وجودة</p>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- ===============================================================

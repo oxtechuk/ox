@@ -57,6 +57,15 @@
     .calm-breadcrumb a:hover {
         color: #ffffff;
     }
+    .badge-flag-img {
+        width: 18px;
+        height: 12px;
+        object-fit: cover;
+        border-radius: 2px;
+        display: inline-block;
+        vertical-align: middle;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
     .calm-breadcrumb .sep {
         opacity: 0.4;
         font-size: 11px;
@@ -567,7 +576,11 @@
             <!-- Understated Category Tags -->
             <div class="calm-meta-row">
                 <span class="calm-tag">
-                    <span>{{ $project->country_flag }}</span>
+                    @if($project->country_flag_url)
+                        <img src="{{ $project->country_flag_url }}" class="badge-flag-img" alt="{{ $project->country_name }}" loading="lazy">
+                    @else
+                        <span>{{ $project->country_flag }}</span>
+                    @endif
                     <span>{{ __($project->country_name) }}</span>
                 </span>
                 <span class="calm-tag accent">
@@ -769,7 +782,14 @@
                             </div>
                             <div class="spec-table-row">
                                 <span>{{ $locale === 'ar' ? 'السوق' : 'Market' }}</span>
-                                <strong>{{ $project->country_flag }} {{ __($project->country_name) }}</strong>
+                                <strong>
+                                    @if($project->country_flag_url)
+                                        <img src="{{ $project->country_flag_url }}" class="badge-flag-img" alt="{{ $project->country_name }}" style="margin-inline-end: 4px;" loading="lazy">
+                                    @else
+                                        {{ $project->country_flag }}
+                                    @endif
+                                    {{ __($project->country_name) }}
+                                </strong>
                             </div>
                             @if($project->duration)
                                 <div class="spec-table-row">
@@ -861,7 +881,13 @@
                                 
                                 <div class="portfolio-badges-top">
                                     <span class="portfolio-country-badge">
-                                        <span class="badge-flag">{{ $rel->country_flag }}</span>
+                                        <span class="badge-flag">
+                                            @if($rel->country_flag_url)
+                                                <img src="{{ $rel->country_flag_url }}" class="badge-flag-img" alt="{{ $rel->country_name }}" loading="lazy">
+                                            @else
+                                                {{ $rel->country_flag }}
+                                            @endif
+                                        </span>
                                         <span>{{ __($rel->country_name) }}</span>
                                     </span>
                                     @if($rel->sector_name)
@@ -869,11 +895,7 @@
                                     @endif
                                 </div>
 
-                                @if($rel->impact_stat)
-                                    <div class="portfolio-impact-chip">
-                                        <span>{{ $rel->impact_stat }}</span>
-                                    </div>
-                                @endif
+                              
                             </div>
 
                             <div class="portfolio-card-body">
