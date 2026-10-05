@@ -1,9 +1,28 @@
-﻿<!doctype html>
+@php
+    use App\Models\SiteSetting;
+    $siteSettings = SiteSetting::all()->pluck('value', 'key');
+    $resolveLogo = function (?string $path): ?string {
+        if (empty($path)) return null;
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+        return asset(ltrim($path, '/'));
+    };
+    $adminLogo = $resolveLogo($siteSettings['site_logo_main'] ?? null)
+        ?: $resolveLogo($siteSettings['site_logo_dark'] ?? null)
+        ?: $resolveLogo($siteSettings['site_logo_footer'] ?? null);
+    $adminFavicon = $resolveLogo($siteSettings['site_favicon'] ?? null);
+    $siteName = $siteSettings['site_name'] ?? 'OX Tech';
+@endphp
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>تسجيل دخول الإدارة | OX Tech</title>
+    <title>تسجيل دخول الإدارة | {{ $siteName }}</title>
+    @if(!empty($adminFavicon))
+        <link rel="icon" href="{{ $adminFavicon }}">
+    @endif
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
