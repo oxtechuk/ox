@@ -1,9 +1,26 @@
+@php
+    use App\Models\SiteSetting;
+    $siteSettings = SiteSetting::all()->pluck('value', 'key');
+    $resolveLogo = function (?string $path): ?string {
+        if (empty($path)) return null;
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+        return asset(ltrim($path, '/'));
+    };
+    $adminLogo = $resolveLogo($siteSettings['site_logo_main'] ?? null) ?: $resolveLogo($siteSettings['site_logo_footer'] ?? null);
+    $adminFavicon = $resolveLogo($siteSettings['site_favicon'] ?? null);
+    $siteName = $siteSettings['site_name'] ?? 'OX Tech';
+@endphp
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@yield('title', 'لوحة التحكم | OX Tech')</title>
+    @if(!empty($adminFavicon))
+        <link rel="icon" href="{{ $adminFavicon }}">
+    @endif
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -83,6 +100,12 @@
             color: var(--brand-green);
             letter-spacing: 1.5px;
             margin-top: 4px;
+        }
+        .admin-sidebar-logo-img {
+            max-height: 38px;
+            max-width: 145px;
+            object-fit: contain;
+            display: block;
         }
 
         .collapse-toggle-btn {
@@ -659,8 +682,12 @@
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-brand">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
-                OX<span>.</span>
-                <small>ADMIN STUDIO</small>
+                @if(!empty($adminLogo))
+                    <img src="{{ $adminLogo }}" alt="{{ $siteName }}" class="admin-sidebar-logo-img">
+                @else
+                    OX<span>.</span>
+                    <small>ADMIN STUDIO</small>
+                @endif
             </a>
             <button type="button" class="collapse-toggle-btn" id="sidebarCollapseBtn" title="طي / توسيع القائمة">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
