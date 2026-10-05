@@ -101,10 +101,16 @@ class SeoController extends Controller
     {
         $sitemapUrl = url('/sitemap.xml');
 
+        $adminPrefix = config('app.admin_prefix', env('ADMIN_PREFIX', 'ox-secure-cp'));
+
         $content = "User-agent: *\n";
         $content .= "Allow: /\n";
         $content .= "Disallow: /admin/\n";
         $content .= "Disallow: /admin/login\n";
+        if ($adminPrefix !== 'admin') {
+            $content .= "Disallow: /{$adminPrefix}/\n";
+            $content .= "Disallow: /{$adminPrefix}/login\n";
+        }
         $content .= "Disallow: /account/\n";
         $content .= "Disallow: /checkout/\n";
         $content .= "Disallow: /downloads/\n\n";

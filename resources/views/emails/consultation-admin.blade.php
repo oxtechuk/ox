@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -62,8 +62,8 @@
                             </div>
 
                             <div style="text-align: center;">
-                                <a href="{{ url('/admin/consultations') }}" style="display: inline-block; background-color: #1A56F5; color: #ffffff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 14px; margin-left: 10px;">فتح لوحة التحكم</a>
-                                <a href="{{ url('/admin/crm/clients/create?name=' . urlencode($consultation->name) . '&email=' . urlencode($consultation->email) . '&phone=' . urlencode($consultation->phone ?? '') . '&company=' . urlencode($consultation->company_name ?? '')) }}" style="display: inline-block; background-color: #BDFF45; color: #060F1A; padding: 12px 28px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px;">تحويل إلى عميل CRM 🚀</a>
+                                <a href="{{ route('admin.consultations.index') }}" style="display: inline-block; background-color: #1A56F5; color: #ffffff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 14px; margin-left: 10px;">فتح لوحة التحكم</a>
+                                <a href="{{ route('admin.crm.clients.create', ['name' => $consultation->name, 'email' => $consultation->email, 'phone' => $consultation->phone ?? '', 'company' => $consultation->company_name ?? '']) }}" style="display: inline-block; background-color: #BDFF45; color: #060F1A; padding: 12px 28px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 14px;">تحويل إلى عميل CRM 🚀</a>
                             </div>
                         </td>
                     </tr>

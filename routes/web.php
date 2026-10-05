@@ -88,7 +88,19 @@ Route::get('/robots.txt', [SeoController::class, 'robots'])->name('seo.robots');
 | Admin Authentication Routes
 |--------------------------------------------------------------------------
 */
-Route::prefix('admin')->name('admin.')->group(function () {
+$adminPrefix = config('app.admin_prefix', env('ADMIN_PREFIX', 'ox-secure-cp'));
+
+// If a custom admin prefix is enabled, disguise the standard /admin URL with a 404 Not Found
+if ($adminPrefix !== 'admin') {
+    Route::any('/admin', fn () => abort(404));
+    Route::any('/admin/{any}', fn () => abort(404))->where('any', '.*');
+}
+
+Route::prefix($adminPrefix)->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return auth()->check() ? redirect()->route('admin.dashboard') : redirect()->route('admin.login');
+    });
+
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])
         ->middleware('throttle:6,1')
