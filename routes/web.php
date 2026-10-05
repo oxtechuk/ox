@@ -82,6 +82,8 @@ Route::get('/lang/{locale}', [SeoController::class, 'switchLanguage'])->name('la
 */
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('seo.sitemap');
 Route::get('/robots.txt', [SeoController::class, 'robots'])->name('seo.robots');
+Route::get('/llms.txt', [SeoController::class, 'llmsText'])->name('seo.llms');
+Route::get('/llms-full.txt', [SeoController::class, 'llmsFullText'])->name('seo.llms-full');
 
 /*
 |--------------------------------------------------------------------------

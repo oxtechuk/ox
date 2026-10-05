@@ -72,7 +72,33 @@ class ProductionSecurityAuditTest extends TestCase
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'text/plain; charset=utf-8');
         $response->assertSee('Disallow: /admin/');
+        $response->assertSee('GPTBot');
+        $response->assertSee('PerplexityBot');
+        $response->assertSee('ClaudeBot');
         $response->assertSee('Sitemap:');
+    }
+
+    public function test_llms_txt_endpoints_are_available_for_ai_engines(): void
+    {
+        $response = $this->get('/llms.txt');
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/markdown; charset=utf-8');
+        $response->assertSee('oxtech.uk');
+        $response->assertSee('https://github.com/oxtechuk');
+
+        $fullResponse = $this->get('/llms-full.txt');
+        $fullResponse->assertStatus(200);
+        $fullResponse->assertHeader('Content-Type', 'text/markdown; charset=utf-8');
+        $fullResponse->assertSee('Complete AI Knowledge Base');
+    }
+
+    public function test_schema_org_contains_social_media_profiles_and_map(): void
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertSee('instagram.com/oxtech.uk', false);
+        $response->assertSee('github.com/oxtechuk', false);
+        $response->assertSee('share.google/82M8ufbu784MYpH3y', false);
     }
 
     public function test_non_existent_page_returns_404_error_page(): void
