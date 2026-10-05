@@ -29,6 +29,22 @@ class SettingController extends Controller
             if ($request->hasFile($fileKey)) {
                 $file = $request->file($fileKey);
                 $path = $file->store('uploads/branding', 'public');
+
+                // Fail-safe: Ensure directory and file are mirrored directly into public/storage
+                try {
+                    $publicUploadsDir = public_path('storage/uploads/branding');
+                    if (!file_exists($publicUploadsDir)) {
+                        @mkdir($publicUploadsDir, 0755, true);
+                    }
+                    $sourcePath = storage_path('app/public/'.$path);
+                    $destPath = public_path('storage/'.$path);
+                    if (file_exists($sourcePath) && !file_exists($destPath)) {
+                        @copy($sourcePath, $destPath);
+                    }
+                } catch (\Throwable $e) {
+                    // Ignore if environment filesystem is read-only or already symlinked
+                }
+
                 SiteSetting::set($fileKey, '/storage/'.$path, 'branding', 'file');
                 unset($data[$fileKey]);
             }

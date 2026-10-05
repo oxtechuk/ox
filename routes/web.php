@@ -171,3 +171,30 @@ Route::prefix($adminPrefix)->name('admin.')->group(function () {
         Route::resource('users', AdminUserController::class);
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Storage Asset Fallback Route
+|--------------------------------------------------------------------------
+| Serves files directly from storage/app/public when the public/storage
+| symlink is missing or unsupported by the web server (e.g. cPanel / shared hosting).
+*/
+Route::get('/storage/{path}', function (string $path) {
+    if (str_contains($path, '..') || str_contains($path, '\\')) {
+        abort(404);
+    }
+
+    $filePath = storage_path('app/public/'.$path);
+
+    if (!file_exists($filePath) || !is_file($filePath)) {
+        abort(404);
+    }
+
+    $mime = mime_content_type($filePath) ?: 'application/octet-stream';
+
+    return response()->file($filePath, [
+        'Content-Type' => $mime,
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*')->name('storage.fallback');
+
