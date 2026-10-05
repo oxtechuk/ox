@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreConsultationRequest;
 use App\Mail\ConsultationAdminNotificationMail;
 use App\Mail\ConsultationConfirmationMail;
 use App\Models\Consultation;
 use App\Models\SiteSetting;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ConsultationController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreConsultationRequest $request)
     {
         // 1. Anti-Spam Bot Honeypot Trap
         // If a hidden bot field is filled, silently discard or fake success to fool automated scrapers
@@ -45,28 +45,8 @@ class ConsultationController extends Controller
             }
         }
 
-        // 3. Strict Validation & Character Limits
-        $validated = $request->validate([
-            'name' => 'required|string|min:2|max:70',
-            'email' => 'required|email|max:100',
-            'phone' => 'nullable|string|max:30',
-            'company_name' => 'nullable|string|max:100',
-            'project_type' => 'nullable|string|max:100',
-            'budget' => 'nullable|string|max:100',
-            'message' => 'required|string|min:10|max:1000',
-        ], [
-            'name.required' => __('يرجى إدخال الاسم الكريم.'),
-            'name.min' => __('الاسم يجب أن يتكون من حرفين على الأقل.'),
-            'name.max' => __('الاسم يجب ألا يتجاوز 70 حرفاً.'),
-            'email.required' => __('البريد الإلكتروني مطلوب.'),
-            'email.email' => __('يرجى إدخال بريد إلكتروني صحيح.'),
-            'email.max' => __('البريد الإلكتروني يجب ألا يتجاوز 100 حرف.'),
-            'phone.max' => __('رقم الجوال يجب ألا يتجاوز 30 حرفاً.'),
-            'company_name.max' => __('اسم الشركة يجب ألا يتجاوز 100 حرف.'),
-            'message.required' => __('يرجى كتابة تفاصيل مشروعك أو فكرتك.'),
-            'message.min' => __('يرجى كتابة 10 أحرف على الأقل لشرح الفكرة بشكل أوضح.'),
-            'message.max' => __('تفاصيل الرسالة يجب ألا تتجاوز 1000 حرف.'),
-        ]);
+        // 3. Validated Data from FormRequest
+        $validated = $request->validated();
 
         // Merge attribution data
         $validated['utm_source'] = $request->input('utm_source', session('attribution.utm_source'));

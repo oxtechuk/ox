@@ -15,10 +15,16 @@ class AdminAuth
             return redirect()->route('admin.login')->with('error', 'يرجى تسجيل الدخول للوصول إلى لوحة التحكم.');
         }
 
-        if (! Auth::user()->is_active) {
+        $user = Auth::user();
+
+        if (! $user->is_active) {
             Auth::logout();
 
             return redirect()->route('admin.login')->with('error', 'تم تعطيل هذا الحساب.');
+        }
+
+        if (! method_exists($user, 'isAdmin') || ! $user->isAdmin()) {
+            abort(403, 'غير مصرح لك بالوصول إلى لوحة التحكم الإدارية.');
         }
 
         return $next($request);

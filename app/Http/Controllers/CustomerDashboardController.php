@@ -114,7 +114,7 @@ class CustomerDashboardController extends Controller
 
         // Check file path or generate distribution package
         $disk = Storage::disk('local');
-        $fileName = $product->file_name ?: StrSlug($product->name).'-v'.$product->version.'.zip';
+        $fileName = $product->file_name ?: Str::slug($product->name).'-v'.$product->version.'.zip';
         $storagePath = $product->file_path;
 
         if ($storagePath && $disk->exists($storagePath)) {
@@ -124,7 +124,7 @@ class CustomerDashboardController extends Controller
         }
 
         // If no custom file uploaded yet, generate a branded package with license and instructions
-        $tempDir = storage_app_path('temp_downloads');
+        $tempDir = storage_path('app'.DIRECTORY_SEPARATOR.'temp_downloads');
         if (! file_exists($tempDir)) {
             mkdir($tempDir, 0755, true);
         }
@@ -168,19 +168,5 @@ class CustomerDashboardController extends Controller
         }
 
         return redirect()->route('customer.dashboard')->with('error', 'حدث خطأ أثناء تجهيز ملف التحميل. يرجى التواصل مع الدعم الفني.');
-    }
-}
-
-if (! function_exists('StrSlug')) {
-    function StrSlug(string $title): string
-    {
-        return Str::slug($title);
-    }
-}
-
-if (! function_exists('storage_app_path')) {
-    function storage_app_path(string $path = ''): string
-    {
-        return storage_path('app'.($path ? DIRECTORY_SEPARATOR.$path : ''));
     }
 }

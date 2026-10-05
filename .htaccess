@@ -1,7 +1,12 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /ox/
-    RewriteRule ^$ public/ [L,R=302]
-    RewriteCond %{REQUEST_URI} !^/ox/public/
-    RewriteRule ^(.*)$ public/$1 [L,R=302]
+
+    # Block direct access to sensitive files and directories
+    RewriteRule ^(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml) - [F,L,NC]
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage/logs)/ - [F,L,NC]
+
+    # Silently forward all requests to the public directory without browser reload/redirect
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{REQUEST_URI} !public/
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>

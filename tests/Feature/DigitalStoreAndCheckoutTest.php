@@ -142,7 +142,7 @@ class DigitalStoreAndCheckoutTest extends TestCase
         $this->assertTrue($token->isValid());
 
         // Assert confirmation email dispatched
-        Mail::assertSent(DigitalProductOrderCompleted::class, function ($mail) {
+        Mail::assertQueued(DigitalProductOrderCompleted::class, function ($mail) {
             return $mail->hasTo('sara@example.com');
         });
     }

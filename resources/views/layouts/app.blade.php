@@ -5,6 +5,8 @@
     $siteSettings = SiteSetting::all()->pluck('value', 'key');
     $activePixels = TrackingPixel::getActivePixels();
     $currentUrl = url()->current();
+    $isHome = request()->routeIs('home');
+    $homeUrl = route('home');
     
     $seoTitle = $siteSettings['seo_meta_title'] ?? 'OX Tech | أفضل شركة برمجة وتطوير تطبيقات وسوفت وير في السعودية ومصر والإمارات';
     $seoDesc = $siteSettings['seo_meta_description'] ?? 'أوكس تك (OX Tech) بيت خبرة تقني وتطوير برمجيات متكامل يقدم حلول البرمجة السحابية، تطوير تطبيقات الجوال، المتاجر الإلكترونية، وحلول الذكاء الاصطناعي في الرياض، القاهرة، ودبي.';
@@ -162,6 +164,11 @@
     <link rel="stylesheet" href="{{ asset('assets/ox-theme.css') }}" fetchpriority="high"/>
 
     <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 88px;
+        }
+
         :root {
             /* ===== BRAND COLORS ===== */
             --ox-carbon:       #071B19;
@@ -1210,6 +1217,11 @@
         <div class="container navbar-inner">
             <!-- Right CTA Action in RTL -->
             <div class="navbar-cta-group">
+                <button type="button" class="ox-menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <a href="#consult" onclick="openConsultModal(); return false;" class="btn-primary nav-cta-btn">
                     <span>{{ $currentLocale === 'ar' ? 'ابدأ مشروعك' : ($currentLocale === 'fr' ? 'Démarrer Projet' : 'Start Project') }}</span>
                     <span class="btn-arrow-icon">{{ $currentLocale === 'ar' ? '←' : '→' }}</span>
@@ -1217,31 +1229,31 @@
             </div>
 
             <!-- Center Navigation Links -->
-            <nav class="navbar-links">
+            <nav class="navbar-links" id="mainNavbarLinks">
                 @if($currentLocale === 'ar')
-                    <a href="{{ route('home') }}" class="active">الرئيسية</a>
-                    <a href="{{ route('home') }}#services">خدماتنا</a>
-                    <a href="{{ route('home') }}#work">أعمالنا</a>
-                    <a href="{{ route('home') }}#about">من نحن</a>
-                    <a href="{{ route('home') }}#consult">تواصل معنا</a>
+                    <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">الرئيسية</a>
+                    <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">خدماتنا</a>
+                    <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">أعمالنا</a>
+                    <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">من نحن</a>
+                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="nav-item-link" data-target="consult">تواصل معنا</a>
                 @elseif($currentLocale === 'fr')
-                    <a href="{{ route('home') }}" class="active">Accueil</a>
-                    <a href="{{ route('home') }}#services">Services</a>
-                    <a href="{{ route('home') }}#work">Réalisations</a>
-                    <a href="{{ route('home') }}#about">À Propos</a>
-                    <a href="{{ route('home') }}#consult">Contact</a>
+                    <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">Accueil</a>
+                    <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
+                    <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Réalisations</a>
+                    <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">À Propos</a>
+                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="nav-item-link" data-target="consult">Contact</a>
                 @else
-                    <a href="{{ route('home') }}" class="active">Home</a>
-                    <a href="{{ route('home') }}#services">Services</a>
-                    <a href="{{ route('home') }}#work">Work</a>
-                    <a href="{{ route('home') }}#about">About</a>
-                    <a href="{{ route('home') }}#consult">Contact</a>
+                    <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">Home</a>
+                    <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
+                    <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Work</a>
+                    <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">About</a>
+                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="nav-item-link" data-target="consult">Contact</a>
                 @endif
             </nav>
 
             <!-- Left Brand Logo & Lang Switcher in RTL -->
             <div class="navbar-brand-wrap">
-                <a class="ox-brand-logo" href="{{ route('home') }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
+                <a class="ox-brand-logo" href="{{ $isHome ? '#home' : $homeUrl }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" data-target="home">
                     @if(!empty($mainLogoUrl))
                         <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img">
                     @else
@@ -1249,8 +1261,6 @@
                         <span class="ox-logo-subtitle">TECHNOLOGY FOR A BETTER TOMORROW</span>
                     @endif
                 </a>
-
-              
             </div>
         </div>
     </header>
@@ -1258,7 +1268,7 @@
     <!-- Mobile Navigation Drawer -->
     <div class="mobile-nav-drawer" id="mobileNavDrawer">
         <div class="mobile-drawer-top">
-            <a class="logo" href="{{ route('home') }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
+            <a class="logo" href="{{ $isHome ? '#home' : $homeUrl }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
                 @if(!empty($mainLogoUrl))
                     <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img" style="max-height: 32px;">
                 @else
@@ -1269,26 +1279,26 @@
         </div>
         <div class="mobile-drawer-links">
             @if($currentLocale === 'ar')
-                <a href="{{ route('home') }}#home" onclick="closeMobileNav()">✦ الرئيسية</a>
-                <a href="{{ route('home') }}#work" onclick="closeMobileNav()">✦ أعمالنا ومشاريعنا</a>
-                <a href="{{ route('home') }}#services" onclick="closeMobileNav()">✦ الخدمات والحلول</a>
-                <a href="{{ route('home') }}#stories" onclick="closeMobileNav()">✦ قصص وآراء الشركاء</a>
-                <a href="{{ route('home') }}#about" onclick="closeMobileNav()">✦ عن OX Tech</a>
-                <a href="{{ route('home') }}#consult" onclick="closeMobileNav()">✦ احجز استشارتك</a>
+                <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ الرئيسية</a>
+                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ أعمالنا ومشاريعنا</a>
+                <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ الخدمات والحلول</a>
+                <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ قصص وآراء الشركاء</a>
+                <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ عن OX Tech</a>
+                <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" onclick="closeMobileNav()">✦ احجز استشارتك</a>
             @elseif($currentLocale === 'fr')
-                <a href="{{ route('home') }}#home" onclick="closeMobileNav()">✦ Accueil</a>
-                <a href="{{ route('home') }}#work" onclick="closeMobileNav()">✦ Nos Projets</a>
-                <a href="{{ route('home') }}#services" onclick="closeMobileNav()">✦ Services & Solutions</a>
-                <a href="{{ route('home') }}#stories" onclick="closeMobileNav()">✦ Témoignages Partenaires</a>
-                <a href="{{ route('home') }}#about" onclick="closeMobileNav()">✦ À Propos de Nous</a>
-                <a href="{{ route('home') }}#consult" onclick="closeMobileNav()">✦ Réserver Consultation</a>
+                <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Accueil</a>
+                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Nos Projets</a>
+                <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
+                <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Témoignages Partenaires</a>
+                <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ À Propos de Nous</a>
+                <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" onclick="closeMobileNav()">✦ Réserver Consultation</a>
             @else
-                <a href="{{ route('home') }}#home" onclick="closeMobileNav()">✦ Home</a>
-                <a href="{{ route('home') }}#work" onclick="closeMobileNav()">✦ Work & Projects</a>
-                <a href="{{ route('home') }}#services" onclick="closeMobileNav()">✦ Services & Solutions</a>
-                <a href="{{ route('home') }}#stories" onclick="closeMobileNav()">✦ Partner Stories</a>
-                <a href="{{ route('home') }}#about" onclick="closeMobileNav()">✦ About OX Tech</a>
-                <a href="{{ route('home') }}#consult" onclick="closeMobileNav()">✦ Book Consultation</a>
+                <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Home</a>
+                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Work & Projects</a>
+                <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
+                <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Partner Stories</a>
+                <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ About OX Tech</a>
+                <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" onclick="closeMobileNav()">✦ Book Consultation</a>
             @endif
         </div>
         <div class="mobile-drawer-footer">
@@ -1325,7 +1335,7 @@
         <div class="ox-footer-main">
             <div class="container ox-footer-main-inner">
                 <!-- Brand / Logo (Left) -->
-                <a href="{{ route('home') }}" class="ox-footer-logo-brand" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
+                <a href="{{ $isHome ? '#home' : $homeUrl }}" class="ox-footer-logo-brand" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
                     @if(!empty($footerLogoUrl))
                         <img src="{{ $footerLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-footer-logo-img">
                     @else
@@ -1339,19 +1349,19 @@
 
                 <!-- Navigation Links (Center) -->
                 <nav class="ox-footer-nav" aria-label="Footer Navigation">
-                    <a href="{{ route('home') }}#consult" class="ox-footer-nav-link">
+                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="ox-footer-nav-link" data-target="consult">
                         {{ $currentLocale === 'ar' ? 'تواصل معنا' : ($currentLocale === 'fr' ? 'Contact' : 'Contact Us') }}
                     </a>
-                    <a href="{{ route('home') }}#about" class="ox-footer-nav-link">
+                    <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="ox-footer-nav-link" data-target="about">
                         {{ $currentLocale === 'ar' ? 'من نحن' : ($currentLocale === 'fr' ? 'À Propos' : 'About Us') }}
                     </a>
-                    <a href="{{ route('home') }}#work" class="ox-footer-nav-link">
+                    <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="ox-footer-nav-link" data-target="work">
                         {{ $currentLocale === 'ar' ? 'أعمالنا' : ($currentLocale === 'fr' ? 'Réalisations' : 'Portfolio') }}
                     </a>
-                    <a href="{{ route('home') }}#services" class="ox-footer-nav-link">
+                    <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="ox-footer-nav-link" data-target="services">
                         {{ $currentLocale === 'ar' ? 'خدماتنا' : ($currentLocale === 'fr' ? 'Services' : 'Services') }}
                     </a>
-                    <a href="{{ route('home') }}#home" class="ox-footer-nav-link active">
+                    <a href="{{ $isHome ? '#home' : $homeUrl }}" class="ox-footer-nav-link {{ $isHome ? 'active' : '' }}" data-target="home">
                         {{ $currentLocale === 'ar' ? 'الرئيسية' : ($currentLocale === 'fr' ? 'Accueil' : 'Home') }}
                     </a>
                 </nav>
@@ -1632,6 +1642,148 @@
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
+                }
+            }
+        });
+
+        // Smooth scroll to target section with header offset
+        function smoothScrollToTarget(targetElement) {
+            if (!targetElement) return;
+            const header = document.getElementById('mainHeader');
+            const headerHeight = header ? (header.offsetHeight || 80) : 80;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 12;
+            
+            window.scrollTo({
+                top: Math.max(0, offsetPosition),
+                behavior: 'smooth'
+            });
+        }
+
+        // Global Link Interceptor for Smooth In-Page Scrolling (Prevents Full Page Reload)
+        document.addEventListener('click', function(e) {
+            const anchor = e.target.closest('a');
+            if (!anchor) return;
+
+            const href = anchor.getAttribute('href');
+            if (!href) return;
+
+            // Ignore non-navigation links
+            if (href.startsWith('javascript:') || href.startsWith('tel:') || href.startsWith('mailto:')) {
+                return;
+            }
+
+            const isHomePage = window.location.pathname === '/' || 
+                               window.location.pathname.endsWith('/home') || 
+                               document.getElementById('hero') !== null ||
+                               document.getElementById('home') !== null;
+
+            let targetId = null;
+
+            if (href.startsWith('#')) {
+                targetId = href.substring(1);
+            } else if (href.includes('#')) {
+                try {
+                    const parsedUrl = new URL(anchor.href, window.location.origin);
+                    if (parsedUrl.pathname === window.location.pathname) {
+                        targetId = parsedUrl.hash.replace('#', '');
+                    }
+                } catch (err) {
+                    const parts = href.split('#');
+                    if (parts.length > 1) {
+                        targetId = parts[1];
+                    }
+                }
+            } else if (isHomePage) {
+                // If it's a link to home (no hash) while already on home page
+                try {
+                    const parsedUrl = new URL(anchor.href, window.location.origin);
+                    if (parsedUrl.pathname === window.location.pathname && (anchor.classList.contains('active') || anchor.classList.contains('ox-brand-logo') || anchor.dataset.target === 'home')) {
+                        e.preventDefault();
+                        if (typeof closeMobileNav === 'function') closeMobileNav();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        if (history.pushState) {
+                            history.pushState(null, null, window.location.pathname);
+                        }
+                        updateActiveNavLink('home');
+                        return;
+                    }
+                } catch (err) {}
+            }
+
+            if (targetId) {
+                // If target is "home" or "hero", scroll smoothly to the top
+                if (targetId === 'home' || targetId === 'hero') {
+                    e.preventDefault();
+                    if (typeof closeMobileNav === 'function') closeMobileNav();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (history.pushState) {
+                        history.pushState(null, null, window.location.pathname);
+                    }
+                    updateActiveNavLink('home');
+                    return;
+                }
+
+                // Check if target element exists on this page
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    e.preventDefault();
+                    if (typeof closeMobileNav === 'function') closeMobileNav();
+                    smoothScrollToTarget(targetEl);
+                    if (history.pushState) {
+                        history.pushState(null, null, '#' + targetId);
+                    }
+                    updateActiveNavLink(targetId);
+                }
+            }
+        });
+
+        // Function to update active class on header links
+        function updateActiveNavLink(sectionId) {
+            const navLinks = document.querySelectorAll('#mainNavbarLinks a');
+            navLinks.forEach(link => {
+                const target = link.getAttribute('data-target') || (link.getAttribute('href') || '').replace('#', '');
+                if (target === sectionId || (sectionId === 'services' && target === 'services') || (sectionId === 'work' && target === 'work')) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Active Link Scrollspy using IntersectionObserver
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = ['hero', 'services', 'work', 'about', 'consult'];
+            const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean);
+
+            if (sectionElements.length > 0 && 'IntersectionObserver' in window) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '-20% 0px -60% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.id === 'hero' ? 'home' : entry.target.id;
+                            updateActiveNavLink(id);
+                        }
+                    });
+                }, observerOptions);
+
+                sectionElements.forEach(el => observer.observe(el));
+            }
+
+            // Handle page load with hash (e.g. navigated from an external page via /#services)
+            if (window.location.hash) {
+                const hashId = window.location.hash.substring(1);
+                const el = document.getElementById(hashId);
+                if (el) {
+                    setTimeout(() => {
+                        smoothScrollToTarget(el);
+                        updateActiveNavLink(hashId);
+                    }, 250);
                 }
             }
         });

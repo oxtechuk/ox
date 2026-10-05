@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\CaptureMarketingAttribution;
+use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             CaptureMarketingAttribution::class,
             SetLocale::class,
+            SecurityHeaders::class,
         ]);
 
         $middleware->alias([
@@ -25,7 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->validateCsrfTokens(except: [
-            'consultation/store',
             'checkout/paysky/*',
         ]);
     })

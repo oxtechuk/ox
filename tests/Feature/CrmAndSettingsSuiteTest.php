@@ -79,8 +79,8 @@ class CrmAndSettingsSuiteTest extends TestCase
         $this->assertEquals('Snapchat', $consultation->platform_detected);
         $this->assertEquals('saudi_tech_2026', $consultation->utm_campaign);
 
-        Mail::assertSent(ConsultationConfirmationMail::class);
-        Mail::assertSent(ConsultationAdminNotificationMail::class);
+        Mail::assertQueued(ConsultationConfirmationMail::class);
+        Mail::assertQueued(ConsultationAdminNotificationMail::class);
     }
 
     public function test_admin_can_update_settings_and_seo(): void
@@ -210,7 +210,7 @@ class CrmAndSettingsSuiteTest extends TestCase
             'custom_message' => 'عزيزتنا ريم، نرفق لك العرض الفني المالي المعتمد.',
         ]);
         $emailRes->assertSessionHas('success');
-        Mail::assertSent(QuotationMail::class);
+        Mail::assertQueued(QuotationMail::class);
 
         // Convert to Invoice
         $convertRes = $this->post(route('admin.crm.quotations.convert_to_invoice', $quotation));
@@ -277,7 +277,7 @@ class CrmAndSettingsSuiteTest extends TestCase
         $this->post(route('admin.crm.invoices.send_email', $invoice), [
             'custom_message' => 'إشعار استلام دفعة 10,000 ريال والمتبقي 13,000 ريال.',
         ]);
-        Mail::assertSent(InvoiceMail::class);
+        Mail::assertQueued(InvoiceMail::class);
     }
 
     public function test_reports_dashboard_renders_with_attribution_and_financials(): void

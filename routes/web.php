@@ -22,8 +22,7 @@ use App\Http\Controllers\DigitalCheckoutController;
 use App\Http\Controllers\DigitalStoreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
-use App\Models\Project;
-use Illuminate\Http\Request;
+use App\Http\Controllers\SeoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,7 +34,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio.index');
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
-Route::post('/consultation/store', [ConsultationController::class, 'store'])->name('consultation.store');
+Route::post('/consultation/store', [ConsultationController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('consultation.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +52,9 @@ Route::get('/p/{slug}', [DigitalStoreController::class, 'landing'])->name('store
 | Checkout & PaySky Gateway Integration
 |--------------------------------------------------------------------------
 */
-Route::post('/checkout/initiate', [DigitalCheckoutController::class, 'initiate'])->name('checkout.initiate');
+Route::post('/checkout/initiate', [DigitalCheckoutController::class, 'initiate'])
+    ->middleware('throttle:15,1')
+    ->name('checkout.initiate');
 Route::match(['get', 'post'], '/checkout/paysky/callback', [DigitalCheckoutController::class, 'callback'])->name('checkout.paysky.callback');
 Route::post('/checkout/paysky/webhook', [DigitalCheckoutController::class, 'webhook'])->name('checkout.paysky.webhook');
 Route::get('/checkout/success/{orderNumber}', [DigitalCheckoutController::class, 'success'])->name('checkout.success');
@@ -63,79 +66,22 @@ Route::get('/checkout/success/{orderNumber}', [DigitalCheckoutController::class,
 */
 Route::get('/account', [CustomerDashboardController::class, 'dashboard'])->name('customer.dashboard');
 Route::get('/account/login', [CustomerDashboardController::class, 'showLogin'])->name('customer.login');
-Route::post('/account/login', [CustomerDashboardController::class, 'login'])->name('customer.login.submit');
+Route::post('/account/login', [CustomerDashboardController::class, 'login'])
+    ->middleware('throttle:6,1')
+    ->name('customer.login.submit');
 Route::post('/account/logout', [CustomerDashboardController::class, 'logout'])->name('customer.logout');
-Route::get('/downloads/{token}', [CustomerDashboardController::class, 'download'])->name('digital.download');
-Route::get('/lang/{locale}', function (Request $request, string $locale) {
-    if (in_array($locale, ['ar', 'en', 'fr'], true)) {
-        session(['locale' => $locale]);
-        cookie()->queue('locale', $locale, 60 * 24 * 365);
-        app()->setLocale($locale);
-    }
-
-    $referer = $request->header('referer');
-    if ($referer) {
-        $parsed = parse_url($referer);
-        if (! empty($parsed['query'])) {
-            parse_str($parsed['query'], $queryParams);
-            unset($queryParams['lang']);
-            $newQuery = http_build_query($queryParams);
-            $cleanUrl = ($parsed['scheme'] ?? 'http').'://'.($parsed['host'] ?? '').($parsed['path'] ?? '').($newQuery ? '?'.$newQuery : '');
-
-            return redirect($cleanUrl);
-        }
-
-        return redirect($referer);
-    }
-
-    return redirect()->route('home');
-})->name('lang.switch');
+Route::get('/downloads/{token}', [CustomerDashboardController::class, 'download'])
+    ->middleware('throttle:30,1')
+    ->name('digital.download');
+Route::get('/lang/{locale}', [SeoController::class, 'switchLanguage'])->name('lang.switch');
 
 /*
 |--------------------------------------------------------------------------
 | Dynamic SEO: Sitemap & Robots
 |--------------------------------------------------------------------------
 */
-Route::get('/sitemap.xml', function () {
-    $projects = Project::all();
-    $baseUrl = url('/');
-
-    $xml = '<?xml version="1.0" encoding="UTF-8"?>';
-    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
-
-    // Homepage
-    $xml .= '<url>';
-    $xml .= '<loc>'.$baseUrl.'</loc>';
-    $xml .= '<lastmod>'.now()->toAtomString().'</lastmod>';
-    $xml .= '<changefreq>daily</changefreq>';
-    $xml .= '<priority>1.0</priority>';
-    $xml .= '</url>';
-
-    // Projects
-    foreach ($projects as $project) {
-        $xml .= '<url>';
-        $xml .= '<loc>'.route('projects.show', $project->slug).'</loc>';
-        $xml .= '<lastmod>'.$project->updated_at->toAtomString().'</lastmod>';
-        $xml .= '<changefreq>weekly</changefreq>';
-        $xml .= '<priority>0.8</priority>';
-        $xml .= '</url>';
-    }
-
-    $xml .= '</urlset>';
-
-    return response($xml, 200)->header('Content-Type', 'text/xml');
-})->name('seo.sitemap');
-
-Route::get('/robots.txt', function () {
-    $sitemapUrl = url('/sitemap.xml');
-    $content = "User-agent: *\n";
-    $content .= "Allow: /\n";
-    $content .= "Disallow: /admin/\n";
-    $content .= "Disallow: /admin/login\n\n";
-    $content .= "Sitemap: {$sitemapUrl}\n";
-
-    return response($content, 200)->header('Content-Type', 'text/plain');
-})->name('seo.robots');
+Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('seo.sitemap');
+Route::get('/robots.txt', [SeoController::class, 'robots'])->name('seo.robots');
 
 /*
 |--------------------------------------------------------------------------
@@ -144,7 +90,9 @@ Route::get('/robots.txt', function () {
 */
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:6,1')
+        ->name('login.submit');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     /*

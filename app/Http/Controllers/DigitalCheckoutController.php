@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InitiateCheckoutRequest;
 use App\Models\DigitalProduct;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -26,17 +27,9 @@ class DigitalCheckoutController extends Controller
     /**
      * Initiate instant order and get PaySky Lightbox payload
      */
-    public function initiate(Request $request): JsonResponse
+    public function initiate(InitiateCheckoutRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'product_id' => 'required|exists:digital_products,id',
-            'customer_name' => 'required|string|max:150',
-            'customer_email' => 'required|email|max:150',
-            'customer_phone' => 'nullable|string|max:30',
-            'utm_source' => 'nullable|string|max:100',
-            'utm_medium' => 'nullable|string|max:100',
-            'utm_campaign' => 'nullable|string|max:100',
-        ]);
+        $validated = $request->validated();
 
         $product = DigitalProduct::findOrFail($validated['product_id']);
 
@@ -126,6 +119,16 @@ class DigitalCheckoutController extends Controller
             return redirect()->route('store.index')->with('error', 'الطلب المطلوب غير موجود.');
         }
 
+        // Validate HMAC-SHA256 signature when present or in non-local environments
+        if ($request->hasAny(['SecureHash', 'secure_hash'])) {
+            $isSignatureValid = $this->paySkyService->verifyCallback($request->all());
+            if (! $isSignatureValid) {
+                Log::warning('PaySky signature verification failed for MerchantReference: '.$merchantReference);
+
+                return redirect()->route('store.index')->with('error', 'فشل التحقق من التوقيع الرقمي لعملية الدفع.');
+            }
+        }
+
         // Check if PaySky indicated success (true / "true" / "1" / "00")
         $isSuccessful = filter_var($success, FILTER_VALIDATE_BOOLEAN) || in_array($success, ['true', 'True', '1', '00', '0'], true);
 
@@ -187,6 +190,15 @@ class DigitalCheckoutController extends Controller
 
         if (! $order) {
             return response()->json(['status' => 'order_not_found'], 404);
+        }
+
+        if ($request->hasAny(['SecureHash', 'secure_hash'])) {
+            $isSignatureValid = $this->paySkyService->verifyCallback($request->all());
+            if (! $isSignatureValid) {
+                Log::warning('PaySky webhook signature mismatch for MerchantReference: '.$merchantReference);
+
+                return response()->json(['status' => 'invalid_signature'], 403);
+            }
         }
 
         $success = $request->input('Success') ?? $request->input('success');

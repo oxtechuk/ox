@@ -1,58 +1,142 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# OX Tech Enterprise Cloud Solutions & Software Engineering
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Enterprise-grade software engineering platform and digital storefront built with Laravel 13, PHP 8.4, and modern MySQL architecture.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. System Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **PHP**: `^8.4` with extensions:
+  - `bcmath`, `ctype`, `curl`, `dom`, `fileinfo`, `filter`, `hash`, `intl`, `json`, `mbstring`, `openssl`, `pcre`, `pdo_mysql`, `session`, `tokenizer`, `xml`, `zip`
+- **Database**: MySQL `>= 8.0` or MariaDB `>= 10.5`
+- **Composer**: `^2.2`
+- **Node.js**: `>= 20.x` & NPM `>= 10.x`
+- **Web Server**: Nginx or Apache (Document Root **must** point to `/public`)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 2. Local & Server Installation
 
 ```bash
-composer require laravel/boost --dev
+# 1. Clone repository
+git clone <repo_url> /var/www/ox
+cd /var/www/ox
 
-php artisan boost:install
+# 2. Install PHP dependencies
+composer install --no-dev --optimize-autoloader
+
+# 3. Setup environment configuration
+cp .env.example .env
+php artisan key:generate
+
+# 4. Configure Database in .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ox_tech_db
+DB_USERNAME=ox_user
+DB_PASSWORD=secret_password
+
+# 5. Run Database Migrations
+php artisan migrate --force
+
+# 6. Create Public Storage Symlink
+php artisan storage:link
+
+# 7. Install Frontend Assets & Build
+npm ci
+npm run build
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 3. Production Deployment Commands
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Run these steps during zero-downtime deployment pipelines:
 
-## Code of Conduct
+```bash
+# Pull latest code
+git pull origin main
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Update dependencies & optimize autoloader
+composer install --no-dev --optimize-autoloader --no-interaction
 
-## Security Vulnerabilities
+# Run safe database migrations
+php artisan migrate --force
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Cache configuration, routes, and views
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
-## License
+# Build optimized production assets
+npm ci
+npm run build
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Restart background queue workers
+php artisan queue:restart
+```
+
+---
+
+## 4. Background Workers & Queue Management
+
+Production emails (consultation alerts, order fulfillments, invoice transmissions) use Laravel Queues to guarantee instantaneous HTTP responses.
+
+### Supervisor Configuration (`/etc/supervisor/conf.d/ox-worker.conf`)
+
+```ini
+[program:ox-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/ox/artisan queue:work database --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=www-data
+numprocs=2
+redirect_stderr=true
+stdout_logfile=/var/www/ox/storage/logs/worker.log
+stopwaitsecs=3600
+```
+
+---
+
+## 5. Cron & Scheduler
+
+Add the Laravel scheduler cron entry to the web server:
+
+```cron
+* * * * * cd /var/www/ox && php artisan schedule:run >> /dev/null 2>&1
+```
+
+---
+
+## 6. Security & Hardening Features
+
+1. **HMAC-SHA256 Signature Verification**: All PaySky payment callbacks and server-to-server webhooks verify cryptographic signatures prior to order fulfillment.
+2. **Role-Based Admin Protection**: `AdminAuth` middleware strictly validates admin privileges (`super_admin`, `admin`, `editor`) and active account status, rejecting unauthorized users with `403 Forbidden`.
+3. **HTTP Security Headers**: Auto-injected headers including `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, and `Permissions-Policy`.
+4. **Rate Limiting**: Automated IP-based throttle buckets protecting `/consultation/store`, `/checkout/initiate`, `/admin/login`, `/account/login`, and `/downloads/{token}`.
+5. **Branded Custom Error Views**: Production-ready, responsive, accessible error pages in `resources/views/errors/` for `404`, `403`, `419`, `429`, `500`, and `503`.
+
+---
+
+## 7. Automated Testing
+
+Run the comprehensive PHPUnit test suite:
+
+```bash
+php artisan test
+```
+
+---
+
+## 8. Troubleshooting & Maintenance
+
+| Issue | Cause | Resolution |
+|---|---|---|
+| `419 Page Expired` | Expired CSRF token or session timeout | Ensure forms include `@csrf` and sessions are stored in database/redis. |
+| `Storage permission denied` | Web server user lacks write permissions | `chown -R www-data:www-data storage bootstrap/cache` |
+| `Vite manifest not found` | Assets not built | Run `npm run build` |
+| `Queue jobs failing` | Mail credentials / API down | Check `failed_jobs` table and `php artisan queue:retry all` |

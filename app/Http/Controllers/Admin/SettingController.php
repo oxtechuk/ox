@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateSettingRequest;
 use App\Models\SiteSetting;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SettingController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $activeTab = $request->query('tab', 'branding');
         $settings = SiteSetting::all()->pluck('value', 'key');
@@ -16,7 +19,7 @@ class SettingController extends Controller
         return view('admin.settings.index', compact('settings', 'activeTab'));
     }
 
-    public function update(Request $request)
+    public function update(UpdateSettingRequest $request): RedirectResponse
     {
         $data = $request->except(['_token', '_method', 'active_tab']);
 
@@ -25,8 +28,7 @@ class SettingController extends Controller
         foreach ($fileKeys as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $file = $request->file($fileKey);
-                $filename = $fileKey.'_'.time().'.'.$file->getClientOriginalExtension();
-                $path = $file->storeAs('uploads/branding', $filename, 'public');
+                $path = $file->store('uploads/branding', 'public');
                 SiteSetting::set($fileKey, '/storage/'.$path, 'branding', 'file');
                 unset($data[$fileKey]);
             }

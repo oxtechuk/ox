@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DigitalProduct;
 use App\Models\ProductCategory;
 use App\Models\ProductLandingPage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -94,7 +95,7 @@ class DigitalStoreController extends Controller
     /**
      * Show dedicated high-conversion sales landing page for advertising
      */
-    public function landing(string $slug): View
+    public function landing(string $slug): View|RedirectResponse
     {
         $landingPage = ProductLandingPage::with(['product.category'])
             ->where('slug', $slug)
