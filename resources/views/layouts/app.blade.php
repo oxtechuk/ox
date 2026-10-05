@@ -9,8 +9,21 @@
     $seoTitle = $siteSettings['seo_meta_title'] ?? 'OX Tech | أفضل شركة برمجة وتطوير تطبيقات وسوفت وير في السعودية ومصر والإمارات';
     $seoDesc = $siteSettings['seo_meta_description'] ?? 'أوكس تك (OX Tech) بيت خبرة تقني وتطوير برمجيات متكامل يقدم حلول البرمجة السحابية، تطوير تطبيقات الجوال، المتاجر الإلكترونية، وحلول الذكاء الاصطناعي في الرياض، القاهرة، ودبي.';
     $seoKeywords = $siteSettings['seo_meta_keywords'] ?? 'شركة برمجة في الرياض, افضل سوفت وير هاوس في السعودية, شركة تطوير تطبيقات دبي, برمجة مواقع القاهرة, شركة تقنية معلومات الرياض';
-    $ogImage = !empty($siteSettings['seo_og_image']) ? url($siteSettings['seo_og_image']) : asset('assets/hero-bg.jpg');
-    $favicon = $siteSettings['site_favicon'] ?? asset('favicon.ico');
+
+    $resolveAssetUrl = function (?string $path, ?string $fallback = null): ?string {
+        if (empty($path)) {
+            return $fallback ? (str_starts_with($fallback, 'http') ? $fallback : asset(ltrim($fallback, '/'))) : null;
+        }
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+        return asset(ltrim($path, '/'));
+    };
+
+    $mainLogoUrl = $resolveAssetUrl($siteSettings['site_logo_main'] ?? null);
+    $footerLogoUrl = $resolveAssetUrl($siteSettings['site_logo_footer'] ?? null) ?: $mainLogoUrl;
+    $favicon = $resolveAssetUrl($siteSettings['site_favicon'] ?? null, 'favicon.ico');
+    $ogImage = $resolveAssetUrl($siteSettings['seo_og_image'] ?? null, 'assets/hero-bg.jpg');
 
     $schemaData = [
         '@context' => 'https://schema.org',
@@ -20,7 +33,7 @@
                 '@id' => url('/') . '#organization',
                 'name' => $siteSettings['site_name'] ?? 'OX Tech Software House',
                 'url' => url('/'),
-                'logo' => !empty($siteSettings['site_logo_main']) ? url($siteSettings['site_logo_main']) : url('/assets/logo.png'),
+                'logo' => $mainLogoUrl ?: asset('assets/logo.png'),
                 'description' => $seoDesc,
                 'email' => $siteSettings['contact_email_primary'] ?? 'info@ox-tech.sa',
                 'telephone' => $siteSettings['contact_phone_primary'] ?? '+966500000000',
@@ -193,6 +206,33 @@
             --radius-md:  14px;
             --radius-lg:  24px;
             --radius-xl:  28px;
+        }
+
+        .site-nav-logo-img {
+            height: 38px;
+            max-height: 38px;
+            width: auto;
+            max-width: 170px;
+            object-fit: contain;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        header.site-header.scrolled .site-nav-logo-img {
+            height: 32px;
+            max-height: 32px;
+        }
+        .site-footer-logo-img {
+            height: 42px;
+            max-height: 42px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
+            display: block;
+            transition: opacity 0.2s ease;
+        }
+        .site-footer-logo-img:hover,
+        .site-nav-logo-img:hover {
+            opacity: 0.9;
         }
 
         /* ─── Explicit Typography Rules (Arabic vs English/Latin) ─── */
@@ -1174,9 +1214,13 @@
 
             <!-- Left Brand Logo & Lang Switcher in RTL -->
             <div class="navbar-brand-wrap">
-                <a class="ox-brand-logo" href="{{ route('home') }}">
-                    <span class="ox-logo-title">Ox<span class="dot-accent">Tech</span></span>
-                    <span class="ox-logo-subtitle">TECHNOLOGY FOR A BETTER TOMORROW</span>
+                <a class="ox-brand-logo" href="{{ route('home') }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
+                    @if(!empty($mainLogoUrl))
+                        <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img">
+                    @else
+                        <span class="ox-logo-title">Ox<span class="dot-accent">Tech</span></span>
+                        <span class="ox-logo-subtitle">TECHNOLOGY FOR A BETTER TOMORROW</span>
+                    @endif
                 </a>
 
                 <div class="navbar-controls">
@@ -1205,9 +1249,9 @@
     <!-- Mobile Navigation Drawer -->
     <div class="mobile-nav-drawer" id="mobileNavDrawer">
         <div class="mobile-drawer-top">
-            <a class="logo" href="{{ route('home') }}">
-                @if(!empty($siteSettings['site_logo_main']))
-                    <img src="{{ $siteSettings['site_logo_main'] }}" alt="OX Tech" style="max-height: 32px;">
+            <a class="logo" href="{{ route('home') }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
+                @if(!empty($mainLogoUrl))
+                    <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img" style="max-height: 32px;">
                 @else
                     OX<span>.</span><small>TECH STUDIO</small>
                 @endif
@@ -1347,12 +1391,16 @@
         <div class="ox-footer-main">
             <div class="container ox-footer-main-inner">
                 <!-- Brand / Logo (Left) -->
-                <a href="{{ route('home') }}" class="ox-footer-logo-brand" aria-label="OxTech Home">
-                    <span class="ox-footer-logo-text">O<span class="ox-logo-accent">x</span>Tech</span>
-                    <span class="ox-footer-tagline">
-                        <span>TECHNOLOGY</span>
-                        <span>FOR A BETTER TOMORROW</span>
-                    </span>
+                <a href="{{ route('home') }}" class="ox-footer-logo-brand" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
+                    @if(!empty($footerLogoUrl))
+                        <img src="{{ $footerLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-footer-logo-img">
+                    @else
+                        <span class="ox-footer-logo-text">O<span class="ox-logo-accent">x</span>Tech</span>
+                        <span class="ox-footer-tagline">
+                            <span>TECHNOLOGY</span>
+                            <span>FOR A BETTER TOMORROW</span>
+                        </span>
+                    @endif
                 </a>
 
                 <!-- Navigation Links (Center) -->
