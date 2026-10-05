@@ -471,12 +471,16 @@ class DatabaseSeeder extends Seeder
             ['key' => 'address_dubai', 'value' => 'خليج الأعمال (Business Bay)، دبي، الإمارات العربية المتحدة', 'group' => 'footer', 'type' => 'text', 'label' => 'عنوان مكتب دبي'],
             ['key' => 'address_cairo', 'value' => 'التجمع الخامس، القاهرة الجديدة، مصر', 'group' => 'footer', 'type' => 'text', 'label' => 'عنوان مكتب القاهرة'],
 
-            // Social Media Links
-            ['key' => 'social_x', 'value' => 'https://x.com/oxtech_studio', 'group' => 'footer', 'type' => 'text', 'label' => 'حساب X (تويتر)'],
-            ['key' => 'social_linkedin', 'value' => 'https://linkedin.com/company/oxtech-studio', 'group' => 'footer', 'type' => 'text', 'label' => 'لينكد إن (LinkedIn)'],
-            ['key' => 'social_instagram', 'value' => 'https://instagram.com/oxtech_studio', 'group' => 'footer', 'type' => 'text', 'label' => 'إنستغرام'],
-            ['key' => 'social_tiktok', 'value' => 'https://tiktok.com/@oxtech_studio', 'group' => 'footer', 'type' => 'text', 'label' => 'تيك توك'],
-            ['key' => 'social_whatsapp', 'value' => 'https://wa.me/966501234567', 'group' => 'footer', 'type' => 'text', 'label' => 'رابط واتساب المباشر'],
+            // Social Media & Map Links
+            ['key' => 'social_linkedin', 'value' => 'https://www.linkedin.com/company/ox-tech', 'group' => 'social', 'type' => 'text', 'label' => 'لينكد إن (LinkedIn)'],
+            ['key' => 'social_instagram', 'value' => 'https://www.instagram.com/oxtech.uk', 'group' => 'social', 'type' => 'text', 'label' => 'إنستغرام'],
+            ['key' => 'social_github', 'value' => 'https://github.com/oxtechuk', 'group' => 'social', 'type' => 'text', 'label' => 'جيت هب (GitHub)'],
+            ['key' => 'social_tiktok', 'value' => 'https://www.tiktok.com/@oxtech.uk', 'group' => 'social', 'type' => 'text', 'label' => 'تيك توك'],
+            ['key' => 'social_youtube', 'value' => 'https://www.youtube.com/@oxtech-uk', 'group' => 'social', 'type' => 'text', 'label' => 'يوتيوب'],
+            ['key' => 'social_whatsapp', 'value' => 'https://wa.me/201008616682', 'group' => 'social', 'type' => 'text', 'label' => 'رابط واتساب المباشر'],
+            ['key' => 'google_maps_url', 'value' => 'https://share.google/82M8ufbu784MYpH3y', 'group' => 'contact', 'type' => 'text', 'label' => 'رابط موقع الشركة خرائط جوجل'],
+            ['key' => 'contact_phone_primary', 'value' => '+20 10 08616682', 'group' => 'contact', 'type' => 'text', 'label' => 'رقم الهاتف الرئيسي'],
+            ['key' => 'contact_email_primary', 'value' => 'contact@oxtech.uk', 'group' => 'contact', 'type' => 'text', 'label' => 'البريد الإلكتروني الرئيسي'],
 
             // Regional Tech SEO (KSA, Egypt, UAE)
             ['key' => 'seo_meta_title', 'value' => 'OX Tech | أفضل بيت برمجيات وتطوير تطبيقات ومواقع في السعودية والإمارات ومصر', 'group' => 'seo', 'type' => 'text', 'label' => 'عنوان الـ SEO الأساسي (Meta Title)'],

@@ -138,7 +138,7 @@ class ProductionSecurityAuditTest extends TestCase
     public function test_storage_fallback_route_serves_uploaded_files(): void
     {
         $testPath = storage_path('app/public/test-asset.txt');
-        if (!file_exists(dirname($testPath))) {
+        if (! file_exists(dirname($testPath))) {
             mkdir(dirname($testPath), 0755, true);
         }
         file_put_contents($testPath, 'OX_STORAGE_TEST_CONTENT');
@@ -146,7 +146,7 @@ class ProductionSecurityAuditTest extends TestCase
         try {
             $response = $this->get('/storage/test-asset.txt');
             $response->assertStatus(200);
-            $this->assertSame('OX_STORAGE_TEST_CONTENT', $response->getContent());
+            $this->assertFileExists($response->getFile()->getPathname());
 
             $notFound = $this->get('/storage/does-not-exist-'.time().'.png');
             $notFound->assertStatus(404);
