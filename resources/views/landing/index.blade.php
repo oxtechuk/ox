@@ -118,13 +118,13 @@
         <!-- <div class="brands-header reveal">
             <p class="kicker">{{ $locale === 'ar' ? 'تكاملات وشراكات استراتيجية' : ($locale === 'fr' ? 'ÉCOSYSTÈME & INTÉGRATIONS' : 'ECOSYSTEM & INTEGRATIONS') }}</p>
             @if($locale === 'ar')
-                <h3>تكامل سلس مع <span class="accent-highlight">+80 شريك</span> عالمي ومحلي، لتلبية جميع احتياجاتك وتوسيع إمكانياتك بسهولة</h3>
+                <h3>تكامل سلس مع +80 شريك عالمي ومحلي، لتلبية جميع احتياجاتك وتوسيع إمكانياتك بسهولة</h3>
                 <p class="brands-subtitle">ربط منجز مع أنظمة المبيعات والمحاسبة والمخزون لديك، تكامل مباشر مع منصات التجارة الإلكترونية، أنظمة CRM أخرى، وأدوات الدفع الإلكتروني لأتمتة كاملة من أول تفاعل إلى إتمام البيع.</p>
             @elseif($locale === 'fr')
-                <h3>Intégration fluide avec plus de <span class="accent-highlight">+80 partenaires</span> mondiaux et locaux, pour répondre à tous vos besoins.</h3>
+                <h3>Intégration fluide avec plus de +80 partenaires mondiaux et locaux, pour répondre à tous vos besoins.</h3>
                 <p class="brands-subtitle">Connexion directe avec les leaders des ERP, plateformes e-commerce, CRM et passerelles de paiement pour une automatisation complète.</p>
             @else
-                <h3>Seamless integration with <span class="accent-highlight">+80 global & local partners</span>, to fulfill your needs and scale effortlessly.</h3>
+                <h3>Seamless integration with +80 global & local partners, to fulfill your needs and scale effortlessly.</h3>
                 <p class="brands-subtitle">Direct, unified integration with top enterprise ERPs, eCommerce engines, CRMs, and payment gateways for end-to-end operational automation.</p>
             @endif
         </div> -->
@@ -699,52 +699,7 @@
         </div>
     </section>
 
-    <!-- ─── B2B & B2C Modern Models Section ─── -->
-    <section class="ox-models-section" id="models">
-        <div class="container">
-            <div class="ox-models-grid">
-                <!-- Right Side in RTL: Main Headline -->
-                <div class="ox-models-header reveal">
-                    <h2 class="ox-models-title">
-                        {{ $locale === 'ar' ? 'نشتغل مع' : 'We Build For' }} <span class="tag-b2b">B2B</span><br/>
-                        {{ $locale === 'ar' ? 'ونفهم' : 'And Master' }} <span class="tag-b2c">B2C.</span>
-                    </h2>
-                </div>
-
-                <!-- Left Side in RTL: Two Distinct Feature Cards -->
-                <div class="ox-models-cards reveal">
-                    <!-- Card 1 (Dark Emerald): حلول للشركات والمؤسسات -->
-                    <article class="ox-model-card card-dark" onclick="openConsultModal()">
-                        <div>
-                            <h3 class="model-card-title">{{ $locale === 'ar' ? 'حلول للشركات والمؤسسات' : 'Enterprise & Corporate' }}</h3>
-                            <p class="model-card-desc">{{ $locale === 'ar' ? 'أنظمة مخصصة تلبي احتياجات القطاعات الكبيرة' : 'Tailored enterprise architectures engineered for large-scale operations and complex workflows.' }}</p>
-                        </div>
-                        <div class="model-card-arrow">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </div>
-                    </article>
-
-                    <!-- Card 2 (Light Ivory): حلول جاهزة لقطاعك الخاص -->
-                    <article class="ox-model-card card-light" onclick="openConsultModal()">
-                        <div>
-                            <h3 class="model-card-title">{{ $locale === 'ar' ? 'حلول جاهزة لقطاعك الخاص' : 'Turnkey Sector Solutions' }}</h3>
-                            <p class="model-card-desc">{{ $locale === 'ar' ? 'منصات وتطبيقات تساعدك على إدارة وتنمية أعمالك' : 'Ready-to-deploy platforms and apps empowering you to scale and manage your business.' }}</p>
-                        </div>
-                        <div class="model-card-arrow">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </section>
-
+   
     <!-- ─── Partner Stories / Testimonials Section (Saudi Sadu Aesthetic & Inline Video Player) ─── -->
     <section class="testimonials section" id="stories">
         <!-- Sadu Corner Accents -->
@@ -1083,7 +1038,7 @@
                     @if($locale === 'ar')
                         <h2 class="ox-consult-headline">
                             عندك فكرة؟ خلّينا<br/>
-                            <span class="ox-mint-highlight">نبنيها معاً.</span>
+                            نبنيها معاً.
                         </h2>
                         <p class="ox-consult-subtitle">
                             سواء مشروع جديد أو تطوير لفكرة حالية<br/>
@@ -1092,7 +1047,7 @@
                     @elseif($locale === 'fr')
                         <h2 class="ox-consult-headline">
                             Une idée en tête ?<br/>
-                            <span class="ox-mint-highlight">Bâtissons-la ensemble.</span>
+                            Bâtissons-la ensemble.
                         </h2>
                         <p class="ox-consult-subtitle">
                             Nouveau projet ou développement d'une idée existante,<br/>
@@ -1101,7 +1056,7 @@
                     @else
                         <h2 class="ox-consult-headline">
                             Have an idea?<br/>
-                            <span class="ox-mint-highlight">Let's build it together.</span>
+                            Let's build it together.
                         </h2>
                         <p class="ox-consult-subtitle">
                             Whether a brand-new project or scaling an existing vision,<br/>

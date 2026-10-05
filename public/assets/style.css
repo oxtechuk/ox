@@ -1021,8 +1021,8 @@ blockquote {
 }
 
 .brands-header h3 .accent-highlight {
-    color: #129e38;
-    font-weight: 900;
+    color: inherit;
+    font-weight: inherit;
 }
 
 .brands-subtitle {

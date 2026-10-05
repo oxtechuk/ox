@@ -208,6 +208,14 @@
             --radius-xl:  28px;
         }
 
+        /* Global: No highlight backgrounds, glowing text, or gradient clipping */
+        .highlight, mark {
+            background: transparent !important;
+            color: inherit !important;
+            -webkit-text-fill-color: initial !important;
+            text-shadow: none !important;
+        }
+
         .site-nav-logo-img {
             height: 38px;
             max-height: 38px;

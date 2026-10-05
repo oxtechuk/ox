@@ -14,22 +14,23 @@
 @push('styles')
 <style>
     /* ===============================================================
-       OX TECH — REFINED, HUMAN & CALM CASE STUDY STYLES
-       No AI clichés • No neon glow • No noisy taglines • Quiet Luxury
+       OX TECH — REFINED, HUMAN & CALM CASE STUDY STYLES (LIGHT THEME)
+       Quiet Luxury • Saudi Emerald #1D8A68 • Desert Camel #C8A96B
        =============================================================== */
 
     /* ─── Page Container & Base Background ─── */
     .project-page-wrap {
-        background-color: #071715;
-        color: #e2e8f0;
+        background-color: #F8FAF9;
+        color: #0b1b17;
         min-height: 100vh;
+        position: relative;
     }
 
     /* ─── Hero Section ─── */
     .project-calm-hero {
-        padding: 140px 0 50px;
-        background: linear-gradient(180deg, #051210 0%, #071715 100%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 130px 0 55px;
+        background: linear-gradient(180deg, #edf7f2 0%, #f8faf9 100%);
+        border-bottom: 1px solid #e2ede8;
         position: relative;
         text-align: center;
     }
@@ -41,21 +42,27 @@
 
     /* Minimalist Breadcrumbs */
     .calm-breadcrumb {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
         font-size: 13px;
-        color: #7b928c;
-        margin-bottom: 20px;
+        color: #64748b;
+        margin-bottom: 22px;
+        background: #ffffff;
+        border: 1px solid #e2ede8;
+        padding: 7px 20px;
+        border-radius: 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
     .calm-breadcrumb a {
-        color: #9cb0aa;
+        color: #4b5e57;
         text-decoration: none;
         transition: color 0.2s ease;
+        font-weight: 600;
     }
     .calm-breadcrumb a:hover {
-        color: #ffffff;
+        color: #1D8A68;
     }
     .badge-flag-img {
         width: 18px;
@@ -64,15 +71,16 @@
         border-radius: 2px;
         display: inline-block;
         vertical-align: middle;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
     .calm-breadcrumb .sep {
         opacity: 0.4;
         font-size: 11px;
+        color: #94a3b8;
     }
     .calm-breadcrumb .current {
-        color: #d1deda;
-        font-weight: 600;
+        color: #1D8A68;
+        font-weight: 700;
     }
 
     /* Simple, Understated Meta Pills */
@@ -82,51 +90,56 @@
         justify-content: center;
         gap: 10px;
         flex-wrap: wrap;
-        margin-bottom: 20px;
+        margin-bottom: 22px;
     }
     .calm-tag {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 5px 14px;
-        border-radius: 6px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 6px 16px;
+        border-radius: 30px;
+        background: #ffffff;
+        border: 1px solid #e2ede8;
         font-size: 12.5px;
-        color: #a4b8b2;
-        font-weight: 500;
+        color: #4b5e57;
+        font-weight: 600;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     }
     .calm-tag.accent {
-        color: #c7dcd5;
-        border-color: rgba(29, 138, 104, 0.35);
-        background: rgba(29, 138, 104, 0.1);
+        color: #1D8A68;
+        border-color: #a7f3d0;
+        background: #ecfdf5;
+        font-weight: 700;
     }
 
     /* Hero Typography */
     .project-main-title {
-        font-size: clamp(32px, 4.5vw, 56px);
-        font-weight: 800;
+        font-size: clamp(32px, 4.5vw, 54px);
+        font-weight: 900;
         line-height: 1.25;
-        color: #ffffff;
+        color: #0b1b17;
         margin: 0 0 12px;
         letter-spacing: -0.5px;
+        font-family: var(--font-ar);
     }
 
     .project-subtitle-text {
-        font-size: clamp(17px, 2vw, 24px);
-        font-weight: 400;
-        color: #9eb5ae;
+        font-size: clamp(17px, 2vw, 22px);
+        font-weight: 700;
+        color: #1D8A68;
         margin: 0 0 18px;
         line-height: 1.5;
+        font-family: var(--font-ar);
     }
 
     .project-lead-summary {
         font-size: clamp(15px, 1.35vw, 17.5px);
         line-height: 1.85;
-        color: #8da49e;
-        max-width: 720px;
-        margin: 0 auto 30px;
+        color: #4b5e57;
+        max-width: 760px;
+        margin: 0 auto 32px;
         font-weight: 400;
+        font-family: var(--font-ar);
     }
 
     /* Quiet Action Buttons */
@@ -143,44 +156,51 @@
         gap: 8px;
         background: #1D8A68;
         color: #ffffff !important;
-        padding: 12px 24px;
-        border-radius: 8px;
+        padding: 12px 28px;
+        border-radius: 50px;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 700;
         text-decoration: none;
-        transition: background-color 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 4px 18px rgba(29, 138, 104, 0.3);
+        transition: all 0.25s ease;
+        border: none;
     }
     .btn-quiet-primary:hover {
-        background: #177356;
-        transform: translateY(-1px);
+        background: #167054;
+        box-shadow: 0 6px 24px rgba(29, 138, 104, 0.4);
+        transform: translateY(-2px);
     }
 
     .btn-quiet-outline {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: transparent;
-        color: #cbdad5 !important;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        padding: 12px 22px;
-        border-radius: 8px;
+        background: #ffffff;
+        color: #0b1b17 !important;
+        border: 1px solid #cbd5e1;
+        padding: 12px 26px;
+        border-radius: 50px;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 600;
         text-decoration: none;
         cursor: pointer;
-        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        transition: all 0.25s ease;
     }
     .btn-quiet-outline:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.28);
-        color: #ffffff !important;
+        background: #f8fafc;
+        border-color: #1D8A68;
+        color: #1D8A68 !important;
+        transform: translateY(-2px);
     }
 
     /* ─── Minimal Project Metadata Strip ─── */
     .project-metadata-strip {
-        background: #051412;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        padding: 22px 0;
+        background: #ffffff;
+        border-top: 1px solid #e2ede8;
+        border-bottom: 1px solid #e2ede8;
+        padding: 24px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     }
     .metadata-items-flex {
         display: flex;
@@ -196,25 +216,23 @@
     }
     .meta-data-cell label {
         display: block;
-        font-size: 11px;
-        color: #6d857f;
+        font-size: 11.5px;
+        color: #64748b;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-bottom: 4px;
-        font-weight: 500;
+        margin-bottom: 5px;
+        font-weight: 700;
     }
     .meta-data-cell span {
-        font-size: 14px;
-        font-weight: 600;
-        color: #e2e8f0;
-    }
-    .meta-data-cell span.highlight {
-        color: #C8A96B;
+        font-size: 14.5px;
+        font-weight: 700;
+        color: #0b1b17;
     }
 
     /* ─── Main Content Layout ─── */
     .project-main-section {
-        padding: 55px 0 80px;
+        padding: 55px 0 85px;
+        background-color: #F8FAF9;
     }
     .project-grid-layout {
         display: grid;
@@ -225,19 +243,19 @@
 
     /* ─── Visual Showcase Frame (Clean & Photographic) ─── */
     .project-showcase-frame {
-        border-radius: 14px;
+        border-radius: 20px;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: #030c0a;
+        border: 1px solid #e5eee9;
+        background: #ffffff;
         margin-bottom: 40px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 10px 30px rgba(11, 27, 23, 0.05);
     }
     .showcase-media-box {
         position: relative;
         width: 100%;
         max-height: 520px;
         overflow: hidden;
-        background: #030c0a;
+        background: #f1f5f9;
     }
     .showcase-media-box img {
         width: 100%;
@@ -247,40 +265,42 @@
         display: block;
     }
     .showcase-media-caption {
-        padding: 14px 20px;
-        background: #081a17;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 16px 24px;
+        background: #ffffff;
+        border-top: 1px solid #f1f5f9;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 13px;
-        color: #8da49e;
+        font-size: 13.5px;
+        color: #64748b;
     }
     .showcase-media-caption strong {
-        color: #ffffff;
-        font-weight: 600;
+        color: #0b1b17;
+        font-weight: 700;
     }
 
     /* ─── Case Study Narrative Sections ─── */
     .narrative-block {
-        margin-bottom: 40px;
+        margin-bottom: 42px;
     }
     .narrative-heading {
-        font-size: 20px;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0 0 14px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        font-size: 21px;
+        font-weight: 800;
+        color: #0b1b17;
+        margin: 0 0 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e2ede8;
         display: flex;
         align-items: center;
         gap: 10px;
+        font-family: var(--font-ar);
     }
     .narrative-text {
-        font-size: 15px;
+        font-size: 15.5px;
         line-height: 2;
-        color: #b5c7c2;
+        color: #4b5e57;
         margin: 0;
+        font-family: var(--font-ar);
     }
 
     /* Challenge & Solution Grid */
@@ -288,31 +308,36 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
-        margin-top: 16px;
+        margin-top: 18px;
     }
     .calm-card-box {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
-        padding: 22px;
+        background: #ffffff;
+        border: 1px solid #e2ede8;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
     }
     .calm-card-box.challenge-card {
-        border-inline-start: 3px solid #e06c75;
+        border-inline-start: 4px solid #ef4444;
+        background: #fffdfd;
     }
     .calm-card-box.solution-card {
-        border-inline-start: 3px solid #1D8A68;
+        border-inline-start: 4px solid #1D8A68;
+        background: #fdfffe;
     }
     .calm-card-box h4 {
-        font-size: 14.5px;
-        font-weight: 700;
+        font-size: 15.5px;
+        font-weight: 800;
         margin: 0 0 8px;
-        color: #ffffff;
+        color: #0b1b17;
+        font-family: var(--font-ar);
     }
     .calm-card-box p {
-        font-size: 13.5px;
+        font-size: 14px;
         line-height: 1.85;
-        color: #9eb2ac;
+        color: #4b5e57;
         margin: 0;
+        font-family: var(--font-ar);
     }
 
     /* Key Features Clean List */
@@ -320,51 +345,57 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 12px;
-        margin-top: 14px;
+        margin-top: 16px;
     }
     .clean-feature-row {
         display: flex;
         align-items: flex-start;
-        gap: 10px;
-        padding: 12px 14px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
+        gap: 12px;
+        padding: 14px 16px;
+        background: #ffffff;
+        border: 1px solid #e2ede8;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
     }
     .feature-dash {
         color: #1D8A68;
-        font-weight: bold;
+        font-weight: 900;
         line-height: 1;
-        margin-top: 3px;
+        margin-top: 2px;
+        font-size: 16px;
     }
     .clean-feature-row span {
-        font-size: 13.5px;
-        color: #cbd8d4;
+        font-size: 14px;
+        color: #334155;
         line-height: 1.6;
+        font-weight: 600;
     }
 
     /* Live Link In-Content Box */
     .live-url-panel {
-        background: rgba(29, 138, 104, 0.08);
+        background: linear-gradient(135deg, #edf7f2 0%, #e1efe9 100%);
         border: 1px solid rgba(29, 138, 104, 0.25);
-        border-radius: 12px;
-        padding: 22px 26px;
+        border-radius: 16px;
+        padding: 24px 28px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 20px;
         flex-wrap: wrap;
-        margin-top: 30px;
+        margin-top: 32px;
+        box-shadow: 0 8px 24px rgba(29, 138, 104, 0.06);
     }
     .live-url-info h4 {
-        font-size: 15px;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0 0 4px;
+        font-size: 16px;
+        font-weight: 800;
+        color: #0b1b17;
+        margin: 0 0 5px;
+        font-family: var(--font-ar);
     }
     .live-url-info p {
-        font-size: 12.5px;
-        color: #8fa9a1;
+        font-size: 13.5px;
+        color: #1D8A68;
+        font-weight: 600;
         margin: 0;
     }
 
@@ -377,18 +408,20 @@
         top: 100px;
     }
     .sidebar-block {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
-        padding: 22px;
+        background: #ffffff;
+        border: 1px solid #e5eee9;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
     }
     .sidebar-block-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: #ffffff;
+        font-size: 15px;
+        font-weight: 800;
+        color: #0b1b17;
         margin: 0 0 14px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f1f5f3;
+        font-family: var(--font-ar);
     }
 
     /* Tech Stack Pills */
@@ -398,59 +431,65 @@
         gap: 6px;
     }
     .sidebar-tech-tag {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 5px 11px;
+        background: #f1f7f4;
+        border: 1px solid #dceed8;
+        padding: 5px 12px;
         border-radius: 6px;
         font-size: 12px;
-        color: #b8ccc6;
-        font-family: var(--font-latin), sans-serif;
+        font-weight: 700;
+        color: #1d5244;
+        font-family: var(--font-en, sans-serif);
     }
 
     /* Sidebar Specs Rows */
     .specs-table-rows {
         display: grid;
-        gap: 10px;
-        font-size: 13px;
+        gap: 12px;
+        font-size: 13.5px;
     }
     .spec-table-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-bottom: 6px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f1f5f3;
     }
     .spec-table-row:last-child {
         border-bottom: none;
         padding-bottom: 0;
     }
     .spec-table-row span {
-        color: #7b948d;
+        color: #64748b;
+        font-size: 13px;
     }
     .spec-table-row strong {
-        color: #dbe7e4;
-        font-weight: 600;
+        color: #0b1b17;
+        font-weight: 700;
+        font-size: 13.5px;
     }
 
     /* Quiet Consultation Box */
     .sidebar-consult-simple {
-        background: rgba(29, 138, 104, 0.06);
-        border: 1px solid rgba(29, 138, 104, 0.2);
-        border-radius: 12px;
-        padding: 22px;
+        background: linear-gradient(135deg, #edf7f2 0%, #e1efe9 100%);
+        border: 1px solid rgba(29, 138, 104, 0.25);
+        border-radius: 16px;
+        padding: 24px;
         text-align: {{ $isRtl ? 'right' : 'left' }};
+        box-shadow: 0 8px 24px rgba(29, 138, 104, 0.06);
     }
     .sidebar-consult-simple h4 {
-        font-size: 15px;
-        font-weight: 700;
-        color: #ffffff;
+        font-size: 16px;
+        font-weight: 800;
+        color: #0b1b17;
         margin: 0 0 8px;
+        font-family: var(--font-ar);
     }
     .sidebar-consult-simple p {
-        font-size: 13px;
+        font-size: 13.5px;
         line-height: 1.7;
-        color: #9cb2ab;
-        margin: 0 0 16px;
+        color: #4b5e57;
+        margin: 0 0 18px;
+        font-family: var(--font-ar);
     }
     .sidebar-consult-simple button {
         width: 100%;
@@ -459,9 +498,10 @@
 
     /* ─── Previous / Next Navigation ─── */
     .project-bottom-nav {
-        background: #051210;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: #ffffff;
+        border-top: 1px solid #e2ede8;
         padding: 28px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.02);
     }
     .nav-flex-split {
         display: flex;
@@ -474,50 +514,55 @@
         align-items: center;
         gap: 12px;
         text-decoration: none;
-        color: #cbd8d4;
+        color: #0b1b17;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 700;
         transition: color 0.2s ease;
     }
     .bottom-nav-link:hover {
-        color: #ffffff;
+        color: #1D8A68;
     }
     .bottom-nav-link span.label {
-        font-size: 11px;
-        color: #6d857f;
+        font-size: 11.5px;
+        color: #64748b;
         display: block;
         font-weight: normal;
+        margin-bottom: 2px;
     }
     .all-work-calm-link {
-        color: #8da49e;
+        color: #475569;
         text-decoration: none;
-        font-size: 13px;
-        font-weight: 500;
-        padding: 7px 16px;
-        border-radius: 6px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        transition: all 0.2s ease;
+        font-size: 13.5px;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 30px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        transition: all 0.25s ease;
     }
     .all-work-calm-link:hover {
+        background: #1D8A68;
+        border-color: #1D8A68;
         color: #ffffff;
-        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 14px rgba(29, 138, 104, 0.25);
     }
 
     /* ─── Related Projects (Understated) ─── */
     .calm-related-section {
-        background: #071715;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        padding: 60px 0 80px;
+        background: #F8FAF9;
+        border-top: 1px solid #e2ede8;
+        padding: 60px 0 90px;
     }
     .calm-related-section .section-header {
         margin-bottom: 32px;
         text-align: {{ $isRtl ? 'right' : 'left' }};
     }
     .calm-related-section h3 {
-        font-size: 22px;
-        font-weight: 700;
-        color: #ffffff;
+        font-size: 24px;
+        font-weight: 800;
+        color: #0b1b17;
         margin: 0;
+        font-family: var(--font-ar);
     }
 
     /* ─── Responsive Queries ─── */
@@ -564,34 +609,7 @@
          ========================================= -->
     <section class="project-calm-hero">
         <div class="container">
-            <!-- Breadcrumbs -->
-            <nav class="calm-breadcrumb" aria-label="Breadcrumb">
-                <a href="{{ route('home') }}">{{ $locale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
-                <span class="sep">/</span>
-                <a href="{{ route('home') }}#work">{{ $locale === 'ar' ? 'أعمالنا' : 'Work' }}</a>
-                <span class="sep">/</span>
-                <span class="current">{{ $project->title }}</span>
-            </nav>
-
-            <!-- Understated Category Tags -->
-            <div class="calm-meta-row">
-                <span class="calm-tag">
-                    @if($project->country_flag_url)
-                        <img src="{{ $project->country_flag_url }}" class="badge-flag-img" alt="{{ $project->country_name }}" loading="lazy">
-                    @else
-                        <span>{{ $project->country_flag }}</span>
-                    @endif
-                    <span>{{ __($project->country_name) }}</span>
-                </span>
-                <span class="calm-tag accent">
-                    <span>{{ __($project->sector_name) }}</span>
-                </span>
-                @if($project->duration)
-                    <span class="calm-tag">
-                        <span>{{ $locale === 'ar' ? 'مدة العمل:' : 'Timeline:' }} {{ $project->duration }}</span>
-                    </span>
-                @endif
-            </div>
+         
 
             <!-- Clean Project Title & Subtitle -->
             <h1 class="project-main-title">{{ $project->title }}</h1>
@@ -653,7 +671,7 @@
                 @if($project->impact_stat)
                     <div class="meta-data-cell">
                         <label>{{ $locale === 'ar' ? 'الأثر والنتائج' : 'Key Result' }}</label>
-                        <span class="highlight">{{ $project->impact_stat }}</span>
+                        <span>{{ $project->impact_stat }}</span>
                     </div>
                 @endif
             </div>
@@ -724,7 +742,7 @@
                     @if(!empty($project->key_features) && is_array($project->key_features) && count($project->key_features) > 0)
                         <div class="narrative-block">
                             <h2 class="narrative-heading">
-                                {{ $locale === 'ar' ? 'أبرز مميزات العمل' : 'Key Highlights' }}
+                                {{ $locale === 'ar' ? 'أبرز مميزات العمل' : 'Key Features' }}
                             </h2>
                             <div class="features-clean-grid">
                                 @foreach($project->key_features as $feature)
@@ -890,9 +908,7 @@
                                         </span>
                                         <span>{{ __($rel->country_name) }}</span>
                                     </span>
-                                    @if($rel->sector_name)
-                                        <span class="portfolio-sector-badge">{{ __($rel->sector_name) }}</span>
-                                    @endif
+                                   
                                 </div>
 
                               

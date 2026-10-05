@@ -24,47 +24,47 @@
 @push('styles')
 <style>
     /* ═══════════════════════════════════════════════════════════════
-       OX TECH — FULL PORTFOLIO SHOWCASE PAGE
+       OX TECH — PREMIUM LIGHT THEME PORTFOLIO SHOWCASE
        ═══════════════════════════════════════════════════════════════ */
     .portfolio-archive-page {
-        background-color: #030e15;
-        color: #e2e8f0;
+        background-color: #F8FAF9;
+        color: #0b1b17;
         min-height: 100vh;
         position: relative;
         overflow: hidden;
     }
 
-    /* Ambient Background Glows */
+    /* Ambient Subtle Emerald & Warm Camel Glows */
     .portfolio-archive-page::before {
         content: '';
         position: absolute;
         top: -100px;
-        right: 10%;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(22, 98, 196, 0.12) 0%, transparent 70%);
+        right: 5%;
+        width: 650px;
+        height: 650px;
+        background: radial-gradient(circle, rgba(29, 138, 104, 0.06) 0%, transparent 70%);
         pointer-events: none;
         z-index: 0;
     }
     .portfolio-archive-page::after {
         content: '';
         position: absolute;
-        top: 400px;
+        top: 500px;
         left: 5%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(189, 255, 69, 0.06) 0%, transparent 70%);
+        width: 550px;
+        height: 550px;
+        background: radial-gradient(circle, rgba(200, 169, 107, 0.06) 0%, transparent 70%);
         pointer-events: none;
         z-index: 0;
     }
 
-    /* Hero Section */
+    /* Hero Section (Light & Elegant) */
     .portfolio-hero-section {
-        padding: 150px 0 50px;
+        padding: 130px 0 55px;
         position: relative;
         text-align: center;
-        background: radial-gradient(ellipse at 50% 0%, rgba(10, 31, 51, 0.7) 0%, #030e15 80%);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: linear-gradient(180deg, #edf7f2 0%, #f8faf9 100%);
+        border-bottom: 1px solid #e2ede8;
     }
     .portfolio-hero-inner {
         max-width: 920px;
@@ -79,27 +79,30 @@
         align-items: center;
         gap: 8px;
         font-size: 13px;
-        color: #8da49e;
+        color: #64748b;
         margin-bottom: 22px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        padding: 6px 18px;
+        background: #ffffff;
+        border: 1px solid #e2ede8;
+        padding: 7px 20px;
         border-radius: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
     }
     .portfolio-breadcrumb a {
-        color: #b8ccc6;
+        color: #4b5e57;
         text-decoration: none;
         transition: color 0.2s ease;
+        font-weight: 600;
     }
     .portfolio-breadcrumb a:hover {
-        color: #bdff45;
+        color: #1D8A68;
     }
     .portfolio-breadcrumb .sep {
         opacity: 0.4;
+        color: #94a3b8;
     }
     .portfolio-breadcrumb .current {
-        color: #ffffff;
-        font-weight: 600;
+        color: #1D8A68;
+        font-weight: 700;
     }
 
     .portfolio-page-kicker {
@@ -107,47 +110,47 @@
         align-items: center;
         gap: 8px;
         font-size: 13px;
-        font-weight: 700;
-        color: #bdff45;
+        font-weight: 800;
+        color: #1D8A68;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
         margin-bottom: 14px;
+        background: rgba(29, 138, 104, 0.08);
+        padding: 5px 14px;
+        border-radius: 99px;
+        border: 1px solid rgba(29, 138, 104, 0.15);
     }
     .portfolio-page-kicker-dot {
-        width: 8px;
-        height: 8px;
-        background: #bdff45;
+        width: 7px;
+        height: 7px;
+        background: #1D8A68;
         border-radius: 50%;
-        box-shadow: 0 0 10px #bdff45;
+        box-shadow: 0 0 8px rgba(29, 138, 104, 0.5);
     }
 
     .portfolio-page-title {
-        font-size: clamp(28px, 4.5vw, 48px);
-        font-weight: 800;
+        font-size: clamp(30px, 4.5vw, 50px);
+        font-weight: 900;
         line-height: 1.25;
-        color: #ffffff;
+        color: #0b1b17;
         margin: 0 0 18px;
-    }
-    .portfolio-page-title .highlight {
-        color: #bdff45;
-        background: linear-gradient(135deg, #bdff45 0%, #34d399 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-family: var(--font-ar);
     }
 
     .portfolio-page-subtitle {
-        font-size: clamp(14px, 1.8vw, 17px);
-        line-height: 1.8;
-        color: #94a3b8;
-        max-width: 760px;
-        margin: 0 auto 32px;
+        font-size: clamp(15px, 1.8vw, 17.5px);
+        line-height: 1.85;
+        color: #4b5e57;
+        max-width: 780px;
+        margin: 0 auto 34px;
+        font-family: var(--font-ar);
     }
 
     /* Hero Quick Stats */
     .portfolio-hero-stats {
         display: flex;
         justify-content: center;
-        gap: 32px;
+        gap: 20px;
         flex-wrap: wrap;
         margin-top: 10px;
     }
@@ -155,69 +158,65 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        background: rgba(10, 31, 51, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 10px 20px;
-        border-radius: 12px;
-        backdrop-filter: blur(8px);
+        background: #ffffff;
+        border: 1px solid #e2ede8;
+        padding: 12px 24px;
+        border-radius: 14px;
+        box-shadow: 0 4px 16px rgba(11, 27, 23, 0.03);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .portfolio-stat-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(29, 138, 104, 0.08);
+        border-color: rgba(29, 138, 104, 0.3);
     }
     .portfolio-stat-num {
-        font-size: 22px;
-        font-weight: 800;
-        color: #bdff45;
+        font-size: 24px;
+        font-weight: 900;
+        color: #1D8A68;
         font-family: var(--font-en, sans-serif);
     }
     .portfolio-stat-label {
-        font-size: 12px;
-        color: #cbd5e1;
+        font-size: 13px;
+        font-weight: 700;
+        color: #4b5e57;
     }
 
     /* Main Showcase Content Area */
     .portfolio-content-section {
-        padding: 50px 0 100px;
+        padding: 45px 0 95px;
         position: relative;
         z-index: 2;
+        background-color: #F8FAF9;
     }
 
     /* Search & Filter Top Bar */
-    .portfolio-search-filter-wrap {
-        margin-bottom: 32px;
-    }
-    .portfolio-search-box {
-        position: relative;
-        max-width: 460px;
-        margin: 0 auto 24px;
-    }
-    .portfolio-search-input {
-        width: 100%;
-        background: rgba(10, 31, 51, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: #ffffff;
-        padding: 12px 44px 12px 18px;
-        border-radius: 12px;
-        font-size: 14px;
-        font-family: inherit;
-        outline: none;
-        transition: all 0.25s ease;
-    }
-    html[dir="rtl"] .portfolio-search-input {
-        padding: 12px 18px 12px 44px;
-    }
-    .portfolio-search-input:focus {
-        border-color: #bdff45;
-        box-shadow: 0 0 18px rgba(189, 255, 69, 0.2);
-        background: rgba(10, 31, 51, 0.95);
-    }
-    .portfolio-search-icon {
+    .portfolio-search-clear {
         position: absolute;
+        inset-inline-end: 42px;
         top: 50%;
         transform: translateY(-50%);
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
         color: #64748b;
-        pointer-events: none;
-        inset-inline-end: 16px;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+        transition: all 0.2s ease;
+    }
+    .portfolio-search-clear:hover {
+        background: #e2e8f0;
+        color: #0f172a;
     }
 
-    /* Project Cards Hover & Transitions */
+    /* Project Cards Hover & Transitions in Light Theme */
     .ox-portfolio-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -226,8 +225,8 @@
         z-index: 2;
     }
     .ox-portfolio-card {
-        background: linear-gradient(180deg, rgba(12, 28, 42, 0.85) 0%, rgba(6, 17, 28, 0.96) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.09);
+        background: #ffffff;
+        border: 1px solid #e5eee9;
         border-radius: 20px;
         overflow: hidden;
         display: flex;
@@ -235,39 +234,163 @@
         cursor: pointer;
         text-decoration: none;
         transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease, opacity 0.25s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 4px 20px rgba(11, 27, 23, 0.04);
         position: relative;
     }
     .ox-portfolio-card:hover {
         transform: translateY(-8px);
-        border-color: rgba(189, 255, 69, 0.45);
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(189, 255, 69, 0.16);
+        border-color: #1D8A68;
+        box-shadow: 0 20px 45px rgba(29, 138, 104, 0.12);
     }
 
-    /* Bottom CTA Card */
+    /* Card Details */
+    .portfolio-card-head {
+        margin-bottom: 12px;
+    }
+    .portfolio-client-name {
+        color: #1D8A68;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+        display: block;
+    }
+    .portfolio-card-title {
+        color: #0b1b17;
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0 0 8px;
+        line-height: 1.35;
+        font-family: var(--font-ar);
+    }
+    .portfolio-card-desc {
+        color: #4b5e57;
+        font-size: 14px;
+        line-height: 1.65;
+        margin: 0;
+        font-family: var(--font-ar);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .portfolio-tech-tags {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+    .tech-tag {
+        background: #f0f7f4;
+        border: 1px solid #dceed8;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 11.5px;
+        font-weight: 700;
+        color: #1d5244;
+        font-family: var(--font-en, sans-serif);
+    }
+
+    .portfolio-card-foot {
+        border-top: 1px solid #f0f5f3;
+        padding-top: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .portfolio-view-text {
+        font-size: 13px;
+        font-weight: 700;
+        color: #1D8A68;
+        transition: color 0.2s ease;
+    }
+    .portfolio-view-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        color: #1D8A68;
+        display: grid;
+        place-items: center;
+        transition: all 0.25s ease;
+    }
+    .ox-portfolio-card:hover .portfolio-view-btn {
+        background: #1D8A68;
+        border-color: #1D8A68;
+        color: #ffffff;
+        transform: scale(1.08);
+    }
+
+    /* Empty state */
+    .portfolio-no-results {
+        background: #ffffff;
+        border: 1px solid #e2ede8;
+        border-radius: 20px;
+        padding: 50px 20px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        margin: 20px 0;
+    }
+    .portfolio-no-results .no-results-icon {
+        font-size: 38px;
+        margin-bottom: 14px;
+    }
+    .portfolio-no-results h4 {
+        color: #0b1b17;
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0 0 8px;
+    }
+    .portfolio-no-results p {
+        color: #64748b;
+        font-size: 14.5px;
+        margin: 0 0 16px;
+    }
+
+    /* Bottom CTA Card (Light Elegant) */
     .portfolio-cta-box {
-        margin-top: 80px;
-        background: radial-gradient(ellipse at 50% 0%, rgba(22, 98, 196, 0.2) 0%, rgba(10, 31, 51, 0.8) 100%);
-        border: 1px solid rgba(189, 255, 69, 0.25);
+        margin-top: 75px;
+        background: linear-gradient(135deg, #edf6f2 0%, #e1efe9 100%);
+        border: 1px solid rgba(29, 138, 104, 0.25);
         border-radius: 24px;
-        padding: 50px 30px;
+        padding: 52px 32px;
         text-align: center;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        box-shadow: 0 15px 40px rgba(29, 138, 104, 0.08);
     }
     .portfolio-cta-box h3 {
-        font-size: clamp(22px, 3vw, 32px);
-        font-weight: 800;
-        color: #ffffff;
-        margin: 0 0 12px;
+        font-size: clamp(23px, 3.2vw, 34px);
+        font-weight: 900;
+        color: #0b1b17;
+        margin: 0 0 14px;
+        font-family: var(--font-ar);
     }
     .portfolio-cta-box p {
-        color: #94a3b8;
-        font-size: 15px;
-        max-width: 600px;
-        margin: 0 auto 28px;
-        line-height: 1.7;
+        color: #4b5e57;
+        font-size: 15.5px;
+        max-width: 650px;
+        margin: 0 auto 30px;
+        line-height: 1.8;
+        font-family: var(--font-ar);
+    }
+    .portfolio-cta-box .btn-primary {
+        background: #1D8A68;
+        color: #ffffff;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        box-shadow: 0 6px 22px rgba(29, 138, 104, 0.35);
+        transition: all 0.25s ease;
+    }
+    .portfolio-cta-box .btn-primary:hover {
+        background: #167054;
+        box-shadow: 0 8px 26px rgba(29, 138, 104, 0.45);
+        transform: translateY(-2px);
     }
 
     @media (max-width: 1080px) {
@@ -285,7 +408,9 @@
             gap: 12px;
         }
         .portfolio-stat-box {
-            padding: 8px 14px;
+            padding: 10px 16px;
+            width: 100%;
+            justify-content: center;
         }
     }
 </style>
@@ -304,14 +429,10 @@
                 <span class="current">{{ $locale === 'ar' ? 'سابقة الأعمال' : ($locale === 'fr' ? 'Portfolio' : 'Portfolio') }}</span>
             </nav>
 
-            <div class="portfolio-page-kicker">
-                <span class="portfolio-page-kicker-dot"></span>
-                <span>{{ $locale === 'ar' ? 'معرض المشاريع والحلول التقنية' : ($locale === 'fr' ? 'Portfolio des Projets OX Tech' : 'Engineered Digital Systems') }}</span>
-            </div>
+          
 
             <h1 class="portfolio-page-title">
-                {{ $locale === 'ar' ? 'أعمالنا تتكلم:' : ($locale === 'fr' ? 'Nos Réalisations:' : 'Our Proven Track Record:') }}
-                <span class="highlight">{{ $locale === 'ar' ? 'ابتكار برمجي يصنع فارقاً حقيقياً' : ($locale === 'fr' ? 'Impact & Excellence' : 'Built for Real Impact') }}</span>
+                {{ $locale === 'ar' ? 'أعمالنا تتكلم: ابتكار برمجي يصنع فارقاً حقيقياً' : ($locale === 'fr' ? 'Nos Réalisations: Impact & Excellence' : 'Our Proven Track Record: Built for Real Impact') }}
             </h1>
 
             <p class="portfolio-page-subtitle">
@@ -322,20 +443,6 @@
                         : 'Discover the complete showcase of custom cloud architectures, SaaS products, and mobile applications engineered for enterprise partners across Saudi Arabia, Egypt, and the Gulf.') }}
             </p>
 
-            <div class="portfolio-hero-stats">
-                <div class="portfolio-stat-box">
-                    <span class="portfolio-stat-num">{{ $allProjectsCount }}+</span>
-                    <span class="portfolio-stat-label">{{ $locale === 'ar' ? 'مشروع ومنصة منجزة' : ($locale === 'fr' ? 'Projets Livrés' : 'Delivered Platforms') }}</span>
-                </div>
-                <div class="portfolio-stat-box">
-                    <span class="portfolio-stat-num">{{ count($countries) }}+</span>
-                    <span class="portfolio-stat-label">{{ $locale === 'ar' ? 'دول إقليمية وعالمية' : ($locale === 'fr' ? 'Pays Couverts' : 'Active Markets') }}</span>
-                </div>
-                <div class="portfolio-stat-box">
-                    <span class="portfolio-stat-num">99.8%</span>
-                    <span class="portfolio-stat-label">{{ $locale === 'ar' ? 'رضا والتزام بالجودة' : ($locale === 'fr' ? 'Satisfaction Client' : 'Client Satisfaction') }}</span>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -505,10 +612,18 @@
                                     <span>{{ $project->country_name }}</span>
                                 </span>
                                 @if($project->sector_name)
-                                    <span class="portfolio-sector-badge">{{ $project->sector_name }}</span>
+                                    <span class="portfolio-sector-badge">
+                                        {{ $project->sector_name }}
+                                    </span>
                                 @endif
                             </div>
 
+                            @if($project->impact_stat)
+                                <span class="portfolio-impact-chip">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                    <span>{{ $project->impact_stat }}</span>
+                                </span>
+                            @endif
                         </div>
 
                         <!-- Card Body -->
