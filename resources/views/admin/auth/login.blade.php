@@ -65,6 +65,13 @@
             margin-bottom: 25px;
         }
         .login-logo span { color: var(--lime); }
+        .login-logo-img {
+            max-height: 48px;
+            max-width: 180px;
+            object-fit: contain;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
         .login-title {
             font-size: 22px;
             font-weight: 800;
@@ -153,7 +160,13 @@
 </head>
 <body>
     <div class="login-box">
-        <a href="{{ route('home') }}" class="login-logo">OX<span>.</span></a>
+        <a href="{{ route('home') }}" class="login-logo" style="text-decoration: none;">
+            @if(!empty($adminLogo))
+                <img src="{{ $adminLogo }}" alt="{{ $siteName }}" class="login-logo-img">
+            @else
+                OX<span>.</span>
+            @endif
+        </a>
         <h1 class="login-title">تسجيل الدخول للوحة التحكم</h1>
         <p class="login-subtitle">أدخل بيانات الحساب المصرح له بإدارة موقع OX Tech</p>
 
