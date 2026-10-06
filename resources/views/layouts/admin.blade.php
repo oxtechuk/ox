@@ -83,7 +83,7 @@
 
         /* ─── Sidebar (Dark Obsidian) ─── */
         .admin-sidebar {
-            width: 270px;
+            width: 250px;
             background: var(--sidebar-bg);
             border-left: 1px solid var(--sidebar-border);
             display: flex;
@@ -98,37 +98,37 @@
         }
 
         .sidebar-brand {
-            padding: 22px 24px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--sidebar-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 10px;
             background: var(--sidebar-bg-sub);
         }
 
         .sidebar-logo {
-            font: 900 22px/1 var(--font-code), sans-serif;
-            letter-spacing: -0.5px;
+            font: 800 18px/1 var(--font-code), sans-serif;
+            letter-spacing: -0.3px;
             color: #FFFFFF;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             white-space: nowrap;
         }
         .sidebar-logo span { color: var(--brand-green); }
         .sidebar-logo small {
             display: block;
-            font: 800 9px/1 var(--font-code), sans-serif;
+            font: 700 8.5px/1 var(--font-code), sans-serif;
             color: var(--brand-green);
-            letter-spacing: 2px;
-            margin-top: 5px;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
         }
 
         .admin-sidebar-logo-img {
-            max-height: 38px;
-            max-width: 150px;
+            max-height: 32px;
+            max-width: 135px;
             object-fit: contain;
             display: block;
             filter: brightness(0) invert(1);
@@ -377,48 +377,49 @@
 
         /* ─── Clean Top Bar (Matching Image 1) ─── */
         .admin-topbar {
-            height: 75px;
+            height: 62px;
             background: #FFFFFF;
             border-bottom: 1px solid var(--border-card);
-            padding: 0 35px;
+            padding: 0 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-            gap: 20px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.02);
+            gap: 16px;
         }
 
         .topbar-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .topbar-title {
-            font-size: 22px;
-            font-weight: 900;
+            font-size: 16.5px;
+            font-weight: 700;
             color: var(--text-heading);
-            letter-spacing: -0.5px;
+            letter-spacing: 0;
+            margin: 0;
         }
 
         .topbar-actions {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .topbar-date-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 11.5px;
+            gap: 5px;
+            font-size: 11px;
             font-weight: 600;
             color: #64748B;
             background: #F8FAFC;
             border: 1px solid #E2E8F0;
-            padding: 4px 10px;
-            border-radius: 99px;
-            margin-right: 12px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-right: 8px;
         }
 
         .quick-add-dropdown-wrapper {
@@ -429,13 +430,13 @@
             background: #071B19 !important;
             color: #FFFFFF !important;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 12.5px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11.5px;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -470,7 +471,7 @@
             gap: 10px;
             padding: 8px 12px;
             border-radius: 8px;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 600;
             color: #334155;
             text-decoration: none;
@@ -488,9 +489,9 @@
             position: relative;
             background: #071B19;
             color: #FFFFFF;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -505,13 +506,13 @@
 
         .bell-counter-badge {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -4px;
+            right: -4px;
             background: #EF4444;
             color: #FFFFFF;
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 800;
-            padding: 2px 6px;
+            padding: 2px 5px;
             border-radius: 99px;
             border: 2px solid #FFFFFF;
             font-family: var(--font-code);
@@ -520,26 +521,26 @@
         .topbar-user-capsule {
             background: #071B19;
             color: #FFFFFF;
-            padding: 6px 14px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .user-capsule-avatar-box {
             position: relative;
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             background: rgba(255, 255, 255, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 12px;
+            font-size: 11px;
             color: #FFFFFF;
         }
 
@@ -547,22 +548,22 @@
             position: absolute;
             bottom: -2px;
             right: -2px;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: #10B981;
-            border: 2px solid #071B19;
+            border: 1.5px solid #071B19;
             border-radius: 50%;
         }
 
         .user-capsule-text {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: #FFFFFF;
             white-space: nowrap;
         }
         .user-capsule-text small {
             display: block;
-            font-size: 9.5px;
+            font-size: 9px;
             color: #94A3B8;
             font-weight: 500;
         }
@@ -570,15 +571,15 @@
         .view-site-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 12px;
+            gap: 6px;
+            font-size: 11.5px;
             font-weight: 700;
             color: #475569;
             text-decoration: none;
             background: #F8FAFC;
             border: 1px solid #E2E8F0;
-            padding: 8px 16px;
-            border-radius: 10px;
+            padding: 5px 12px;
+            border-radius: 8px;
             transition: 0.2s;
         }
         .view-site-link:hover {
@@ -588,7 +589,7 @@
         }
 
         .admin-content {
-            padding: 35px;
+            padding: 24px 28px;
             flex: 1;
         }
 
@@ -761,13 +762,12 @@
         </div>
 
         <ul class="sidebar-menu">
-            <!-- GROUP 1: OVERVIEW & FINANCE (نظرة عامة والمالية) -->
-            <li class="menu-heading">نظرة عامة والمالية</li>
+            <li class="menu-heading">الرئيسية والمبيعات</li>
             <li>
                 <a href="{{ route('admin.dashboard') }}" class="menu-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" data-tooltip="لوحة التحكم">
                     <div class="menu-link-content">
                         <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
                             </svg>
@@ -780,7 +780,7 @@
                 <a href="{{ route('admin.digital-orders.index') }}" class="menu-link {{ request()->routeIs('admin.digital-orders.*') ? 'active' : '' }}" data-tooltip="مبيعات وتراخيص المتجر">
                     <div class="menu-link-content">
                         <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="9" cy="21" r="1"></circle>
                                 <circle cx="20" cy="21" r="1"></circle>
                                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
@@ -794,56 +794,11 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.payment-logs.index') }}" class="menu-link {{ request()->routeIs('admin.payment-logs.*') ? 'active' : '' }}" data-tooltip="سجل بوابات الدفع (Logs)">
+                <a href="{{ route('admin.digital-products.index') }}" class="menu-link {{ request()->routeIs('admin.digital-products.*') ? 'active' : '' }}" data-tooltip="البرامج والمنتجات الرقمية">
                     <div class="menu-link-content">
                         <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                            </svg>
-                        </span>
-                        <span class="menu-text">سجل بوابات الدفع (Logs)</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.crm.invoices.index') }}" class="menu-link {{ request()->routeIs('admin.crm.invoices.*') ? 'active' : '' }}" data-tooltip="الفواتير والمستحقات">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1z"></path>
-                                <path d="M8 7h8"></path>
-                                <path d="M8 11h8"></path>
-                                <path d="M8 15h5"></path>
-                            </svg>
-                        </span>
-                        <span class="menu-text">الفواتير والمستحقات</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.crm.quotations.index') }}" class="menu-link {{ request()->routeIs('admin.crm.quotations.*') ? 'active' : '' }}" data-tooltip="عروض الأسعار">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                            </svg>
-                        </span>
-                        <span class="menu-text">عروض الأسعار</span>
-                    </div>
-                </a>
-            </li>
-
-            <!-- GROUP 2: DIGITAL PRODUCTS (المتجر والمنتجات) -->
-            <li class="menu-heading">المتجر والمنتجات الرقمية</li>
-            <li>
-                <a href="{{ route('admin.digital-products.index') }}" class="menu-link {{ request()->routeIs('admin.digital-products.*') ? 'active' : '' }}" data-tooltip="البرامج والمنتجات">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
                                 <line x1="8" y1="21" x2="16" y2="21"></line>
                                 <line x1="12" y1="17" x2="12" y2="21"></line>
                             </svg>
@@ -852,14 +807,11 @@
                     </div>
                 </a>
             </li>
-
-            <!-- GROUP 3: CLIENTS & LEADS (العملاء والتسويق) -->
-            <li class="menu-heading">العملاء والتسويق</li>
             <li>
                 <a href="{{ route('admin.consultations.index') }}" class="menu-link {{ request()->routeIs('admin.consultations.*') ? 'active' : '' }}" data-tooltip="طلبات الاستشارة">
                     <div class="menu-link-content">
                         <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
                         </span>
@@ -874,7 +826,7 @@
                 <a href="{{ route('admin.crm.clients.index') }}" class="menu-link {{ request()->routeIs('admin.crm.clients.*') ? 'active' : '' }}" data-tooltip="سجل العملاء والشركات">
                     <div class="menu-link-content">
                         <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="9" cy="7" r="4"></circle>
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -886,97 +838,35 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.reports.index') }}" class="menu-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" data-tooltip="تقارير الأداء ومصادر الزيارات">
+                <a href="{{ route('admin.crm.invoices.index') }}" class="menu-link {{ request()->routeIs('admin.crm.invoices.*') ? 'active' : '' }}" data-tooltip="الفواتير والمستحقات">
                     <div class="menu-link-content">
                         <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="18" y1="20" x2="18" y2="10"></line>
-                                <line x1="12" y1="20" x2="12" y2="4"></line>
-                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1z"></path>
+                                <path d="M8 7h8"></path>
+                                <path d="M8 11h8"></path>
+                                <path d="M8 15h5"></path>
                             </svg>
                         </span>
-                        <span class="menu-text">تقارير الأداء</span>
+                        <span class="menu-text">الفواتير والمستحقات</span>
                     </div>
                 </a>
             </li>
 
-            <!-- GROUP 4: CONTENT & SYSTEM (المحتوى والنظام) -->
-            <li class="menu-heading">المحتوى والنظام</li>
+            <!-- System & Unified Hub Link -->
+            <li class="menu-heading" style="margin-top: 10px;">إدارة النظام والمحتوى</li>
             <li>
-                <a href="{{ route('admin.projects.index') }}" class="menu-link {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}" data-tooltip="معرض الأعمال والمشاريع">
+                <a href="{{ route('admin.hub') }}" class="menu-link {{ request()->routeIs('admin.hub') || request()->routeIs('admin.projects.*') || request()->routeIs('admin.testimonials.*') || request()->routeIs('admin.site-content.*') || request()->routeIs('admin.settings.*') || request()->routeIs('admin.tracking.*') || request()->routeIs('admin.reports.*') || request()->routeIs('admin.payment-logs.*') || request()->routeIs('admin.crm.quotations.*') || request()->routeIs('admin.users.*') ? 'active' : '' }}" data-tooltip="مركز النظام والأدوات">
                     <div class="menu-link-content">
                         <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                        </span>
-                        <span class="menu-text">المشاريع والأعمال</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.testimonials.index') }}" class="menu-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" data-tooltip="فيديوهات الشركاء">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                            </svg>
-                        </span>
-                        <span class="menu-text">فيديوهات الشركاء</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.site-content.index') }}" class="menu-link {{ request()->routeIs('admin.site-content.*') ? 'active' : '' }}" data-tooltip="نصوص الموقع">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                            </svg>
-                        </span>
-                        <span class="menu-text">نصوص الموقع</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.settings.index') }}" class="menu-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" data-tooltip="إعدادات الموقع وبوابات الدفع">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="3"></circle>
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                             </svg>
                         </span>
-                        <span class="menu-text">إعدادات الموقع والدفع</span>
+                        <span class="menu-text">مركز النظام والمحتوى</span>
                     </div>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.tracking.index') }}" class="menu-link {{ request()->routeIs('admin.tracking.*') ? 'active' : '' }}" data-tooltip="بكسلات التتبع">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <circle cx="12" cy="12" r="6"></circle>
-                                <circle cx="12" cy="12" r="2"></circle>
-                            </svg>
-                        </span>
-                        <span class="menu-text">بكسلات التتبع</span>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.users.index') }}" class="menu-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" data-tooltip="المستخدمين">
-                    <div class="menu-link-content">
-                        <span class="menu-icon">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                        </span>
-                        <span class="menu-text">المستخدمين</span>
-                    </div>
+                    <span style="font-size: 10px; background: rgba(255, 255, 255, 0.12); color: #94A3B8; padding: 2px 6px; border-radius: 6px;">HUB</span>
                 </a>
             </li>
         </ul>

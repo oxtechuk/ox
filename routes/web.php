@@ -57,14 +57,14 @@ Route::post('/checkout/initiate', [DigitalCheckoutController::class, 'initiate']
     ->middleware('throttle:15,1')
     ->name('checkout.initiate');
 Route::match(['get', 'post'], '/checkout/paysky/callback', [DigitalCheckoutController::class, 'callback'])->name('checkout.paysky.callback');
-Route::post('/checkout/paysky/webhook', [DigitalCheckoutController::class, 'webhook'])->name('checkout.paysky.webhook');
+Route::match(['get', 'post'], '/checkout/paysky/webhook', [DigitalCheckoutController::class, 'webhook'])->name('checkout.paysky.webhook');
 Route::post('/checkout/paysky/log-error', [DigitalCheckoutController::class, 'logClientError'])->name('checkout.paysky.log_error');
 
 // PayPal Checkout Routes
 Route::get('/checkout/paypal/config', [PayPalCheckoutController::class, 'config'])->name('checkout.paypal.config');
 Route::post('/checkout/paypal/create', [PayPalCheckoutController::class, 'create'])->name('checkout.paypal.create');
 Route::post('/checkout/paypal/capture', [PayPalCheckoutController::class, 'capture'])->name('checkout.paypal.capture');
-Route::post('/checkout/paypal/webhook', [PayPalCheckoutController::class, 'webhook'])->name('checkout.paypal.webhook');
+Route::match(['get', 'post'], '/checkout/paypal/webhook', [PayPalCheckoutController::class, 'webhook'])->name('checkout.paypal.webhook');
 
 Route::get('/checkout/success/{orderNumber}', [DigitalCheckoutController::class, 'success'])->name('checkout.success');
 
@@ -125,6 +125,7 @@ Route::prefix($adminPrefix)->name('admin.')->group(function () {
     */
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/hub', [DashboardController::class, 'hub'])->name('hub');
 
         // Projects Management
         Route::resource('projects', AdminProjectController::class);

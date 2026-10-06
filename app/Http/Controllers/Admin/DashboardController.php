@@ -8,9 +8,12 @@ use App\Models\Consultation;
 use App\Models\DigitalProduct;
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\PaymentLog;
 use App\Models\Project;
 use App\Models\Quotation;
+use App\Models\SiteSetting;
 use App\Models\Testimonial;
+use App\Models\TrackingPixel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\View\View;
@@ -125,5 +128,20 @@ class DashboardController extends Controller
             'recentConsultations',
             'recentProjects'
         ));
+    }
+
+    public function hub(): View
+    {
+        $hubStats = [
+            'projects_count' => Project::count(),
+            'testimonials_count' => Testimonial::count(),
+            'quotations_count' => Quotation::count(),
+            'payment_logs_count' => PaymentLog::count(),
+            'users_count' => User::count(),
+            'tracking_pixels_count' => TrackingPixel::count(),
+            'site_settings_count' => SiteSetting::count(),
+        ];
+
+        return view('admin.hub', compact('hubStats'));
     }
 }

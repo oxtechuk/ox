@@ -44,66 +44,66 @@
     .balance-hero-card {
         background: #FFFFFF;
         border: 1px solid var(--border-card);
-        border-radius: 20px;
-        padding: 30px 28px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.02);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        min-height: 190px;
+        min-height: 160px;
         position: relative;
     }
 
     .balance-amount-row {
         display: flex;
         align-items: baseline;
-        gap: 12px;
-        margin-bottom: 6px;
+        gap: 8px;
+        margin-bottom: 4px;
     }
 
     .balance-amount-num {
-        font: 900 44px/1 var(--font-code), sans-serif;
+        font: 800 28px/1 var(--font-code), sans-serif;
         color: var(--text-heading);
-        letter-spacing: -1px;
+        letter-spacing: -0.5px;
     }
 
     .balance-amount-currency {
-        font: 800 18px/1 var(--font-code), sans-serif;
+        font: 700 13.5px/1 var(--font-code), sans-serif;
         color: #0F172A;
         letter-spacing: 0.5px;
     }
 
     .balance-label {
-        font-size: 14.5px;
+        font-size: 12px;
         color: var(--text-muted);
         font-weight: 600;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
     }
 
     .balance-meta-bar {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         flex-wrap: wrap;
-        padding-top: 14px;
+        padding-top: 12px;
         border-top: 1px solid #F1F5F9;
     }
 
     .balance-growth-badge {
         display: inline-flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
         background: #ECFDF5;
         color: #047857;
-        font-size: 12px;
-        font-weight: 800;
-        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
         border-radius: 99px;
         font-family: var(--font-code);
     }
 
     .balance-sub-egp {
-        font-size: 12.5px;
+        font-size: 11.5px;
         font-weight: 700;
         color: #64748B;
         font-family: var(--font-code);
@@ -113,15 +113,15 @@
     .metrics-stack {
         display: flex;
         flex-direction: column;
-        gap: 14px;
+        gap: 12px;
     }
 
     .metric-sub-card {
         background: #FFFFFF;
         border: 1px solid var(--border-card);
-        border-radius: 16px;
-        padding: 18px 22px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+        border-radius: 14px;
+        padding: 13px 18px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -131,29 +131,29 @@
 
     .metric-sub-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
     }
 
     .metric-sub-info {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 3px;
     }
 
     .metric-sub-label {
-        font-size: 13px;
+        font-size: 11.5px;
         color: var(--text-muted);
         font-weight: 600;
     }
 
     .metric-sub-value {
-        font: 800 24px/1 var(--font-code), sans-serif;
+        font: 800 19px/1 var(--font-code), sans-serif;
         color: var(--text-heading);
     }
 
     .metric-sub-icon-circle {
-        width: 44px;
-        height: 44px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         border: 1.5px solid #0F172A;
         display: flex;
@@ -174,13 +174,13 @@
     .marketplace-hero-card {
         background: #FFFFFF;
         border: 1px solid var(--border-card);
-        border-radius: 20px;
-        padding: 24px 22px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        border-radius: 16px;
+        padding: 18px 18px;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.02);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        min-height: 190px;
+        min-height: 160px;
     }
 
     .marketplace-header {
@@ -188,37 +188,37 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        margin-bottom: 14px;
+        margin-bottom: 10px;
     }
 
     .marketplace-brand-tag {
         display: flex;
         align-items: center;
         gap: 6px;
-        font-size: 13.5px;
-        font-weight: 800;
+        font-size: 12px;
+        font-weight: 700;
         color: #0F172A;
     }
     .marketplace-brand-tag span.brand-dot {
         color: #10B981;
-        font-size: 18px;
+        font-size: 14px;
         line-height: 1;
     }
 
     .marketplace-actions-row {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
 
     .marketplace-pill-btn {
         background: #F8FAFC;
         border: 1px solid #E2E8F0;
         color: #334155;
-        font-size: 11.5px;
-        font-weight: 700;
-        padding: 5px 12px;
-        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 9px;
+        border-radius: 6px;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
@@ -233,17 +233,17 @@
 
     .marketplace-center-content {
         text-align: center;
-        padding: 10px 14px;
+        padding: 6px 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
 
     .marketplace-icon-wrap {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         background: #F8FAFC;
         border: 1px solid #E2E8F0;
         display: flex;
@@ -253,8 +253,8 @@
     }
 
     .marketplace-desc-text {
-        font-size: 12px;
-        line-height: 1.6;
+        font-size: 11px;
+        line-height: 1.5;
         color: #64748B;
         text-align: center;
         margin: 0;
@@ -263,8 +263,8 @@
     .marketplace-footer-pills {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin-top: 14px;
+        gap: 6px;
+        margin-top: 10px;
     }
 
     .marketplace-action-pill {
@@ -272,16 +272,16 @@
         background: #F8FAFC;
         border: 1px solid #E2E8F0;
         color: #334155;
-        padding: 8px 14px;
-        border-radius: 10px;
-        font-size: 12px;
-        font-weight: 700;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 600;
         text-align: center;
         text-decoration: none;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
         transition: all 0.2s ease;
     }
     .marketplace-action-pill:hover {
@@ -306,9 +306,9 @@
     .chart-card {
         background: #FFFFFF;
         border: 1px solid var(--border-card);
-        border-radius: 20px;
-        padding: 26px 28px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.02);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -318,41 +318,41 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 10px;
     }
 
     .chart-title-box h3 {
-        font-size: 17px;
-        font-weight: 800;
+        font-size: 14.5px;
+        font-weight: 700;
         color: var(--text-heading);
         margin-bottom: 2px;
     }
     .chart-title-box p {
-        font-size: 12px;
+        font-size: 11px;
         color: var(--text-muted);
-        font-weight: 600;
+        font-weight: 500;
         margin: 0;
     }
 
     .chart-tabs-bar {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
         background: #F8FAFC;
-        padding: 4px;
-        border-radius: 10px;
+        padding: 3px;
+        border-radius: 8px;
         border: 1px solid #E2E8F0;
     }
 
     .chart-tab-btn {
         background: transparent;
         border: none;
-        padding: 5px 12px;
-        border-radius: 7px;
-        font-size: 11.5px;
-        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 600;
         color: #64748B;
         cursor: pointer;
         transition: 0.15s;
@@ -361,22 +361,22 @@
     .chart-tab-btn.active {
         background: #FFFFFF;
         color: #071B19;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     }
 
     .chart-canvas-wrapper {
         position: relative;
-        height: 250px;
+        height: 220px;
         width: 100%;
     }
 
     .chart-bottom-caption {
         text-align: center;
-        font-size: 12px;
-        font-weight: 700;
+        font-size: 11px;
+        font-weight: 600;
         color: #64748B;
         font-family: var(--font-code);
-        margin-top: 14px;
+        margin-top: 10px;
     }
 
     /* ─── Gateway Status Box ─── */

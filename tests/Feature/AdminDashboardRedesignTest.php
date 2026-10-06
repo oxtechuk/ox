@@ -36,11 +36,15 @@ class AdminDashboardRedesignTest extends TestCase
 
         $response->assertStatus(200);
 
-        // Verify the 4 Smart Navigation Groups
-        $response->assertSee('نظرة عامة والمالية');
-        $response->assertSee('المتجر والمنتجات الرقمية');
-        $response->assertSee('العملاء والتسويق');
-        $response->assertSee('المحتوى والنظام');
+        // Verify Streamlined Sidebar Navigation Items
+        $response->assertSee('الرئيسية والمبيعات');
+        $response->assertSee('لوحة التحكم');
+        $response->assertSee('مبيعات وتراخيص المتجر');
+        $response->assertSee('البرامج والمنتجات');
+        $response->assertSee('طلبات الاستشارة');
+        $response->assertSee('سجل العملاء');
+        $response->assertSee('الفواتير والمستحقات');
+        $response->assertSee('مركز النظام والمحتوى');
 
         // Verify Financial Hub Elements & Metrics
         $response->assertSee('Available balance');
@@ -58,5 +62,29 @@ class AdminDashboardRedesignTest extends TestCase
         // Verify Topbar SaaS Features
         $response->assertSee('إضافة سريعة');
         $response->assertSee('مرحباً!');
+    }
+
+    public function test_admin_can_access_unified_hub_page(): void
+    {
+        $response = $this->actingAs($this->admin)->get(route('admin.hub'));
+
+        $response->assertStatus(200);
+
+        // Verify Hub Page Modules & Categories
+        $response->assertSee('مركز إدارة النظام والأدوات');
+        $response->assertSee('المحتوى ومعرض الأعمال');
+        $response->assertSee('العمليات والمالية');
+        $response->assertSee('النظام والتهيئة والأمان');
+
+        // Verify Consolidated Cards
+        $response->assertSee('المشاريع ومعرض الأعمال');
+        $response->assertSee('فيديوهات وقصص الشركاء');
+        $response->assertSee('نصوص وعناصر الموقع');
+        $response->assertSee('عروض الأسعار (Quotations)');
+        $response->assertSee('سجل بوابات الدفع');
+        $response->assertSee('تقارير الأداء ومصادر الزيارات');
+        $response->assertSee('إعدادات الموقع وبوابات الدفع');
+        $response->assertSee('بكسلات التتبع');
+        $response->assertSee('فريق الإدارة والمستخدمين');
     }
 }

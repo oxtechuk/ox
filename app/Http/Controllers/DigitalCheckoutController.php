@@ -174,6 +174,14 @@ class DigitalCheckoutController extends Controller
      */
     public function webhook(Request $request): JsonResponse
     {
+        if ($request->isMethod('get')) {
+            return response()->json([
+                'status' => 'active',
+                'gateway' => 'paysky',
+                'message' => 'PaySky Webhook endpoint is active and listening for POST notifications.',
+            ]);
+        }
+
         Log::info('PaySky Webhook Received', $request->all());
 
         $merchantReference = $request->input('MerchantReference') ?? $request->input('merchant_reference');

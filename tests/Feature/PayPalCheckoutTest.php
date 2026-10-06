@@ -181,4 +181,23 @@ class PayPalCheckoutTest extends TestCase
             'status' => 'success',
         ]);
     }
+
+    public function test_paypal_webhook_endpoint_accepts_get_and_post(): void
+    {
+        $getResponse = $this->getJson(route('checkout.paypal.webhook'));
+        $getResponse->assertStatus(200);
+        $getResponse->assertJson([
+            'status' => 'active',
+            'gateway' => 'paypal',
+        ]);
+
+        $postResponse = $this->postJson(route('checkout.paypal.webhook'), [
+            'event_type' => 'CHECKOUT.ORDER.APPROVED',
+            'resource' => [],
+        ]);
+        $postResponse->assertStatus(200);
+        $postResponse->assertJson([
+            'status' => 'received',
+        ]);
+    }
 }

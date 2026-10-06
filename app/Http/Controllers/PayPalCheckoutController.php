@@ -185,6 +185,14 @@ class PayPalCheckoutController extends Controller
      */
     public function webhook(Request $request): JsonResponse
     {
+        if ($request->isMethod('get')) {
+            return response()->json([
+                'status' => 'active',
+                'gateway' => 'paypal',
+                'message' => 'PayPal Webhook endpoint is active and listening for POST notifications.',
+            ]);
+        }
+
         Log::info('PayPal Webhook Received', $request->all());
 
         $eventType = $request->input('event_type');

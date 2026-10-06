@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->validateCsrfTokens(except: [
             'checkout/paysky/*',
+            'checkout/paypal/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
