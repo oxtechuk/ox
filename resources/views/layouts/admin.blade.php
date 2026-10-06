@@ -678,6 +678,73 @@
             border-radius: 8px;
         }
 
+        /* ─── Modern Form System ─── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 13.5px;
+            font-family: var(--font);
+            color: #0F172A;
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 14px center;
+            padding-left: 38px;
+            cursor: pointer;
+        }
+
+        .form-control:focus {
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            background: #FFFFFF;
+        }
+
+        .form-control[readonly] {
+            background: #F8FAFC;
+            color: #475569;
+            cursor: default;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #64748B;
+            margin-top: 5px;
+            display: block;
+            line-height: 1.5;
+        }
+
         /* ─── Tables ─── */
         .table-responsive {
             overflow-x: auto;

@@ -3,31 +3,173 @@
 @section('title', 'إعدادات الهوية والفوتر و SEO | OX Tech')
 @section('header_title', 'إعدادات النظام والموقع والظهور الإقليمي')
 
+@push('admin-styles')
+<style>
+    .settings-nav-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: #F1F5F9;
+        padding: 6px;
+        border-radius: 14px;
+        margin-bottom: 24px;
+        border: 1px solid #E2E8F0;
+        overflow-x: auto;
+    }
+    .settings-nav-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 18px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #475569;
+        text-decoration: none;
+        border-radius: 10px;
+        white-space: nowrap;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid transparent;
+    }
+    .settings-nav-item:hover {
+        color: #0F172A;
+        background: rgba(255, 255, 255, 0.7);
+    }
+    .settings-nav-item.active {
+        background: #FFFFFF;
+        color: #0F172A !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        border-color: #E2E8F0;
+    }
+    .settings-nav-item.paypal.active {
+        color: #003087 !important;
+        border-color: #BAE6FD;
+        background: #F0F9FF;
+    }
+    .settings-nav-item.paysky.active {
+        color: #0284C7 !important;
+        border-color: #BAE6FD;
+        background: #F0F9FF;
+    }
+
+    /* ─── Premium Card Styles ─── */
+    .settings-card {
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+        margin-bottom: 22px;
+    }
+    .settings-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #F1F5F9;
+    }
+    .settings-card-title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #0F172A;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+    }
+    .settings-card-subtitle {
+        font-size: 12.5px;
+        color: #64748B;
+        margin-top: 4px;
+        line-height: 1.5;
+    }
+
+    /* ─── Modern Input Addons ─── */
+    .input-action-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .input-action-group .form-control {
+        padding-left: 44px;
+    }
+    .input-action-btn {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #64748B;
+        cursor: pointer;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        transition: 0.2s;
+    }
+    .input-action-btn:hover {
+        background: #F1F5F9;
+        color: #0F172A;
+    }
+
+    /* ─── Notice / Callout Box ─── */
+    .callout-box {
+        border-radius: 12px;
+        padding: 14px 18px;
+        font-size: 13px;
+        line-height: 1.6;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 22px;
+    }
+    .callout-warning {
+        background: #FFFBEB;
+        border: 1px solid #FDE68A;
+        color: #92400E;
+    }
+    .callout-info {
+        background: #EFF6FF;
+        border: 1px solid #BFDBFE;
+        color: #1E40AF;
+    }
+</style>
+@endpush
+
 @section('content')
 <div style="max-width: 1100px;">
 
-    <!-- Navigation Tabs -->
-    <div style="display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border-card); padding-bottom: 12px; overflow-x: auto;">
-        <a href="{{ route('admin.settings.index', ['tab' => 'branding']) }}" class="btn {{ $activeTab === 'branding' ? 'btn-lime' : 'btn-outline' }}">
-            الهوية والشعارات
+    <!-- Modern Pill Navigation Tabs -->
+    <div class="settings-nav-bar">
+        <a href="{{ route('admin.settings.index', ['tab' => 'branding']) }}" class="settings-nav-item {{ $activeTab === 'branding' ? 'active' : '' }}">
+            <span>🎨</span>
+            <span>الهوية والشعارات</span>
         </a>
-        <a href="{{ route('admin.settings.index', ['tab' => 'footer']) }}" class="btn {{ $activeTab === 'footer' ? 'btn-lime' : 'btn-outline' }}">
-            الفوتر والمكاتب الإقليمية
+        <a href="{{ route('admin.settings.index', ['tab' => 'footer']) }}" class="settings-nav-item {{ $activeTab === 'footer' ? 'active' : '' }}">
+            <span>🏢</span>
+            <span>الفوتر والمكاتب</span>
         </a>
-        <a href="{{ route('admin.settings.index', ['tab' => 'seo']) }}" class="btn {{ $activeTab === 'seo' ? 'btn-lime' : 'btn-outline' }}">
-            تحسين محركات البحث (SEO KSA/EG/UAE)
+        <a href="{{ route('admin.settings.index', ['tab' => 'seo']) }}" class="settings-nav-item {{ $activeTab === 'seo' ? 'active' : '' }}">
+            <span>🌐</span>
+            <span>تحسين محركات البحث (SEO)</span>
         </a>
-        <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}" class="btn {{ $activeTab === 'social' ? 'btn-lime' : 'btn-outline' }}">
-            روابط التواصل الاجتماعي
+        <a href="{{ route('admin.settings.index', ['tab' => 'social']) }}" class="settings-nav-item {{ $activeTab === 'social' ? 'active' : '' }}">
+            <span>📱</span>
+            <span>روابط التواصل</span>
         </a>
-        <a href="{{ route('admin.settings.index', ['tab' => 'mail']) }}" class="btn {{ $activeTab === 'mail' ? 'btn-lime' : 'btn-outline' }}">
-            خادم البريد (SMTP)
+        <a href="{{ route('admin.settings.index', ['tab' => 'mail']) }}" class="settings-nav-item {{ $activeTab === 'mail' ? 'active' : '' }}">
+            <span>✉️</span>
+            <span>خادم البريد (SMTP)</span>
         </a>
-        <a href="{{ route('admin.settings.index', ['tab' => 'paysky']) }}" class="btn {{ $activeTab === 'paysky' ? 'btn-lime' : 'btn-outline' }}" style="border-color: #38bdf8;">
-            💳 بوابة دفع PaySky
+        <a href="{{ route('admin.settings.index', ['tab' => 'paysky']) }}" class="settings-nav-item paysky {{ $activeTab === 'paysky' ? 'active' : '' }}">
+            <span>💳</span>
+            <span>بوابة PaySky (مصر)</span>
         </a>
-        <a href="{{ route('admin.settings.index', ['tab' => 'paypal']) }}" class="btn {{ $activeTab === 'paypal' ? 'btn-lime' : 'btn-outline' }}" style="border-color: #fbbf24;">
-            🅿️ بوابة دفع PayPal
+        <a href="{{ route('admin.settings.index', ['tab' => 'paypal']) }}" class="settings-nav-item paypal {{ $activeTab === 'paypal' ? 'active' : '' }}">
+            <span>🅿️</span>
+            <span>بوابة PayPal (العالمية)</span>
         </a>
     </div>
 
@@ -334,88 +476,186 @@
             </div>
         @elseif($activeTab === 'paypal')
             <!-- PayPal Gateway Integration -->
-            <div class="card">
-                <div class="card-header">
+            <div class="settings-card">
+                <div class="settings-card-header">
                     <div>
-                        <h3 class="card-title">إعدادات بوابة الدفع العالمية PayPal (Checkout REST API v2)</h3>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
-                            تمكين المبيعات الدولية واستقبال المدفوعات بحسابات PayPal والبطاقات العالمية.
+                        <h3 class="settings-card-title">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0;">
+                                <path d="M7 21l3-14h5.5c3 0 5 1.5 4.5 4.5-.4 2.5-2.2 4-4.5 4H12l-1 5.5H7z" fill="#003087"/>
+                                <path d="M9.5 21l2.5-11.5h4c2.5 0 4 1.2 3.5 3.8-.4 2.2-1.9 3.5-3.8 3.5H13l-1 4.2H9.5z" fill="#0079C1"/>
+                            </svg>
+                            <span>إعدادات بوابة الدفع العالمية PayPal (Checkout REST API v2)</span>
+                        </h3>
+                        <p class="settings-card-subtitle">
+                            تمكين المبيعات الدولية واستقبال المدفوعات بحسابات PayPal والبطاقات العالمية بأسلوب Smart Buttons.
                         </p>
                     </div>
                     <div>
-                        <span style="background: rgba(251, 191, 36, 0.15); color: #d97706; padding: 4px 10px; border-radius: 99px; font-size: 12px; font-weight: 700;">
-                            🅿️ PayPal Smart Buttons
+                        <span style="background: rgba(2, 132, 199, 0.1); color: #0284C7; padding: 6px 14px; border-radius: 99px; font-size: 12px; font-weight: 800; border: 1px solid rgba(2, 132, 199, 0.2);">
+                            REST API v2
                         </span>
                     </div>
                 </div>
 
-                <div class="form-grid" style="margin-bottom: 20px;">
+                <!-- Callout Alert Box -->
+                <div class="callout-box callout-warning">
+                    <span style="font-size: 20px; line-height: 1;">⚠️</span>
                     <div>
-                        <label class="form-label">حالة بوابة PayPal *</label>
-                        <select name="paypal_enabled" class="form-control">
-                            <option value="1" {{ ($settings['paypal_enabled'] ?? '1') === '1' ? 'selected' : '' }}>مفعلة وتستقبل المدفوعات (Enabled)</option>
-                            <option value="0" {{ ($settings['paypal_enabled'] ?? '1') === '0' ? 'selected' : '' }}>معطلة مؤقتاً (Disabled)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="form-label">بيئة العمل والتشغيل (Environment Mode) *</label>
-                        <select name="paypal_mode" class="form-control">
-                            <option value="sandbox" {{ ($settings['paypal_mode'] ?? 'sandbox') === 'sandbox' ? 'selected' : '' }}>بيئة التجربة والاختبار (Sandbox)</option>
-                            <option value="live" {{ ($settings['paypal_mode'] ?? 'sandbox') === 'live' ? 'selected' : '' }}>البيئة الحية للإنتاج الحقيقي (Live / Production)</option>
-                        </select>
-                        <small style="color: var(--text-muted); font-size: 11px;">في البيئة الحية سيتم خصم مبالغ حقيقية من حسابات وبطاقات المشترين.</small>
+                        <strong style="color: #78350F; display: block; margin-bottom: 2px;">تنبيه هام لتجنب فشل المصادقة (Client Authentication failed):</strong>
+                        <span>تأكد من أن <strong>بيئة العمل (Environment Mode)</strong> المختارة أدناه تطابق نوع التطبيق المستخرج منه المفاتيح في <a href="https://developer.paypal.com/dashboard/applications" target="_blank" style="color: #92400E; text-decoration: underline; font-weight: 800;">لوحة PayPal Developer</a> (إذا نسخت المفاتيح من تبويب <strong>Live</strong> اختر <strong>البيئة الحية</strong>، وإذا نسختها من <strong>Sandbox</strong> اختر <strong>بيئة التجربة</strong>).</span>
                     </div>
                 </div>
 
-                <div class="form-grid" style="margin-bottom: 20px;">
-                    <div>
-                        <label class="form-label">معرف العميل (PayPal Client ID) *</label>
-                        <input type="text" name="paypal_client_id" class="form-control" value="{{ $settings['paypal_client_id'] ?? config('services.paypal.client_id', '') }}" placeholder="A..." style="font-family: var(--font-code);">
-                        <small style="color: var(--text-muted); font-size: 11px;">مستخرج من تطبيق PayPal Developer Dashboard (REST API app).</small>
+                <!-- 1. Gateway Status & Mode -->
+                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 20px; margin-bottom: 24px;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981;"></span>
+                        <span>1. تفعيل البوابة وبيئة التشغيل (Status & Environment)</span>
                     </div>
+                    <div class="form-grid" style="margin-bottom: 0;">
+                        <div>
+                            <label class="form-label">حالة بوابة PayPal *</label>
+                            <select name="paypal_enabled" class="form-control" style="font-weight: 700;">
+                                <option value="1" {{ ($settings['paypal_enabled'] ?? '1') === '1' ? 'selected' : '' }}>🟢 مفعلة وتستقبل المدفوعات (Enabled)</option>
+                                <option value="0" {{ ($settings['paypal_enabled'] ?? '1') === '0' ? 'selected' : '' }}>⚪ معطلة مؤقتاً (Disabled)</option>
+                            </select>
+                            <span class="form-hint">عند التفعيل سيظهر زر PayPal في صفحة تفاصيل المنتج وسلة الشراء.</span>
+                        </div>
 
-                    <div>
-                        <label class="form-label">المفتاح السري (PayPal Client Secret) *</label>
-                        <input type="password" name="paypal_client_secret" class="form-control" value="{{ $settings['paypal_client_secret'] ?? config('services.paypal.client_secret', '') }}" placeholder="E..." style="font-family: var(--font-code);">
-                        <small style="color: var(--text-muted); font-size: 11px;">المفتاح السري لتأكيد إنشاء الطلبات وتفويض السحب.</small>
-                    </div>
-                </div>
-
-                <div class="form-grid" style="margin-bottom: 20px;">
-                    <div>
-                        <label class="form-label">العملة الافتراضية لحساب PayPal</label>
-                        <select name="paypal_currency" class="form-control">
-                            <option value="USD" {{ ($settings['paypal_currency'] ?? 'USD') === 'USD' ? 'selected' : '' }}>دولار أمريكي (USD)</option>
-                            <option value="EUR" {{ ($settings['paypal_currency'] ?? 'USD') === 'EUR' ? 'selected' : '' }}>يورو (EUR)</option>
-                            <option value="GBP" {{ ($settings['paypal_currency'] ?? 'USD') === 'GBP' ? 'selected' : '' }}>جنيه إسترليني (GBP)</option>
-                            <option value="SAR" {{ ($settings['paypal_currency'] ?? 'USD') === 'SAR' ? 'selected' : '' }}>ريال سعودي (SAR)</option>
-                        </select>
-                        <small style="color: var(--text-muted); font-size: 11px;">العملة التي سيتم إنشاء وسحب المعاملة بها داخل PayPal.</small>
-                    </div>
-
-                    <div>
-                        <label class="form-label">سعر صرف تحويل الجنيه المصري للدولار (EGP to USD Rate)</label>
-                        <input type="number" step="0.0001" name="paypal_egp_to_usd_rate" class="form-control" value="{{ $settings['paypal_egp_to_usd_rate'] ?? config('services.paypal.egp_to_usd_rate', 0.021) }}" style="font-family: var(--font-code);">
-                        <small style="color: var(--text-muted); font-size: 11px;">مثال: 0.021 يعني أن 1000 جنيه مصري تعادل 21.00 دولار.</small>
+                        <div>
+                            <label class="form-label">بيئة العمل والتشغيل (Environment Mode) *</label>
+                            <select name="paypal_mode" class="form-control" style="font-weight: 700;">
+                                <option value="live" {{ ($settings['paypal_mode'] ?? 'sandbox') === 'live' ? 'selected' : '' }}>🚀 البيئة الحية للإنتاج الحقيقي (Live / Production)</option>
+                                <option value="sandbox" {{ ($settings['paypal_mode'] ?? 'sandbox') === 'sandbox' ? 'selected' : '' }}>🧪 بيئة التجربة والاختبار (Sandbox)</option>
+                            </select>
+                            <span class="form-hint">في البيئة الحية Live يتم خصم مبالغ حقيقية وتحويلها إلى حساب PayPal التجاري.</span>
+                        </div>
                     </div>
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <label class="form-label">رابط استلام إشعار الخادم (PayPal Webhook URL)</label>
-                    <input type="text" readonly class="form-control" value="{{ route('checkout.paypal.webhook') }}" style="background: #f8fafc; font-family: var(--font-code); color: var(--text-muted);">
-                    <small style="color: var(--text-muted); font-size: 11px;">أضف هذا الرابط في صفحة Webhooks داخل لوحة PayPal Developer مع تفعيل حدث <code>PAYMENT.CAPTURE.COMPLETED</code>.</small>
+                <!-- 2. API Credentials -->
+                <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 14px; padding: 20px; margin-bottom: 24px;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #2563EB;"></span>
+                        <span>2. مفاتيح الاعتماد والربط (PayPal API Credentials)</span>
+                    </div>
+                    <div class="form-grid" style="margin-bottom: 0;">
+                        <div>
+                            <label class="form-label">معرف العميل (PayPal Client ID) *</label>
+                            <input type="text" name="paypal_client_id" class="form-control" value="{{ $settings['paypal_client_id'] ?? config('services.paypal.client_id', '') }}" placeholder="A..." style="font-family: monospace; font-size: 13px;" required>
+                            <span class="form-hint">المعرف العام المستخرج من تطبيق REST API داخل PayPal Developer Dashboard.</span>
+                        </div>
+
+                        <div>
+                            <label class="form-label">المفتاح السري (PayPal Client Secret) *</label>
+                            <div class="input-action-group">
+                                <input type="password" id="paypalSecretInput" name="paypal_client_secret" class="form-control" value="{{ $settings['paypal_client_secret'] ?? config('services.paypal.client_secret', '') }}" placeholder="E..." style="font-family: monospace; font-size: 13px;" required>
+                                <button type="button" class="input-action-btn" id="toggleSecretBtn" title="إظهار / إخفاء المفتاح السري">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span class="form-hint">المفتاح السري الضروري للحصول على تصريح OAuth وإنشاء الطلبات على الخادم.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Currency & Exchange Rate -->
+                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 14px; padding: 20px; margin-bottom: 24px;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #D97706;"></span>
+                        <span>3. العملة وسعر التحويل (Currency & Exchange Rate)</span>
+                    </div>
+                    <div class="form-grid" style="margin-bottom: 0;">
+                        <div>
+                            <label class="form-label">العملة الافتراضية لحساب PayPal</label>
+                            <select name="paypal_currency" class="form-control">
+                                <option value="USD" {{ ($settings['paypal_currency'] ?? 'USD') === 'USD' ? 'selected' : '' }}>دولار أمريكي (USD)</option>
+                                <option value="EUR" {{ ($settings['paypal_currency'] ?? 'USD') === 'EUR' ? 'selected' : '' }}>يورو (EUR)</option>
+                                <option value="GBP" {{ ($settings['paypal_currency'] ?? 'USD') === 'GBP' ? 'selected' : '' }}>جنيه إسترليني (GBP)</option>
+                                <option value="SAR" {{ ($settings['paypal_currency'] ?? 'USD') === 'SAR' ? 'selected' : '' }}>ريال سعودي (SAR)</option>
+                            </select>
+                            <span class="form-hint">العملة التي سيتم إنشاء وسحب المعاملة بها داخل حساب PayPal.</span>
+                        </div>
+
+                        <div>
+                            <label class="form-label">سعر صرف تحويل الجنيه المصري للدولار (EGP to USD Rate)</label>
+                            <input type="number" step="0.0001" name="paypal_egp_to_usd_rate" class="form-control" value="{{ $settings['paypal_egp_to_usd_rate'] ?? config('services.paypal.egp_to_usd_rate', 0.021) }}" style="font-family: monospace; font-size: 13px;">
+                            <span class="form-hint">مثال: القيمة <code>0.021</code> تعني أن كل 1,000 جنيه مصري تعادل 21.00 دولار أمريكي تقريباً.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Webhook Notification -->
+                <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 14px; padding: 20px;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #0F172A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #8B5CF6;"></span>
+                        <span>4. إشعار الخادم الآلي (Server-to-Server Webhook)</span>
+                    </div>
+                    <div>
+                        <label class="form-label">رابط استلام إشعار الخادم (PayPal Webhook URL)</label>
+                        <div class="input-action-group">
+                            <input type="text" id="paypalWebhookInput" readonly class="form-control" value="{{ route('checkout.paypal.webhook') }}" style="background: #F8FAFC; font-family: monospace; font-size: 13px; color: #1E293B;">
+                            <button type="button" class="input-action-btn" id="copyWebhookBtn" title="نسخ رابط الويب هوك">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="form-hint" style="margin-top: 8px;">
+                            أضف هذا الرابط في خانة <strong>Webhook URL</strong> داخل لوحة PayPal Developer مع تفعيل حدث <code>PAYMENT.CAPTURE.COMPLETED</code>.
+                        </span>
+                    </div>
                 </div>
             </div>
         @endif
 
-        <div style="display: flex; gap: 12px; margin-top: 20px;">
-            <button type="submit" class="btn btn-lime" style="padding: 10px 28px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #E2E8F0;">
+            <button type="submit" class="btn btn-lime" style="padding: 12px 32px; font-size: 14px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
                 <span>حفظ التغييرات وتحديث الإعدادات</span>
             </button>
-            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline">إلغاء</a>
+            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline" style="padding: 12px 24px;">إلغاء</a>
         </div>
     </form>
 
 </div>
+
+@push('admin-scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Toggle Secret Visibility
+        const toggleBtn = document.getElementById('toggleSecretBtn');
+        const secretInput = document.getElementById('paypalSecretInput');
+        if (toggleBtn && secretInput) {
+            toggleBtn.addEventListener('click', () => {
+                const isPassword = secretInput.type === 'password';
+                secretInput.type = isPassword ? 'text' : 'password';
+                toggleBtn.style.color = isPassword ? '#10B981' : '#64748B';
+            });
+        }
+
+        // Copy Webhook URL
+        const copyBtn = document.getElementById('copyWebhookBtn');
+        const webhookInput = document.getElementById('paypalWebhookInput');
+        if (copyBtn && webhookInput) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(webhookInput.value).then(() => {
+                    copyBtn.style.color = '#10B981';
+                    setTimeout(() => {
+                        copyBtn.style.color = '#64748B';
+                    }, 2000);
+                });
+            });
+        }
+    });
+</script>
+@endpush
 @endsection
