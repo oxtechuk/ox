@@ -76,6 +76,9 @@
                 <label style="display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">نوع الحدث (Event)</label>
                 <select name="event" class="form-control">
                     <option value="">جميع الأحداث</option>
+                    <option value="gateway_error" {{ request('event') === 'gateway_error' ? 'selected' : '' }}>⚠️ أخطاء البوابة (Gateway Error)</option>
+                    <option value="lightbox_error" {{ request('event') === 'lightbox_error' ? 'selected' : '' }}>⚠️ خطأ نافذة الدفع (Lightbox Error)</option>
+                    <option value="lightbox_cancelled" {{ request('event') === 'lightbox_cancelled' ? 'selected' : '' }}>إلغاء النافذة (Cancelled)</option>
                     <option value="lightbox_payload_prepared" {{ request('event') === 'lightbox_payload_prepared' ? 'selected' : '' }}>تجهيز Lightbox</option>
                     <option value="callback_received" {{ request('event') === 'callback_received' ? 'selected' : '' }}>استلام Callback</option>
                     <option value="webhook_received" {{ request('event') === 'webhook_received' ? 'selected' : '' }}>إشعار Webhook</option>

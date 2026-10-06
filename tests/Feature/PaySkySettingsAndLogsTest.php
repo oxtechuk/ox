@@ -131,4 +131,24 @@ class PaySkySettingsAndLogsTest extends TestCase
         $response->assertSee('REF-LOG-TEST');
         $response->assertSee('تجربة تسجيل عملية دفع');
     }
+
+    public function test_client_error_logging_creates_gateway_error_log(): void
+    {
+        $response = $this->postJson(route('checkout.paysky.log_error'), [
+            'merchant_reference' => 'REF-TEST-ERR-123',
+            'message' => 'فشل الدفع في نافذة PaySky: Card Declined',
+            'error' => ['Message' => 'Card Declined', 'Code' => '101'],
+            'source' => 'paysky_error_callback',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson(['success' => true]);
+
+        $this->assertDatabaseHas('payment_logs', [
+            'merchant_reference' => 'REF-TEST-ERR-123',
+            'event' => 'gateway_error',
+            'status' => 'failed',
+            'message' => 'فشل الدفع في نافذة PaySky: Card Declined',
+        ]);
+    }
 }

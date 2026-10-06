@@ -597,6 +597,44 @@
         });
     }
 
+    let currentMerchantRef = '';
+
+    function logGatewayError(ref, message, errorData, source, status) {
+        try {
+            fetch('{{ route('checkout.paysky.log_error') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    merchant_reference: ref || currentMerchantRef,
+                    message: message,
+                    error: errorData,
+                    source: source || 'lightbox_client',
+                    status: status || 'failed'
+                })
+            }).catch(console.error);
+        } catch (e) {
+            console.error('Failed to log error to server:', e);
+        }
+    }
+
+    window.addEventListener('message', function (event) {
+        if (event.data && typeof event.data === 'object') {
+            if (event.data.callback === 'errorCallback' || event.data.status === 'failed') {
+                logGatewayError(
+                    currentMerchantRef,
+                    'خطأ وارد من نافذة PaySky (postMessage): ' + (event.data.Info?.Message || event.data.message || JSON.stringify(event.data)),
+                    event.data,
+                    'paysky_post_message',
+                    'failed'
+                );
+            }
+        }
+    });
+
     async function handleSalesCheckout(e) {
         e.preventDefault();
         const btn = document.getElementById('btnSalesSubmit');
@@ -628,6 +666,7 @@
             const data = await response.json();
 
             if (data.success && data.paysky) {
+                currentMerchantRef = data.paysky.MerchantReference || data.merchant_reference || '';
                 btn.innerText = 'فتح نافذة الدفع...';
 
                 const scriptLoaded = await loadPaySkyAsync(data.paysky.ScriptUrl);
@@ -644,11 +683,26 @@
                             window.location.href = data.callback_url + '?MerchantReference=' + encodeURIComponent(data.paysky.MerchantReference) + '&Success=true';
                         },
                         errorCallback: function (error) {
-                            alert('حدث خطأ أثناء معالجة الدفع: ' + (error.Message || 'يرجى المحاولة مجدداً'));
+                            const errMsg = (error && (error.Message || error.errorMessage || error.message)) ? (error.Message || error.errorMessage || error.message) : JSON.stringify(error || 'خطأ غير محدد من البوابة');
+                            logGatewayError(
+                                data.paysky.MerchantReference,
+                                'فشل الدفع في نافذة PaySky (errorCallback): ' + errMsg,
+                                error,
+                                'paysky_error_callback',
+                                'failed'
+                            );
+                            alert('حدث خطأ أثناء معالجة الدفع: ' + (error?.Message || error?.errorMessage || 'يرجى مراجعة بيانات البطاقة أو المحاولة مجدداً'));
                             btn.disabled = false;
                             btn.innerText = 'إتمام الشراء الآن والدفع عبر PaySky ←';
                         },
                         cancelCallback: function () {
+                            logGatewayError(
+                                data.paysky.MerchantReference,
+                                'قام العميل بإلغاء أو إغلاق نافذة الدفع PaySky Lightbox',
+                                { action: 'lightbox_cancelled' },
+                                'lightbox_cancelled',
+                                'cancelled'
+                            );
                             btn.disabled = false;
                             btn.innerText = 'إتمام الشراء الآن والدفع عبر PaySky ←';
                         }
@@ -658,12 +712,26 @@
                     window.location.href = data.callback_url + '?MerchantReference=' + encodeURIComponent(data.paysky.MerchantReference) + '&Success=true';
                 }
             } else {
+                logGatewayError(
+                    '',
+                    'فشل إنشاء أمر الدفع من الخادم: ' + (data.message || 'بيانات غير مكتملة'),
+                    data,
+                    'checkout_initiate_failed',
+                    'failed'
+                );
                 alert(data.message || 'حدث خطأ في النظام.');
                 btn.disabled = false;
                 btn.innerText = 'إتمام الشراء الآن والدفع عبر PaySky ←';
             }
         } catch (err) {
             console.error(err);
+            logGatewayError(
+                currentMerchantRef,
+                'استثناء في متصفح العميل أثناء محاولة الدفع: ' + (err.message || String(err)),
+                { error: String(err), stack: err.stack },
+                'client_exception',
+                'failed'
+            );
             alert('حدث خطأ بالاتصال. يرجى المحاولة لاحقاً.');
             btn.disabled = false;
             btn.innerText = 'إتمام الشراء الآن والدفع عبر PaySky ←';

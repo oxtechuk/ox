@@ -58,40 +58,56 @@ class PaySkyService
     }
 
     /**
+     * Generate PaySky / UPG SecureHash using HMAC-SHA256 with parameter string
+     *
+     * @param  array<string, mixed>  $parameters
+     * @return array{hash: string, raw_string: string}
+     */
+    public function generateSecureHashWithRaw(array $parameters): array
+    {
+        unset($parameters['SecureHash'], $parameters['secure_hash']);
+
+        // Sort keys ascending alphabetically
+        ksort($parameters);
+
+        // Build canonical query string with key=value&key2=value2
+        $pairs = [];
+        foreach ($parameters as $key => $value) {
+            if ($value !== null && $value !== '') {
+                $pairs[] = $key.'='.$value;
+            }
+        }
+        $rawString = implode('&', $pairs);
+
+        try {
+            $binaryKey = ctype_xdigit($this->secretKey) && (strlen($this->secretKey) % 2 === 0)
+                ? hex2bin($this->secretKey)
+                : $this->secretKey;
+
+            $hash = strtoupper(hash_hmac('sha256', $rawString, (string) $binaryKey));
+        } catch (Exception $e) {
+            Log::error('PaySky SecureHash calculation error', [
+                'error' => $e->getMessage(),
+                'raw_string' => $rawString,
+            ]);
+
+            $hash = strtoupper(hash_hmac('sha256', $rawString, $this->secretKey));
+        }
+
+        return [
+            'hash' => $hash,
+            'raw_string' => $rawString,
+        ];
+    }
+
+    /**
      * Generate PaySky SecureHash using HMAC-SHA256
      *
      * @param  array<string, mixed>  $parameters
      */
     public function generateSecureHash(array $parameters): string
     {
-        unset($parameters['SecureHash']);
-        unset($parameters['secure_hash']);
-
-        // Sort keys ascending
-        ksort($parameters);
-
-        $concatenated = '';
-        foreach ($parameters as $key => $value) {
-            if ($value !== null && $value !== '') {
-                $concatenated .= $key.'='.$value;
-            }
-        }
-
-        try {
-            // Check if key is valid hex
-            $binaryKey = ctype_xdigit($this->secretKey) && (strlen($this->secretKey) % 2 === 0)
-                ? hex2bin($this->secretKey)
-                : $this->secretKey;
-
-            return strtoupper(hash_hmac('sha256', $concatenated, (string) $binaryKey));
-        } catch (Exception $e) {
-            Log::error('PaySky SecureHash calculation error', [
-                'error' => $e->getMessage(),
-                'concatenated' => $concatenated,
-            ]);
-
-            return strtoupper(hash_hmac('sha256', $concatenated, $this->secretKey));
-        }
+        return $this->generateSecureHashWithRaw($parameters)['hash'];
     }
 
     /**
@@ -105,16 +121,18 @@ class PaySkyService
         $amountTrxn = (int) round(((float) $order->total_amount) * 100);
         $trxDateTime = now()->format('YmdHis');
 
-        $payload = [
-            'AmountTrxn' => (string) $amountTrxn,
-            'CurrencyCode' => $order->currency === 'EGP' ? '818' : ($order->currency === 'SAR' ? '682' : '840'),
+        // UPG / PaySky Lightbox canonical hash parameters
+        $hashParams = [
+            'Amount' => (string) $amountTrxn,
+            'DateTimeLocalTrxn' => $trxDateTime,
             'MerchantId' => $this->mid,
             'MerchantReference' => $order->merchant_reference,
             'TerminalId' => $this->tid,
-            'TrxDateTime' => $trxDateTime,
         ];
 
-        $secureHash = $this->generateSecureHash($payload);
+        $hashResult = $this->generateSecureHashWithRaw($hashParams);
+        $secureHash = $hashResult['hash'];
+        $rawString = $hashResult['raw_string'];
 
         // Record log
         try {
@@ -123,8 +141,15 @@ class PaySkyService
                 status: 'info',
                 message: 'تم تجهيز معاملات نافذة الدفع Lightbox وتوليد توقيع SecureHash',
                 order: $order,
-                requestPayload: $payload,
-                responsePayload: ['SecureHash' => $secureHash]
+                requestPayload: array_merge($hashParams, [
+                    'AmountTrxn' => (string) $amountTrxn,
+                    'CurrencyCode' => $order->currency === 'EGP' ? '818' : ($order->currency === 'SAR' ? '682' : '840'),
+                    'TrxDateTime' => $trxDateTime,
+                ]),
+                responsePayload: [
+                    'SecureHash' => $secureHash,
+                    'hash_raw_string' => $rawString,
+                ]
             );
         } catch (Exception $e) {
             Log::warning('Could not write payment log', ['error' => $e->getMessage()]);
@@ -136,6 +161,7 @@ class PaySkyService
             'AmountTrxn' => $amountTrxn,
             'MerchantReference' => $order->merchant_reference,
             'TrxDateTime' => $trxDateTime,
+            'DateTimeLocalTrxn' => $trxDateTime,
             'SecureHash' => $secureHash,
             'OrderNumber' => $order->order_number,
             'CustomerEmail' => $order->customer_email,

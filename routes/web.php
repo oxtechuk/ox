@@ -57,6 +57,7 @@ Route::post('/checkout/initiate', [DigitalCheckoutController::class, 'initiate']
     ->name('checkout.initiate');
 Route::match(['get', 'post'], '/checkout/paysky/callback', [DigitalCheckoutController::class, 'callback'])->name('checkout.paysky.callback');
 Route::post('/checkout/paysky/webhook', [DigitalCheckoutController::class, 'webhook'])->name('checkout.paysky.webhook');
+Route::post('/checkout/paysky/log-error', [DigitalCheckoutController::class, 'logClientError'])->name('checkout.paysky.log_error');
 Route::get('/checkout/success/{orderNumber}', [DigitalCheckoutController::class, 'success'])->name('checkout.success');
 
 /*
@@ -186,7 +187,7 @@ Route::get('/storage/{path}', function (string $path) {
 
     $filePath = storage_path('app/public/'.$path);
 
-    if (!file_exists($filePath) || !is_file($filePath)) {
+    if (! file_exists($filePath) || ! is_file($filePath)) {
         abort(404);
     }
 
@@ -197,4 +198,3 @@ Route::get('/storage/{path}', function (string $path) {
         'Cache-Control' => 'public, max-age=31536000',
     ]);
 })->where('path', '.*')->name('storage.fallback');
-

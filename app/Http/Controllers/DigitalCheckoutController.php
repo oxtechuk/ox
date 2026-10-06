@@ -222,4 +222,42 @@ class DigitalCheckoutController extends Controller
 
         return view('checkout.success', compact('order'));
     }
+
+    /**
+     * Log client-side or gateway error to payment logs
+     */
+    public function logClientError(Request $request): JsonResponse
+    {
+        $merchantReference = $request->input('merchant_reference') ?? $request->input('MerchantReference');
+        $error = $request->input('error') ?? $request->all();
+        $message = (string) ($request->input('message') ?? 'خطأ أثناء محاولة الدفع في بوابة PaySky');
+        $source = (string) ($request->input('source') ?? 'lightbox_client');
+        $status = (string) ($request->input('status') ?? 'failed');
+
+        $order = $merchantReference ? Order::where('merchant_reference', $merchantReference)->first() : null;
+
+        $event = match ($source) {
+            'lightbox_cancelled' => 'lightbox_cancelled',
+            'paysky_error_callback' => 'gateway_error',
+            'paysky_post_message' => 'gateway_error',
+            default => 'gateway_error',
+        };
+
+        PaymentLog::record(
+            event: $event,
+            status: $status === 'cancelled' || $event === 'lightbox_cancelled' ? 'info' : 'failed',
+            message: $message,
+            order: $order,
+            merchantReference: $merchantReference,
+            requestPayload: [
+                'source' => $source,
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'received_data' => $request->all(),
+            ],
+            responsePayload: is_array($error) ? $error : ['error' => $error]
+        );
+
+        return response()->json(['success' => true]);
+    }
 }
