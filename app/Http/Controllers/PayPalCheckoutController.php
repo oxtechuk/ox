@@ -108,9 +108,15 @@ class PayPalCheckoutController extends Controller
         $paypalOrder = $this->payPalService->createOrder($order);
 
         if (! $paypalOrder || ! isset($paypalOrder['id'])) {
+            $reason = $this->payPalService->getLastError();
+            $message = $reason
+                ? "تعذر بدء عملية الدفع مع خوادم PayPal: {$reason}"
+                : 'تعذر بدء عملية الدفع مع خوادم PayPal. يرجى التحقق من إعدادات الحساب و Client Secret.';
+
             return response()->json([
                 'success' => false,
-                'message' => 'تعذر بدء عملية الدفع مع خوادم PayPal. يرجى التحقق من إعدادات الحساب.',
+                'message' => $message,
+                'detail' => $reason,
             ], 500);
         }
 

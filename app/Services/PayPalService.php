@@ -24,6 +24,8 @@ class PayPalService
 
     protected string $baseUrl;
 
+    protected ?string $lastError = null;
+
     public function __construct()
     {
         $this->clientId = (string) (SiteSetting::get('paypal_client_id') ?: config('services.paypal.client_id', ''));
@@ -35,6 +37,11 @@ class PayPalService
         $this->baseUrl = $this->mode === 'live'
             ? 'https://api-m.paypal.com'
             : 'https://api-m.sandbox.paypal.com';
+    }
+
+    public function getLastError(): ?string
+    {
+        return $this->lastError;
     }
 
     public function isEnabled(): bool
@@ -96,34 +103,45 @@ class PayPalService
     public function getAccessToken(): ?string
     {
         if (empty($this->clientId) || empty($this->clientSecret)) {
-            Log::warning('PayPal credentials missing.');
+            $this->lastError = 'بيانات PayPal غير مكتملة (يرجى التأكد من إدخال Client Secret في لوحة التحكم)';
+            Log::warning('PayPal credentials missing: clientId or clientSecret is empty.');
 
             return null;
         }
 
         $cacheKey = "paypal_token_{$this->mode}_{$this->clientId}";
 
-        return Cache::remember($cacheKey, now()->addSeconds(3000), function () {
-            try {
-                $response = Http::asForm()
-                    ->withBasicAuth($this->clientId, $this->clientSecret)
-                    ->post("{$this->baseUrl}/v1/oauth2/token", [
-                        'grant_type' => 'client_credentials',
-                    ]);
+        if ($cached = Cache::get($cacheKey)) {
+            return $cached;
+        }
 
-                if ($response->successful()) {
-                    return $response->json('access_token');
-                }
+        try {
+            $response = Http::asForm()
+                ->withBasicAuth($this->clientId, $this->clientSecret)
+                ->post("{$this->baseUrl}/v1/oauth2/token", [
+                    'grant_type' => 'client_credentials',
+                ]);
 
-                Log::error('PayPal Auth Error: '.$response->body());
+            if ($response->successful()) {
+                $token = $response->json('access_token');
+                $expiresIn = (int) ($response->json('expires_in') ?? 3200);
+                Cache::put($cacheKey, $token, now()->addSeconds(max(60, $expiresIn - 120)));
 
-                return null;
-            } catch (Exception $e) {
-                Log::error('PayPal Token Request Failed: '.$e->getMessage());
-
-                return null;
+                return $token;
             }
-        });
+
+            $body = $response->json() ?? [];
+            $err = $body['error_description'] ?? $body['error'] ?? $response->body();
+            $this->lastError = 'فشل التحقق من حساب PayPal (OAuth): '.$err;
+            Log::error('PayPal Auth Error: '.$response->body());
+
+            return null;
+        } catch (Exception $e) {
+            $this->lastError = 'تعذر الاتصال بخوادم PayPal: '.$e->getMessage();
+            Log::error('PayPal Token Request Failed: '.$e->getMessage());
+
+            return null;
+        }
     }
 
     /**
@@ -194,10 +212,13 @@ class PayPalService
                 return $result;
             }
 
+            $failMsg = $result['message'] ?? $result['error_description'] ?? 'فشل إنشاء طلب الدفع في PayPal';
+            $this->lastError = $failMsg;
+
             PaymentLog::record(
                 event: 'paypal_order_failed',
                 status: 'failed',
-                message: 'فشل إنشاء طلب الدفع في PayPal: '.($result['message'] ?? 'Unknown Error'),
+                message: 'فشل إنشاء طلب الدفع في PayPal: '.$failMsg,
                 order: $order,
                 merchantReference: $order->merchant_reference,
                 requestPayload: $payload,
@@ -206,6 +227,7 @@ class PayPalService
 
             return null;
         } catch (Exception $e) {
+            $this->lastError = 'استثناء أثناء إنشاء طلب PayPal: '.$e->getMessage();
             Log::error('PayPal Create Order Exception: '.$e->getMessage());
 
             PaymentLog::record(
