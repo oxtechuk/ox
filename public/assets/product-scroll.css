@@ -4,7 +4,7 @@
            Electric Blue (#1A56F5), Frosted Cards, Space Grotesk
    ═══════════════════════════════════════════════════════════════ */
 
-@import url("https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap");
+/* Font @import removed for Google PageSpeed optimization (consolidated in head) */
 
 .showcase-root {
     --ox-navy-deep: #030B12;

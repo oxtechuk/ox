@@ -476,6 +476,8 @@
                             <img src="{{ $projectImg }}" 
                                  alt="{{ $project->title }}" 
                                  loading="lazy" 
+                                 width="420"
+                                 height="280"
                                  class="portfolio-card-img" />
                             <div class="portfolio-card-overlay"></div>
                             
@@ -604,7 +606,7 @@
             <div class="ox-services-cards-grid reveal">
                 <!-- Card 1: Web & SaaS Platforms -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-web.jpg') }}" alt="{{ $locale === 'ar' ? 'تطوير الويب والسحاب' : 'Web & SaaS Platforms' }}" class="ox-service-card-bg" loading="lazy">
+                    <img src="{{ asset('assets/services/service-web.webp') }}" alt="{{ $locale === 'ar' ? 'تطوير الويب والسحاب' : 'Web & SaaS Platforms' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -627,7 +629,7 @@
 
                 <!-- Card 2: Mobile Applications -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-mobile.jpg') }}" alt="{{ $locale === 'ar' ? 'تطبيقات الجوال الذكية' : 'Mobile Applications' }}" class="ox-service-card-bg" loading="lazy">
+                    <img src="{{ asset('assets/services/service-mobile.webp') }}" alt="{{ $locale === 'ar' ? 'تطبيقات الجوال الذكية' : 'Mobile Applications' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -650,7 +652,7 @@
 
                 <!-- Card 3: Digital E-Commerce -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-ecommerce.jpg') }}" alt="{{ $locale === 'ar' ? 'المتاجر والتجارة الرقمية' : 'Digital E-Commerce' }}" class="ox-service-card-bg" loading="lazy">
+                    <img src="{{ asset('assets/services/service-ecommerce.webp') }}" alt="{{ $locale === 'ar' ? 'المتاجر والتجارة الرقمية' : 'Digital E-Commerce' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -673,7 +675,7 @@
 
                 <!-- Card 4: Enterprise, Odoo & Desktop -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-enterprise.jpg') }}" alt="{{ $locale === 'ar' ? 'أنظمة أودو والمؤسسات' : 'Enterprise & Odoo ERP' }}" class="ox-service-card-bg" loading="lazy">
+                    <img src="{{ asset('assets/services/service-enterprise.webp') }}" alt="{{ $locale === 'ar' ? 'أنظمة أودو والمؤسسات' : 'Enterprise & Odoo ERP' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -904,7 +906,7 @@
                 <!-- Video Card Column (Right in RTL) -->
                 <div class="ox-about-video-wrap reveal">
                     <div class="ox-video-card" onclick="openStoryVideoModal()" role="button" tabindex="0" aria-label="{{ __('مشاهدة قصة نجاح OX Tech') }}">
-                        <img src="{{ asset('assets/ox-saudi-founder-video.jpg') }}" alt="شاهد قصة نجاح OX Tech في السعودية" class="ox-video-img" loading="lazy">
+                        <img src="{{ asset('assets/ox-saudi-founder-video.webp') }}" alt="شاهد قصة نجاح OX Tech في السعودية" class="ox-video-img" width="560" height="360" loading="lazy">
                         <div class="ox-video-overlay"></div>
                         
                         <!-- Glassmorphism Play Button in Center -->
@@ -983,7 +985,7 @@
             </button>
             <div class="ox-story-video-container">
                 <div class="ox-story-video-frame">
-                    <img src="{{ asset('assets/ox-saudi-founder-video.jpg') }}" alt="قصة نجاح OX Tech في السعودية" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85);">
+                    <img src="{{ asset('assets/ox-saudi-founder-video.webp') }}" alt="قصة نجاح OX Tech في السعودية" width="760" height="428" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85);" loading="lazy">
                     <div class="ox-story-video-player-ui">
                         <div class="player-header">
                             <span class="player-badge">OX TECH · SAUDI ARABIA</span>

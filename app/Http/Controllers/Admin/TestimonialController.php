@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
+use App\Services\ImageOptimizerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
+    public function __construct(
+        protected ImageOptimizerService $imageOptimizer
+    ) {}
+
     public function index()
     {
         $testimonials = Testimonial::orderBy('order', 'asc')->get();
@@ -47,8 +52,8 @@ class TestimonialController extends Controller
         }
 
         if ($request->hasFile('poster_image')) {
-            $path = $request->file('poster_image')->store('testimonials/posters', 'public');
-            $validated['poster_image'] = $path;
+            $opt = $this->imageOptimizer->optimizeAndStore($request->file('poster_image'), 'testimonials/posters', 'public', 1200, 82);
+            $validated['poster_image'] = $opt['path'];
         }
 
         Testimonial::create($validated);
@@ -93,8 +98,8 @@ class TestimonialController extends Controller
             if ($testimonial->poster_image && ! str_starts_with($testimonial->poster_image, 'assets/')) {
                 Storage::disk('public')->delete($testimonial->poster_image);
             }
-            $path = $request->file('poster_image')->store('testimonials/posters', 'public');
-            $validated['poster_image'] = $path;
+            $opt = $this->imageOptimizer->optimizeAndStore($request->file('poster_image'), 'testimonials/posters', 'public', 1200, 82);
+            $validated['poster_image'] = $opt['path'];
         }
 
         $testimonial->update($validated);

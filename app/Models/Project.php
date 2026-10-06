@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Project extends Model
@@ -113,10 +114,25 @@ class Project extends Model
                 return $this->hero_image;
             }
             if (str_starts_with($this->hero_image, 'assets/')) {
+                $webpAsset = preg_replace('/\.(jpe?g|png)$/i', '.webp', $this->hero_image);
+                if (file_exists(public_path($webpAsset))) {
+                    return asset($webpAsset);
+                }
+
                 return asset($this->hero_image);
             }
 
+            // Check if storage has a .webp version
+            $webpStorage = preg_replace('/\.(jpe?g|png)$/i', '.webp', $this->hero_image);
+            if (Storage::disk('public')->exists($webpStorage)) {
+                return asset('storage/'.$webpStorage);
+            }
+
             return asset('storage/'.$this->hero_image);
+        }
+
+        if (file_exists(public_path('assets/ox-saudi-story.webp'))) {
+            return asset('assets/ox-saudi-story.webp');
         }
 
         return asset('assets/ox-saudi-story.png');

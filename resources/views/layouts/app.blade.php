@@ -225,12 +225,18 @@
         @endforeach
     @endif
 
-    <!-- ─── Font Preconnects ─── -->
+    <!-- ─── Font Preconnects & DNS Prefetch ─── -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- ─── Google Fonts: Arabic (Cairo + Tajawal + Alexandria) & Latin (Poppins + Syne + Plus Jakarta Sans) ─── -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=Poppins:wght@400;500;600;700;800&family=Alexandria:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <!-- ─── Google Fonts (Optimized Non-Blocking + display=swap) ─── -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap">
+    </noscript>
 
     <!-- ─── Main Styles ─── -->
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}" fetchpriority="high"/>
@@ -1328,7 +1334,7 @@
             <div class="navbar-brand-wrap">
                 <a class="ox-brand-logo" href="{{ $isHome ? '#home' : $homeUrl }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" data-target="home">
                     @if(!empty($mainLogoUrl))
-                        <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img">
+                        <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img" width="170" height="38" fetchpriority="high">
                     @else
                         <span class="ox-logo-title">Ox<span class="dot-accent">Tech</span></span>
                         <span class="ox-logo-subtitle">TECHNOLOGY FOR A BETTER TOMORROW</span>
@@ -1343,7 +1349,7 @@
         <div class="mobile-drawer-top">
             <a class="logo" href="{{ $isHome ? '#home' : $homeUrl }}" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
                 @if(!empty($mainLogoUrl))
-                    <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img" style="max-height: 32px;">
+                    <img src="{{ $mainLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-nav-logo-img" width="140" height="32" style="max-height: 32px;">
                 @else
                     OX<span>.</span><small>TECH STUDIO</small>
                 @endif
@@ -1410,7 +1416,7 @@
                 <!-- Brand / Logo (Left) -->
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" class="ox-footer-logo-brand" aria-label="{{ $siteSettings['site_name'] ?? 'OX Tech' }}">
                     @if(!empty($footerLogoUrl))
-                        <img src="{{ $footerLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-footer-logo-img">
+                        <img src="{{ $footerLogoUrl }}" alt="{{ $siteSettings['site_name'] ?? 'OX Tech' }}" class="site-footer-logo-img" width="180" height="42" loading="lazy">
                     @else
                         <span class="ox-footer-logo-text">O<span class="ox-logo-accent">x</span>Tech</span>
                         <span class="ox-footer-tagline">
@@ -1585,23 +1591,23 @@
                 <input type="hidden" name="platform_detected" value="{{ session('attribution.platform_detected') }}">
 
                 <div class="form-group">
-                    <label class="form-label">{{ $currentLocale === 'ar' ? 'الاسم الكريم *' : ($currentLocale === 'fr' ? 'Nom Complet *' : 'Full Name *') }}</label>
-                    <input type="text" name="name" class="form-input" placeholder="{{ $currentLocale === 'ar' ? 'مثال: عبدالله الراجحي' : 'e.g. John Doe' }}" maxlength="70" required>
+                    <label class="form-label" for="consult_name">{{ $currentLocale === 'ar' ? 'الاسم الكريم *' : ($currentLocale === 'fr' ? 'Nom Complet *' : 'Full Name *') }}</label>
+                    <input type="text" name="name" id="consult_name" class="form-input" placeholder="{{ $currentLocale === 'ar' ? 'مثال: عبدالله الراجحي' : 'e.g. John Doe' }}" maxlength="70" required>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="form-group">
-                        <label class="form-label">{{ $currentLocale === 'ar' ? 'البريد الإلكتروني *' : ($currentLocale === 'fr' ? 'Email Pro *' : 'Business Email *') }}</label>
-                        <input type="email" name="email" class="form-input" placeholder="name@company.com" maxlength="100" required>
+                        <label class="form-label" for="consult_email">{{ $currentLocale === 'ar' ? 'البريد الإلكتروني *' : ($currentLocale === 'fr' ? 'Email Pro *' : 'Business Email *') }}</label>
+                        <input type="email" name="email" id="consult_email" class="form-input" placeholder="name@company.com" maxlength="100" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp' : 'Phone / WhatsApp') }}</label>
-                        <input type="text" name="phone" class="form-input" placeholder="+966 50 000 0000" maxlength="30">
+                        <label class="form-label" for="consult_phone">{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp' : 'Phone / WhatsApp') }}</label>
+                        <input type="text" name="phone" id="consult_phone" class="form-input" placeholder="+966 50 000 0000" maxlength="30">
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                     <div class="form-group">
-                        <label class="form-label">{{ $currentLocale === 'ar' ? 'نوع المشروع' : ($currentLocale === 'fr' ? 'Type de Projet' : 'Project Type') }}</label>
-                        <select name="project_type" class="form-select">
+                        <label class="form-label" for="consult_project_type">{{ $currentLocale === 'ar' ? 'نوع المشروع' : ($currentLocale === 'fr' ? 'Type de Projet' : 'Project Type') }}</label>
+                        <select name="project_type" id="consult_project_type" class="form-select">
                             <option value="منصات ومواقع ويب">{{ $currentLocale === 'ar' ? 'منصات ومواقع ويب' : ($currentLocale === 'fr' ? 'Plateforme Web' : 'Web & Platforms') }}</option>
                             <option value="متاجر إلكترونية">{{ $currentLocale === 'ar' ? 'متجر إلكتروني متكامل' : ($currentLocale === 'fr' ? 'E-commerce' : 'E-Commerce Store') }}</option>
                             <option value="تطبيقات ومنتجات">{{ $currentLocale === 'ar' ? 'تطبيق جوال iOS / Android' : ($currentLocale === 'fr' ? 'App Mobile iOS / Android' : 'Mobile App (iOS/Android)') }}</option>
@@ -1610,8 +1616,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">{{ $currentLocale === 'ar' ? 'الميزانية التقديرية' : ($currentLocale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</label>
-                        <select name="budget" class="form-select">
+                        <label class="form-label" for="consult_budget">{{ $currentLocale === 'ar' ? 'الميزانية التقديرية' : ($currentLocale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</label>
+                        <select name="budget" id="consult_budget" class="form-select">
                             <option value="أقل من $10,000">{{ $currentLocale === 'ar' ? 'أقل من $10,000' : '< $10,000' }}</option>
                             <option value="$10,000 - $25,000">$10,000 - $25,000</option>
                             <option value="$25,000 - $50,000">$25,000 - $50,000</option>
@@ -1620,8 +1626,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">{{ $currentLocale === 'ar' ? 'تفاصيل الفكرة أو التحدي *' : ($currentLocale === 'fr' ? 'Détails du Projet *' : 'Project Details or Challenge *') }}</label>
-                    <textarea name="message" class="form-textarea" rows="3" placeholder="{{ $currentLocale === 'ar' ? 'أخبرنا باختصار عن فكرتك وما ترغب في تحقيقه...' : 'Tell us briefly about your goals and technical scope...' }}" minlength="10" maxlength="1000" required></textarea>
+                    <label class="form-label" for="consult_message">{{ $currentLocale === 'ar' ? 'تفاصيل الفكرة أو التحدي *' : ($currentLocale === 'fr' ? 'Détails du Projet *' : 'Project Details or Challenge *') }}</label>
+                    <textarea name="message" id="consult_message" class="form-textarea" rows="3" placeholder="{{ $currentLocale === 'ar' ? 'أخبرنا باختصار عن فكرتك وما ترغب في تحقيقه...' : 'Tell us briefly about your goals and technical scope...' }}" minlength="10" maxlength="1000" required></textarea>
                     <div style="display: flex; justify-content: space-between; font-size: 11px; color: #8fa099; margin-top: 4px;">
                         <span>{{ $currentLocale === 'ar' ? 'الحد الأدنى 10 أحرف' : 'Min 10 characters' }}</span>
                         <span id="modalMsgCounter">0 / 1000</span>

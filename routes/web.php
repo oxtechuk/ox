@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DigitalOrderController;
 use App\Http\Controllers\Admin\DigitalProductController;
 use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Admin\MediaController as AdminMediaController;
 use App\Http\Controllers\Admin\PaymentLogController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\QuotationController as AdminQuotationController;
@@ -146,6 +147,12 @@ Route::prefix($adminPrefix)->name('admin.')->group(function () {
         Route::get('/payment-logs/{paymentLog}', [PaymentLogController::class, 'show'])->name('payment-logs.show');
         Route::post('/payment-logs/clear-old', [PaymentLogController::class, 'clearOld'])->name('payment-logs.clear_old');
 
+        // Media Library & Automatic WebP Image Optimization
+        Route::get('/media', [AdminMediaController::class, 'index'])->name('media.index');
+        Route::post('/media', [AdminMediaController::class, 'store'])->name('media.store');
+        Route::delete('/media', [AdminMediaController::class, 'destroy'])->name('media.destroy');
+        Route::post('/media/batch-optimize', [AdminMediaController::class, 'batchOptimize'])->name('media.batch-optimize');
+
         // Site Content Management
         Route::get('/site-content', [AdminSiteContentController::class, 'index'])->name('site-content.index');
         Route::post('/site-content/update', [AdminSiteContentController::class, 'update'])->name('site-content.update');
@@ -201,6 +208,9 @@ Route::get('/storage/{path}', function (string $path) {
     }
 
     $mime = mime_content_type($filePath) ?: 'application/octet-stream';
+    if (str_ends_with(strtolower($filePath), '.webp')) {
+        $mime = 'image/webp';
+    }
 
     return response()->file($filePath, [
         'Content-Type' => $mime,

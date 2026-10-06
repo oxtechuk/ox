@@ -405,12 +405,15 @@
 
         @if($activeTab === 'paysky')
             <!-- PaySky Omni Gateway Settings -->
-            <div class="card">
-                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="settings-card">
+                <div class="settings-card-header">
                     <div>
-                        <h3 class="card-title">إعدادات بوابة الدفع PaySky Omni Gateway</h3>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
-                            تحكم ببيانات الربط مع PaySky، التبديل بين البيئة التجريبية والحية، ومفاتيح التشفير SecureHash
+                        <h3 class="settings-card-title">
+                            <span style="font-size: 20px;">💳</span>
+                            <span>إعدادات بوابة الدفع PaySky Omni Gateway (مصر)</span>
+                        </h3>
+                        <p class="settings-card-subtitle">
+                            تحكم ببيانات الربط مع PaySky، التبديل بين البيئة التجريبية والحية، ومفاتيح التشفير SecureHash.
                         </p>
                     </div>
 
@@ -422,39 +425,39 @@
                 <div class="form-grid" style="margin-bottom: 20px;">
                     <div>
                         <label class="form-label">حالة بوابة الدفع *</label>
-                        <select name="paysky_enabled" class="form-control">
-                            <option value="1" {{ ($settings['paysky_enabled'] ?? '1') === '1' ? 'selected' : '' }}>مفعلة وتستقبل المدفوعات (Enabled)</option>
-                            <option value="0" {{ ($settings['paysky_enabled'] ?? '1') === '0' ? 'selected' : '' }}>معطلة مؤقتاً (Disabled)</option>
+                        <select name="paysky_enabled" class="form-control" style="font-weight: 700;">
+                            <option value="1" {{ ($settings['paysky_enabled'] ?? '1') === '1' ? 'selected' : '' }}>🟢 مفعلة وتستقبل المدفوعات (Enabled)</option>
+                            <option value="0" {{ ($settings['paysky_enabled'] ?? '1') === '0' ? 'selected' : '' }}>⚪ معطلة مؤقتاً (Disabled)</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="form-label">بيئة العمل والتشغيل (Environment Mode) *</label>
-                        <select name="paysky_mode" class="form-control">
-                            <option value="test" {{ ($settings['paysky_mode'] ?? 'test') === 'test' ? 'selected' : '' }}>بيئة التجربة والاختبار (Staging / Test)</option>
-                            <option value="live" {{ ($settings['paysky_mode'] ?? 'test') === 'live' ? 'selected' : '' }}>البيئة الحية للإنتاج الحقيقي (Live / Production)</option>
+                        <select name="paysky_mode" class="form-control" style="font-weight: 700;">
+                            <option value="live" {{ ($settings['paysky_mode'] ?? 'test') === 'live' ? 'selected' : '' }}>🚀 البيئة الحية للإنتاج الحقيقي (Live / Production)</option>
+                            <option value="test" {{ ($settings['paysky_mode'] ?? 'test') === 'test' ? 'selected' : '' }}>🧪 بيئة التجربة والاختبار (Staging / Test)</option>
                         </select>
-                        <small style="color: var(--text-muted); font-size: 11px;">في البيئة الحية سيتم خصم مبالغ حقيقية من بطاقات العملاء.</small>
+                        <span class="form-hint">في البيئة الحية سيتم خصم مبالغ حقيقية من بطاقات العملاء.</span>
                     </div>
                 </div>
 
                 <div class="form-grid" style="margin-bottom: 20px;">
                     <div>
                         <label class="form-label">رقم التاجر (Merchant ID - MID) *</label>
-                        <input type="text" name="paysky_mid" class="form-control" value="{{ $settings['paysky_mid'] ?? config('services.paysky.mid', '10000000001') }}" required style="font-family: var(--font-code);">
-                        <small style="color: var(--text-muted); font-size: 11px;">مقدم من بنك مصر / البنك الشريك أو PaySky</small>
+                        <input type="text" name="paysky_mid" class="form-control" value="{{ $settings['paysky_mid'] ?? config('services.paysky.mid', '10000000001') }}" required style="font-family: monospace; font-size: 13px;">
+                        <span class="form-hint">مقدم من بنك مصر / البنك الشريك أو PaySky.</span>
                     </div>
 
                     <div>
                         <label class="form-label">رقم نقطة البيع / المحطة (Terminal ID - TID) *</label>
-                        <input type="text" name="paysky_tid" class="form-control" value="{{ $settings['paysky_tid'] ?? config('services.paysky.tid', '10000001') }}" required style="font-family: var(--font-code);">
+                        <input type="text" name="paysky_tid" class="form-control" value="{{ $settings['paysky_tid'] ?? config('services.paysky.tid', '10000001') }}" required style="font-family: monospace; font-size: 13px;">
                     </div>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                     <label class="form-label">المفتاح السري للتشفير (Merchant Secret Key / Secure Hash Key) *</label>
-                    <input type="password" name="paysky_secret_key" class="form-control" value="{{ $settings['paysky_secret_key'] ?? config('services.paysky.secret_key', '31323334353637383930313233343536') }}" required style="font-family: var(--font-code);">
-                    <small style="color: var(--text-muted); font-size: 11px;">المفتاح السري بنظام HEX أو النص لتوليد توقيع HMAC-SHA256 والتحقق من الاستجابة.</small>
+                    <input type="password" name="paysky_secret_key" class="form-control" value="{{ $settings['paysky_secret_key'] ?? config('services.paysky.secret_key', '31323334353637383930313233343536') }}" required style="font-family: monospace; font-size: 13px;">
+                    <span class="form-hint">المفتاح السري بنظام HEX أو النص لتوليد توقيع HMAC-SHA256 والتحقق من الاستجابة.</span>
                 </div>
 
                 <div class="form-grid" style="margin-bottom: 20px;">
@@ -469,8 +472,8 @@
 
                     <div>
                         <label class="form-label">رابط استلام إشعار الخادم (Webhook / IPN URL)</label>
-                        <input type="text" readonly class="form-control" value="{{ route('checkout.paysky.webhook') }}" style="background: #f8fafc; font-family: var(--font-code); color: var(--text-muted);">
-                        <small style="color: var(--text-muted); font-size: 11px;">ضعه في لوحة تحكم PaySky لاستلام تأكيدات الدفع الآلية.</small>
+                        <input type="text" readonly class="form-control" value="{{ route('checkout.paysky.webhook') }}" style="background: #F8FAFC; font-family: monospace; font-size: 13px; color: #1E293B;">
+                        <span class="form-hint">ضعه في لوحة تحكم PaySky لاستلام تأكيدات الدفع الآلية.</span>
                     </div>
                 </div>
             </div>

@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Services\ImageOptimizerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
+    public function __construct(
+        protected ImageOptimizerService $imageOptimizer
+    ) {}
+
     public function index(Request $request)
     {
         $query = Project::query();
@@ -91,8 +96,8 @@ class ProjectController extends Controller
         $validated['order'] = $validated['order'] ?? (Project::max('order') + 1);
 
         if ($request->hasFile('hero_image')) {
-            $path = $request->file('hero_image')->store('projects', 'public');
-            $validated['hero_image'] = $path;
+            $opt = $this->imageOptimizer->optimizeAndStore($request->file('hero_image'), 'projects', 'public', 1600, 82);
+            $validated['hero_image'] = $opt['path'];
         }
 
         Project::create($validated);
@@ -156,8 +161,8 @@ class ProjectController extends Controller
             if ($project->hero_image && ! str_starts_with($project->hero_image, 'assets/')) {
                 Storage::disk('public')->delete($project->hero_image);
             }
-            $path = $request->file('hero_image')->store('projects', 'public');
-            $validated['hero_image'] = $path;
+            $opt = $this->imageOptimizer->optimizeAndStore($request->file('hero_image'), 'projects', 'public', 1600, 82);
+            $validated['hero_image'] = $opt['path'];
         }
 
         $project->update($validated);

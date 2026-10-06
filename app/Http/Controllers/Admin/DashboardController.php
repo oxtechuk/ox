@@ -140,6 +140,7 @@ class DashboardController extends Controller
             'users_count' => User::count(),
             'tracking_pixels_count' => TrackingPixel::count(),
             'site_settings_count' => SiteSetting::count(),
+            'media_count' => count(\Illuminate\Support\Facades\Storage::disk('public')->allFiles()),
         ];
 
         return view('admin.hub', compact('hubStats'));

@@ -272,6 +272,28 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Media Library & Compression -->
+            <div class="hub-card">
+                <div>
+                    <div class="hub-card-header">
+                        <div class="hub-icon-box" style="color: #059669; background: #ECFDF5; border-color: #A7F3D0;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        </div>
+                        <span class="hub-card-tag" style="background: #ECFDF5; color: #065F46; border-color: #A7F3D0;">WebP تلقائي</span>
+                    </div>
+                    <div class="hub-card-content">
+                        <h3>مكتبة الوسائط وضغط الصور</h3>
+                        <p>استعراض جميع الصور المرفوعة بالموقع، ضغط تلقائي فوري إلى WebP، نسخ الروابط المباشرة، وحذف الملفات الزائدة.</p>
+                    </div>
+                </div>
+                <div class="hub-card-actions">
+                    <a href="{{ route('admin.media.index') }}" class="hub-enter-btn" style="background: #059669;">
+                        <span>فتح مكتبة الوسائط</span>
+                        <span>&larr;</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

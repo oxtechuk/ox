@@ -923,7 +923,7 @@
             <!-- System & Unified Hub Link -->
             <li class="menu-heading" style="margin-top: 10px;">إدارة النظام والمحتوى</li>
             <li>
-                <a href="{{ route('admin.hub') }}" class="menu-link {{ request()->routeIs('admin.hub') || request()->routeIs('admin.projects.*') || request()->routeIs('admin.testimonials.*') || request()->routeIs('admin.site-content.*') || request()->routeIs('admin.settings.*') || request()->routeIs('admin.tracking.*') || request()->routeIs('admin.reports.*') || request()->routeIs('admin.payment-logs.*') || request()->routeIs('admin.crm.quotations.*') || request()->routeIs('admin.users.*') ? 'active' : '' }}" data-tooltip="مركز النظام والأدوات">
+                <a href="{{ route('admin.hub') }}" class="menu-link {{ request()->routeIs('admin.hub') || request()->routeIs('admin.media.*') || request()->routeIs('admin.projects.*') || request()->routeIs('admin.testimonials.*') || request()->routeIs('admin.site-content.*') || request()->routeIs('admin.settings.*') || request()->routeIs('admin.tracking.*') || request()->routeIs('admin.reports.*') || request()->routeIs('admin.payment-logs.*') || request()->routeIs('admin.crm.quotations.*') || request()->routeIs('admin.users.*') ? 'active' : '' }}" data-tooltip="مركز النظام والأدوات">
                     <div class="menu-link-content">
                         <span class="menu-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

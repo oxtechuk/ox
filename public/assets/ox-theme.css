@@ -391,7 +391,7 @@ html[dir="ltr"] .btn-primary:hover .btn-arrow-icon {
   display: flex;
   align-items: center;
   background-color: var(--ox-carbon);
-  background-image: url('ox-hero-saudi-egypt.jpg');
+  background-image: url('ox-hero-saudi-egypt.webp');
   background-size: cover;
   background-position: center top !important;
   background-repeat: no-repeat;
