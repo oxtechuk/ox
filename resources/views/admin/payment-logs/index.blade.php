@@ -79,6 +79,10 @@
                     <option value="gateway_error" {{ request('event') === 'gateway_error' ? 'selected' : '' }}>⚠️ أخطاء البوابة (Gateway Error)</option>
                     <option value="lightbox_error" {{ request('event') === 'lightbox_error' ? 'selected' : '' }}>⚠️ خطأ نافذة الدفع (Lightbox Error)</option>
                     <option value="lightbox_cancelled" {{ request('event') === 'lightbox_cancelled' ? 'selected' : '' }}>إلغاء النافذة (Cancelled)</option>
+                    <option value="paypal_order_created" {{ request('event') === 'paypal_order_created' ? 'selected' : '' }}>🅿️ إنشاء طلب PayPal</option>
+                    <option value="paypal_payment_captured" {{ request('event') === 'paypal_payment_captured' ? 'selected' : '' }}>🅿️ نجاح سحب PayPal</option>
+                    <option value="paypal_capture_failed" {{ request('event') === 'paypal_capture_failed' ? 'selected' : '' }}>🅿️ فشل دفع PayPal</option>
+                    <option value="paypal_webhook_received" {{ request('event') === 'paypal_webhook_received' ? 'selected' : '' }}>🅿️ إشعار PayPal Webhook</option>
                     <option value="lightbox_payload_prepared" {{ request('event') === 'lightbox_payload_prepared' ? 'selected' : '' }}>تجهيز Lightbox</option>
                     <option value="callback_received" {{ request('event') === 'callback_received' ? 'selected' : '' }}>استلام Callback</option>
                     <option value="webhook_received" {{ request('event') === 'webhook_received' ? 'selected' : '' }}>إشعار Webhook</option>

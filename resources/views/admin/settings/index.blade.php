@@ -26,6 +26,9 @@
         <a href="{{ route('admin.settings.index', ['tab' => 'paysky']) }}" class="btn {{ $activeTab === 'paysky' ? 'btn-lime' : 'btn-outline' }}" style="border-color: #38bdf8;">
             💳 بوابة دفع PaySky
         </a>
+        <a href="{{ route('admin.settings.index', ['tab' => 'paypal']) }}" class="btn {{ $activeTab === 'paypal' ? 'btn-lime' : 'btn-outline' }}" style="border-color: #fbbf24;">
+            🅿️ بوابة دفع PayPal
+        </a>
     </div>
 
     <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
@@ -327,6 +330,81 @@
                         <input type="text" readonly class="form-control" value="{{ route('checkout.paysky.webhook') }}" style="background: #f8fafc; font-family: var(--font-code); color: var(--text-muted);">
                         <small style="color: var(--text-muted); font-size: 11px;">ضعه في لوحة تحكم PaySky لاستلام تأكيدات الدفع الآلية.</small>
                     </div>
+                </div>
+            </div>
+        @elseif($activeTab === 'paypal')
+            <!-- PayPal Gateway Integration -->
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">إعدادات بوابة الدفع العالمية PayPal (Checkout REST API v2)</h3>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                            تمكين المبيعات الدولية واستقبال المدفوعات بحسابات PayPal والبطاقات العالمية.
+                        </p>
+                    </div>
+                    <div>
+                        <span style="background: rgba(251, 191, 36, 0.15); color: #d97706; padding: 4px 10px; border-radius: 99px; font-size: 12px; font-weight: 700;">
+                            🅿️ PayPal Smart Buttons
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">حالة بوابة PayPal *</label>
+                        <select name="paypal_enabled" class="form-control">
+                            <option value="1" {{ ($settings['paypal_enabled'] ?? '1') === '1' ? 'selected' : '' }}>مفعلة وتستقبل المدفوعات (Enabled)</option>
+                            <option value="0" {{ ($settings['paypal_enabled'] ?? '1') === '0' ? 'selected' : '' }}>معطلة مؤقتاً (Disabled)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label">بيئة العمل والتشغيل (Environment Mode) *</label>
+                        <select name="paypal_mode" class="form-control">
+                            <option value="sandbox" {{ ($settings['paypal_mode'] ?? 'sandbox') === 'sandbox' ? 'selected' : '' }}>بيئة التجربة والاختبار (Sandbox)</option>
+                            <option value="live" {{ ($settings['paypal_mode'] ?? 'sandbox') === 'live' ? 'selected' : '' }}>البيئة الحية للإنتاج الحقيقي (Live / Production)</option>
+                        </select>
+                        <small style="color: var(--text-muted); font-size: 11px;">في البيئة الحية سيتم خصم مبالغ حقيقية من حسابات وبطاقات المشترين.</small>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">معرف العميل (PayPal Client ID) *</label>
+                        <input type="text" name="paypal_client_id" class="form-control" value="{{ $settings['paypal_client_id'] ?? config('services.paypal.client_id', '') }}" placeholder="A..." style="font-family: var(--font-code);">
+                        <small style="color: var(--text-muted); font-size: 11px;">مستخرج من تطبيق PayPal Developer Dashboard (REST API app).</small>
+                    </div>
+
+                    <div>
+                        <label class="form-label">المفتاح السري (PayPal Client Secret) *</label>
+                        <input type="password" name="paypal_client_secret" class="form-control" value="{{ $settings['paypal_client_secret'] ?? config('services.paypal.client_secret', '') }}" placeholder="E..." style="font-family: var(--font-code);">
+                        <small style="color: var(--text-muted); font-size: 11px;">المفتاح السري لتأكيد إنشاء الطلبات وتفويض السحب.</small>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">العملة الافتراضية لحساب PayPal</label>
+                        <select name="paypal_currency" class="form-control">
+                            <option value="USD" {{ ($settings['paypal_currency'] ?? 'USD') === 'USD' ? 'selected' : '' }}>دولار أمريكي (USD)</option>
+                            <option value="EUR" {{ ($settings['paypal_currency'] ?? 'USD') === 'EUR' ? 'selected' : '' }}>يورو (EUR)</option>
+                            <option value="GBP" {{ ($settings['paypal_currency'] ?? 'USD') === 'GBP' ? 'selected' : '' }}>جنيه إسترليني (GBP)</option>
+                            <option value="SAR" {{ ($settings['paypal_currency'] ?? 'USD') === 'SAR' ? 'selected' : '' }}>ريال سعودي (SAR)</option>
+                        </select>
+                        <small style="color: var(--text-muted); font-size: 11px;">العملة التي سيتم إنشاء وسحب المعاملة بها داخل PayPal.</small>
+                    </div>
+
+                    <div>
+                        <label class="form-label">سعر صرف تحويل الجنيه المصري للدولار (EGP to USD Rate)</label>
+                        <input type="number" step="0.0001" name="paypal_egp_to_usd_rate" class="form-control" value="{{ $settings['paypal_egp_to_usd_rate'] ?? config('services.paypal.egp_to_usd_rate', 0.021) }}" style="font-family: var(--font-code);">
+                        <small style="color: var(--text-muted); font-size: 11px;">مثال: 0.021 يعني أن 1000 جنيه مصري تعادل 21.00 دولار.</small>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label">رابط استلام إشعار الخادم (PayPal Webhook URL)</label>
+                    <input type="text" readonly class="form-control" value="{{ route('checkout.paypal.webhook') }}" style="background: #f8fafc; font-family: var(--font-code); color: var(--text-muted);">
+                    <small style="color: var(--text-muted); font-size: 11px;">أضف هذا الرابط في صفحة Webhooks داخل لوحة PayPal Developer مع تفعيل حدث <code>PAYMENT.CAPTURE.COMPLETED</code>.</small>
                 </div>
             </div>
         @endif

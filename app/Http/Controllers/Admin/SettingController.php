@@ -33,12 +33,12 @@ class SettingController extends Controller
                 // Fail-safe: Ensure directory and file are mirrored directly into public/storage
                 try {
                     $publicUploadsDir = public_path('storage/uploads/branding');
-                    if (!file_exists($publicUploadsDir)) {
+                    if (! file_exists($publicUploadsDir)) {
                         @mkdir($publicUploadsDir, 0755, true);
                     }
                     $sourcePath = storage_path('app/public/'.$path);
                     $destPath = public_path('storage/'.$path);
-                    if (file_exists($sourcePath) && !file_exists($destPath)) {
+                    if (file_exists($sourcePath) && ! file_exists($destPath)) {
                         @copy($sourcePath, $destPath);
                     }
                 } catch (\Throwable $e) {
@@ -67,6 +67,8 @@ class SettingController extends Controller
                 $group = 'mail';
             } elseif (str_starts_with($key, 'paysky_')) {
                 $group = 'paysky';
+            } elseif (str_starts_with($key, 'paypal_')) {
+                $group = 'paypal';
             }
 
             SiteSetting::set($key, is_array($value) ? json_encode($value) : $value, $group);

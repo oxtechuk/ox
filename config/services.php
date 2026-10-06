@@ -44,4 +44,13 @@ return [
         'live_script_url' => env('PAYSKY_LIVE_SCRIPT_URL', 'https://cube.paysky.io:6006/js/LightBox.js'),
     ],
 
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID', ''),
+        'client_secret' => env('PAYPAL_CLIENT_SECRET', ''),
+        'mode' => env('PAYPAL_MODE', 'sandbox'), // 'sandbox' or 'live'
+        'currency' => env('PAYPAL_CURRENCY', 'USD'),
+        'webhook_id' => env('PAYPAL_WEBHOOK_ID', ''),
+        'egp_to_usd_rate' => (float) env('PAYPAL_EGP_TO_USD_RATE', 0.021), // ~48 EGP = 1 USD
+    ],
+
 ];

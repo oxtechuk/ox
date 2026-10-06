@@ -21,6 +21,7 @@ use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\DigitalCheckoutController;
 use App\Http\Controllers\DigitalStoreController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PayPalCheckoutController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SeoController;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,13 @@ Route::post('/checkout/initiate', [DigitalCheckoutController::class, 'initiate']
 Route::match(['get', 'post'], '/checkout/paysky/callback', [DigitalCheckoutController::class, 'callback'])->name('checkout.paysky.callback');
 Route::post('/checkout/paysky/webhook', [DigitalCheckoutController::class, 'webhook'])->name('checkout.paysky.webhook');
 Route::post('/checkout/paysky/log-error', [DigitalCheckoutController::class, 'logClientError'])->name('checkout.paysky.log_error');
+
+// PayPal Checkout Routes
+Route::get('/checkout/paypal/config', [PayPalCheckoutController::class, 'config'])->name('checkout.paypal.config');
+Route::post('/checkout/paypal/create', [PayPalCheckoutController::class, 'create'])->name('checkout.paypal.create');
+Route::post('/checkout/paypal/capture', [PayPalCheckoutController::class, 'capture'])->name('checkout.paypal.capture');
+Route::post('/checkout/paypal/webhook', [PayPalCheckoutController::class, 'webhook'])->name('checkout.paypal.webhook');
+
 Route::get('/checkout/success/{orderNumber}', [DigitalCheckoutController::class, 'success'])->name('checkout.success');
 
 /*

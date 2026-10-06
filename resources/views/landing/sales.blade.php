@@ -527,14 +527,32 @@
                     <input type="tel" id="spPhone" placeholder="010xxxxxxxx" class="input-field">
                 </div>
 
-                <button type="submit" id="btnSalesSubmit" class="cta-btn-main" style="width: 100%;">
-                    <span>إتمام الشراء الآن والدفع عبر PaySky ({{ number_format($product->effective_price, 2) }} {{ $product->currency }})</span>
-                    <span>&larr;</span>
-                </button>
+                <div style="margin-bottom: 18px;">
+                    <label class="input-label" style="margin-bottom: 8px;">اختر وسيلة الدفع المفضلة:</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <button type="button" id="tabSalesPaySky" onclick="switchSalesGateway('paysky')" style="padding: 12px 14px; border-radius: 12px; border: 2px solid #2563eb; background: #eff6ff; color: #1e40af; font-weight: 800; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;">
+                            <span>💳 PaySky / ميزة / كروت بنكية</span>
+                        </button>
+                        <button type="button" id="tabSalesPayPal" onclick="switchSalesGateway('paypal')" style="padding: 12px 14px; border-radius: 12px; border: 2px solid #e2e8f0; background: #fff; color: #475569; font-weight: 800; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;">
+                            <span>🅿️ PayPal (دولي وعربي)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="paysky-sales-section">
+                    <button type="submit" id="btnSalesSubmit" class="cta-btn-main" style="width: 100%;">
+                        <span>إتمام الشراء الآن والدفع عبر PaySky ({{ number_format($product->effective_price, 2) }} {{ $product->currency }})</span>
+                        <span>&larr;</span>
+                    </button>
+                </div>
+
+                <div id="paypal-sales-section" style="display: none; margin-top: 10px;">
+                    <div id="paypal-sales-button-container" style="min-height: 45px;"></div>
+                </div>
             </form>
 
             <div style="margin-top: 20px; text-align: center; font-size: 11.5px; color: #64748b; display: flex; justify-content: center; gap: 14px;">
-                <span>🛡️ معتمد ومؤمن من PaySky</span>
+                <span>🛡️ معتمد ومؤمن من PaySky & PayPal</span>
                 <span>•</span>
                 <span>⚡ تفعيل رقمي فوري</span>
                 <span>•</span>
@@ -634,6 +652,162 @@
             }
         }
     });
+
+    let activeSalesGateway = 'paysky';
+    let salesPayPalButtonsInitialized = false;
+
+    function switchSalesGateway(gateway) {
+        activeSalesGateway = gateway;
+        const tabPaySky = document.getElementById('tabSalesPaySky');
+        const tabPayPal = document.getElementById('tabSalesPayPal');
+        const payskySection = document.getElementById('paysky-sales-section');
+        const paypalSection = document.getElementById('paypal-sales-section');
+
+        if (gateway === 'paysky') {
+            tabPaySky.style.borderColor = '#2563eb';
+            tabPaySky.style.background = '#eff6ff';
+            tabPaySky.style.color = '#1e40af';
+
+            tabPayPal.style.borderColor = '#e2e8f0';
+            tabPayPal.style.background = '#fff';
+            tabPayPal.style.color = '#475569';
+
+            payskySection.style.display = 'block';
+            paypalSection.style.display = 'none';
+        } else {
+            tabPayPal.style.borderColor = '#fbbf24';
+            tabPayPal.style.background = '#fffbeb';
+            tabPayPal.style.color = '#b45309';
+
+            tabPaySky.style.borderColor = '#e2e8f0';
+            tabPaySky.style.background = '#fff';
+            tabPaySky.style.color = '#475569';
+
+            payskySection.style.display = 'none';
+            paypalSection.style.display = 'block';
+
+            if (!salesPayPalButtonsInitialized) {
+                initSalesPayPalButtons();
+            }
+        }
+    }
+
+    async function initSalesPayPalButtons() {
+        const container = document.getElementById('paypal-sales-button-container');
+        if (!container) return;
+
+        container.innerHTML = '<div style="text-align:center; padding:10px; color:#64748b; font-size:12px;">جاري إعداد بوابة PayPal...</div>';
+
+        try {
+            const cfgRes = await fetch('{{ route('checkout.paypal.config') }}');
+            const cfg = await cfgRes.json();
+
+            if (!cfg.enabled || !cfg.client_id) {
+                container.innerHTML = '<div style="background:#fef2f2; border:1px solid #fecaca; color:#991b1b; padding:10px; border-radius:8px; font-size:12px; text-align:center;">بوابة PayPal غير مفعلة حالياً من لوحة الإدارة.</div>';
+                return;
+            }
+
+            if (!window.paypal) {
+                await new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(cfg.client_id)}&currency=${encodeURIComponent(cfg.currency || 'USD')}`;
+                    s.onload = resolve;
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+
+            container.innerHTML = '';
+            window.paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color: 'gold',
+                    shape: 'rect',
+                    label: 'paypal',
+                    height: 48
+                },
+                createOrder: async function(data, actions) {
+                    const name = document.getElementById('spName').value.trim();
+                    const email = document.getElementById('spEmail').value.trim();
+                    const phone = document.getElementById('spPhone').value.trim();
+
+                    if (!name || !email) {
+                        alert('يرجى كتابة الاسم والبريد الإلكتروني أولاً لاستلام الترخيص والملفات.');
+                        throw new Error('Name and email required');
+                    }
+
+                    const createRes = await fetch('{{ route('checkout.paypal.create') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            _token: '{{ csrf_token() }}',
+                            product_id: document.getElementById('spId').value,
+                            customer_name: name,
+                            customer_email: email,
+                            customer_phone: phone,
+                            utm_source: '{{ request('utm_source') }}',
+                            utm_medium: '{{ request('utm_medium') }}',
+                            utm_campaign: '{{ request('utm_campaign') }}',
+                        })
+                    });
+
+                    const resData = await createRes.json();
+                    if (!resData.success || !resData.paypal_order_id) {
+                        alert(resData.message || 'حدث خطأ أثناء بدء دفع PayPal.');
+                        throw new Error(resData.message);
+                    }
+
+                    currentMerchantRef = resData.merchant_reference;
+                    return resData.paypal_order_id;
+                },
+                onApprove: async function(data, actions) {
+                    container.innerHTML = '<div style="text-align:center; padding:14px; font-weight:800; color:#059669; font-size:13px;">جاري تأكيد دفعك وإصدار التراخيص...</div>';
+                    const captureRes = await fetch('{{ route('checkout.paypal.capture') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            _token: '{{ csrf_token() }}',
+                            paypal_order_id: data.orderID,
+                            merchant_reference: currentMerchantRef
+                        })
+                    });
+
+                    const captureData = await captureRes.json();
+                    if (captureData.success && captureData.redirect_url) {
+                        window.location.href = captureData.redirect_url;
+                    } else {
+                        alert(captureData.message || 'حدث خطأ أثناء تأكيد الدفع.');
+                        salesPayPalButtonsInitialized = false;
+                        initSalesPayPalButtons();
+                    }
+                },
+                onError: function(err) {
+                    console.error('PayPal Sales Error:', err);
+                    logGatewayError(
+                        currentMerchantRef,
+                        'خطأ في نافذة PayPal (Sales Landing): ' + (err.message || String(err)),
+                        { error: String(err) },
+                        'paypal_sdk_error',
+                        'failed'
+                    );
+                    alert('حدث خطأ في نافذة PayPal. يرجى المحاولة لاحقاً أو الدفع عبر PaySky.');
+                }
+            }).render('#paypal-sales-button-container');
+
+            salesPayPalButtonsInitialized = true;
+        } catch (err) {
+            console.error('PayPal init sales error:', err);
+            container.innerHTML = '<div style="color:#ef4444; font-size:12px; text-align:center;">تعذر تحميل بوابة PayPal حالياً. يرجى استخدام بطاقة البنك عبر PaySky.</div>';
+        }
+    }
 
     async function handleSalesCheckout(e) {
         e.preventDefault();
