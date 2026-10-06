@@ -362,7 +362,7 @@
                         <div class="portfolio-country-dropdown-wrap" id="portfolioCountryWrap">
                             <button type="button" class="portfolio-country-toggle-btn has-filter" id="portfolioCountryBtn" onclick="togglePortfolioCountryDropdown(event)" aria-haspopup="true" aria-expanded="false">
                                 <span class="country-toggle-flag" id="portfolioCurrentFlag">
-                                    <img src="{{ $defaultFlagUrl }}" class="country-toggle-flag-img" alt="{{ $defaultCountryName }}">
+                                    <img src="{{ $defaultFlagUrl }}" class="country-toggle-flag-img" alt="" aria-hidden="true">
                                 </span>
                                 <span class="country-toggle-text" id="portfolioCurrentCountryText">{{ $defaultCountryName }}</span>
                                 <svg class="country-toggle-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -525,7 +525,7 @@
                                 <span class="portfolio-view-text">
                                     {{ $locale === 'ar' ? 'عرض تفاصيل المشروع' : ($locale === 'fr' ? 'Voir le projet' : 'View Case Study') }}
                                 </span>
-                                <span class="portfolio-view-btn" aria-label="{{ $locale === 'ar' ? 'تفاصيل' : 'Details' }}">
+                                <span class="portfolio-view-btn" aria-hidden="true">
                                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <polyline points="{{ $locale === 'ar' ? '15 18 9 12 15 6' : '9 18 15 12 9 6' }}"></polyline>
                                     </svg>
@@ -618,7 +618,7 @@
                         <p class="ox-service-card-desc">
                             {{ $locale === 'ar' ? 'بناء منصات سحابية وبوابات SaaS تفاعلية فائقة السرعة والأمان، بمعمارية برمجية قابلة للتوسع اللانهائي.' : ($locale === 'fr' ? 'Plateformes cloud et SaaS hautement sécurisées et scalables.' : 'Scalable cloud architectures, SaaS platforms, and enterprise portals engineered for speed and security.') }}
                         </p>
-                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                        <div class="ox-service-card-circle-btn" aria-hidden="true">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
@@ -641,7 +641,7 @@
                         <p class="ox-service-card-desc">
                             {{ $locale === 'ar' ? 'تطبيقات جوال سلسة ومتطورة بأحدث التقنيات (Flutter & Native) تضمن تجربة مستخدم استثنائية وأداء فائق السرعة.' : ($locale === 'fr' ? 'Applications fluides et performantes (Flutter & Native).' : 'High-performance iOS & Android mobile apps engineered with Flutter and Native frameworks.') }}
                         </p>
-                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                        <div class="ox-service-card-circle-btn" aria-hidden="true">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
@@ -664,7 +664,7 @@
                         <p class="ox-service-card-desc">
                             {{ $locale === 'ar' ? 'متاجر مخصصة متكاملة مع بوابات الدفع والشحن والأنظمة المحاسبية، مصممة لتحقيق أعلى معدلات التحويل.' : ($locale === 'fr' ? 'Boutiques en ligne optimisées avec passerelles de paiement et logistique.' : 'Custom digital commerce stores integrated with multi-currency gateways and automated fulfillment.') }}
                         </p>
-                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                        <div class="ox-service-card-circle-btn" aria-hidden="true">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
@@ -687,7 +687,7 @@
                         <p class="ox-service-card-desc">
                             {{ $locale === 'ar' ? 'تطبيق وتخصيص دورات Odoo ERP الشاملة والربط الضريبي (ZATCA)، مع برمجيات Windows ونقاط البيع POS دون إنترنت.' : ($locale === 'fr' ? 'Intégration Odoo ERP complète et logiciels POS offline.' : 'Full-cycle Odoo ERP customization, e-invoicing compliance, and offline-first desktop POS systems.') }}
                         </p>
-                        <div class="ox-service-card-circle-btn" aria-label="Explore Service">
+                        <div class="ox-service-card-circle-btn" aria-hidden="true">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
@@ -862,8 +862,8 @@
                                     <video id="native-video-{{ $tIndex }}" 
                                            playsinline 
                                            controls 
-                                           preload="metadata" 
-                                           src="{{ $t->video_src }}" 
+                                           preload="none" 
+                                           data-src="{{ $t->video_src }}" 
                                            style="width:100%; height:100%; object-fit:cover;"></video>
                                 @else
                                     <div style="display:grid; place-items:center; height:100%; color:#1D8A68; padding:20px; text-align:center;">
@@ -1075,7 +1075,7 @@
                                 </svg>
                             </span>
                         </button>
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? '966500000000') }}?text={{ urlencode($locale === 'ar' ? 'مرحباً OX Tech، أود الاستفسار عن تطوير مشروع تقني' : 'Hello OX Tech, I would like to inquire about software development') }}" target="_blank" rel="noopener noreferrer" class="ox-consult-btn-secondary">
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? '966500000000') }}?text={{ urlencode($locale === 'ar' ? 'مرحباً OX Tech، أود الاستفسار عن تطوير مشروع تقني' : 'Hello OX Tech, I would like to inquire about software development') }}" target="_blank" rel="noopener noreferrer" class="ox-consult-btn-secondary" aria-label="{{ $locale === 'ar' ? 'تواصل معنا عبر واتساب' : ($locale === 'fr' ? 'Contactez-nous sur WhatsApp' : 'Contact Us on WhatsApp') }}">
                             <span>{{ $locale === 'ar' ? 'تواصل معنا' : ($locale === 'fr' ? 'Contactez-nous' : 'Contact Us') }}</span>
                         </a>
                     </div>
@@ -1145,7 +1145,7 @@
                                 <!-- Row 1: Name & Email -->
                                 <div class="ox-consult-row">
                                     <div class="ox-consult-field-wrap">
-                                        <input type="text" name="name" id="consult_name" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'الاسم الكامل *' : ($locale === 'fr' ? 'Nom Complet *' : 'Full Name *') }}" maxlength="70" required>
+                                        <input type="text" name="name" id="inline_consult_name" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'الاسم الكامل *' : ($locale === 'fr' ? 'Nom Complet *' : 'Full Name *') }}" maxlength="70" required>
                                     </div>
                                     <div class="ox-consult-field-wrap">
                                         <input type="email" name="email" class="ox-consult-input" placeholder="{{ $locale === 'ar' ? 'البريد الإلكتروني *' : ($locale === 'fr' ? 'Email Pro *' : 'Business Email *') }}" maxlength="100" required>
@@ -1202,7 +1202,7 @@
                                 <div class="ox-consult-row">
                                     <div class="ox-consult-field-wrap">
                                         <div class="ox-consult-select-wrap">
-                                            <select name="project_type" class="ox-consult-select" required>
+                                            <select name="project_type" id="inline_project_type" class="ox-consult-select" aria-label="{{ $locale === 'ar' ? 'نوع المشروع' : ($locale === 'fr' ? 'Type de Projet' : 'Project Type') }}" required>
                                                 <option value="" disabled selected hidden>{{ $locale === 'ar' ? 'نوع المشروع' : ($locale === 'fr' ? 'Type de Projet' : 'Project Type') }}</option>
                                                 <option value="تطبيقات جوال (iOS & Android)">{{ $locale === 'ar' ? 'تطبيق جوال iOS / Android' : 'Mobile App (iOS / Android)' }}</option>
                                                 <option value="منصات ومواقع ويب">{{ $locale === 'ar' ? 'منصات ومواقع ويب' : 'Web & Platforms' }}</option>
@@ -1220,7 +1220,7 @@
                                     </div>
                                     <div class="ox-consult-field-wrap">
                                         <div class="ox-consult-select-wrap">
-                                            <select name="budget" class="ox-consult-select" required>
+                                            <select name="budget" id="inline_budget" class="ox-consult-select" aria-label="{{ $locale === 'ar' ? 'الميزانية التقديرية' : ($locale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}" required>
                                                 <option value="" disabled selected hidden>{{ $locale === 'ar' ? 'الميزانية التقديرية' : ($locale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</option>
                                                 <option value="أقل من $10,000">{{ $locale === 'ar' ? 'أقل من $10,000' : '< $10,000' }}</option>
                                                 <option value="$10,000 - $25,000">$10,000 - $25,000</option>
@@ -1268,21 +1268,6 @@
 @endsection
 
 @push('styles')
-<script type="importmap">
-{
-    "imports": {
-        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/index.js",
-        "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/ScrollTrigger.js",
-        "gsap/SplitText": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/SplitText.js",
-        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.mjs",
-        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-        "three/examples/jsm/loaders/GLTFLoader.js": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js",
-        "three/examples/jsm/utils/BufferGeometryUtils.js": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/BufferGeometryUtils.js",
-        "three/examples/jsm/utils/SkeletonUtils.js": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/SkeletonUtils.js"
-    }
-}
-</script>
-<link rel="stylesheet" href="{{ asset('assets/product-scroll.css') }}">
 <style>
     /* ─── Portfolio Grid Limits (3x3 = 9 Desktop, 6 Mobile) ─── */
     @media (min-width: 769px) {
@@ -1610,22 +1595,28 @@
     // Instant & Scroll Fallback: ensure any elements in or near viewport are always visible
     function ensureRevealed() {
         const threshold = window.innerHeight + 120;
+        const toShow = [];
         document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= threshold) {
-                el.classList.add('visible');
+            if (el.getBoundingClientRect().top <= threshold) {
+                toShow.push(el);
             }
         });
+        toShow.forEach(el => el.classList.add('visible'));
     }
 
-    ensureRevealed();
-    window.addEventListener('scroll', ensureRevealed, { passive: true });
-    window.addEventListener('resize', ensureRevealed, { passive: true });
-    setTimeout(ensureRevealed, 100);
-    setTimeout(ensureRevealed, 400);
-    setTimeout(ensureRevealed, 1200);
-    // Ultimate fail-safe: reveal everything after 2.5s in case observer is blocked
-    setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 2500);
+    if (window.requestIdleCallback) {
+        requestIdleCallback(() => ensureRevealed());
+    } else {
+        setTimeout(ensureRevealed, 100);
+    }
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(ensureRevealed);
+    }, { passive: true });
+    window.addEventListener('resize', () => {
+        requestAnimationFrame(ensureRevealed);
+    }, { passive: true });
+    // Ultimate fail-safe: reveal everything after 2s in case observer is blocked
+    setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 2000);
 
     // 2. Smart Client-Friendly Portfolio Filter (Live Search + Sector Tabs + Country Dropdown)
     let currentPortfolioCat = 'all';
@@ -1694,7 +1685,7 @@
             if (code === 'all' || !flagUrl) {
                 flagEl.innerHTML = '<svg class="country-toggle-flag-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>';
             } else {
-                flagEl.innerHTML = `<img src="${flagUrl}" class="country-toggle-flag-img" alt="${name}">`;
+                flagEl.innerHTML = `<img src="${flagUrl}" class="country-toggle-flag-img" alt="" aria-hidden="true">`;
             }
         }
         if (toggleBtn) {
@@ -1885,6 +1876,10 @@
         const frame = document.getElementById(`card-video-frame-${index}`);
         const vid = document.getElementById(`native-video-${index}`);
         if (frame && vid) {
+            if (!vid.src && vid.dataset.src) {
+                vid.src = vid.dataset.src;
+                vid.load();
+            }
             frame.classList.add('playing');
             vid.currentTime = 0;
             const playPromise = vid.play();
@@ -1960,7 +1955,7 @@
 
     // 6. Focus consultation form from CTA button
     function focusConsultForm() {
-        const nameInput = document.getElementById('consult_name');
+        const nameInput = document.getElementById('inline_consult_name') || document.getElementById('consult_name');
         if (nameInput) {
             nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
             setTimeout(() => {
@@ -2187,7 +2182,4 @@
 <!-- Ionicons v7 Web Components (self-hosted) -->
 <script type="module" src="{{ asset('vendor/ionicons/ionicons.esm.js') }}"></script>
 <script nomodule src="{{ asset('vendor/ionicons/ionicons.js') }}"></script>
-
-<!-- 3D Product Scroll Showcase -->
-<script type="module" src="{{ asset('assets/product-scroll.js') }}"></script>
 @endpush

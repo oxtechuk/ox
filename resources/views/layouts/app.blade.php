@@ -186,28 +186,52 @@
     @if(!empty($siteSettings['seo_schema_custom']))
         {!! $siteSettings['seo_schema_custom'] !!}
     @endif
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17984061932"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    @if($isHome)
+        <!-- Hero Background LCP Preload Hint -->
+        <link rel="preload" as="image" href="{{ asset('assets/ox-hero-saudi-egypt.webp') }}" type="image/webp" fetchpriority="high">
+    @endif
 
-      gtag('config', 'AW-17984061932');
-    </script>
-
-    <!-- Meta Pixel Code -->
+    <!-- Optimized Non-Blocking Analytics & Pixels -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1907678277306091');
-    fbq('track', 'PageView');
+    function loadMarketingPixels() {
+        if (window._pixelsInitialized) return;
+        window._pixelsInitialized = true;
+
+        // Google Tag Manager / Ads
+        var gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17984061932';
+        document.head.appendChild(gtagScript);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'AW-17984061932');
+
+        // Meta Pixel
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1907678277306091');
+        fbq('track', 'PageView');
+    }
+
+    if (document.readyState === 'complete') {
+        loadMarketingPixels();
+    } else {
+        window.addEventListener('load', function() {
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(loadMarketingPixels, { timeout: 2000 });
+            } else {
+                setTimeout(loadMarketingPixels, 1200);
+            }
+        });
+    }
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1907678277306091&ev=PageView&noscript=1"
@@ -1508,11 +1532,11 @@
             <button type="button" class="ox-lang-trigger" id="floatingLangBtn" onclick="toggleFloatingLang(event)" aria-label="Language Selector" title="{{ $currentLocale === 'ar' ? 'تغيير اللغة' : ($currentLocale === 'fr' ? 'Changer de langue' : 'Switch Language') }}">
                 <span class="ox-lang-flag">
                     @if($currentLocale === 'ar')
-                        <img src="{{ asset('assets/flags/sa.webp') }}" class="ox-flag-img" alt="AR">
+                        <img src="{{ asset('assets/flags/sa.webp') }}" class="ox-flag-img" alt="" aria-hidden="true">
                     @elseif($currentLocale === 'fr')
-                        <img src="{{ asset('assets/flags/fr.webp') }}" class="ox-flag-img" alt="FR">
+                        <img src="{{ asset('assets/flags/fr.webp') }}" class="ox-flag-img" alt="" aria-hidden="true">
                     @else
-                        <img src="{{ asset('assets/flags/gb.webp') }}" class="ox-flag-img" alt="EN">
+                        <img src="{{ asset('assets/flags/gb.webp') }}" class="ox-flag-img" alt="" aria-hidden="true">
                     @endif
                 </span>
                 <span class="ox-lang-text">{{ strtoupper($currentLocale) }}</span>
@@ -1520,19 +1544,19 @@
             </button>
             <div class="ox-lang-popover" id="floatingLangPopover">
                 <a href="{{ route('lang.switch', 'ar') }}" class="ox-lang-option {{ $currentLocale === 'ar' ? 'active' : '' }}">
-                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/sa.webp') }}" class="ox-flag-img" alt="AR"></span>
+                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/sa.webp') }}" class="ox-flag-img" alt="" aria-hidden="true"></span>
                     <span class="ox-lang-name">العربية</span>
                     <span class="ox-lang-code">AR</span>
                     @if($currentLocale === 'ar')<span class="ox-active-dot"></span>@endif
                 </a>
                 <a href="{{ route('lang.switch', 'en') }}" class="ox-lang-option {{ $currentLocale === 'en' ? 'active' : '' }}">
-                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/gb.webp') }}" class="ox-flag-img" alt="EN"></span>
+                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/gb.webp') }}" class="ox-flag-img" alt="" aria-hidden="true"></span>
                     <span class="ox-lang-name">English</span>
                     <span class="ox-lang-code">EN</span>
                     @if($currentLocale === 'en')<span class="ox-active-dot"></span>@endif
                 </a>
                 <a href="{{ route('lang.switch', 'fr') }}" class="ox-lang-option {{ $currentLocale === 'fr' ? 'active' : '' }}">
-                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/fr.webp') }}" class="ox-flag-img" alt="FR"></span>
+                    <span class="ox-flag-emoji"><img src="{{ asset('assets/flags/fr.webp') }}" class="ox-flag-img" alt="" aria-hidden="true"></span>
                     <span class="ox-lang-name">Français</span>
                     <span class="ox-lang-code">FR</span>
                     @if($currentLocale === 'fr')<span class="ox-active-dot"></span>@endif

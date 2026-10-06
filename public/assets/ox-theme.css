@@ -318,9 +318,9 @@ header.site-header.scrolled {
   justify-content: center;
   gap: 10px;
   padding: 12px 28px;
-  background: var(--ox-emerald);
-  color: var(--ox-white);
-  border: 1px solid var(--ox-emerald);
+  background: #147255;
+  color: #FFFFFF;
+  border: 1px solid #147255;
   border-radius: var(--radius-full);
   font-family: var(--font-ar);
   font-size: 15px;
@@ -1410,7 +1410,7 @@ html[dir="ltr"] .services-store-link:hover svg {
   bottom: 0;
   width: 52%;
   max-width: 740px;
-  background-image: url('ox-riyadh-skyline-fade.jpg');
+  background-image: url('ox-riyadh-skyline-fade.webp');
   background-size: cover;
   background-position: left center;
   background-repeat: no-repeat;
@@ -2199,6 +2199,7 @@ html[dir="ltr"] .ox-beneficiaries-skyline {
   padding-left: 3px;
   box-shadow: 0 0 25px rgba(0, 229, 155, 0.35);
   transition: .35s cubic-bezier(.2, .8, .2, 1);
+  will-change: transform, opacity;
   animation: saduPulse 2.4s infinite;
 }
 
@@ -2413,11 +2414,13 @@ blockquote {
 
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(0, 229, 155, 0.25);
+    transform: scale(1);
+    opacity: 0.92;
   }
 
   50% {
-    box-shadow: 0 0 35px rgba(0, 229, 155, 0.6), 0 0 0 10px rgba(0, 229, 155, 0.1);
+    transform: scale(1.08);
+    opacity: 1;
   }
 }
 
@@ -3011,7 +3014,7 @@ html[dir="ltr"] .ox-video-partner-badge {
   right: 0;
   width: 58%;
   min-width: 520px;
-  background-image: url('/assets/ox-consult-bg.jpg');
+  background-image: url('/assets/ox-consult-bg.webp');
   background-position: right center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -3117,8 +3120,8 @@ html[dir="ltr"] .ox-consult-arabesque-art {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: #1D8A68;
-  color: #041c16;
+  background: #147255;
+  color: #FFFFFF;
   font-family: var(--font-ar);
   font-weight: 800;
   font-size: 15px;
@@ -4478,7 +4481,7 @@ html[dir="ltr"] .portfolio-country-menu {
 .portfolio-client-name {
   font-size: 11.5px;
   font-weight: 700;
-  color: #059669;
+  color: #047857;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 5px;

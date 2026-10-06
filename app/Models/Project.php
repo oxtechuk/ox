@@ -110,22 +110,36 @@ class Project extends Model
     public function getDisplayImageAttribute(): string
     {
         if ($this->hero_image) {
-            if (str_starts_with($this->hero_image, 'http')) {
-                return $this->hero_image;
-            }
-            if (str_starts_with($this->hero_image, 'assets/')) {
-                $webpAsset = preg_replace('/\.(jpe?g|png)$/i', '.webp', $this->hero_image);
+            $parsed = parse_url($this->hero_image);
+            $path = isset($parsed['path']) ? ltrim($parsed['path'], '/') : $this->hero_image;
+
+            if (str_starts_with($path, 'assets/')) {
+                $webpAsset = preg_replace('/\.(jpe?g|png)$/i', '.webp', $path);
                 if (file_exists(public_path($webpAsset))) {
                     return asset($webpAsset);
                 }
 
-                return asset($this->hero_image);
+                return asset($path);
+            }
+
+            if (str_starts_with($path, 'storage/')) {
+                $storageSub = substr($path, 8);
+                $webpStorage = preg_replace('/\.(jpe?g|png)$/i', '.webp', $storageSub);
+                if (Storage::disk('public')->exists($webpStorage)) {
+                    return asset('storage/'.$webpStorage);
+                }
+
+                return asset('storage/'.$storageSub);
             }
 
             // Check if storage has a .webp version
             $webpStorage = preg_replace('/\.(jpe?g|png)$/i', '.webp', $this->hero_image);
             if (Storage::disk('public')->exists($webpStorage)) {
                 return asset('storage/'.$webpStorage);
+            }
+
+            if (str_starts_with($this->hero_image, 'http')) {
+                return $this->hero_image;
             }
 
             return asset('storage/'.$this->hero_image);
