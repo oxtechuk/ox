@@ -13,12 +13,12 @@ class HomeController extends Controller
     public function index()
     {
         $projects = Project::where('is_featured', true)
-            ->orderBy('order')
+            ->orderBy('order', 'asc')
             ->orderBy('id', 'desc')
             ->get();
 
         if ($projects->isEmpty()) {
-            $projects = Project::orderBy('order')->orderBy('id', 'desc')->get();
+            $projects = Project::orderBy('order', 'asc')->orderBy('id', 'desc')->get();
         }
 
         $testimonials = Testimonial::where('is_active', true)
@@ -94,7 +94,7 @@ class HomeController extends Controller
             ->get();
 
         // Primary strip order matching client reference image + active DB countries
-        $stripOrder = ['jo', 'eg', 'sa', 'ae', 'kw', 'iq', 'ma', 'ps', 'lb', 'sy'];
+        $stripOrder = ['jo', 'eg', 'sa', 'lb', 'ps', 'ae', 'sy', 'kw', 'iq', 'ma'];
         foreach ($dbCountries as $dbc) {
             $c = strtolower($dbc->country_code);
             if (! in_array($c, $stripOrder)) {
@@ -135,7 +135,11 @@ class HomeController extends Controller
 
         $countries = $displayCountries;
 
-        $sectors = Project::select('sector_slug', 'sector_name')
+        $featuredSectorSlugs = $projects->pluck('sector_slug')->unique()->filter()->values();
+        $sectors = ($featuredSectorSlugs->isNotEmpty()
+            ? Project::whereIn('sector_slug', $featuredSectorSlugs)
+            : Project::query())
+            ->select('sector_slug', 'sector_name')
             ->distinct()
             ->whereNotNull('sector_slug')
             ->get()

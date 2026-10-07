@@ -37,8 +37,14 @@
                 <option value="marine" {{ request('sector') == 'marine' ? 'selected' : '' }}>نقل بحري</option>
             </select>
 
+            <select name="featured" class="form-control" style="max-width: 170px;">
+                <option value="">كل المشاريع</option>
+                <option value="1" {{ request('featured') === '1' ? 'selected' : '' }}>⭐ المميزة (الرئيسية)</option>
+                <option value="0" {{ request('featured') === '0' ? 'selected' : '' }}>غير مميزة (أعمالنا فقط)</option>
+            </select>
+
             <button type="submit" class="btn btn-outline">تصفية</button>
-            @if(request()->hasAny(['search', 'country', 'sector']))
+            @if(request()->hasAny(['search', 'country', 'sector', 'featured']))
                 <a href="{{ route('admin.projects.index') }}" class="btn btn-outline" style="color: #b91c1c;">إلغاء الفلتر</a>
             @endif
         </div>
@@ -48,21 +54,21 @@
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th style="width: 50px;">ترتيب</th>
+                    <th style="width: 70px; text-align: center;">الترتيب</th>
                     <th>المشروع</th>
                     <th>الدولة والقطاع</th>
                     <th>مدة العمل</th>
                     <th>تاريخ الإنجاز</th>
                     <th>كارت كبير</th>
-                    <th>الحالة</th>
+                    <th>الظهور والتمييز</th>
                     <th>إجراءات</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($projects as $p)
                     <tr>
-                        <td style="font-family: var(--font-code); font-weight: 700; color: var(--brand-forest);">
-                            {{ $p->order }}
+                        <td style="font-family: var(--font-code); font-weight: 700; color: var(--brand-forest); text-align: center;">
+                            #{{ $p->order }}
                         </td>
                         <td>
                             <div style="display: flex; align-items: center; gap: 12px;">
@@ -90,9 +96,13 @@
                         </td>
                         <td>
                             @if($p->is_featured)
-                                <span class="status-badge scheduled">معروض</span>
+                                <span class="status-badge new" style="background: rgba(184, 255, 44, 0.15); color: #84cc16; border: 1px solid rgba(184, 255, 44, 0.3); font-weight: 700; white-space: nowrap;">
+                                    ⭐ مميز (الرئيسية)
+                                </span>
                             @else
-                                <span class="status-badge archived">مخفي</span>
+                                <span class="status-badge archived" style="white-space: nowrap;">
+                                    عادي (أعمالنا فقط)
+                                </span>
                             @endif
                         </td>
                         <td>

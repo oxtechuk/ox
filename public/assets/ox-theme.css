@@ -3918,6 +3918,287 @@ html[lang='fr'] .ox-footer-copy {
   line-height: 1.7;
 }
 
+/* ─── Visual Country Flags Strip (User Mockup Replica) ─── */
+.portfolio-country-flags-strip-wrap {
+  width: 100%;
+  padding-bottom: 6px;
+  position: relative;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 4px;
+}
+
+.portfolio-country-flags-strip {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 2px 10px 2px;
+}
+
+.portfolio-country-flags-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.country-flag-strip-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 16px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 60px;
+  flex-shrink: 0;
+  outline: none;
+  user-select: none;
+}
+
+.country-flag-strip-btn:hover {
+  transform: translateY(-2px);
+}
+
+.flag-strip-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.22s ease;
+}
+
+.country-flag-strip-btn:hover .flag-strip-avatar {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.flag-strip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.flag-strip-emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.flag-strip-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #1D8A68;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  min-width: 17px;
+  height: 17px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.flag-strip-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.25;
+  transition: all 0.2s ease;
+}
+
+/* Active State (Selected Country or All Countries) */
+.country-flag-strip-btn.active .flag-strip-avatar {
+  border-color: #1D8A68;
+  box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22), 0 6px 16px rgba(29, 138, 104, 0.28);
+  transform: scale(1.05);
+}
+
+.country-flag-strip-btn.active .flag-strip-label {
+  color: #1D8A68;
+  font-weight: 800;
+}
+
+/* Globe Avatar for "كل الدول" (All Countries) */
+.globe-avatar {
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  border-color: #a7f3d0;
+  color: #1D8A68;
+}
+
+.country-flag-strip-btn.active .globe-avatar {
+  background: linear-gradient(135deg, #1D8A68, #156d52);
+  color: #ffffff;
+  border-color: #1D8A68;
+  box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.25), 0 6px 16px rgba(29, 138, 104, 0.35);
+}
+
+/* Other Countries Button (+12 / +13 دول أخرى) */
+.country-flag-strip-dropdown-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.other-avatar {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+}
+
+.other-count-text {
+  font-size: 13px;
+  font-weight: 800;
+  color: #475569;
+  letter-spacing: -0.5px;
+}
+
+.country-flag-strip-btn.other-countries-btn.active .other-avatar {
+  border-color: #1D8A68;
+  background: #ecfdf5;
+}
+
+.country-flag-strip-btn.other-countries-btn.active .other-count-text {
+  color: #1D8A68;
+}
+
+/* Other Countries Dropdown Menu */
+.other-countries-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 200;
+  width: 290px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 12px;
+  display: none;
+  animation: oxDropdownFade 0.2s ease;
+}
+
+html[dir="rtl"] .other-countries-menu {
+  left: 0;
+  right: auto;
+}
+
+.other-countries-menu.show {
+  display: block;
+}
+
+.other-countries-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 10px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #64748b;
+}
+
+.other-header-count {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+}
+
+.other-countries-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-top: 10px;
+  scrollbar-width: thin;
+}
+
+.other-country-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  text-align: inherit;
+  width: 100%;
+}
+
+.other-country-item:hover {
+  background: #f0fdf4;
+  border-color: #a7f3d0;
+  transform: translateY(-1px);
+}
+
+.other-country-item.active {
+  background: #ecfdf5;
+  border-color: #1D8A68;
+}
+
+.other-item-flag {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.other-flag-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.other-item-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.other-item-count {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #1D8A68;
+  background: #ffffff;
+  padding: 1px 6px;
+  border-radius: 6px;
+  border: 1px solid #d1fae5;
+}
+
 /* ─── Light Theme Portfolio Discovery Filter Container ─── */
 .portfolio-filter-container {
   background: #ffffff;

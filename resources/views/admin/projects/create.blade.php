@@ -112,8 +112,9 @@
             </div>
 
             <div>
-                <label class="form-label">ترتيب العرض</label>
-                <input type="number" name="order" class="form-control" value="{{ old('order', 1) }}">
+                <label class="form-label">ترتيب العرض (Order) *</label>
+                <input type="number" name="order" class="form-control" value="{{ old('order', 1) }}" placeholder="1, 2, 3..." required>
+                <div class="form-hint" style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">الترتيب الرقمي (الرقم الأقل يظهر أولاً، مثال: 1 ثم 2 ثم 3).</div>
             </div>
         </div>
 
@@ -156,17 +157,42 @@
                 </div>
             </div>
 
-            <!-- Flags -->
-            <div style="display: flex; gap: 24px; align-items: center; margin: 25px 0;">
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="checkbox" name="is_big" value="1" {{ old('is_big') ? 'checked' : '' }}>
-                    <span style="font-size: 12.5px; font-weight: 600; color: var(--text-heading);">عرض ككارت مزدوج عريض (Big Card)</span>
-                </label>
+            <!-- Display & Feature Settings -->
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08)); border-radius: 12px; padding: 20px; margin: 25px 0;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--text-heading); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                    <span>⚙️</span>
+                    <span>إعدادات التمييز والظهور (Featured & Placement)</span>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                    <!-- Featured Toggle -->
+                    <label style="display: flex; align-items: flex-start; gap: 12px; padding: 14px; background: rgba(184, 255, 44, 0.05); border: 1px solid rgba(184, 255, 44, 0.25); border-radius: 10px; cursor: pointer;">
+                        <input type="hidden" name="is_featured" value="0">
+                        <input type="checkbox" name="is_featured" id="is_featured" value="1" {{ old('is_featured', '1') == '1' ? 'checked' : '' }} style="margin-top: 3px; accent-color: #84cc16; width: 18px; height: 18px;">
+                        <div>
+                            <div style="font-size: 13.5px; font-weight: 700; color: var(--text-heading); display: flex; align-items: center; gap: 6px;">
+                                <span>⭐ مشروع مميز (Featured Project)</span>
+                            </div>
+                            <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.5; margin-top: 3px;">
+                                يظهر هذا المشروع في <strong>الصفحة الرئيسية</strong> (Home Page)، ويتصدر قائمة المشاريع في <strong>صفحة أعمالنا</strong> وفق ترتيب العرض المحدد.
+                            </div>
+                        </div>
+                    </label>
 
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', 1) ? 'checked' : '' }}>
-                    <span style="font-size: 12.5px; font-weight: 600; color: var(--text-heading);">تفعيل وظهور في الصفحة الرئيسية</span>
-                </label>
+                    <!-- Big Card Toggle -->
+                    <label style="display: flex; align-items: flex-start; gap: 12px; padding: 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; cursor: pointer;">
+                        <input type="hidden" name="is_big" value="0">
+                        <input type="checkbox" name="is_big" id="is_big" value="1" {{ old('is_big') ? 'checked' : '' }} style="margin-top: 3px; accent-color: #84cc16; width: 18px; height: 18px;">
+                        <div>
+                            <div style="font-size: 13.5px; font-weight: 700; color: var(--text-heading);">
+                                <span>كارت مزدوج عريض (Big Card)</span>
+                            </div>
+                            <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.5; margin-top: 3px;">
+                                يتم عرض المشروع بحجم كارت عريض يأخذ مساحة أكبر في شبكة المشاريع.
+                            </div>
+                        </div>
+                    </label>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-lime" style="padding: 10px 28px;">

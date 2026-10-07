@@ -48,7 +48,8 @@ class ProjectController extends Controller
             });
         }
 
-        $projects = $query->orderBy('order', 'asc')
+        $projects = $query->orderByDesc('is_featured')
+            ->orderBy('order', 'asc')
             ->orderBy('id', 'desc')
             ->get();
 
@@ -94,7 +95,7 @@ class ProjectController extends Controller
             ->get();
 
         // Primary strip order matching client reference image + active DB countries
-        $stripOrder = ['jo', 'eg', 'sa', 'ae', 'kw', 'iq', 'ma', 'ps', 'lb', 'sy'];
+        $stripOrder = ['jo', 'eg', 'sa', 'lb', 'ps', 'ae', 'sy', 'kw', 'iq', 'ma'];
         foreach ($dbCountries as $dbc) {
             $c = strtolower($dbc->country_code);
             if (! in_array($c, $stripOrder)) {

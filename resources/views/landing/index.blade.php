@@ -335,7 +335,106 @@
             <!-- ─── Dual-Filter Bar (Category + Country with Flags) ─── -->
             <!-- ─── Smart Client-Friendly Filter Bar ─── -->
             <div class="portfolio-filter-container reveal" id="portfolioFilterContainer">
-                <!-- Row 1: Smart Search & Country Dropdown & Actions -->
+                <!-- Row 1: Visual Country Flags Strip (User Mockup Replica) -->
+                <div class="portfolio-country-flags-strip-wrap">
+                    <div class="portfolio-country-flags-strip" id="portfolioCountryStrip" role="tablist" aria-label="{{ $locale === 'ar' ? 'فلتر المشاريع حسب الدولة' : 'Filter projects by country' }}">
+                        <!-- 1. All Countries Option (Default Active) -->
+                        <button type="button" 
+                                class="country-flag-strip-btn active" 
+                                data-country="all" 
+                                id="flagBtnAll" 
+                                onclick="selectPortfolioCountry('all', '{{ $locale === 'ar' ? 'كل الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}', null)" 
+                                title="{{ $locale === 'ar' ? 'كل الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}">
+                            <span class="flag-strip-avatar globe-avatar">
+                                <svg class="globe-strip-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                            </span>
+                            <span class="flag-strip-label">{{ $locale === 'ar' ? 'كل الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}</span>
+                        </button>
+
+                        <!-- 2. Display Countries (Circular Flags) -->
+                        @foreach($displayCountries as $country)
+                            @php
+                                $cLower = strtolower($country->country_code);
+                                $cName = ($locale === 'en' && !empty($country->country_name_en)) ? $country->country_name_en : $country->country_name;
+                                $cCount = $projects->filter(fn($p) => strtolower($p->country_code) === $cLower)->count();
+                            @endphp
+                            <button type="button" 
+                                    class="country-flag-strip-btn" 
+                                    data-country="{{ $cLower }}" 
+                                    id="flagBtn_{{ $cLower }}" 
+                                    onclick="selectPortfolioCountry('{{ $cLower }}', '{{ addslashes($cName) }}', '{{ $country->flag_url }}')" 
+                                    title="{{ $cName }}">
+                                <span class="flag-strip-avatar">
+                                    @if(!empty($country->flag_url))
+                                        <img src="{{ $country->flag_url }}" class="flag-strip-img" alt="{{ $cName }}" loading="lazy">
+                                    @else
+                                        <span class="flag-strip-emoji">🌐</span>
+                                    @endif
+                                    @if($cCount > 0)
+                                        <span class="flag-strip-badge">{{ $cCount }}</span>
+                                    @endif
+                                </span>
+                                <span class="flag-strip-label">{{ $cName }}</span>
+                            </button>
+                        @endforeach
+
+                        <!-- 3. Other Countries Dropdown (+13 دول أخرى) -->
+                        @if(isset($otherCountries) && $otherCountries->isNotEmpty())
+                            <div class="country-flag-strip-dropdown-wrap" id="otherCountriesWrap">
+                                <button type="button" 
+                                        class="country-flag-strip-btn other-countries-btn" 
+                                        id="otherCountriesBtn" 
+                                        onclick="toggleOtherCountriesDropdown(event)" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false" 
+                                        title="{{ $locale === 'ar' ? 'دول أخرى' : 'Other Countries' }}">
+                                    <span class="flag-strip-avatar other-avatar" id="otherCountriesAvatar">
+                                        <span class="other-count-text">+{{ $otherCountries->count() }}</span>
+                                    </span>
+                                    <span class="flag-strip-label" id="otherCountriesLabel">{{ $locale === 'ar' ? 'دول أخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}</span>
+                                </button>
+
+                                <div class="other-countries-menu" id="otherCountriesMenu">
+                                    <div class="other-countries-header">
+                                        <span>{{ $locale === 'ar' ? 'اختر الدولة' : 'Select Country' }}</span>
+                                        <span class="other-header-count">+{{ $otherCountries->count() }}</span>
+                                    </div>
+                                    <div class="other-countries-grid">
+                                        @foreach($otherCountries as $oCountry)
+                                            @php
+                                                $ocLower = strtolower($oCountry->country_code);
+                                                $ocName = ($locale === 'en' && !empty($oCountry->country_name_en)) ? $oCountry->country_name_en : $oCountry->country_name;
+                                                $ocCount = $projects->filter(fn($p) => strtolower($p->country_code) === $ocLower)->count();
+                                            @endphp
+                                            <button type="button" 
+                                                    class="other-country-item" 
+                                                    data-country="{{ $ocLower }}" 
+                                                    onclick="selectPortfolioCountry('{{ $ocLower }}', '{{ addslashes($ocName) }}', '{{ $oCountry->flag_url }}', true)">
+                                                <span class="other-item-flag">
+                                                    @if(!empty($oCountry->flag_url))
+                                                        <img src="{{ $oCountry->flag_url }}" class="other-flag-img" alt="{{ $ocName }}" loading="lazy">
+                                                    @else
+                                                        <span>🌐</span>
+                                                    @endif
+                                                </span>
+                                                <span class="other-item-name">{{ $ocName }}</span>
+                                                @if($ocCount > 0)
+                                                    <span class="other-item-count">{{ $ocCount }}</span>
+                                                @endif
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Row 2: Live Search & Reset Action -->
                 <div class="portfolio-filter-toolbar">
                     <!-- Live Search Box -->
                     <div class="portfolio-search-wrap">
@@ -350,66 +449,14 @@
                         <button type="button" id="portfolioSearchClear" class="portfolio-search-clear" onclick="clearPortfolioSearch()" style="display:none;" title="{{ $locale === 'ar' ? 'مسح البحث' : 'Clear search' }}">✕</button>
                     </div>
 
-                    <!-- Actions: Country Picker + Reset Button -->
-                    <div class="portfolio-toolbar-actions">
-                        @php
-                            $saCountry = $countries->first(fn($c) => strtolower($c->country_code) === 'sa');
-                            $defaultCountryCode = 'sa';
-                            $defaultCountryName = $saCountry ? $saCountry->country_name : ($locale === 'ar' ? 'السعودية' : ($locale === 'fr' ? 'Arabie Saoudite' : 'Saudi Arabia'));
-                            $defaultFlagUrl = $saCountry?->flag_url ?? asset('assets/flags/sa.webp');
-                        @endphp
-                        <!-- Country Dropdown Button (Default: Saudi Arabia) -->
-                        <div class="portfolio-country-dropdown-wrap" id="portfolioCountryWrap">
-                            <button type="button" class="portfolio-country-toggle-btn has-filter" id="portfolioCountryBtn" onclick="togglePortfolioCountryDropdown(event)" aria-haspopup="true" aria-expanded="false">
-                                <span class="country-toggle-flag" id="portfolioCurrentFlag">
-                                    <img src="{{ $defaultFlagUrl }}" class="country-toggle-flag-img" alt="" aria-hidden="true">
-                                </span>
-                                <span class="country-toggle-text" id="portfolioCurrentCountryText">{{ $defaultCountryName }}</span>
-                                <svg class="country-toggle-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </button>
-
-                            <div class="portfolio-country-menu" id="portfolioCountryMenu">
-                                <button type="button" class="country-menu-item country-pill-btn" data-country="all" onclick="selectPortfolioCountry('all', '{{ $locale === 'ar' ? 'جميع الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}', null)">
-                                    <span class="country-menu-flag">
-                                        <svg class="country-menu-globe-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                    </span>
-                                    <span class="country-menu-name">{{ $locale === 'ar' ? 'جميع الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}</span>
-                                    <span class="country-menu-count">{{ $projects->count() }}</span>
-                                </button>
-                                @foreach($countries as $country)
-                                    @php
-                                        $cLower = strtolower($country->country_code);
-                                        $cCount = $projects->filter(fn($p) => strtolower($p->country_code) === $cLower)->count();
-                                        $isDefaultActive = ($cLower === 'sa');
-                                    @endphp
-                                    <button type="button" class="country-menu-item country-pill-btn {{ $isDefaultActive ? 'active' : '' }}" data-country="{{ $cLower }}" onclick="selectPortfolioCountry('{{ $cLower }}', '{{ addslashes($country->country_name) }}', '{{ $country->flag_url }}')">
-                                        <span class="country-menu-flag">
-                                            @if(!empty($country->flag_url))
-                                                <img src="{{ $country->flag_url }}" class="country-menu-flag-img" alt="{{ $country->country_name }}" loading="lazy">
-                                            @else
-                                                <svg class="country-menu-globe-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                            @endif
-                                        </span>
-                                        <span class="country-menu-name">{{ $country->country_name }}</span>
-                                        @if($cCount > 0)
-                                            <span class="country-menu-count">{{ $cCount }}</span>
-                                        @endif
-                                    </button>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <!-- Reset Filter Button (Shown when filters active) -->
-                        <button type="button" class="portfolio-reset-pill-btn" id="portfolioResetBtn" style="display:none;" onclick="resetPortfolioFilter()" title="{{ $locale === 'ar' ? 'إعادة تعيين الفلاتر' : 'Reset filters' }}">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                            <span>{{ $locale === 'ar' ? 'إلغاء الفلتر' : ($locale === 'fr' ? 'Réinitialiser' : 'Reset') }}</span>
-                        </button>
-                    </div>
+                    <!-- Reset Filter Button (Shown when filters active) -->
+                    <button type="button" class="portfolio-reset-pill-btn" id="portfolioResetBtn" style="display:none;" onclick="resetPortfolioFilter()" title="{{ $locale === 'ar' ? 'إعادة تعيين الفلاتر' : 'Reset filters' }}">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>{{ $locale === 'ar' ? 'إلغاء الفلتر' : ($locale === 'fr' ? 'Réinitialiser' : 'Reset') }}</span>
+                    </button>
                 </div>
 
                 <!-- Row 2: Client-Friendly Business Sector Tabs (SVG Vector Icons, No Emojis) -->
@@ -1623,9 +1670,9 @@
     // Ultimate fail-safe: reveal everything after 2s in case observer is blocked
     setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }, 2000);
 
-    // 2. Smart Client-Friendly Portfolio Filter (Live Search + Sector Tabs + Country Dropdown)
+    // 2. Smart Client-Friendly Portfolio Filter (Live Search + Sector Tabs + Country Flags Strip)
     let currentPortfolioCat = 'all';
-    let currentPortfolioCountry = 'sa';
+    let currentPortfolioCountry = 'all';
     let currentPortfolioSearch = '';
 
     window.handlePortfolioSearch = function(query) {
@@ -1653,63 +1700,61 @@
         applyPortfolioFilters();
     };
 
-    window.togglePortfolioCountryDropdown = function(e) {
+    window.toggleOtherCountriesDropdown = function(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
         }
-        const menu = document.getElementById('portfolioCountryMenu');
-        const btn = document.getElementById('portfolioCountryBtn');
+        const menu = document.getElementById('otherCountriesMenu');
+        const btn = document.getElementById('otherCountriesBtn');
         if (!menu) return;
-        const isOpen = menu.classList.contains('show');
-        if (isOpen) {
-            menu.classList.remove('show');
-            if (btn) btn.classList.remove('active');
-        } else {
-            menu.classList.add('show');
-            if (btn) btn.classList.add('active');
-        }
+        menu.classList.toggle('show');
+        if (btn) btn.classList.toggle('open');
     };
 
-    window.closePortfolioCountryDropdown = function() {
-        const menu = document.getElementById('portfolioCountryMenu');
-        const btn = document.getElementById('portfolioCountryBtn');
+    window.closeOtherCountriesDropdown = function() {
+        const menu = document.getElementById('otherCountriesMenu');
+        const btn = document.getElementById('otherCountriesBtn');
         if (menu) menu.classList.remove('show');
-        if (btn) btn.classList.remove('active');
+        if (btn) btn.classList.remove('open');
     };
 
-    window.selectPortfolioCountry = function(code, name, flagUrl) {
+    window.selectPortfolioCountry = function(code, name, flagUrl, isFromOtherMenu = false) {
         currentPortfolioCountry = code;
-        
-        const textEl = document.getElementById('portfolioCurrentCountryText');
-        const flagEl = document.getElementById('portfolioCurrentFlag');
-        const toggleBtn = document.getElementById('portfolioCountryBtn');
-        
-        if (textEl) textEl.textContent = name;
-        if (flagEl) {
-            if (code === 'all' || !flagUrl) {
-                flagEl.innerHTML = '<svg class="country-toggle-flag-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>';
-            } else {
-                flagEl.innerHTML = `<img src="${flagUrl}" class="country-toggle-flag-img" alt="" aria-hidden="true">`;
+
+        // Toggle active states
+        document.querySelectorAll('.country-flag-strip-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.other-country-item').forEach(b => b.classList.remove('active'));
+
+        const otherBtn = document.getElementById('otherCountriesBtn');
+        const otherLabel = document.getElementById('otherCountriesLabel');
+        const otherAvatar = document.getElementById('otherCountriesAvatar');
+
+        if (code === 'all') {
+            const allBtn = document.getElementById('flagBtnAll');
+            if (allBtn) allBtn.classList.add('active');
+            if (otherLabel) otherLabel.textContent = '{{ $locale === 'ar' ? 'دول أخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}';
+            if (otherAvatar) otherAvatar.innerHTML = '<span class="other-count-text">+{{ $otherCountries->count() }}</span>';
+        } else if (isFromOtherMenu) {
+            if (otherBtn) otherBtn.classList.add('active');
+            if (otherLabel) otherLabel.textContent = name;
+            if (otherAvatar) {
+                if (flagUrl) {
+                    otherAvatar.innerHTML = `<img src="${flagUrl}" class="flag-strip-img" alt="${name}">`;
+                } else {
+                    otherAvatar.innerHTML = '<span class="other-count-text">🌐</span>';
+                }
             }
-        }
-        if (toggleBtn) {
-            if (code !== 'all') {
-                toggleBtn.classList.add('has-filter');
-            } else {
-                toggleBtn.classList.remove('has-filter');
-            }
+            const activeItem = document.querySelector(`.other-country-item[data-country="${code}"]`);
+            if (activeItem) activeItem.classList.add('active');
+        } else {
+            const stripBtn = document.getElementById(`flagBtn_${code}`);
+            if (stripBtn) stripBtn.classList.add('active');
+            if (otherLabel) otherLabel.textContent = '{{ $locale === 'ar' ? 'دول أخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}';
+            if (otherAvatar) otherAvatar.innerHTML = '<span class="other-count-text">+{{ $otherCountries->count() }}</span>';
         }
 
-        document.querySelectorAll('.country-menu-item, .country-pill-btn').forEach(item => {
-            if (item.getAttribute('data-country') === code) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-
-        closePortfolioCountryDropdown();
+        closeOtherCountriesDropdown();
         applyPortfolioFilters();
     };
 
@@ -1720,7 +1765,7 @@
         let visibleCount = 0;
         let matchedSoFar = 0;
 
-        const hasActiveFilter = (currentPortfolioCat !== 'all' || currentPortfolioCountry !== 'sa' || currentPortfolioSearch.length > 0);
+        const hasActiveFilter = (currentPortfolioCat !== 'all' || currentPortfolioCountry !== 'all' || currentPortfolioSearch.length > 0);
         const resetBtn = document.getElementById('portfolioResetBtn');
         if (resetBtn) {
             resetBtn.style.display = hasActiveFilter ? 'inline-flex' : 'none';
@@ -1787,7 +1832,7 @@
 
     window.resetPortfolioFilter = function() {
         currentPortfolioCat = 'all';
-        currentPortfolioCountry = 'sa';
+        currentPortfolioCountry = 'all';
         currentPortfolioSearch = '';
         
         const searchInput = document.getElementById('portfolioSmartSearch');
@@ -1799,13 +1844,13 @@
             b.classList.toggle('active', b.getAttribute('data-cat') === 'all');
         });
 
-        selectPortfolioCountry('sa', '{{ addslashes($defaultCountryName) }}', '{{ $defaultFlagUrl }}');
+        selectPortfolioCountry('all', '{{ $locale === 'ar' ? 'كل الدول' : ($locale === 'fr' ? 'Tous les pays' : 'All Countries') }}', null);
     };
 
     document.addEventListener('click', function(e) {
-        const wrap = document.getElementById('portfolioCountryWrap');
+        const wrap = document.getElementById('otherCountriesWrap');
         if (wrap && !wrap.contains(e.target)) {
-            closePortfolioCountryDropdown();
+            closeOtherCountriesDropdown();
         }
     });
 
@@ -1817,7 +1862,7 @@
         }, 150);
     });
 
-    // Initial filter execution to apply default Saudi Arabia filter
+    // Initial filter execution to apply default all countries filter
     applyPortfolioFilters();
 
     // 4. Partner Stories Video Stage Controller
