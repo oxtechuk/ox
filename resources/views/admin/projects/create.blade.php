@@ -56,7 +56,11 @@
                     <option value="commerce" data-name="تجارة إلكترونية" {{ old('sector_slug') == 'commerce' ? 'selected' : '' }}>تجارة إلكترونية (commerce)</option>
                     <option value="auto" data-name="سيارات" {{ old('sector_slug') == 'auto' ? 'selected' : '' }}>سيارات (auto)</option>
                     <option value="health" data-name="طبي" {{ old('sector_slug') == 'health' ? 'selected' : '' }}>طبي (health)</option>
-                    <option value="marine" data-name="نقل بحري" {{ old('sector_slug') == 'marine' ? 'selected' : '' }}>نقل بحري (marine)</option>
+                    <option value="education" data-name="تنمية مهارات الأطفال وتجارة إلكترونية" {{ old('sector_slug') == 'education' ? 'selected' : '' }}>تعليم وتنمية مهارات (education)</option>
+                    <option value="creative" data-name="تصميم رقمي وتطوير ويب" {{ old('sector_slug') == 'creative' ? 'selected' : '' }}>تصميم رقمي وتطوير ويب (creative)</option>
+                    <option value="legal" data-name="خدمات واستشارات قانونية" {{ old('sector_slug') == 'legal' ? 'selected' : '' }}>خدمات قانونية (legal)</option>
+                    <option value="telecom" data-name="اتصالات وخدمات رقمية" {{ old('sector_slug') == 'telecom' ? 'selected' : '' }}>اتصالات وخدمات رقمية (telecom)</option>
+                    <option value="marine" data-name="توريدات بحرية وأمن صناعي" {{ old('sector_slug') == 'marine' ? 'selected' : '' }}>توريدات بحرية وأمن صناعي (marine)</option>
                 </select>
                 <input type="hidden" name="sector_name" id="sector_name" value="{{ old('sector_name', 'تجارة إلكترونية') }}">
             </div>

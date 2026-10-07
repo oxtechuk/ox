@@ -14,11 +14,15 @@ class Project extends Model
     protected $fillable = [
         'title',
         'slug',
+        'title_en',
         'subtitle',
+        'subtitle_en',
         'country_code',
         'country_name',
+        'country_name_en',
         'sector_slug',
         'sector_name',
+        'sector_name_en',
         'gradient_class',
         'custom_gradient',
         'is_big',
@@ -26,16 +30,24 @@ class Project extends Model
         'order',
         'number_badge',
         'short_description',
+        'short_description_en',
         'impact_stat',
         'hero_image',
         'client_name',
+        'client_name_en',
         'duration',
+        'duration_en',
         'delivery_date',
+        'delivery_date_en',
         'live_url',
         'summary',
+        'summary_en',
         'challenge',
+        'challenge_en',
         'solution',
+        'solution_en',
         'key_features',
+        'key_features_en',
         'technologies',
         'gallery',
     ];
@@ -45,6 +57,7 @@ class Project extends Model
         'is_featured' => 'boolean',
         'order' => 'integer',
         'key_features' => 'array',
+        'key_features_en' => 'array',
         'technologies' => 'array',
         'gallery' => 'array',
     ];
@@ -150,5 +163,115 @@ class Project extends Model
         }
 
         return asset('assets/ox-saudi-story.png');
+    }
+
+    public function getTitleAttribute($value): string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['title_en'])) {
+            return $this->attributes['title_en'];
+        }
+
+        return (string) $value;
+    }
+
+    public function getSubtitleAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['subtitle_en'])) {
+            return $this->attributes['subtitle_en'];
+        }
+
+        return $value;
+    }
+
+    public function getCountryNameAttribute($value): string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['country_name_en'])) {
+            return $this->attributes['country_name_en'];
+        }
+
+        return (string) $value;
+    }
+
+    public function getSectorNameAttribute($value): string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['sector_name_en'])) {
+            return $this->attributes['sector_name_en'];
+        }
+
+        return (string) $value;
+    }
+
+    public function getShortDescriptionAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['short_description_en'])) {
+            return $this->attributes['short_description_en'];
+        }
+
+        return $value;
+    }
+
+    public function getClientNameAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['client_name_en'])) {
+            return $this->attributes['client_name_en'];
+        }
+
+        return $value;
+    }
+
+    public function getDurationAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['duration_en'])) {
+            return $this->attributes['duration_en'];
+        }
+
+        return $value;
+    }
+
+    public function getDeliveryDateAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['delivery_date_en'])) {
+            return $this->attributes['delivery_date_en'];
+        }
+
+        return $value;
+    }
+
+    public function getSummaryAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['summary_en'])) {
+            return $this->attributes['summary_en'];
+        }
+
+        return $value;
+    }
+
+    public function getChallengeAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['challenge_en'])) {
+            return $this->attributes['challenge_en'];
+        }
+
+        return $value;
+    }
+
+    public function getSolutionAttribute($value): ?string
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['solution_en'])) {
+            return $this->attributes['solution_en'];
+        }
+
+        return $value;
+    }
+
+    public function getKeyFeaturesAttribute($value): ?array
+    {
+        if (app()->getLocale() === 'en' && ! empty($this->attributes['key_features_en'])) {
+            $kf = $this->attributes['key_features_en'];
+
+            return is_string($kf) ? json_decode($kf, true) : $kf;
+        }
+
+        return is_string($value) ? json_decode($value, true) : $value;
     }
 }

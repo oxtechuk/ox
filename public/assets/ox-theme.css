@@ -4202,6 +4202,299 @@ html[dir="ltr"] .portfolio-country-menu {
   color: #b91c1c;
 }
 
+/* ─── Circular Country Filter Strip (Matching Reference Design) ─── */
+.portfolio-country-filter-section {
+  width: 100%;
+  position: relative;
+  padding: 10px 0 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.portfolio-country-strip-track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 22px;
+  overflow-x: auto;
+  padding: 6px 4px 10px 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.portfolio-country-strip-track::-webkit-scrollbar {
+  height: 4px;
+}
+
+.portfolio-country-strip-track::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 99px;
+}
+
+@media (max-width: 991px) {
+  .portfolio-country-strip-track {
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 6px 10px 10px 10px;
+  }
+}
+
+/* Individual Country Node (Circle Avatar + Label below) */
+.portfolio-country-node {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+  flex-shrink: 0;
+  min-width: 52px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-country-node:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* The Round Avatar Container */
+.country-node-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Flag Image */
+.country-avatar-flag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* "All Countries" Avatar */
+.country-avatar-all {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #64748b;
+}
+
+.country-avatar-all .country-avatar-icon {
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+/* "+ More Countries" Avatar (13+) */
+.country-avatar-more {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+.country-more-plus {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #475569;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+/* Label below circle */
+.country-node-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.2s ease, font-weight 0.2s ease;
+  line-height: 1.2;
+}
+
+/* Hover States */
+.portfolio-country-node:hover .country-node-avatar {
+  transform: translateY(-2px);
+  border-color: #94a3b8;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.portfolio-country-node:hover .country-node-label {
+  color: #0f172a;
+}
+
+/* Active State */
+.portfolio-country-node.active .country-node-avatar {
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2), 0 6px 14px rgba(5, 150, 105, 0.18);
+  transform: translateY(-2px) scale(1.06);
+}
+
+.portfolio-country-node.active .country-avatar-all {
+  background: #ecfdf5;
+  border-color: #059669;
+}
+
+.portfolio-country-node.active .country-avatar-all .country-avatar-icon {
+  color: #059669;
+}
+
+.portfolio-country-node.active .country-avatar-more {
+  border-color: #059669;
+}
+
+.portfolio-country-node.active .country-more-plus {
+  color: #059669;
+}
+
+.portfolio-country-node.active .country-node-label {
+  color: #059669;
+  font-weight: 800;
+}
+
+/* Dropdown Wrap for "+ Other Countries" */
+.country-node-dropdown-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.portfolio-other-countries-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 200;
+  width: 270px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 10px;
+  display: none;
+  animation: oxDropdownFade 0.2s ease;
+}
+
+html[dir="ltr"] .portfolio-other-countries-menu {
+  right: auto;
+  left: 0;
+}
+
+.portfolio-other-countries-menu.show {
+  display: block;
+}
+
+.other-countries-search-wrap {
+  margin-bottom: 8px;
+}
+
+.other-countries-search-input {
+  width: 100%;
+  height: 36px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 12.5px;
+  font-family: inherit;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.other-countries-search-input:focus {
+  border-color: #059669;
+  background: #ffffff;
+}
+
+.other-countries-list {
+  max-height: 240px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.other-country-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #334155;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: inherit;
+  transition: all 0.15s ease;
+}
+
+.other-country-item:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.other-country-item.active {
+  background: #ecfdf5;
+  color: #047857;
+  font-weight: 700;
+}
+
+.other-country-flag-wrap {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.other-country-flag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.other-country-name {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.other-country-count {
+  font-size: 11px;
+  background: #f1f5f9;
+  color: #64748b;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
 /* Row 2: Category Tabs */
 .portfolio-sector-tabs-wrap {
   border-top: 1px solid #f1f5f9;
