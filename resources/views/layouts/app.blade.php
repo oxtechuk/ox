@@ -263,8 +263,8 @@
     </noscript>
 
     <!-- ─── Main Styles ─── -->
-    <link rel="stylesheet" href="{{ asset('assets/style.css') }}" fetchpriority="high"/>
-    <link rel="stylesheet" href="{{ asset('assets/ox-theme.css') }}" fetchpriority="high"/>
+    <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ @filemtime(public_path('assets/style.css')) ?: time() }}" fetchpriority="high"/>
+    <link rel="stylesheet" href="{{ asset('assets/ox-theme.css') }}?v={{ @filemtime(public_path('assets/ox-theme.css')) ?: time() }}" fetchpriority="high"/>
 
     <style>
         html {

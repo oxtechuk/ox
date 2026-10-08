@@ -93,14 +93,8 @@ class HomeController extends Controller
             ->whereNotNull('country_code')
             ->get();
 
-        // Primary strip order matching client reference image + active DB countries
+        // Primary strip order matching client reference image
         $stripOrder = ['jo', 'eg', 'sa', 'lb', 'ps', 'ae', 'sy', 'kw', 'iq', 'ma'];
-        foreach ($dbCountries as $dbc) {
-            $c = strtolower($dbc->country_code);
-            if (! in_array($c, $stripOrder)) {
-                $stripOrder[] = $c;
-            }
-        }
 
         $displayCountries = collect($stripOrder)->map(function ($code) use ($dbCountries, $countryDictionary) {
             $dbItem = $dbCountries->first(fn ($d) => strtolower($d->country_code) === $code);
@@ -118,20 +112,28 @@ class HomeController extends Controller
             ];
         });
 
-        // Other countries for the other countries dropdown
-        $otherCountries = collect($countryDictionary)
-            ->filter(fn ($info, $code) => ! in_array($code, $stripOrder))
-            ->map(function ($info, $code) {
-                $flagFile = "assets/flags/{$code}.webp";
-                $flagUrl = file_exists(public_path($flagFile)) ? asset($flagFile) : null;
+        // Other countries for the other countries dropdown (+13 دول أخرى)
+        $otherCodes = collect(array_keys($countryDictionary))
+            ->merge($dbCountries->pluck('country_code')->map(fn ($c) => strtolower($c)))
+            ->unique()
+            ->filter(fn ($code) => ! in_array($code, $stripOrder))
+            ->values();
 
-                return (object) [
-                    'country_code' => $code,
-                    'country_name' => $info['name'],
-                    'country_name_en' => $info['name_en'],
-                    'flag_url' => $flagUrl,
-                ];
-            })->values();
+        $otherCountries = $otherCodes->map(function ($code) use ($dbCountries, $countryDictionary) {
+            $dbItem = $dbCountries->first(fn ($d) => strtolower($d->country_code) === $code);
+            $dictItem = $countryDictionary[$code] ?? null;
+            $name = $dbItem?->country_name ?? $dictItem['name'] ?? strtoupper($code);
+            $nameEn = $dbItem?->country_name_en ?? $dictItem['name_en'] ?? strtoupper($code);
+            $flagFile = "assets/flags/{$code}.webp";
+            $flagUrl = file_exists(public_path($flagFile)) ? asset($flagFile) : null;
+
+            return (object) [
+                'country_code' => $code,
+                'country_name' => $name,
+                'country_name_en' => $nameEn,
+                'flag_url' => $flagUrl,
+            ];
+        });
 
         $countries = $displayCountries;
 

@@ -3918,285 +3918,299 @@ html[lang='fr'] .ox-footer-copy {
   line-height: 1.7;
 }
 
-/* ─── Visual Country Flags Strip (User Mockup Replica) ─── */
+/* ─── Visual Country Flags Strip (User Reference Replica) ─── */
 .portfolio-country-flags-strip-wrap {
   width: 100%;
-  padding-bottom: 6px;
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 20px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 20px;
   position: relative;
-  border-bottom: 1px solid #f1f5f9;
-  margin-bottom: 4px;
 }
 
 .portfolio-country-flags-strip {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 16px;
-  width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  padding: 4px 2px 10px 2px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 26px !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  -webkit-overflow-scrolling: touch !important;
+  padding: 4px 2px !important;
 }
 
 .portfolio-country-flags-strip::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 
 .country-flag-strip-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 16px;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  min-width: 60px;
-  flex-shrink: 0;
-  outline: none;
-  user-select: none;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  padding: 2px 4px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease !important;
+  min-width: 52px !important;
+  flex-shrink: 0 !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 .country-flag-strip-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) !important;
+}
+
+.country-flag-strip-btn:active {
+  transform: scale(0.96) !important;
 }
 
 .flag-strip-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: #ffffff;
-  border: 2px solid #e2e8f0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-  transition: all 0.22s ease;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
 }
 
 .country-flag-strip-btn:hover .flag-strip-avatar {
-  border-color: #cbd5e1;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
 .flag-strip-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  display: block !important;
 }
 
 .flag-strip-emoji {
-  font-size: 22px;
-  line-height: 1;
-}
-
-.flag-strip-badge {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  background: #1D8A68;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 800;
-  min-width: 17px;
-  height: 17px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 4px;
-  border: 2px solid #ffffff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  font-size: 22px !important;
+  line-height: 1 !important;
 }
 
 .flag-strip-label {
-  font-size: 13px;
-  font-weight: 700;
-  color: #1e293b;
-  text-align: center;
-  white-space: nowrap;
-  line-height: 1.25;
-  transition: all 0.2s ease;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  line-height: 1.25 !important;
+  font-family: inherit !important;
+  transition: color 0.2s ease !important;
+}
+
+.country-flag-strip-btn:hover .flag-strip-label {
+  color: #1D8A68 !important;
 }
 
 /* Active State (Selected Country or All Countries) */
 .country-flag-strip-btn.active .flag-strip-avatar {
-  border-color: #1D8A68;
-  box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22), 0 6px 16px rgba(29, 138, 104, 0.28);
-  transform: scale(1.05);
+  border-color: #1D8A68 !important;
+  box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22), 0 6px 14px rgba(29, 138, 104, 0.25) !important;
+  transform: scale(1.06) !important;
 }
 
 .country-flag-strip-btn.active .flag-strip-label {
-  color: #1D8A68;
-  font-weight: 800;
+  color: #1D8A68 !important;
+  font-weight: 800 !important;
 }
 
 /* Globe Avatar for "كل الدول" (All Countries) */
 .globe-avatar {
-  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-  border-color: #a7f3d0;
-  color: #1D8A68;
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
 }
 
 .country-flag-strip-btn.active .globe-avatar {
-  background: linear-gradient(135deg, #1D8A68, #156d52);
-  color: #ffffff;
-  border-color: #1D8A68;
-  box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.25), 0 6px 16px rgba(29, 138, 104, 0.35);
+  background: #ecfdf5 !important;
+  color: #1D8A68 !important;
+  border-color: #1D8A68 !important;
+  box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22), 0 6px 14px rgba(29, 138, 104, 0.25) !important;
 }
 
-/* Other Countries Button (+12 / +13 دول أخرى) */
+/* Other Countries Button (+13 دول أخرى) */
 .country-flag-strip-dropdown-wrap {
-  position: relative;
-  flex-shrink: 0;
+  position: relative !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
 }
 
 .other-avatar {
-  background: #ffffff;
-  border: 1.5px solid #cbd5e1;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
 }
 
 .other-count-text {
-  font-size: 13px;
-  font-weight: 800;
-  color: #475569;
-  letter-spacing: -0.5px;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  color: #334155 !important;
+  letter-spacing: -0.3px !important;
 }
 
 .country-flag-strip-btn.other-countries-btn.active .other-avatar {
-  border-color: #1D8A68;
-  background: #ecfdf5;
+  border-color: #1D8A68 !important;
+  background: #ecfdf5 !important;
+  box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22) !important;
 }
 
 .country-flag-strip-btn.other-countries-btn.active .other-count-text {
-  color: #1D8A68;
+  color: #1D8A68 !important;
 }
 
 /* Other Countries Dropdown Menu */
 .other-countries-menu {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  z-index: 200;
-  width: 290px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 12px;
+  position: absolute !important;
+  top: calc(100% + 12px) !important;
+  z-index: 9999 !important;
+  width: 320px !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  padding: 14px !important;
   display: none;
-  animation: oxDropdownFade 0.2s ease;
 }
 
 html[dir="rtl"] .other-countries-menu {
-  left: 0;
-  right: auto;
+  left: 0 !important;
+  right: auto !important;
+}
+
+html[dir="ltr"] .other-countries-menu {
+  right: 0 !important;
+  left: auto !important;
 }
 
 .other-countries-menu.show {
-  display: block;
+  display: block !important;
+  animation: oxDropdownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .other-countries-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4px 8px 10px 8px;
-  border-bottom: 1px solid #f1f5f9;
-  font-size: 12.5px;
-  font-weight: 800;
-  color: #64748b;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 2px 4px 10px 4px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #475569 !important;
 }
 
 .other-header-count {
-  background: #f1f5f9;
-  color: #475569;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 8px;
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  padding: 2px 8px !important;
+  border-radius: 10px !important;
 }
 
 .other-countries-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  max-height: 260px;
-  overflow-y: auto;
-  padding-top: 10px;
-  scrollbar-width: thin;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 6px !important;
+  max-height: 280px !important;
+  overflow-y: auto !important;
+  padding-top: 10px !important;
+  scrollbar-width: thin !important;
 }
 
 .other-country-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 10px;
-  border-radius: 10px;
-  background: #f8fafc;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
-  text-align: inherit;
-  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  border-radius: 10px !important;
+  background: #f8fafc !important;
+  border: 1px solid transparent !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  font-family: inherit !important;
+  text-align: inherit !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .other-country-item:hover {
-  background: #f0fdf4;
-  border-color: #a7f3d0;
-  transform: translateY(-1px);
+  background: #f0fdf4 !important;
+  border-color: #a7f3d0 !important;
+  transform: translateY(-1px) !important;
 }
 
 .other-country-item.active {
-  background: #ecfdf5;
-  border-color: #1D8A68;
+  background: #ecfdf5 !important;
+  border-color: #1D8A68 !important;
+  font-weight: 800 !important;
+  color: #1D8A68 !important;
 }
 
 .other-item-flag {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .other-flag-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
 }
 
 .other-item-name {
-  font-size: 12px;
-  font-weight: 700;
-  color: #1e293b;
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  flex: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .other-item-count {
-  font-size: 10.5px;
-  font-weight: 700;
-  color: #1D8A68;
-  background: #ffffff;
-  padding: 1px 6px;
-  border-radius: 6px;
-  border: 1px solid #d1fae5;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: #1D8A68 !important;
+  background: #ffffff !important;
+  border: 1px solid #a7f3d0 !important;
+  padding: 1px 6px !important;
+  border-radius: 8px !important;
 }
 
 /* ─── Light Theme Portfolio Discovery Filter Container ─── */
