@@ -1624,8 +1624,35 @@
                         <input type="email" name="email" id="consult_email" class="form-input" placeholder="name@company.com" maxlength="100" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="consult_phone">{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp' : 'Phone / WhatsApp') }}</label>
-                        <input type="text" name="phone" id="consult_phone" class="form-input" placeholder="+966 50 000 0000" maxlength="30">
+                        <label class="form-label" for="consult_phone_raw">{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp' : 'Phone / WhatsApp') }}</label>
+                        <div class="consult-phone-combo" style="display: flex; gap: 6px; align-items: stretch; direction: ltr;">
+                            <select id="consult_country_code" class="form-select consult-code-select" style="width: 105px; flex-shrink: 0; padding: 12px 6px; font-size: 11.5px; font-family: var(--font-code), system-ui; direction: ltr; cursor: pointer; background: #0c202d; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px;" aria-label="{{ $currentLocale === 'ar' ? 'كود الدولة' : 'Country Code' }}">
+                                <option value="+966" selected>🇸🇦 +966</option>
+                                <option value="+971">🇦🇪 +971</option>
+                                <option value="+20">🇪🇬 +20</option>
+                                <option value="+965">🇰🇼 +965</option>
+                                <option value="+974">🇶🇦 +974</option>
+                                <option value="+968">🇴🇲 +968</option>
+                                <option value="+973">🇧🇭 +973</option>
+                                <option value="+962">🇯🇴 +962</option>
+                                <option value="+964">🇮🇶 +964</option>
+                                <option value="+967">🇾🇪 +967</option>
+                                <option value="+212">🇲🇦 +212</option>
+                                <option value="+213">🇩🇿 +213</option>
+                                <option value="+216">🇹🇳 +216</option>
+                                <option value="+961">🇱🇧 +961</option>
+                                <option value="+218">🇱🇾 +218</option>
+                                <option value="+970">🇵🇸 +970</option>
+                                <option value="+249">🇸🇩 +249</option>
+                                <option value="+44">🇬🇧 +44</option>
+                                <option value="+1">🇺🇸 +1</option>
+                                <option value="+49">🇩🇪 +49</option>
+                                <option value="+33">🇫🇷 +33</option>
+                                <option value="+90">🇹🇷 +90</option>
+                            </select>
+                            <input type="tel" id="consult_phone_raw" class="form-input" style="flex: 1; min-width: 0; direction: ltr; font-family: var(--font-code), system-ui;" placeholder="50 123 4567" maxlength="20" autocomplete="tel">
+                            <input type="hidden" name="phone" id="consult_phone" value="">
+                        </div>
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
@@ -1639,15 +1666,7 @@
                             <option value="تكاملات وتطوير">{{ $currentLocale === 'ar' ? 'تكاملات وأتمتة' : ($currentLocale === 'fr' ? 'Intégrations & Automatisation' : 'Integrations & Automation') }}</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="consult_budget">{{ $currentLocale === 'ar' ? 'الميزانية التقديرية' : ($currentLocale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</label>
-                        <select name="budget" id="consult_budget" class="form-select">
-                            <option value="أقل من $10,000">{{ $currentLocale === 'ar' ? 'أقل من $10,000' : '< $10,000' }}</option>
-                            <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                            <option value="$25,000 - $50,000">$25,000 - $50,000</option>
-                            <option value="أكثر من $50,000">{{ $currentLocale === 'ar' ? 'أكثر من $50,000' : '> $50,000' }}</option>
-                        </select>
-                    </div>
+                 
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="consult_message">{{ $currentLocale === 'ar' ? 'تفاصيل الفكرة أو التحدي *' : ($currentLocale === 'fr' ? 'Détails du Projet *' : 'Project Details or Challenge *') }}</label>
@@ -1697,6 +1716,46 @@
                 } else {
                     modalMsgCounter.style.color = '#8fa099';
                 }
+            });
+        }
+
+        // Sync Modal Phone with Country Dial Code (Default Saudi Arabia +966)
+        const modalCountryCode = document.getElementById('consult_country_code');
+        const modalPhoneRaw = document.getElementById('consult_phone_raw');
+        const modalFullPhone = document.getElementById('consult_phone');
+        const modalConsultForm = document.getElementById('consultationForm');
+
+        function syncModalPhone() {
+            if (!modalPhoneRaw || !modalCountryCode || !modalFullPhone) return;
+            let val = modalPhoneRaw.value.trim();
+            if (!val) {
+                modalFullPhone.value = '';
+                return;
+            }
+            if (val.startsWith('0')) {
+                val = val.replace(/^0+/, '');
+            }
+            if (val.startsWith('+')) {
+                for (let i = 0; i < modalCountryCode.options.length; i++) {
+                    const optVal = modalCountryCode.options[i].value;
+                    if (val.startsWith(optVal)) {
+                        modalCountryCode.value = optVal;
+                        val = val.substring(optVal.length).trim();
+                        modalPhoneRaw.value = val;
+                        break;
+                    }
+                }
+            }
+            modalFullPhone.value = val ? `${modalCountryCode.value} ${val}` : '';
+        }
+
+        if (modalPhoneRaw && modalCountryCode) {
+            modalPhoneRaw.addEventListener('input', syncModalPhone);
+            modalCountryCode.addEventListener('change', syncModalPhone);
+        }
+        if (modalConsultForm) {
+            modalConsultForm.addEventListener('submit', function() {
+                syncModalPhone();
             });
         }
 

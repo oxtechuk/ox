@@ -3050,7 +3050,7 @@ html[dir="ltr"] .ox-consult-arabesque-art {
 
 /* Info Column (Headline, Subtitle, CTA buttons) */
 .ox-consult-info-col {
-  flex: 1 1 480px;
+  flex: 1 1 300px;
   max-width: 520px;
 }
 
