@@ -104,12 +104,24 @@ class TrackVisitorTraffic
     {
         if ($utmSource) {
             $u = strtolower($utmSource);
-            if (str_contains($u, 'google')) return 'google';
-            if (str_contains($u, 'meta') || str_contains($u, 'fb') || str_contains($u, 'ig') || str_contains($u, 'face') || str_contains($u, 'insta')) return 'meta';
-            if (str_contains($u, 'tik')) return 'tiktok';
-            if (str_contains($u, 'snap')) return 'snapchat';
-            if (str_contains($u, 'twit') || str_contains($u, 'x')) return 'twitter';
-            if (str_contains($u, 'what') || str_contains($u, 'wa')) return 'whatsapp';
+            if (str_contains($u, 'google')) {
+                return 'google';
+            }
+            if (str_contains($u, 'meta') || str_contains($u, 'fb') || str_contains($u, 'ig') || str_contains($u, 'face') || str_contains($u, 'insta')) {
+                return 'meta';
+            }
+            if (str_contains($u, 'tik')) {
+                return 'tiktok';
+            }
+            if (str_contains($u, 'snap')) {
+                return 'snapchat';
+            }
+            if (str_contains($u, 'twit') || str_contains($u, 'x')) {
+                return 'twitter';
+            }
+            if (str_contains($u, 'what') || str_contains($u, 'wa')) {
+                return 'whatsapp';
+            }
         }
 
         if (empty($referer)) {
@@ -117,12 +129,24 @@ class TrackVisitorTraffic
         }
 
         $r = strtolower($referer);
-        if (str_contains($r, 'google.')) return 'google';
-        if (str_contains($r, 'facebook.com') || str_contains($r, 'instagram.com') || str_contains($r, 'fb.com') || str_contains($r, 'fb.me')) return 'meta';
-        if (str_contains($r, 'tiktok.com')) return 'tiktok';
-        if (str_contains($r, 'snapchat.com')) return 'snapchat';
-        if (str_contains($r, 'twitter.com') || str_contains($r, 'x.com') || str_contains($r, 't.co')) return 'twitter';
-        if (str_contains($r, 'whatsapp') || str_contains($r, 'wa.me')) return 'whatsapp';
+        if (str_contains($r, 'google.')) {
+            return 'google';
+        }
+        if (str_contains($r, 'facebook.com') || str_contains($r, 'instagram.com') || str_contains($r, 'fb.com') || str_contains($r, 'fb.me')) {
+            return 'meta';
+        }
+        if (str_contains($r, 'tiktok.com')) {
+            return 'tiktok';
+        }
+        if (str_contains($r, 'snapchat.com')) {
+            return 'snapchat';
+        }
+        if (str_contains($r, 'twitter.com') || str_contains($r, 'x.com') || str_contains($r, 't.co')) {
+            return 'twitter';
+        }
+        if (str_contains($r, 'whatsapp') || str_contains($r, 'wa.me')) {
+            return 'whatsapp';
+        }
 
         // Check if referer is self/internal
         $host = parse_url($referer, PHP_URL_HOST);
@@ -142,26 +166,49 @@ class TrackVisitorTraffic
         if (preg_match('/(mobile|android|iphone|ipod|blackberry|opera mini|iemobile)/i', $ua)) {
             return 'mobile';
         }
+
         return 'desktop';
     }
 
     protected function detectBrowser(string $ua): string
     {
-        if (preg_match('/Edg/i', $ua)) return 'Edge';
-        if (preg_match('/Chrome/i', $ua) && !preg_match('/Edg/i', $ua)) return 'Chrome';
-        if (preg_match('/Safari/i', $ua) && !preg_match('/Chrome/i', $ua)) return 'Safari';
-        if (preg_match('/Firefox/i', $ua)) return 'Firefox';
-        if (preg_match('/Opera|OPR/i', $ua)) return 'Opera';
+        if (preg_match('/Edg/i', $ua)) {
+            return 'Edge';
+        }
+        if (preg_match('/Chrome/i', $ua) && ! preg_match('/Edg/i', $ua)) {
+            return 'Chrome';
+        }
+        if (preg_match('/Safari/i', $ua) && ! preg_match('/Chrome/i', $ua)) {
+            return 'Safari';
+        }
+        if (preg_match('/Firefox/i', $ua)) {
+            return 'Firefox';
+        }
+        if (preg_match('/Opera|OPR/i', $ua)) {
+            return 'Opera';
+        }
+
         return 'Other';
     }
 
     protected function detectPlatform(string $ua): string
     {
-        if (preg_match('/iPhone|iPad|iPod/i', $ua)) return 'iOS';
-        if (preg_match('/Android/i', $ua)) return 'Android';
-        if (preg_match('/Windows/i', $ua)) return 'Windows';
-        if (preg_match('/Macintosh|Mac OS X/i', $ua)) return 'macOS';
-        if (preg_match('/Linux/i', $ua)) return 'Linux';
+        if (preg_match('/iPhone|iPad|iPod/i', $ua)) {
+            return 'iOS';
+        }
+        if (preg_match('/Android/i', $ua)) {
+            return 'Android';
+        }
+        if (preg_match('/Windows/i', $ua)) {
+            return 'Windows';
+        }
+        if (preg_match('/Macintosh|Mac OS X/i', $ua)) {
+            return 'macOS';
+        }
+        if (preg_match('/Linux/i', $ua)) {
+            return 'Linux';
+        }
+
         return 'Other';
     }
 }

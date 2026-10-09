@@ -8,7 +8,6 @@ use App\Models\Project;
 use App\Models\TrackingPixel;
 use App\Models\TrafficEvent;
 use App\Models\VisitorTraffic;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -145,20 +144,20 @@ class AnalyticsController extends Controller
             if ($row->path === '/' || empty($row->path)) {
                 $title = 'الصفحة الرئيسية (Landing Page)';
             } elseif ($row->project_id && isset($projectsById[$row->project_id])) {
-                $title = 'مشروع: ' . $projectsById[$row->project_id]->title;
+                $title = 'مشروع: '.$projectsById[$row->project_id]->title;
             } elseif (str_starts_with($row->path, 'projects/')) {
                 $slug = substr($row->path, 9);
-                $title = 'مشروع: ' . ucfirst(str_replace('-', ' ', $slug));
+                $title = 'مشروع: '.ucfirst(str_replace('-', ' ', $slug));
             } elseif (str_starts_with($row->path, 'digital-store')) {
                 $title = 'متجر البرامج الرقمية';
             } elseif (str_starts_with($row->path, 'consult')) {
                 $title = 'صفحة حجز الاستشارة';
             } else {
-                $title = '/' . ltrim($row->path, '/');
+                $title = '/'.ltrim($row->path, '/');
             }
 
             return [
-                'path' => '/' . ltrim($row->path, '/'),
+                'path' => '/'.ltrim($row->path, '/'),
                 'title' => $title,
                 'views' => $row->views,
                 'visitors' => $row->visitors,
@@ -209,6 +208,7 @@ class AnalyticsController extends Controller
 
         $topCountries = $countriesRaw->map(function ($c) use ($countryDictionary, $totalPageviews) {
             $code = strtolower($c->country_code);
+
             return [
                 'code' => $code,
                 'name' => $countryDictionary[$code] ?? strtoupper($code),
@@ -247,19 +247,30 @@ class AnalyticsController extends Controller
 
     public function recordEvent(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'event_name' => 'required|string|max:80',
-            'page_url' => 'nullable|string|max:500',
-            'data' => 'nullable|array',
-        ]);
+        $eventName = $request->input('event_name');
+        $pageUrl = $request->input('page_url');
+        $data = $request->input('data');
 
-        $sessionId = $request->hasSession() ? $request->session()->getId() : md5($request->ip() . $request->userAgent());
+        if (! $eventName && $request->getContent()) {
+            $decoded = json_decode($request->getContent(), true);
+            if (is_array($decoded)) {
+                $eventName = $decoded['event_name'] ?? null;
+                $pageUrl = $decoded['page_url'] ?? $pageUrl;
+                $data = $decoded['data'] ?? $data;
+            }
+        }
+
+        if (! $eventName) {
+            return response()->json(['error' => 'Missing event_name'], 422);
+        }
+
+        $sessionId = $request->hasSession() ? $request->session()->getId() : md5($request->ip().$request->userAgent());
 
         TrafficEvent::create([
             'session_id' => mb_substr($sessionId, 0, 80),
-            'event_name' => $validated['event_name'],
-            'page_url' => $validated['page_url'] ?? $request->header('referer'),
-            'event_data' => $validated['data'] ?? null,
+            'event_name' => mb_substr($eventName, 0, 80),
+            'page_url' => mb_substr($pageUrl ?? $request->header('referer', ''), 0, 500) ?: null,
+            'event_data' => is_array($data) ? $data : null,
         ]);
 
         return response()->json(['success' => true]);
