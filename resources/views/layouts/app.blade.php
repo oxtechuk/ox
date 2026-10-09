@@ -497,12 +497,13 @@
         }
         
         /* ===== CONSULTATION MODAL (SAUDI EXECUTIVE TECH EDITION) ===== */
+        /* ─── Executive Consultation Modal (Luxury Dark Emerald) ─── */
         .consult-modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(3, 13, 19, 0.84);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(2, 10, 8, 0.86);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             z-index: 99999;
             display: flex;
             align-items: center;
@@ -517,27 +518,27 @@
             visibility: visible;
         }
         .consult-modal-box {
-            background: radial-gradient(120% 120% at 50% 0%, rgba(29, 138, 104, 0.16) 0%, #081f1b 45%, #041210 100%);
-            border: 1px solid rgba(29, 138, 104, 0.32);
+            background: radial-gradient(130% 120% at 50% -10%, rgba(0, 229, 153, 0.16) 0%, #071f19 38%, #03110d 100%);
+            border: 1px solid rgba(0, 229, 153, 0.28);
             border-radius: 24px;
-            max-width: 580px;
+            max-width: 560px;
             width: 100%;
-            max-height: calc(100vh - 32px);
+            max-height: calc(100vh - 28px);
             overflow-y: auto;
             overscroll-behavior: contain;
-            padding: 32px 32px 28px;
+            padding: 28px 28px 24px;
             position: relative;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(29, 138, 104, 0.12);
-            transform: scale(0.96) translateY(10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 229, 153, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transform: scale(0.96) translateY(12px);
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
             scrollbar-width: thin;
-            scrollbar-color: rgba(29, 138, 104, 0.4) transparent;
+            scrollbar-color: rgba(0, 229, 153, 0.35) transparent;
         }
         .consult-modal-box::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
         .consult-modal-box::-webkit-scrollbar-thumb {
-            background: rgba(29, 138, 104, 0.35);
+            background: rgba(0, 229, 153, 0.3);
             border-radius: 4px;
         }
         .consult-modal-backdrop.active .consult-modal-box {
@@ -545,8 +546,8 @@
         }
         .modal-close {
             position: absolute;
-            top: 20px;
-            background: rgba(255, 255, 255, 0.06);
+            top: 18px;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: #d1deda;
             width: 36px;
@@ -559,11 +560,11 @@
             transition: all 0.25s ease;
             z-index: 10;
         }
-        html[dir="rtl"] .modal-close { left: 20px; right: auto; }
-        html[dir="ltr"] .modal-close { right: 20px; left: auto; }
+        html[dir="rtl"] .modal-close { left: 18px; right: auto; }
+        html[dir="ltr"] .modal-close { right: 18px; left: auto; }
         .modal-close:hover {
-            background: rgba(29, 138, 104, 0.25);
-            border-color: rgba(0, 229, 153, 0.5);
+            background: rgba(0, 229, 153, 0.2);
+            border-color: #00E599;
             color: #00E599;
             transform: rotate(90deg) scale(1.05);
         }
@@ -573,14 +574,14 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 5px 13px;
+            padding: 5px 14px;
             border-radius: 99px;
-            background: rgba(29, 138, 104, 0.15);
-            border: 1px solid rgba(0, 229, 153, 0.35);
+            background: rgba(0, 229, 153, 0.12);
+            border: 1px solid rgba(0, 229, 153, 0.32);
             font-size: 11.5px;
             font-weight: 700;
             color: #00E599;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             box-shadow: 0 0 20px rgba(0, 229, 153, 0.1);
         }
         .consult-badge-dot {
@@ -596,12 +597,12 @@
             50% { opacity: 0.4; transform: scale(0.85); }
         }
         .consult-modal-title {
-            font-size: 23px;
+            font-size: 22px;
             font-weight: 800;
             color: #ffffff;
-            margin: 0 0 8px;
+            margin: 0 0 6px;
             line-height: 1.35;
-            background: linear-gradient(135deg, #ffffff 40%, #b8f2e2 100%);
+            background: linear-gradient(135deg, #ffffff 40%, #8af3cf 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -609,7 +610,7 @@
             font-size: 12.5px;
             color: #a2b7b0;
             margin-bottom: 14px;
-            line-height: 1.75;
+            line-height: 1.7;
         }
 
         /* Trust Strip */
@@ -617,21 +618,23 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
-            margin-bottom: 18px;
-            padding-bottom: 14px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .consult-trust-item {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 8px;
-            padding: 6px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9px;
+            padding: 7px 8px;
             font-size: 11px;
-            color: #8fa7a0;
+            color: #a2b8b1;
             line-height: 1.3;
+            text-align: center;
         }
         .consult-trust-item svg {
             color: #00E599;
@@ -639,8 +642,26 @@
         }
 
         /* Form Group & Layout */
-        .form-group {
+        .consult-modal-alert {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.45);
+            color: #fca5a5;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 12px;
             margin-bottom: 14px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: consultShake 0.3s ease;
+        }
+        @keyframes consultShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        .form-group {
+            margin-bottom: 12px;
             position: relative;
         }
         .form-label {
@@ -650,7 +671,7 @@
             font-size: 11.5px;
             font-weight: 700;
             color: #c9dbd6;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         .form-label .req {
             color: #00E599;
@@ -658,10 +679,10 @@
         }
         .form-input, .form-select, .form-textarea {
             width: 100%;
-            background: rgba(4, 20, 16, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(3, 18, 14, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.13);
             border-radius: 12px;
-            padding: 12px 14px;
+            padding: 11px 14px;
             color: #ffffff;
             font-family: var(--font);
             font-size: 13px;
@@ -671,11 +692,25 @@
         }
         .form-input:focus, .form-select:focus, .form-textarea:focus {
             border-color: #00E599;
-            background: rgba(4, 28, 22, 0.85);
+            background: rgba(3, 26, 20, 0.95);
             box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.18);
         }
         .form-input::placeholder, .form-textarea::placeholder {
-            color: #6d8880;
+            color: #638077;
+        }
+        .form-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2300E599' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 14px center;
+            padding-left: 32px;
+            cursor: pointer;
+        }
+        html[dir="ltr"] .form-select {
+            background-position: right 14px center;
+            padding-right: 32px;
+            padding-left: 14px;
         }
         .form-select option {
             background: #09211c;
@@ -691,15 +726,15 @@
             position: relative;
         }
         .modal-country-btn {
-            height: 46px;
-            padding: 0 12px;
-            background: rgba(4, 20, 16, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            height: 44px;
+            padding: 0 11px;
+            background: rgba(3, 18, 14, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.13);
             border-radius: 12px;
             color: #ffffff;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
             cursor: pointer;
             transition: all 0.2s ease;
             flex-shrink: 0;
@@ -707,7 +742,7 @@
         }
         .modal-country-btn:hover, .modal-country-btn.active {
             border-color: #00E599;
-            background: rgba(4, 28, 22, 0.9);
+            background: rgba(3, 26, 20, 0.95);
             box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.14);
         }
         .modal-country-flag-img {
@@ -738,9 +773,9 @@
         .modal-phone-input {
             flex: 1;
             min-width: 0;
-            height: 46px;
-            background: rgba(4, 20, 16, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            height: 44px;
+            background: rgba(3, 18, 14, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.13);
             border-radius: 12px;
             padding: 0 14px;
             color: #ffffff;
@@ -754,11 +789,11 @@
         }
         .modal-phone-input:focus {
             border-color: #00E599;
-            background: rgba(4, 28, 22, 0.85);
+            background: rgba(3, 26, 20, 0.95);
             box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.18);
         }
         .modal-phone-input::placeholder {
-            color: #6d8880;
+            color: #638077;
         }
 
         /* Dropdown Popover */
@@ -767,11 +802,11 @@
             top: calc(100% + 6px);
             left: 0;
             right: 0;
-            z-index: 200;
-            background: #071f1a;
+            z-index: 250;
+            background: #061c16;
             border: 1px solid rgba(0, 229, 153, 0.4);
             border-radius: 14px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 229, 153, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 229, 153, 0.15);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: none;
@@ -791,7 +826,7 @@
             align-items: center;
             gap: 10px;
             padding: 10px 14px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             direction: rtl;
         }
@@ -884,12 +919,12 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            padding: 8px 8px;
+            padding: 8px;
             border-radius: 10px;
-            background: rgba(4, 20, 16, 0.5);
+            background: rgba(3, 18, 14, 0.65);
             border: 1px solid rgba(255, 255, 255, 0.12);
             color: #b7cac4;
-            font-size: 11px;
+            font-size: 11.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -900,7 +935,7 @@
             color: #ffffff;
         }
         .pref-channel-chip.active {
-            background: rgba(0, 229, 153, 0.15);
+            background: rgba(0, 229, 153, 0.14);
             border-color: #00E599;
             color: #00E599;
             box-shadow: 0 0 15px rgba(0, 229, 153, 0.12);
@@ -913,7 +948,7 @@
             color: #041b14;
             border: none;
             border-radius: 14px;
-            padding: 15px 24px;
+            padding: 14px 24px;
             font-weight: 800;
             font-family: var(--font);
             font-size: 14px;
@@ -934,6 +969,23 @@
         .form-submit-btn:active {
             transform: translateY(0);
         }
+        .form-submit-btn:disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .consult-btn-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid rgba(4, 27, 20, 0.3);
+            border-top-color: #041b14;
+            border-radius: 50%;
+            animation: consultSpin 0.7s linear infinite;
+            display: inline-block;
+        }
+        @keyframes consultSpin {
+            to { transform: rotate(360deg); }
+        }
         .consult-guarantee-note {
             display: flex;
             align-items: center;
@@ -945,22 +997,134 @@
             text-align: center;
         }
 
+        /* In-Modal Success State */
+        .consult-success-wrap {
+            text-align: center;
+            padding: 24px 10px 14px;
+            animation: consultFadeIn 0.35s ease;
+        }
+        @keyframes consultFadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .consult-success-icon-ring {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(0, 229, 153, 0.12);
+            border: 2px solid #00E599;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 0 35px rgba(0, 229, 153, 0.3);
+            animation: consultRingPulse 2s infinite;
+        }
+        @keyframes consultRingPulse {
+            0%, 100% { box-shadow: 0 0 25px rgba(0, 229, 153, 0.25); }
+            50% { box-shadow: 0 0 50px rgba(0, 229, 153, 0.5); }
+        }
+        .consult-success-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 8px;
+            line-height: 1.3;
+        }
+        .consult-success-desc {
+            font-size: 13px;
+            color: #b7cac4;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .consult-success-ref-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px dashed rgba(0, 229, 153, 0.4);
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 11.5px;
+            color: #00E599;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .consult-success-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .consult-success-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #25D366;
+            color: #041f12;
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+            transition: all 0.2s ease;
+        }
+        .consult-success-wa-btn:hover {
+            background: #2ee571;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
+        }
+        .consult-success-close-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #b8ccc5;
+            padding: 11px 20px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .consult-success-close-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .consult-modal-box {
-                padding: 24px 18px 20px;
+                padding: 22px 16px 18px;
                 border-radius: 20px;
+                max-height: calc(100vh - 20px);
             }
             .consult-modal-title {
-                font-size: 20px;
+                font-size: 19px;
             }
             .consult-trust-strip {
-                grid-template-columns: 1fr;
-                gap: 6px;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+                padding-bottom: 10px;
+                margin-bottom: 12px;
+            }
+            .consult-trust-item {
+                padding: 5px 4px;
+                font-size: 9.5px;
+                flex-direction: column;
+                gap: 3px;
             }
             .modal-pref-channels {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
                 gap: 6px;
+            }
+            .pref-channel-chip {
+                padding: 7px 4px;
+                font-size: 10px;
             }
             .consult-form-grid-2 {
                 grid-template-columns: 1fr !important;
@@ -2032,6 +2196,13 @@
                 </div>
             </div>
 
+            <!-- In-Modal Alert Box -->
+            <div class="consult-modal-alert" id="consultModalAlert" role="alert">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span id="consultModalAlertText"></span>
+            </div>
+
+            <!-- Interactive Consultation Form -->
             <form action="{{ route('consultation.store') }}" method="POST" id="consultationForm">
                 @csrf
                 <!-- Anti-Spam Bot Trap (Honeypot & Time-Trap) -->
@@ -2185,6 +2356,41 @@
                     <span>{{ $currentLocale === 'ar' ? 'نلتزم بالسرية التامة للبيانات وفق أفضل المعايير المهنية.' : 'We adhere to strict data privacy and professional NDA standards.' }}</span>
                 </div>
             </form>
+
+            <!-- In-Modal Success State (High Converting & Seamless) -->
+            <div class="consult-success-wrap" id="consultSuccessWrap" style="display: none;">
+                <div class="consult-success-icon-ring">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#00E599" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                </div>
+                <h3 class="consult-success-title">{{ $currentLocale === 'ar' ? 'تم استلام طلب استشارتك بنجاح! 🎉' : 'Consultation Request Received! 🎉' }}</h3>
+                <p class="consult-success-desc">
+                    {{ $currentLocale === 'ar' 
+                        ? 'شكراً لثقتك بـ OX Tech. سيتواصل معك أحد خبرائنا التقنيين خلال أقل من ساعتين عمل لمناقشة فكرة مشروعك وتقديم دراسة الجدوى ومعمارية النظام.' 
+                        : 'Thank you for choosing OX Tech. One of our senior tech architects will reach out within 2 business hours to review your project scope and architecture roadmap.' 
+                    }}
+                </p>
+                <div class="consult-success-ref-pill">
+                    <span>{{ $currentLocale === 'ar' ? 'رقم طلبك:' : 'Reference ID:' }}</span>
+                    <span id="consultSuccessRefCode">#OX-{{ date('ymd') }}</span>
+                </div>
+                <div class="consult-success-actions">
+                    <a id="consultSuccessWaBtn" 
+                       href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '966500000000')) }}?text={{ urlencode($currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بتقديم طلب استشارة تقنية وأرغب بالمتابعة السريعة معكم.' : 'Hello OX Tech, I just booked a tech consultation and would like an instant follow-up.') }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="consult-success-wa-btn">
+                        <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
+                            <path d="M16 2C8.28 2 2 8.28 2 16c0 2.72.78 5.28 2.14 7.46L2.05 30.1c-.13.5.34.97.84.84l6.84-2.05C11.84 30.19 13.88 30.8 16 30.8c7.72 0 14-6.28 14-14S23.72 2 16 2zm8.18 19.86c-.34.96-1.7 1.83-2.77 2.06-.73.16-1.68.29-4.88-1.04-4.1-1.7-6.75-5.86-6.95-6.13-.21-.27-1.68-2.24-1.68-4.27s1.06-3.03 1.44-3.45c.38-.42.82-.53 1.1-.53.28 0 .55.01.79.02.26.01.6.09.93.89.34.82 1.16 2.83 1.26 3.04.1.21.17.46.03.74-.14.28-.21.46-.42.71-.21.25-.44.55-.63.74-.21.21-.43.44-.19.86.25.42 1.1 1.81 2.36 2.93 1.62 1.44 2.99 1.89 3.42 2.1.42.21.67.18.92-.1.25-.29 1.08-1.26 1.37-1.69.29-.43.58-.36.98-.21.4.14 2.54 1.2 2.97 1.42.44.21.73.32.84.5.11.18.11 1.04-.23 2z"/>
+                        </svg>
+                        <span>{{ $currentLocale === 'ar' ? 'محادثة فورية مع المستشار عبر واتساب' : 'Instant WhatsApp Follow-up' }}</span>
+                    </a>
+                    <button type="button" class="consult-success-close-btn" onclick="closeConsultModal()">
+                        <span>{{ $currentLocale === 'ar' ? 'إغلاق ومتابعة تصفح الموقع' : 'Close and continue browsing' }}</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2200,17 +2406,24 @@
 
     <script>
         function openConsultModal() {
-            document.getElementById('consultModal').classList.add('active');
-            setTimeout(() => {
-                const nameInput = document.getElementById('consult_name');
-                if (nameInput) nameInput.focus();
-            }, 100);
+            const modal = document.getElementById('consultModal');
+            if (modal) {
+                modal.classList.add('active');
+                setTimeout(() => {
+                    const nameInput = document.getElementById('consult_name');
+                    if (nameInput) nameInput.focus();
+                }, 100);
+            }
         }
+
         function closeConsultModal() {
-            document.getElementById('consultModal').classList.remove('active');
+            const modal = document.getElementById('consultModal');
+            if (modal) modal.classList.remove('active');
             closeModalCountryPicker();
+            setTimeout(resetConsultModalForm, 300);
         }
-        document.getElementById('consultModal').addEventListener('click', function(e) {
+
+        document.getElementById('consultModal')?.addEventListener('click', function(e) {
             if (e.target === this) closeConsultModal();
         });
 
@@ -2380,25 +2593,275 @@
             modalPhoneRaw.addEventListener('input', syncModalPhone);
         }
 
+        // ─── Multi-Platform Marketing Pixels & Lead Tracker ───
+        function trackConsultationLead(leadData) {
+            leadData = leadData || {};
+            const projType = leadData.project_type || document.getElementById('consult_project_type')?.value || 'Tech Consultation';
+            const budgetVal = leadData.budget || document.getElementById('consult_budget')?.value || 'Flexible';
+            const prefChan = leadData.contact_preference || document.querySelector('input[name="contact_preference"]:checked')?.value || 'واتساب';
+            const leadId = leadData.consultation_id || ('OX-' + Date.now().toString().slice(-6));
+
+            // 1. Meta / Facebook Pixel
+            try {
+                if (typeof window.fbq === 'function') {
+                    window.fbq('track', 'Lead', {
+                        content_name: 'Tech Consultation Discovery',
+                        content_category: projType,
+                        currency: 'SAR',
+                        value: 0.00,
+                        lead_type: 'consultation_modal',
+                        status: 'lead_captured'
+                    });
+                    window.fbq('trackCustom', 'ConsultationBooked', {
+                        lead_id: leadId,
+                        project_type: projType,
+                        budget: budgetVal,
+                        contact_preference: prefChan
+                    });
+                }
+            } catch (err) {
+                console.warn('Meta Pixel dispatch error:', err);
+            }
+
+            // 2. Google Analytics 4 & Google Ads Conversion
+            try {
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'generate_lead', {
+                        event_category: 'Consultation',
+                        event_label: projType,
+                        value: 0,
+                        currency: 'SAR',
+                        lead_id: leadId
+                    });
+                    // Google Ads Direct Conversion Tag
+                    window.gtag('event', 'conversion', {
+                        'send_to': 'AW-17984061932'
+                    });
+                }
+            } catch (err) {
+                console.warn('Google Tag dispatch error:', err);
+            }
+
+            // 3. Google Tag Manager dataLayer
+            try {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'consultation_lead',
+                    lead_source: 'modal_popup',
+                    project_type: projType,
+                    budget: budgetVal,
+                    contact_preference: prefChan,
+                    consultation_id: leadId
+                });
+            } catch (err) {
+                console.warn('GTM dataLayer error:', err);
+            }
+
+            // 4. Snapchat Pixel
+            try {
+                if (typeof window.snaptr === 'function') {
+                    window.snaptr('track', 'SIGN_UP', {
+                        item_category: projType
+                    });
+                    window.snaptr('track', 'CUSTOM_EVENT_1', {
+                        event_name: 'consultation_modal_lead'
+                    });
+                }
+            } catch (err) {
+                console.warn('Snapchat Pixel error:', err);
+            }
+
+            // 5. TikTok Pixel
+            try {
+                if (window.ttq && typeof window.ttq.track === 'function') {
+                    window.ttq.track('SubmitForm', {
+                        contents: [{
+                            content_id: 'consultation_' + leadId,
+                            content_type: 'product',
+                            content_name: projType
+                        }]
+                    });
+                }
+            } catch (err) {
+                console.warn('TikTok Pixel error:', err);
+            }
+
+            // 6. Internal Real-Time Traffic & Lead Analytics Logger
+            try {
+                const payload = JSON.stringify({
+                    _token: '{{ csrf_token() }}',
+                    event_name: 'consultation_submit',
+                    page_url: window.location.pathname + window.location.search,
+                    data: {
+                        source: 'consult_modal',
+                        consultation_id: leadId,
+                        project_type: projType,
+                        budget: budgetVal,
+                        contact_preference: prefChan
+                    }
+                });
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon('{{ route('traffic.event') }}', new Blob([payload], { type: 'application/json' }));
+                } else {
+                    fetch('{{ route('traffic.event') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: payload,
+                        keepalive: true
+                    }).catch(() => {});
+                }
+            } catch (err) {}
+        }
+        window.trackConsultationLead = trackConsultationLead;
+
+        function showModalAlert(msg) {
+            const alertBox = document.getElementById('consultModalAlert');
+            const alertText = document.getElementById('consultModalAlertText');
+            if (alertBox && alertText) {
+                alertText.textContent = msg;
+                alertBox.style.display = 'flex';
+            }
+        }
+
+        function hideModalAlert() {
+            const alertBox = document.getElementById('consultModalAlert');
+            if (alertBox) alertBox.style.display = 'none';
+        }
+
+        function resetConsultModalForm() {
+            const form = document.getElementById('consultationForm');
+            const successWrap = document.getElementById('consultSuccessWrap');
+            const badge = document.querySelector('.consult-modal-badge');
+            const title = document.querySelector('.consult-modal-title');
+            const desc = document.querySelector('.consult-modal-desc');
+            const trust = document.querySelector('.consult-trust-strip');
+
+            if (successWrap && successWrap.style.display === 'block') {
+                if (form) {
+                    form.reset();
+                    form.style.display = 'block';
+                }
+                if (badge) badge.style.display = 'inline-flex';
+                if (title) title.style.display = 'block';
+                if (desc) desc.style.display = 'block';
+                if (trust) trust.style.display = 'grid';
+                successWrap.style.display = 'none';
+                hideModalAlert();
+
+                const btn = document.getElementById('consultSubmitBtn');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.innerHTML = `<span>{{ $currentLocale === 'ar' ? 'تأكيد وحجز الاستشارة المجانية' : ($currentLocale === 'fr' ? 'Confirmer la Réservation' : 'Confirm & Request Consultation') }}</span><b style="font-size: 16px;">{{ $currentLocale === 'ar' ? '←' : '→' }}</b>`;
+                }
+            }
+        }
+
+        // Consultation Form AJAX Submission with Live Tracking & In-Modal Success
         if (modalConsultForm) {
             modalConsultForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 syncModalPhone();
+                hideModalAlert();
+
+                // Validate minimum message length
+                const msgEl = document.getElementById('consult_message');
+                if (msgEl && msgEl.value.trim().length < 10) {
+                    showModalAlert("{{ $currentLocale === 'ar' ? 'يرجى كتابة 10 أحرف على الأقل لشرح فكرة مشروعك بشكل أوضح.' : 'Please provide at least 10 characters explaining your project requirements.' }}");
+                    msgEl.focus();
+                    return;
+                }
 
                 // Append selected contact preference to message so the team receives it clearly
-                const pref = document.querySelector('input[name="contact_preference"]:checked')?.value;
-                const msgEl = document.getElementById('consult_message');
-                if (pref && msgEl && !msgEl.value.includes('[طريقة التواصل:')) {
+                const pref = document.querySelector('input[name="contact_preference"]:checked')?.value || 'واتساب';
+                if (msgEl && !msgEl.value.includes('[طريقة التواصل:')) {
                     msgEl.value = `[طريقة التواصل المفضلة: ${pref}]\n` + msgEl.value;
                 }
 
                 const btn = document.getElementById('consultSubmitBtn');
+                const origHtml = btn ? btn.innerHTML : '';
                 if (btn) {
                     btn.disabled = true;
-                    btn.style.opacity = '0.75';
-                    btn.innerHTML = `<span>{{ $currentLocale === 'ar' ? 'جاري تأكيد الحجز...' : 'Submitting...' }}</span>`;
+                    btn.style.opacity = '0.85';
+                    btn.innerHTML = `<span class="consult-btn-spinner"></span> <span>{{ $currentLocale === 'ar' ? 'جاري تأكيد حجز الاستشارة...' : 'Securing your advisory slot...' }}</span>`;
                 }
+
+                const formData = new FormData(this);
+
+                fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(async res => {
+                    const data = await res.json().catch(() => null);
+                    if (res.ok && data && data.success) {
+                        // 1. Dispatch multi-channel marketing pixels
+                        trackConsultationLead({
+                            consultation_id: data.consultation_id,
+                            project_type: formData.get('project_type'),
+                            budget: formData.get('budget'),
+                            contact_preference: pref
+                        });
+
+                        // 2. Update reference code in in-modal success view
+                        const refCodeEl = document.getElementById('consultSuccessRefCode');
+                        if (refCodeEl && data.consultation_id) {
+                            refCodeEl.textContent = '#' + data.consultation_id;
+                        }
+
+                        // 3. Update WhatsApp follow-up link with custom reference number
+                        const waBtn = document.getElementById('consultSuccessWaBtn');
+                        if (waBtn && data.consultation_id) {
+                            const waBase = "https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '966500000000')) }}";
+                            const waText = encodeURIComponent("{{ $currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بحجز استشارة تقنية برقم طلب #' : 'Hello OX Tech, I booked a consultation with reference #' }}" + data.consultation_id + " {{ $currentLocale === 'ar' ? 'وأود المتابعة المباشرة معك.' : 'and would like to follow up directly.' }}");
+                            waBtn.href = `${waBase}?text=${waText}`;
+                        }
+
+                        // 4. Smoothly switch to in-modal success state
+                        modalConsultForm.style.display = 'none';
+                        const badge = document.querySelector('.consult-modal-badge');
+                        const title = document.querySelector('.consult-modal-title');
+                        const desc = document.querySelector('.consult-modal-desc');
+                        const trust = document.querySelector('.consult-trust-strip');
+                        if (badge) badge.style.display = 'none';
+                        if (title) title.style.display = 'none';
+                        if (desc) desc.style.display = 'none';
+                        if (trust) trust.style.display = 'none';
+
+                        const successWrap = document.getElementById('consultSuccessWrap');
+                        if (successWrap) successWrap.style.display = 'block';
+                    } else {
+                        const errMsg = (data && data.message) ? data.message : "{{ $currentLocale === 'ar' ? 'حدث خطأ أثناء إرسال البيانات، يرجى التأكد من الحقول والمحاولة مجدداً.' : 'An error occurred while sending your request. Please check inputs and retry.' }}";
+                        showModalAlert(errMsg);
+                        if (btn) {
+                            btn.disabled = false;
+                            btn.style.opacity = '1';
+                            btn.innerHTML = origHtml;
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.warn('Network issue during modal fetch, submitting standard form:', err);
+                    modalConsultForm.submit();
+                });
             });
         }
+
+        // Fallback for session flash success (e.g. from server redirects)
+        @if(session('success'))
+            document.addEventListener('DOMContentLoaded', function() {
+                trackConsultationLead({
+                    source: 'session_flash'
+                });
+            });
+        @endif
 
         function openVideoModal(videoSrc, isDirect) {
             const box = document.getElementById('videoPlayerBox');

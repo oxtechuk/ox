@@ -7,6 +7,7 @@ use App\Mail\ConsultationAdminNotificationMail;
 use App\Mail\ConsultationConfirmationMail;
 use App\Models\Consultation;
 use App\Models\SiteSetting;
+use App\Models\TrafficEvent;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -48,6 +49,10 @@ class ConsultationController extends Controller
         // 3. Validated Data from FormRequest
         $validated = $request->validated();
 
+        if ($request->filled('contact_preference') && ! str_contains($validated['message'], '[طريقة التواصل:')) {
+            $validated['message'] = '[طريقة التواصل المفضلة: '.$request->input('contact_preference')."]\n".$validated['message'];
+        }
+
         // Merge attribution data
         $validated['utm_source'] = $request->input('utm_source', session('attribution.utm_source'));
         $validated['utm_medium'] = $request->input('utm_medium', session('attribution.utm_medium'));
@@ -60,6 +65,23 @@ class ConsultationController extends Controller
         $validated['user_agent'] = $request->userAgent();
 
         $consultation = Consultation::create($validated);
+
+        // Record backend analytics event for reliable tracking
+        try {
+            TrafficEvent::create([
+                'session_id' => mb_substr($request->hasSession() ? $request->session()->getId() : md5($request->ip().$request->userAgent()), 0, 80),
+                'event_name' => 'consultation_submit',
+                'page_url' => mb_substr($request->header('referer', ''), 0, 500) ?: null,
+                'event_data' => [
+                    'consultation_id' => $consultation->id,
+                    'project_type' => $consultation->project_type,
+                    'budget' => $consultation->budget,
+                    'platform' => $consultation->platform_detected,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            Log::warning('Could not record traffic event for consultation: '.$e->getMessage());
+        }
 
         // Send Email Confirmation & Admin Alert safely
         try {

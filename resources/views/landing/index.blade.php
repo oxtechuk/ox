@@ -2481,6 +2481,14 @@
                         const msgEl = document.getElementById('successMsgText');
                         if (msgEl) msgEl.textContent = data.message;
                     }
+                    if (typeof window.trackConsultationLead === 'function') {
+                        window.trackConsultationLead({
+                            consultation_id: data.consultation_id,
+                            project_type: formData.get('project_type'),
+                            budget: formData.get('budget'),
+                            contact_preference: 'inline_form'
+                        });
+                    }
                 } else {
                     alert("{{ __('حدث خطأ أثناء الإرسال، يرجى التحقق من البيانات والمحاولة مجدداً.') }}");
                     if (inlineSubmitBtn) {
