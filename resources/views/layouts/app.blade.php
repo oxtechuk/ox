@@ -1944,23 +1944,93 @@
         </a>
     </div>
 
+    @php
+        $modalPhoneCountries = [
+            ['code' => 'sa', 'dial' => '+966', 'name_ar' => 'المملكة العربية السعودية', 'name_en' => 'Saudi Arabia'],
+            ['code' => 'ae', 'dial' => '+971', 'name_ar' => 'الإمارات العربية المتحدة', 'name_en' => 'United Arab Emirates'],
+            ['code' => 'kw', 'dial' => '+965', 'name_ar' => 'الكويت', 'name_en' => 'Kuwait'],
+            ['code' => 'qa', 'dial' => '+974', 'name_ar' => 'قطر', 'name_en' => 'Qatar'],
+            ['code' => 'bh', 'dial' => '+973', 'name_ar' => 'البحرين', 'name_en' => 'Bahrain'],
+            ['code' => 'om', 'dial' => '+968', 'name_ar' => 'سلطنة عُمان', 'name_en' => 'Oman'],
+            ['code' => 'eg', 'dial' => '+20',  'name_ar' => 'مصر', 'name_en' => 'Egypt'],
+            ['code' => 'jo', 'dial' => '+962', 'name_ar' => 'الأردن', 'name_en' => 'Jordan'],
+            ['code' => 'iq', 'dial' => '+964', 'name_ar' => 'العراق', 'name_en' => 'Iraq'],
+            ['code' => 'ye', 'dial' => '+967', 'name_ar' => 'اليمن', 'name_en' => 'Yemen'],
+            ['code' => 'ma', 'dial' => '+212', 'name_ar' => 'المغرب', 'name_en' => 'Morocco'],
+            ['code' => 'dz', 'dial' => '+213', 'name_ar' => 'الجزائر', 'name_en' => 'Algeria'],
+            ['code' => 'tn', 'dial' => '+216', 'name_ar' => 'تونس', 'name_en' => 'Tunisia'],
+            ['code' => 'lb', 'dial' => '+961', 'name_ar' => 'لبنان', 'name_en' => 'Lebanon'],
+            ['code' => 'ly', 'dial' => '+218', 'name_ar' => 'ليبيا', 'name_en' => 'Libya'],
+            ['code' => 'ps', 'dial' => '+970', 'name_ar' => 'فلسطين', 'name_en' => 'Palestine'],
+            ['code' => 'sd', 'dial' => '+249', 'name_ar' => 'السودان', 'name_en' => 'Sudan'],
+            ['code' => 'sy', 'dial' => '+963', 'name_ar' => 'سوريا', 'name_en' => 'Syria'],
+            ['code' => 'gb', 'dial' => '+44',  'name_ar' => 'المملكة المتحدة', 'name_en' => 'United Kingdom'],
+            ['code' => 'us', 'dial' => '+1',   'name_ar' => 'الولايات المتحدة', 'name_en' => 'United States'],
+            ['code' => 'ca', 'dial' => '+1',   'name_ar' => 'كندا', 'name_en' => 'Canada'],
+            ['code' => 'de', 'dial' => '+49',  'name_ar' => 'ألمانيا', 'name_en' => 'Germany'],
+            ['code' => 'fr', 'dial' => '+33',  'name_ar' => 'فرنسا', 'name_en' => 'France'],
+            ['code' => 'tr', 'dial' => '+90',  'name_ar' => 'تركيا', 'name_en' => 'Turkey'],
+            ['code' => 'se', 'dial' => '+46',  'name_ar' => 'السويد', 'name_en' => 'Sweden'],
+            ['code' => 'ch', 'dial' => '+41',  'name_ar' => 'سويسرا', 'name_en' => 'Switzerland'],
+            ['code' => 'nl', 'dial' => '+31',  'name_ar' => 'هولندا', 'name_en' => 'Netherlands'],
+            ['code' => 'es', 'dial' => '+34',  'name_ar' => 'إسبانيا', 'name_en' => 'Spain'],
+            ['code' => 'it', 'dial' => '+39',  'name_ar' => 'إيطاليا', 'name_en' => 'Italy'],
+            ['code' => 'my', 'dial' => '+60',  'name_ar' => 'ماليزيا', 'name_en' => 'Malaysia'],
+            ['code' => 'sg', 'dial' => '+65',  'name_ar' => 'سنغافورة', 'name_en' => 'Singapore'],
+            ['code' => 'au', 'dial' => '+61',  'name_ar' => 'أستراليا', 'name_en' => 'Australia'],
+            ['code' => 'in', 'dial' => '+91',  'name_ar' => 'الهند', 'name_en' => 'India'],
+            ['code' => 'pk', 'dial' => '+92',  'name_ar' => 'باكستان', 'name_en' => 'Pakistan'],
+            ['code' => 'cn', 'dial' => '+86',  'name_ar' => 'الصين', 'name_en' => 'China'],
+        ];
+        $defaultModalCountry = $modalPhoneCountries[0]; // Saudi Arabia (+966) by default
+    @endphp
+
     <!-- Consultation Modal with UTM Marketing Attribution Inputs -->
     <div class="consult-modal-backdrop" id="consultModal">
         <div class="consult-modal-box">
-            <button class="modal-close" onclick="closeConsultModal()">✕</button>
-            <p class="kicker" style="color:var(--lime); margin-bottom: 8px;">LET'S TALK</p>
-            <h3 style="font-size: 24px; margin: 0 0 10px; font-weight: 800;">
-                {{ $currentLocale === 'ar' ? 'احجز جلسة استشارة مجانية' : ($currentLocale === 'fr' ? 'Réservez Votre Consultation' : 'Book a Discovery Session') }}
+            <button type="button" class="modal-close" onclick="closeConsultModal()" aria-label="{{ $currentLocale === 'ar' ? 'إغلاق النافذة' : 'Close modal' }}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- Saudi Market Executive Badge -->
+            <div class="consult-modal-badge">
+                <span class="consult-badge-dot"></span>
+                <span style="font-size: 13px;">🇸🇦</span>
+                <span>{{ $currentLocale === 'ar' ? 'جلسة استشارية وتنفيذية معتمدة • السوق السعودي والخليج' : ($currentLocale === 'fr' ? 'Session Stratégique • Arabie Saoudite & Golfe' : 'Executive Advisory • Saudi & GCC Market') }}</span>
+            </div>
+
+            <h3 class="consult-modal-title">
+                {{ $currentLocale === 'ar' ? 'احجز استشارة تقنية مجانية مع خبرائنا' : ($currentLocale === 'fr' ? 'Réservez Votre Consultation Stratégique' : 'Book an Executive Tech Discovery Session') }}
             </h3>
-            <p style="font-size: 12px; color: #a4b7b1; margin-bottom: 20px; line-height: 1.8;">
+
+            <p class="consult-modal-desc">
                 @if($currentLocale === 'ar')
-                    استشارة أولية مركزة لمدة 30 دقيقة لنناقش متطلبات مشروعك البرمجي ونقترح خطة التنفيذ الأنسب.
+                    جلسة مباشرة لمدة 30 دقيقة لنقاش متطلبات مشروعك، دراسة الجدوى التقنية، واقتراح أفضل خارطة طريق ومعمارية برمجية مخصصة.
                 @elseif($currentLocale === 'fr')
-                    Session découverte ciblée de 30 minutes pour définir les objectifs et l'architecture de votre projet.
+                    Session ciblée de 30 minutes pour définir l'architecture, le planning et les technologies optimales de votre produit.
                 @else
-                    A focused 30-minute discovery call to evaluate your requirements and suggest optimal architecture.
+                    A high-impact 30-minute discovery call to evaluate your technical scope, architecture, and deployment roadmap.
                 @endif
             </p>
+
+            <!-- Trust Pillars Strip -->
+            <div class="consult-trust-strip">
+                <div class="consult-trust-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span>{{ $currentLocale === 'ar' ? 'تواصل خلال ساعتين عمل' : 'Response in 2h' }}</span>
+                </div>
+                <div class="consult-trust-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span>{{ $currentLocale === 'ar' ? 'سرية تامة (اتفاقية NDA)' : 'Full NDA Privacy' }}</span>
+                </div>
+                <div class="consult-trust-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>{{ $currentLocale === 'ar' ? 'كود ومعمارية مخصصة' : 'Custom Built' }}</span>
+                </div>
+            </div>
 
             <form action="{{ route('consultation.store') }}" method="POST" id="consultationForm">
                 @csrf
@@ -1976,72 +2046,144 @@
                 <input type="hidden" name="utm_content" value="{{ session('attribution.utm_content', request('utm_content')) }}">
                 <input type="hidden" name="platform_detected" value="{{ session('attribution.platform_detected') }}">
 
+                <!-- Full Name -->
                 <div class="form-group">
-                    <label class="form-label" for="consult_name">{{ $currentLocale === 'ar' ? 'الاسم الكريم *' : ($currentLocale === 'fr' ? 'Nom Complet *' : 'Full Name *') }}</label>
-                    <input type="text" name="name" id="consult_name" class="form-input" placeholder="{{ $currentLocale === 'ar' ? 'مثال: عبدالله الراجحي' : 'e.g. John Doe' }}" maxlength="70" required>
+                    <label class="form-label" for="consult_name">
+                        <span>{{ $currentLocale === 'ar' ? 'الاسم الكريم' : ($currentLocale === 'fr' ? 'Nom Complet' : 'Full Name') }} <span class="req">*</span></span>
+                    </label>
+                    <input type="text" name="name" id="consult_name" class="form-input" placeholder="{{ $currentLocale === 'ar' ? 'مثال: سلطان القحطاني' : 'e.g. Sultan Al-Qahtani' }}" maxlength="70" required>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                    <div class="form-group">
-                        <label class="form-label" for="consult_email">{{ $currentLocale === 'ar' ? 'البريد الإلكتروني *' : ($currentLocale === 'fr' ? 'Email Pro *' : 'Business Email *') }}</label>
-                        <input type="email" name="email" id="consult_email" class="form-input" placeholder="name@company.com" maxlength="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="consult_phone_raw">{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp' : 'Phone / WhatsApp') }}</label>
-                        <div class="consult-phone-combo" style="display: flex; gap: 6px; align-items: stretch; direction: ltr;">
-                            <select id="consult_country_code" class="form-select consult-code-select" style="width: 105px; flex-shrink: 0; padding: 12px 6px; font-size: 11.5px; font-family: var(--font-code), system-ui; direction: ltr; cursor: pointer; background: #0c202d; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px;" aria-label="{{ $currentLocale === 'ar' ? 'كود الدولة' : 'Country Code' }}">
-                                <option value="+966" selected>🇸🇦 +966</option>
-                                <option value="+971">🇦🇪 +971</option>
-                                <option value="+20">🇪🇬 +20</option>
-                                <option value="+965">🇰🇼 +965</option>
-                                <option value="+974">🇶🇦 +974</option>
-                                <option value="+968">🇴🇲 +968</option>
-                                <option value="+973">🇧🇭 +973</option>
-                                <option value="+962">🇯🇴 +962</option>
-                                <option value="+964">🇮🇶 +964</option>
-                                <option value="+967">🇾🇪 +967</option>
-                                <option value="+212">🇲🇦 +212</option>
-                                <option value="+213">🇩🇿 +213</option>
-                                <option value="+216">🇹🇳 +216</option>
-                                <option value="+961">🇱🇧 +961</option>
-                                <option value="+218">🇱🇾 +218</option>
-                                <option value="+970">🇵🇸 +970</option>
-                                <option value="+249">🇸🇩 +249</option>
-                                <option value="+44">🇬🇧 +44</option>
-                                <option value="+1">🇺🇸 +1</option>
-                                <option value="+49">🇩🇪 +49</option>
-                                <option value="+33">🇫🇷 +33</option>
-                                <option value="+90">🇹🇷 +90</option>
-                            </select>
-                            <input type="tel" id="consult_phone_raw" class="form-input" style="flex: 1; min-width: 0; direction: ltr; font-family: var(--font-code), system-ui;" placeholder="50 123 4567" maxlength="20" autocomplete="tel">
+
+                <!-- Row: Phone & Email -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="consult-form-grid-2">
+                    <!-- Phone with Country Code Flag Picker -->
+                    <div class="form-group" style="position: relative;">
+                        <label class="form-label" for="consult_phone_raw">
+                            <span>{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp' : 'Phone / WhatsApp') }} <span class="req">*</span></span>
+                        </label>
+                        <div class="modal-phone-combo" id="modalPhoneCombo">
+                            <button type="button" class="modal-country-btn" id="modalCountryBtn" onclick="toggleModalCountryPicker(event)" aria-haspopup="listbox" aria-expanded="false" title="{{ $currentLocale === 'ar' ? 'اختر الدولة' : 'Select Country' }}">
+                                <img id="modalSelectedFlag" src="{{ asset('assets/flags/' . $defaultModalCountry['code'] . '.webp') }}" alt="{{ $currentLocale === 'ar' ? $defaultModalCountry['name_ar'] : $defaultModalCountry['name_en'] }}" class="modal-country-flag-img" width="22" height="15" loading="lazy">
+                                <span id="modalSelectedDial" class="modal-country-dial">{{ $defaultModalCountry['dial'] }}</span>
+                                <svg class="modal-country-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 9l6 6 6-6"/>
+                                </svg>
+                            </button>
+
+                            <input type="tel" id="consult_phone_raw" class="modal-phone-input" placeholder="{{ $currentLocale === 'ar' ? '50 123 4567' : '50 123 4567' }}" maxlength="20" autocomplete="tel" required>
                             <input type="hidden" name="phone" id="consult_phone" value="">
+                            <input type="hidden" id="modalCountryDialHidden" value="{{ $defaultModalCountry['dial'] }}">
+                        </div>
+
+                        <!-- Country Dropdown Popover -->
+                        <div class="modal-country-dropdown" id="modalCountryDropdown" role="listbox">
+                            <div class="modal-country-search-wrap">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="modalCountrySearchInput" class="modal-country-search-input" placeholder="{{ $currentLocale === 'ar' ? 'ابحث باسم الدولة أو كود الاتصال...' : 'Search country or code...' }}" autocomplete="off" oninput="filterModalCountries(this.value)">
+                            </div>
+                            <div class="modal-country-list" id="modalCountryList">
+                                @foreach($modalPhoneCountries as $c)
+                                    <button type="button" class="modal-country-item {{ $c['code'] === $defaultModalCountry['code'] ? 'selected' : '' }}" data-code="{{ $c['code'] }}" data-dial="{{ $c['dial'] }}" data-name="{{ $currentLocale === 'ar' ? $c['name_ar'] : $c['name_en'] }}" onclick="selectModalCountry('{{ $c['code'] }}', '{{ $c['dial'] }}', '{{ asset('assets/flags/' . $c['code'] . '.webp') }}')">
+                                        <span class="modal-country-item-left">
+                                            <img src="{{ asset('assets/flags/' . $c['code'] . '.webp') }}" class="modal-country-flag-img" width="20" height="14" alt="{{ $c['name_en'] }}" loading="lazy">
+                                            <span class="modal-country-item-name">{{ $currentLocale === 'ar' ? $c['name_ar'] : $c['name_en'] }}</span>
+                                        </span>
+                                        <span class="modal-country-item-dial">{{ $c['dial'] }}</span>
+                                    </button>
+                                @endforeach
+                                <div class="modal-country-no-results" id="modalCountryNoResults" style="display: none;">
+                                    {{ $currentLocale === 'ar' ? 'لا توجد نتائج مطابقة' : 'No matching results' }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+
+                    <!-- Business Email -->
                     <div class="form-group">
-                        <label class="form-label" for="consult_project_type">{{ $currentLocale === 'ar' ? 'نوع المشروع' : ($currentLocale === 'fr' ? 'Type de Projet' : 'Project Type') }}</label>
+                        <label class="form-label" for="consult_email">
+                            <span>{{ $currentLocale === 'ar' ? 'البريد الإلكتروني المهني' : ($currentLocale === 'fr' ? 'Email Pro' : 'Business Email') }} <span class="req">*</span></span>
+                        </label>
+                        <input type="email" name="email" id="consult_email" class="form-input" placeholder="ceo@company.sa" maxlength="100" required>
+                    </div>
+                </div>
+
+                <!-- Row: Project Type & Estimated Budget -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="consult-form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="consult_project_type">
+                            <span>{{ $currentLocale === 'ar' ? 'نوع المشروع' : ($currentLocale === 'fr' ? 'Type de Projet' : 'Project Type') }}</span>
+                        </label>
                         <select name="project_type" id="consult_project_type" class="form-select">
-                            <option value="منصات ومواقع ويب">{{ $currentLocale === 'ar' ? 'منصات ومواقع ويب' : ($currentLocale === 'fr' ? 'Plateforme Web' : 'Web & Platforms') }}</option>
-                            <option value="متاجر إلكترونية">{{ $currentLocale === 'ar' ? 'متجر إلكتروني متكامل' : ($currentLocale === 'fr' ? 'E-commerce' : 'E-Commerce Store') }}</option>
-                            <option value="تطبيقات ومنتجات">{{ $currentLocale === 'ar' ? 'تطبيق جوال iOS / Android' : ($currentLocale === 'fr' ? 'App Mobile iOS / Android' : 'Mobile App (iOS/Android)') }}</option>
-                            <option value="أنظمة مخصصة وSaaS">{{ $currentLocale === 'ar' ? 'نظام سحابي / SaaS مخصص' : ($currentLocale === 'fr' ? 'SaaS sur mesure' : 'Custom SaaS / Cloud Platform') }}</option>
-                            <option value="تكاملات وتطوير">{{ $currentLocale === 'ar' ? 'تكاملات وأتمتة' : ($currentLocale === 'fr' ? 'Intégrations & Automatisation' : 'Integrations & Automation') }}</option>
+                            <option value="تطبيقات جوال (iOS & Android)">{{ $currentLocale === 'ar' ? '📱 تطبيق جوال iOS / Android' : '📱 Mobile App (iOS / Android)' }}</option>
+                            <option value="منصات ومواقع ويب" selected>{{ $currentLocale === 'ar' ? '🌐 منصة وبوابة رقمية / ويب' : '🌐 Web Platform & Portal' }}</option>
+                            <option value="متجر إلكتروني متكامل">{{ $currentLocale === 'ar' ? '🛍️ متجر إلكتروني بنظام تجارة حديث' : '🛍️ E-Commerce Platform' }}</option>
+                            <option value="أنظمة سحابية وSaaS">{{ $currentLocale === 'ar' ? '☁️ نظام سحابي SaaS متكامل' : '☁️ Cloud SaaS System' }}</option>
+                            <option value="حلول الذكاء الاصطناعي والأتمتة">{{ $currentLocale === 'ar' ? '🤖 حلول ذكاء اصطناعي وأتمتة' : '🤖 AI & Automation Solutions' }}</option>
+                            <option value="تكاملات وربط أنظمة ERP">{{ $currentLocale === 'ar' ? '⚡ تكاملات وربط أنظمة ERP / APIs' : '⚡ ERP Integrations & APIs' }}</option>
+                            <option value="استشارة وتخطيط معمارية تقنية">{{ $currentLocale === 'ar' ? '💡 استشارة وتخطيط معمارية تقنية' : '💡 Technical Consulting' }}</option>
                         </select>
                     </div>
-                 
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="consult_message">{{ $currentLocale === 'ar' ? 'تفاصيل الفكرة أو التحدي *' : ($currentLocale === 'fr' ? 'Détails du Projet *' : 'Project Details or Challenge *') }}</label>
-                    <textarea name="message" id="consult_message" class="form-textarea" rows="3" placeholder="{{ $currentLocale === 'ar' ? 'أخبرنا باختصار عن فكرتك وما ترغب في تحقيقه...' : 'Tell us briefly about your goals and technical scope...' }}" minlength="10" maxlength="1000" required></textarea>
-                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #8fa099; margin-top: 4px;">
-                        <span>{{ $currentLocale === 'ar' ? 'الحد الأدنى 10 أحرف' : 'Min 10 characters' }}</span>
-                        <span id="modalMsgCounter">0 / 1000</span>
+
+                    <div class="form-group">
+                        <label class="form-label" for="consult_budget">
+                            <span>{{ $currentLocale === 'ar' ? 'الميزانية المتوقعة (اختياري)' : ($currentLocale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</span>
+                        </label>
+                        <select name="budget" id="consult_budget" class="form-select">
+                            <option value="مرنة / للمناقشة في الجلسة">{{ $currentLocale === 'ar' ? 'مرنة / سنناقشها في الجلسة' : 'Flexible / To Discuss' }}</option>
+                            <option value="أقل من 25,000 ر.س">{{ $currentLocale === 'ar' ? 'أقل من 25,000 ر.س (~ $7,000)' : '< $7,000' }}</option>
+                            <option value="25,000 - 50,000 ر.س">{{ $currentLocale === 'ar' ? '25,000 - 50,000 ر.س (~ $13,000)' : '$7,000 - $13,000' }}</option>
+                            <option value="50,000 - 100,000 ر.س">{{ $currentLocale === 'ar' ? '50,000 - 100,000 ر.س (~ $27,000)' : '$13,000 - $27,000' }}</option>
+                            <option value="أكثر من 100,000 ر.س">{{ $currentLocale === 'ar' ? 'أكثر من 100,000 ر.س (مشاريع كبرى)' : '> $27,000 (Enterprise)' }}</option>
+                        </select>
                     </div>
                 </div>
-                <button type="submit" class="form-submit-btn">
-                    <span>{{ $currentLocale === 'ar' ? 'إرسال وتأكيد الحجز' : ($currentLocale === 'fr' ? 'Confirmer la Réservation' : 'Confirm & Request Consultation') }}</span>
-                    <b>{{ $currentLocale === 'ar' ? '←' : '→' }}</b>
+
+                <!-- Preferred Communication Channel -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <span>{{ $currentLocale === 'ar' ? 'طريقة التواصل المفضلة' : 'Preferred Contact Channel' }}</span>
+                    </label>
+                    <div class="modal-pref-channels" id="modalPrefChannels">
+                        <label class="pref-channel-chip active" onclick="setContactPref(this, 'واتساب')">
+                            <input type="radio" name="contact_preference" value="واتساب" checked style="display:none;">
+                            <span>💬 {{ $currentLocale === 'ar' ? 'واتساب (الأسرع)' : 'WhatsApp (Fastest)' }}</span>
+                        </label>
+                        <label class="pref-channel-chip" onclick="setContactPref(this, 'اتصال هاتفي')">
+                            <input type="radio" name="contact_preference" value="اتصال هاتفي" style="display:none;">
+                            <span>📞 {{ $currentLocale === 'ar' ? 'مكالمة هاتفية' : 'Phone Call' }}</span>
+                        </label>
+                        <label class="pref-channel-chip" onclick="setContactPref(this, 'اجتماع زوم')">
+                            <input type="radio" name="contact_preference" value="اجتماع زوم" style="display:none;">
+                            <span>💻 {{ $currentLocale === 'ar' ? 'اجتماع زوم / Meet' : 'Zoom / Meet' }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Project Scope & Message -->
+                <div class="form-group">
+                    <label class="form-label" for="consult_message">
+                        <span>{{ $currentLocale === 'ar' ? 'تفاصيل الفكرة أو المتطلبات' : ($currentLocale === 'fr' ? 'Détails du Projet' : 'Project Scope or Details') }} <span class="req">*</span></span>
+                    </label>
+                    <textarea name="message" id="consult_message" class="form-textarea" rows="3" placeholder="{{ $currentLocale === 'ar' ? 'أخبرنا باختصار عن فكرتك، الميزات الرئيسية المطلوبة، أو التحدي التقني الذي ترغب في حله...' : 'Tell us briefly about your goals, technical scope, and desired delivery roadmap...' }}" minlength="10" maxlength="1000" required></textarea>
+                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #7e9890; margin-top: 4px;">
+                        <span>{{ $currentLocale === 'ar' ? 'الحد الأدنى 10 أحرف' : 'Min 10 characters' }}</span>
+                        <span id="modalMsgCounter">0 / 1000 حرف</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="form-submit-btn" id="consultSubmitBtn">
+                    <span>{{ $currentLocale === 'ar' ? 'تأكيد وحجز الاستشارة المجانية' : ($currentLocale === 'fr' ? 'Confirmer la Réservation' : 'Confirm & Request Consultation') }}</span>
+                    <b style="font-size: 16px;">{{ $currentLocale === 'ar' ? '←' : '→' }}</b>
                 </button>
+
+                <div class="consult-guarantee-note">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span>{{ $currentLocale === 'ar' ? 'نلتزم بالسرية التامة للبيانات وفق أفضل المعايير المهنية.' : 'We adhere to strict data privacy and professional NDA standards.' }}</span>
+                </div>
             </form>
         </div>
     </div>
@@ -2059,9 +2201,14 @@
     <script>
         function openConsultModal() {
             document.getElementById('consultModal').classList.add('active');
+            setTimeout(() => {
+                const nameInput = document.getElementById('consult_name');
+                if (nameInput) nameInput.focus();
+            }, 100);
         }
         function closeConsultModal() {
             document.getElementById('consultModal').classList.remove('active');
+            closeModalCountryPicker();
         }
         document.getElementById('consultModal').addEventListener('click', function(e) {
             if (e.target === this) closeConsultModal();
@@ -2076,48 +2223,180 @@
                 if (this.value.length > 900) {
                     modalMsgCounter.style.color = '#f59e0b';
                 } else {
-                    modalMsgCounter.style.color = '#8fa099';
+                    modalMsgCounter.style.color = '#7e9890';
                 }
             });
         }
 
-        // Sync Modal Phone with Country Dial Code (Default Saudi Arabia +966)
-        const modalCountryCode = document.getElementById('consult_country_code');
+        // Country Flag Picker Handlers for Consultation Modal
+        function toggleModalCountryPicker(e) {
+            if (e) e.stopPropagation();
+            const dropdown = document.getElementById('modalCountryDropdown');
+            const btn = document.getElementById('modalCountryBtn');
+            if (!dropdown || !btn) return;
+
+            const isOpen = dropdown.classList.contains('show');
+            if (isOpen) {
+                closeModalCountryPicker();
+            } else {
+                dropdown.classList.add('show');
+                btn.classList.add('active');
+                btn.setAttribute('aria-expanded', 'true');
+                const search = document.getElementById('modalCountrySearchInput');
+                if (search) {
+                    search.value = '';
+                    filterModalCountries('');
+                    setTimeout(() => search.focus(), 50);
+                }
+            }
+        }
+
+        function closeModalCountryPicker() {
+            const dropdown = document.getElementById('modalCountryDropdown');
+            const btn = document.getElementById('modalCountryBtn');
+            if (dropdown) dropdown.classList.remove('show');
+            if (btn) {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            const wrap = document.getElementById('modalPhoneCombo');
+            const dropdown = document.getElementById('modalCountryDropdown');
+            if (dropdown && dropdown.classList.contains('show')) {
+                if (wrap && !wrap.contains(e.target) && !dropdown.contains(e.target)) {
+                    closeModalCountryPicker();
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const dropdown = document.getElementById('modalCountryDropdown');
+                if (dropdown && dropdown.classList.contains('show')) {
+                    closeModalCountryPicker();
+                } else {
+                    const modal = document.getElementById('consultModal');
+                    if (modal && modal.classList.contains('active')) {
+                        closeConsultModal();
+                    }
+                }
+            }
+        });
+
+        function filterModalCountries(val) {
+            val = (val || '').toLowerCase().trim();
+            const items = document.querySelectorAll('.modal-country-item');
+            const noRes = document.getElementById('modalCountryNoResults');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const name = (item.getAttribute('data-name') || '').toLowerCase();
+                const dial = (item.getAttribute('data-dial') || '').toLowerCase();
+                const code = (item.getAttribute('data-code') || '').toLowerCase();
+
+                if (!val || name.includes(val) || dial.includes(val) || code.includes(val)) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (noRes) {
+                noRes.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        }
+
+        function selectModalCountry(code, dial, flagUrl) {
+            const flag = document.getElementById('modalSelectedFlag');
+            const dialSpan = document.getElementById('modalSelectedDial');
+            const hiddenDial = document.getElementById('modalCountryDialHidden');
+
+            if (flag) flag.src = flagUrl;
+            if (dialSpan) dialSpan.innerText = dial;
+            if (hiddenDial) hiddenDial.value = dial;
+
+            // Highlight selected item in list
+            document.querySelectorAll('.modal-country-item').forEach(item => {
+                item.classList.toggle('selected', item.getAttribute('data-code') === code);
+            });
+
+            closeModalCountryPicker();
+            syncModalPhone();
+
+            const phoneInput = document.getElementById('consult_phone_raw');
+            if (phoneInput) phoneInput.focus();
+        }
+
+        // Preferred Channel Selector Pill
+        function setContactPref(chip, pref) {
+            document.querySelectorAll('#modalPrefChannels .pref-channel-chip').forEach(el => el.classList.remove('active'));
+            chip.classList.add('active');
+            const radio = chip.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+        }
+
+        // Sync Modal Phone with Country Dial Code
         const modalPhoneRaw = document.getElementById('consult_phone_raw');
         const modalFullPhone = document.getElementById('consult_phone');
         const modalConsultForm = document.getElementById('consultationForm');
+        const modalCountryDialHidden = document.getElementById('modalCountryDialHidden');
 
         function syncModalPhone() {
-            if (!modalPhoneRaw || !modalCountryCode || !modalFullPhone) return;
+            if (!modalPhoneRaw || !modalFullPhone || !modalCountryDialHidden) return;
             let val = modalPhoneRaw.value.trim();
+
             if (!val) {
                 modalFullPhone.value = '';
                 return;
             }
+
+            // Remove leading zero for standard formatting (e.g. 0501234567 -> 501234567)
             if (val.startsWith('0')) {
                 val = val.replace(/^0+/, '');
             }
+
+            // If user pasted a number with dial code e.g. +966..., detect it
             if (val.startsWith('+')) {
-                for (let i = 0; i < modalCountryCode.options.length; i++) {
-                    const optVal = modalCountryCode.options[i].value;
-                    if (val.startsWith(optVal)) {
-                        modalCountryCode.value = optVal;
-                        val = val.substring(optVal.length).trim();
+                const items = document.querySelectorAll('.modal-country-item');
+                for (let i = 0; i < items.length; i++) {
+                    const optDial = items[i].getAttribute('data-dial');
+                    if (val.startsWith(optDial)) {
+                        const optCode = items[i].getAttribute('data-code');
+                        selectModalCountry(optCode, optDial, `/assets/flags/${optCode}.webp`);
+                        val = val.substring(optDial.length).trim();
                         modalPhoneRaw.value = val;
                         break;
                     }
                 }
             }
-            modalFullPhone.value = val ? `${modalCountryCode.value} ${val}` : '';
+
+            modalFullPhone.value = val ? `${modalCountryDialHidden.value} ${val}` : '';
         }
 
-        if (modalPhoneRaw && modalCountryCode) {
+        if (modalPhoneRaw) {
             modalPhoneRaw.addEventListener('input', syncModalPhone);
-            modalCountryCode.addEventListener('change', syncModalPhone);
         }
+
         if (modalConsultForm) {
-            modalConsultForm.addEventListener('submit', function() {
+            modalConsultForm.addEventListener('submit', function(e) {
                 syncModalPhone();
+
+                // Append selected contact preference to message so the team receives it clearly
+                const pref = document.querySelector('input[name="contact_preference"]:checked')?.value;
+                const msgEl = document.getElementById('consult_message');
+                if (pref && msgEl && !msgEl.value.includes('[طريقة التواصل:')) {
+                    msgEl.value = `[طريقة التواصل المفضلة: ${pref}]\n` + msgEl.value;
+                }
+
+                const btn = document.getElementById('consultSubmitBtn');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.75';
+                    btn.innerHTML = `<span>{{ $currentLocale === 'ar' ? 'جاري تأكيد الحجز...' : 'Submitting...' }}</span>`;
+                }
             });
         }
 
