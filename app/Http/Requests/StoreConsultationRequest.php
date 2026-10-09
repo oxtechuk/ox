@@ -29,6 +29,7 @@ class StoreConsultationRequest extends FormRequest
             'company_name' => 'nullable|string|max:100',
             'project_type' => 'nullable|string|max:100',
             'budget' => 'nullable|string|max:100',
+            'contact_preference' => 'nullable|string|max:50',
             'message' => 'required|string|min:10|max:1000',
         ];
     }

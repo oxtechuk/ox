@@ -496,114 +496,476 @@
             display: inline-block !important;
         }
         
+        /* ===== CONSULTATION MODAL (SAUDI EXECUTIVE TECH EDITION) ===== */
         .consult-modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(7, 24, 39, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
+            background: rgba(3, 13, 19, 0.84);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            z-index: 99999;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
             opacity: 0;
             visibility: hidden;
-            transition: 0.3s ease;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
         }
         .consult-modal-backdrop.active {
             opacity: 1;
             visibility: visible;
         }
         .consult-modal-box {
-            background: linear-gradient(135deg, #112a3a, #060F1A);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            max-width: 540px;
+            background: radial-gradient(120% 120% at 50% 0%, rgba(29, 138, 104, 0.16) 0%, #081f1b 45%, #041210 100%);
+            border: 1px solid rgba(29, 138, 104, 0.32);
+            border-radius: 24px;
+            max-width: 580px;
             width: 100%;
-            padding: 35px 30px;
+            max-height: calc(100vh - 32px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            padding: 32px 32px 28px;
             position: relative;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-            transform: scale(0.95);
-            transition: 0.3s ease;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(29, 138, 104, 0.12);
+            transform: scale(0.96) translateY(10px);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(29, 138, 104, 0.4) transparent;
+        }
+        .consult-modal-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .consult-modal-box::-webkit-scrollbar-thumb {
+            background: rgba(29, 138, 104, 0.35);
+            border-radius: 4px;
         }
         .consult-modal-backdrop.active .consult-modal-box {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
         .modal-close {
             position: absolute;
             top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #fff;
-            width: 32px;
-            height: 32px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #d1deda;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 16px;
-            display: grid;
-            place-items: center;
-            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            z-index: 10;
         }
+        html[dir="rtl"] .modal-close { left: 20px; right: auto; }
+        html[dir="ltr"] .modal-close { right: 20px; left: auto; }
         .modal-close:hover {
-            background: rgba(189,255,69,0.20);
-            color: var(--lime);
+            background: rgba(29, 138, 104, 0.25);
+            border-color: rgba(0, 229, 153, 0.5);
+            color: #00E599;
+            transform: rotate(90deg) scale(1.05);
         }
+
+        /* Saudi Executive Badge */
+        .consult-modal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 13px;
+            border-radius: 99px;
+            background: rgba(29, 138, 104, 0.15);
+            border: 1px solid rgba(0, 229, 153, 0.35);
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #00E599;
+            margin-bottom: 12px;
+            box-shadow: 0 0 20px rgba(0, 229, 153, 0.1);
+        }
+        .consult-badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #00E599;
+            box-shadow: 0 0 10px #00E599;
+            animation: consultDotPulse 2s infinite;
+        }
+        @keyframes consultDotPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+        .consult-modal-title {
+            font-size: 23px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 8px;
+            line-height: 1.35;
+            background: linear-gradient(135deg, #ffffff 40%, #b8f2e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .consult-modal-desc {
+            font-size: 12.5px;
+            color: #a2b7b0;
+            margin-bottom: 14px;
+            line-height: 1.75;
+        }
+
+        /* Trust Strip */
+        .consult-trust-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .consult-trust-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: #8fa7a0;
+            line-height: 1.3;
+        }
+        .consult-trust-item svg {
+            color: #00E599;
+            flex-shrink: 0;
+        }
+
+        /* Form Group & Layout */
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+            position: relative;
         }
         .form-label {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            color: #c4d3cf;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #c9dbd6;
             margin-bottom: 6px;
+        }
+        .form-label .req {
+            color: #00E599;
+            margin-right: 3px;
         }
         .form-input, .form-select, .form-textarea {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
+            background: rgba(4, 20, 16, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
             padding: 12px 14px;
-            color: #fff;
-            font-family: var(--font);
-            font-size: 12px;
-            transition: 0.2s;
-            outline: none;
-        }
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            border-color: var(--lime);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 3px var(--lime-glow);
-        }
-        .form-input::placeholder, .form-textarea::placeholder {
-            color: #7e958f;
-        }
-        .form-select option {
-            background: var(--navy);
-            color: #fff;
-        }
-        .form-submit-btn {
-            width: 100%;
-            background: var(--lime);
-            color: #09221e;
-            border: none;
-            border-radius: 99px;
-            padding: 14px;
-            font-weight: 700;
+            color: #ffffff;
             font-family: var(--font);
             font-size: 13px;
+            transition: all 0.2s ease;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: #00E599;
+            background: rgba(4, 28, 22, 0.85);
+            box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.18);
+        }
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: #6d8880;
+        }
+        .form-select option {
+            background: #09211c;
+            color: #ffffff;
+        }
+
+        /* Phone & Country Picker Combo */
+        .modal-phone-combo {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+            direction: ltr;
+            position: relative;
+        }
+        .modal-country-btn {
+            height: 46px;
+            padding: 0 12px;
+            background: rgba(4, 20, 16, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            user-select: none;
+        }
+        .modal-country-btn:hover, .modal-country-btn.active {
+            border-color: #00E599;
+            background: rgba(4, 28, 22, 0.9);
+            box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.14);
+        }
+        .modal-country-flag-img {
+            width: 22px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+            display: inline-block;
+        }
+        .modal-country-dial {
+            font-family: 'SF Mono', Consolas, Monaco, monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #00E599;
+            letter-spacing: 0.3px;
+        }
+        .modal-country-chevron {
+            color: #79988e;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .modal-country-btn.active .modal-country-chevron {
+            transform: rotate(180deg);
+            color: #00E599;
+        }
+        .modal-phone-input {
+            flex: 1;
+            min-width: 0;
+            height: 46px;
+            background: rgba(4, 20, 16, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 12px;
+            padding: 0 14px;
+            color: #ffffff;
+            font-family: 'SF Mono', Consolas, Monaco, monospace;
+            font-size: 13.5px;
+            direction: ltr;
+            text-align: left;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .modal-phone-input:focus {
+            border-color: #00E599;
+            background: rgba(4, 28, 22, 0.85);
+            box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.18);
+        }
+        .modal-phone-input::placeholder {
+            color: #6d8880;
+        }
+
+        /* Dropdown Popover */
+        .modal-country-dropdown {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            z-index: 200;
+            background: #071f1a;
+            border: 1px solid rgba(0, 229, 153, 0.4);
+            border-radius: 14px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 229, 153, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: modalDropIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-country-dropdown.show {
+            display: flex;
+        }
+        @keyframes modalDropIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-country-search-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            direction: rtl;
+        }
+        html[dir="ltr"] .modal-country-search-wrap {
+            direction: ltr;
+        }
+        .modal-country-search-wrap svg {
+            color: #00E599;
+            flex-shrink: 0;
+        }
+        .modal-country-search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 12.5px;
+        }
+        .modal-country-search-input::placeholder {
+            color: #6b867f;
+        }
+        .modal-country-list {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 6px 0;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 229, 153, 0.35) transparent;
+        }
+        .modal-country-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .modal-country-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 229, 153, 0.35);
+            border-radius: 4px;
+        }
+        .modal-country-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 8px 14px;
+            background: transparent;
+            border: none;
+            color: #d1deda;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: right;
+            direction: rtl;
+        }
+        html[dir="ltr"] .modal-country-item {
+            direction: ltr;
+            text-align: left;
+        }
+        .modal-country-item:hover, .modal-country-item.selected {
+            background: rgba(0, 229, 153, 0.15);
+            color: #ffffff;
+        }
+        .modal-country-item-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-country-item-name {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .modal-country-item-dial {
+            font-family: 'SF Mono', Consolas, Monaco, monospace;
+            font-size: 11.5px;
+            color: #00E599;
+            direction: ltr;
+            font-weight: 700;
+        }
+        .modal-country-no-results {
+            padding: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: #6b867f;
+        }
+
+        /* Preferred Channel Chips */
+        .modal-pref-channels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .pref-channel-chip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 8px;
+            border-radius: 10px;
+            background: rgba(4, 20, 16, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #b7cac4;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .pref-channel-chip:hover {
+            border-color: rgba(0, 229, 153, 0.4);
+            color: #ffffff;
+        }
+        .pref-channel-chip.active {
+            background: rgba(0, 229, 153, 0.15);
+            border-color: #00E599;
+            color: #00E599;
+            box-shadow: 0 0 15px rgba(0, 229, 153, 0.12);
+        }
+
+        /* Submit Button */
+        .form-submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #00E599 0%, #10B981 100%);
+            color: #041b14;
+            border: none;
+            border-radius: 14px;
+            padding: 15px 24px;
+            font-weight: 800;
+            font-family: var(--font);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 14px;
+            box-shadow: 0 10px 25px rgba(0, 229, 153, 0.32);
         }
         .form-submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(189,255,69,0.30);
+            box-shadow: 0 14px 35px rgba(0, 229, 153, 0.48);
+            filter: brightness(1.05);
+        }
+        .form-submit-btn:active {
+            transform: translateY(0);
+        }
+        .consult-guarantee-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #78928a;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .consult-modal-box {
+                padding: 24px 18px 20px;
+                border-radius: 20px;
+            }
+            .consult-modal-title {
+                font-size: 20px;
+            }
+            .consult-trust-strip {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .modal-pref-channels {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .consult-form-grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
         }
         .flash-alert {
             position: fixed;
