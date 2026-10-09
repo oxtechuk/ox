@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'لوحة التحكم والإحصائيات المالية | OX Tech')
+@section('title', 'لوحة التحكم والإحصائيات الشاملة | OX Tech')
 @section('header_title', 'لوحة التحكم')
 
 @push('admin-styles')
@@ -12,6 +12,78 @@
         gap: 24px;
         max-width: 1440px;
         margin: 0 auto;
+    }
+
+    /* ─── Top Live Visitors Strip ─── */
+    .visitors-live-strip {
+        background: #FFFFFF;
+        border: 1px solid var(--border-card);
+        border-radius: 16px;
+        padding: 16px 22px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    .visitors-live-info {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .live-pulse-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: #ECFDF5;
+        border: 1px solid #A7F3D0;
+        color: #047857;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 5px 12px;
+        border-radius: 99px;
+    }
+
+    .live-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10B981;
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+        animation: pulseLive 1.8s infinite;
+    }
+
+    @keyframes pulseLive {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .visitors-quick-metrics {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .v-metric-item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .v-metric-label {
+        font-size: 11px;
+        color: var(--text-muted);
+        font-weight: 600;
+    }
+
+    .v-metric-val {
+        font: 800 16px/1 var(--font-code), sans-serif;
+        color: var(--text-heading);
     }
 
     /* ─── Top Main Hero Grid ─── */
@@ -101,12 +173,9 @@
         border-radius: 99px;
         font-family: var(--font-code);
     }
-
-    .balance-sub-egp {
-        font-size: 11.5px;
-        font-weight: 700;
-        color: #64748B;
-        font-family: var(--font-code);
+    .balance-growth-badge.down {
+        background: #FEF2F2;
+        color: #B91C1C;
     }
 
     /* ─── 2. Income & Orders Cards Stack ─── */
@@ -170,7 +239,7 @@
         color: #FFFFFF;
     }
 
-    /* ─── 3. MarketPlace Hero Box (Matching Zadwork MarketPlace in Image 1) ─── */
+    /* ─── 3. MarketPlace Hero Box ─── */
     .marketplace-hero-card {
         background: #FFFFFF;
         border: 1px solid var(--border-card);
@@ -249,51 +318,47 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #0F172A;
+        color: #071B19;
     }
 
     .marketplace-desc-text {
-        font-size: 11px;
+        font-size: 11.5px;
+        color: var(--text-muted);
         line-height: 1.5;
-        color: #64748B;
-        text-align: center;
         margin: 0;
+        max-width: 340px;
     }
 
     .marketplace-footer-pills {
         display: flex;
-        flex-direction: column;
-        gap: 6px;
-        margin-top: 10px;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding-top: 10px;
+        border-top: 1px solid #F1F5F9;
     }
 
     .marketplace-action-pill {
-        width: 100%;
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #475569;
         background: #F8FAFC;
         border: 1px solid #E2E8F0;
-        color: #334155;
-        padding: 6px 10px;
-        border-radius: 8px;
-        font-size: 11px;
-        font-weight: 600;
-        text-align: center;
+        padding: 4px 10px;
+        border-radius: 6px;
         text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        transition: all 0.2s ease;
+        transition: 0.15s;
     }
     .marketplace-action-pill:hover {
-        background: #F1F5F9;
-        color: #071B19;
-        border-color: #CBD5E1;
+        background: #071B19;
+        color: #FFFFFF;
+        border-color: #071B19;
     }
 
-    /* ─── Middle Section: Curve Chart & Gateway Status ─── */
+    /* ─── 4. Chart & Two-Column Grid ─── */
     .chart-and-gateways-grid {
         display: grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 1.25fr 0.95fr;
         gap: 20px;
     }
 
@@ -344,6 +409,7 @@
         padding: 3px;
         border-radius: 8px;
         border: 1px solid #E2E8F0;
+        flex-wrap: wrap;
     }
 
     .chart-tab-btn {
@@ -366,7 +432,7 @@
 
     .chart-canvas-wrapper {
         position: relative;
-        height: 220px;
+        height: 240px;
         width: 100%;
     }
 
@@ -379,12 +445,12 @@
         margin-top: 10px;
     }
 
-    /* ─── Gateway Status Box ─── */
-    .gateways-card {
+    /* ─── Top Countries & Gateway Box ─── */
+    .side-metrics-card {
         background: #FFFFFF;
         border: 1px solid var(--border-card);
         border-radius: 20px;
-        padding: 24px 22px;
+        padding: 22px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         display: flex;
         flex-direction: column;
@@ -392,14 +458,27 @@
         gap: 16px;
     }
 
+    .country-row-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #F1F5F9;
+        font-size: 12.5px;
+    }
+    .country-row-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
     .gateway-item {
         background: #F8FAFC;
         border: 1px solid #E2E8F0;
         border-radius: 14px;
-        padding: 16px;
+        padding: 14px 16px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         transition: 0.2s;
     }
     .gateway-item:hover {
@@ -420,26 +499,34 @@
     }
 
     .gateway-dot {
-        width: 10px;
-        height: 10px;
+        width: 9px;
+        height: 9px;
         border-radius: 50%;
         background: #10B981;
         box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
     }
+    .gateway-dot.inactive {
+        background: #94A3B8;
+        box-shadow: none;
+    }
 
     .gateway-name {
-        font-size: 13.5px;
+        font-size: 13px;
         font-weight: 800;
         color: #0F172A;
     }
 
     .gateway-status-tag {
-        font-size: 11px;
+        font-size: 10.5px;
         font-weight: 700;
         color: #047857;
         background: #ECFDF5;
-        padding: 2px 8px;
+        padding: 2px 7px;
         border-radius: 99px;
+    }
+    .gateway-status-tag.inactive {
+        color: #64748B;
+        background: #F1F5F9;
     }
 
     .gateway-amount-row {
@@ -449,12 +536,12 @@
     }
 
     .gateway-revenue-num {
-        font: 800 18px/1 var(--font-code), sans-serif;
+        font: 800 16px/1 var(--font-code), sans-serif;
         color: #0F172A;
     }
 
     .gateway-link-btn {
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 700;
         color: #006848;
         text-decoration: none;
@@ -541,31 +628,62 @@
 @section('content')
 <div class="dashboard-container">
 
-    <!-- ─── 1. HERO FINANCIAL & MARKETPLACE GRID (Matching Image 1) ─── -->
+    <!-- ─── 0. REALTIME VISITORS & TRAFFIC DYNAMIC STRIP ─── -->
+    <div class="visitors-live-strip">
+        <div class="visitors-live-info">
+            <span class="live-pulse-badge">
+                <span class="live-dot"></span>
+                <span>{{ $stats['live_visitors'] }} زائر نشط الآن بالموقع</span>
+            </span>
+            <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">
+                رصد فوري للزيارات والترافيك (Traffic & Realtime Analytics)
+            </span>
+        </div>
+
+        <div class="visitors-quick-metrics">
+            <div class="v-metric-item">
+                <span class="v-metric-label">زوار اليوم (Unique)</span>
+                <span class="v-metric-val">{{ number_format($stats['today_visitors']) }}</span>
+            </div>
+            <div style="width: 1px; height: 26px; background: #E2E8F0;"></div>
+            <div class="v-metric-item">
+                <span class="v-metric-label">إجمالي الزوار الفريدين</span>
+                <span class="v-metric-val">{{ number_format($stats['total_visitors']) }}</span>
+            </div>
+            <div style="width: 1px; height: 26px; background: #E2E8F0;"></div>
+            <div class="v-metric-item">
+                <span class="v-metric-label">مشاهدات الصفحات</span>
+                <span class="v-metric-val" style="color: #10B981;">{{ number_format($stats['total_pageviews']) }}</span>
+            </div>
+
+            <a href="{{ route('admin.analytics.index') }}" class="pill-link-btn" style="background: #071B19; color: #FFFFFF; border-color: #071B19;">
+                <span>تقرير التحليلات المفصل &larr;</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ─── 1. HERO FINANCIAL & MARKETPLACE GRID (100% Dynamic) ─── -->
     <div class="hero-metrics-grid">
         <!-- Card A: Available Balance / Main Revenue -->
         <div class="balance-hero-card">
             <div>
                 <div class="balance-amount-row">
-                    @php
-                        $displayRevenue = $stats['total_revenue'] > 0 ? $stats['total_revenue'] : 11250.9;
-                    @endphp
-                    <span class="balance-amount-num">{{ number_format($displayRevenue, 1) }}</span>
-                    <span class="balance-amount-currency">USD</span>
+                    <span class="balance-amount-num">{{ number_format($stats['total_revenue'], 2) }}</span>
+                    <span class="balance-amount-currency">{{ $stats['currency'] }}</span>
                 </div>
-                <div class="balance-label">الرصيد المتاح وإجمالي المبيعات (Available balance)</div>
+                <div class="balance-label">الرصيد الفعلي وإجمالي المبيعات المحصلة (Available balance)</div>
             </div>
 
             <div class="balance-meta-bar">
-                <span class="balance-growth-badge">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                    +{{ $stats['growth_percentage'] }}% هذا الشهر
+                <span class="balance-growth-badge {{ $stats['growth_percentage'] < 0 ? 'down' : '' }}">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="{{ $stats['growth_percentage'] < 0 ? '6 9 12 15 18 9' : '18 15 12 9 6 15' }}"></polyline></svg>
+                    {{ $stats['growth_percentage'] > 0 ? '+' : '' }}{{ $stats['growth_percentage'] }}% هذا الشهر
                 </span>
-                <span class="balance-sub-egp">
-                    ≈ {{ number_format($displayRevenue * 48.5, 0) }} EGP
+                <span style="font-size: 11.5px; color: #64748B; font-weight: 700; font-family: var(--font-code);">
+                    {{ $stats['paid_orders_count'] }} طلب مسدد من {{ $stats['total_orders_count'] }}
                 </span>
                 <span style="font-size: 11.5px; color: #94A3B8; margin-right: auto;">
-                    {{ $stats['paid_orders_count'] }} طلب مسدد
+                    {{ $stats['active_products_count'] }} منتج نشط
                 </span>
             </div>
         </div>
@@ -575,16 +693,12 @@
             <!-- Sub-card 1: Income -->
             <div class="metric-sub-card">
                 <div class="metric-sub-info">
-                    <span class="metric-sub-label">الدخل الشهري (Income)</span>
+                    <span class="metric-sub-label">الدخل المحصل هذا الشهر (Monthly Income)</span>
                     <span class="metric-sub-value">
-                        @php
-                            $displayMonthly = $stats['monthly_revenue'] > 0 ? $stats['monthly_revenue'] : 19022.64;
-                        @endphp
-                        {{ number_format($displayMonthly, 2) }}$
+                        {{ number_format($stats['monthly_revenue'], 2) }} {{ $stats['currency'] }}
                     </span>
                 </div>
                 <div class="metric-sub-icon-circle" title="الدخل الوارد">
-                    <!-- Down-Left Inbound Arrow matching Image 1 -->
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="17" y1="7" x2="7" y2="17"></line>
                         <polyline points="17 17 7 17 7 7"></polyline>
@@ -592,19 +706,15 @@
                 </div>
             </div>
 
-            <!-- Sub-card 2: Orders Completed / Expenses -->
+            <!-- Sub-card 2: Orders Completed -->
             <div class="metric-sub-card">
                 <div class="metric-sub-info">
-                    <span class="metric-sub-label">الطلبات والتراخيص (Orders)</span>
+                    <span class="metric-sub-label">الطلبات المسددة والتراخيص (Paid Orders)</span>
                     <span class="metric-sub-value">
-                        @php
-                            $displayOrdersValue = $stats['paid_orders_count'] > 0 ? $stats['paid_orders_count'] : 19085.40;
-                        @endphp
-                        {{ is_float($displayOrdersValue) ? number_format($displayOrdersValue, 2) . '$' : number_format($displayOrdersValue) }}
+                        {{ number_format($stats['paid_orders_count']) }} <small style="font-size: 12px; color: var(--text-muted); font-weight: 600;">طلب</small>
                     </span>
                 </div>
                 <div class="metric-sub-icon-circle" title="العمليات المنفذة">
-                    <!-- Up-Right Outbound Arrow matching Image 1 -->
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="7" y1="17" x2="17" y2="7"></line>
                         <polyline points="7 7 17 7 17 17"></polyline>
@@ -613,7 +723,7 @@
             </div>
         </div>
 
-        <!-- Card C: MarketPlace Box (Matching Zadwork MarketPlace in Image 1) -->
+        <!-- Card C: MarketPlace Box -->
         <div class="marketplace-hero-card">
             <div>
                 <div class="marketplace-header">
@@ -633,7 +743,6 @@
 
                 <div class="marketplace-center-content">
                     <div class="marketplace-icon-wrap">
-                        <!-- Monitor with Cart Icon matching Image 1 -->
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="3" width="20" height="14" rx="2"></rect>
                             <circle cx="8" cy="10" r="1"></circle>
@@ -642,35 +751,38 @@
                         </svg>
                     </div>
                     <p class="marketplace-desc-text">
-                        متجر ومستودع البرمجيات والأنظمة يوفر إدارة متكاملة لتراخيص البرامج والملفات الرقمية وتفعيلها الفوري للعملاء بعد إتمام الدفع.
+                        متجر البرمجيات والأنظمة يوفر إدارة متكاملة لتراخيص البرامج والملفات الرقمية وتفعيلها الفوري للعملاء بعد إتمام الدفع.
                     </p>
                 </div>
             </div>
 
             <div class="marketplace-footer-pills">
                 <a href="{{ route('admin.payment-logs.index') }}" class="marketplace-action-pill">
-                    <span>بوابات الدفع: PaySky 🟢 | PayPal 🟢</span>
+                    <span>بوابات الدفع: PaySky {{ $stats['paysky_active'] ? '🟢' : '⚪' }} | PayPal {{ $stats['paypal_active'] ? '🟢' : '⚪' }}</span>
                 </a>
                 <a href="{{ route('admin.digital-products.index') }}" class="marketplace-action-pill">
-                    <span>كتالوج البرامج والأنظمة الجاهزة ▶</span>
+                    <span>كتالوج البرامج ({{ $stats['total_products_count'] }}) ▶</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- ─── 2. SPLINE CURVE CHART & REALTIME GATEWAYS ─── -->
+    <!-- ─── 2. DYNAMIC CHART & COUNTRIES / GATEWAYS SECTION ─── -->
     <div class="chart-and-gateways-grid">
-        <!-- Spline Curve Chart (Matching Image 1 Exact Red Curve) -->
+        <!-- Interactive Multi-Mode Dynamic Chart -->
         <div class="chart-card">
             <div class="chart-card-header">
                 <div class="chart-title-box">
-                    <h3>حركة المبيعات والدخل الشهري (Income Trend)</h3>
-                    <p>مخطط بياني يوضح تدفق الإيرادات الشهرية ومبيعات المتجر الرقمي</p>
+                    <h3 id="chartDynamicTitle">حركة المبيعات والدخل الشهري (Income Trend)</h3>
+                    <p id="chartDynamicSubtitle">مخطط بياني يوضح تدفق الإيرادات الفعلية ومبيعات المتجر الرقمي</p>
                 </div>
                 <div class="chart-tabs-bar">
                     <button type="button" class="chart-tab-btn active" id="tab7M">آخر 7 أشهر</button>
                     <button type="button" class="chart-tab-btn" id="tab30D">آخر 30 يوماً</button>
                     <button type="button" class="chart-tab-btn" id="tabYear">العام الحالي</button>
+                    <button type="button" class="chart-tab-btn" id="tabTraffic" style="background: rgba(16, 185, 129, 0.1); color: #047857; font-weight: 800;">
+                        حركة الزوار (7 أيام)
+                    </button>
                 </div>
             </div>
 
@@ -678,69 +790,95 @@
                 <canvas id="monthlyIncomeChart"></canvas>
             </div>
 
-            <div class="chart-bottom-caption">
-                Monthly income (USD)
+            <div class="chart-bottom-caption" id="chartBottomCaption">
+                Dynamic Income Data ({{ $stats['currency'] }})
             </div>
         </div>
 
-        <!-- Realtime Gateways & CRM Financials -->
-        <div class="gateways-card">
+        <!-- Visitors by Country & Gateways Status -->
+        <div class="side-metrics-card">
+            <!-- Part 1: Top Countries (البلاد الأكثر زيارة للموقع) -->
             <div>
-                <div style="font-size: 15px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
-                    حالة بوابات الدفع والتحصيل
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                    <div style="font-size: 14.5px; font-weight: 800; color: var(--text-heading);">
+                        أكثر الدول تصفحاً (Visitors by Country)
+                    </div>
+                    <a href="{{ route('admin.analytics.index') }}" style="font-size: 11px; font-weight: 700; color: #10B981; text-decoration: none;">
+                        تفاصيل الدول &larr;
+                    </a>
                 </div>
-                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
-                    المتابعة المباشرة لمعالجة المدفوعات والـ Webhooks
+                <div style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 12px;">
+                    توزيع الزيارات حسب النطاق الجغرافي والدول:
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                    @forelse($topCountries as $c)
+                        <div class="country-row-item">
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text-heading);">
+                                <span style="font-family: var(--font-code); background: #F1F5F9; color: #334155; font-size: 10.5px; padding: 2px 6px; border-radius: 4px; font-weight: 800;">
+                                    {{ $c['code'] }}
+                                </span>
+                                <span style="font-size: 12.5px;">{{ $c['name'] }}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 55px; height: 5px; background: #E2E8F0; border-radius: 99px; overflow: hidden;">
+                                    <div style="height: 100%; width: {{ $c['percentage'] }}%; background: #10B981; border-radius: 99px;"></div>
+                                </div>
+                                <span style="font-family: var(--font-code); font-weight: 800; color: var(--text-heading); font-size: 12px;">
+                                    {{ number_format($c['views']) }}
+                                </span>
+                                <small style="font-size: 10.5px; color: var(--text-muted); font-family: var(--font-code);">
+                                    ({{ $c['percentage'] }}%)
+                                </small>
+                            </div>
+                        </div>
+                    @empty
+                        <div style="text-align: center; color: var(--text-muted); padding: 14px 10px; font-size: 12px; background: #F8FAFC; border-radius: 10px; border: 1px dashed #CBD5E1;">
+                            يتم رصد بيانات الدول والزيارات وتحديثها تلقائياً عند تصفح المستخدمين للمنصة.
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+
+            <!-- Part 2: Gateways Realtime Revenue -->
+            <div style="border-top: 1px solid #F1F5F9; padding-top: 14px; margin-top: 6px;">
+                <div style="font-size: 13.5px; font-weight: 800; color: var(--text-heading); margin-bottom: 10px;">
+                    بوابات الدفع والتحصيل الرقمي
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 10px;">
                     <!-- PaySky -->
                     <div class="gateway-item">
                         <div class="gateway-top-row">
                             <div class="gateway-title-wrap">
-                                <span class="gateway-dot"></span>
+                                <span class="gateway-dot {{ $stats['paysky_active'] ? '' : 'inactive' }}"></span>
                                 <span class="gateway-name">PaySky (بطاقات ومحافظ مصر)</span>
                             </div>
-                            <span class="gateway-status-tag">🟢 نشط ومفعل</span>
+                            <span class="gateway-status-tag {{ $stats['paysky_active'] ? '' : 'inactive' }}">
+                                {{ $stats['paysky_active'] ? '🟢 متصل' : '⚪ غير مهيأ' }}
+                            </span>
                         </div>
                         <div class="gateway-amount-row">
-                            <span style="font-size: 12px; color: #64748B;">الإجمالي المسدد:</span>
-                            <span class="gateway-revenue-num">{{ number_format($stats['paysky_revenue'] > 0 ? $stats['paysky_revenue'] : 4850.50, 2) }} USD</span>
+                            <span style="font-size: 11.5px; color: #64748B;">الإجمالي المسدد الفعلي:</span>
+                            <span class="gateway-revenue-num">{{ number_format($stats['paysky_revenue'], 2) }} {{ $stats['currency'] }}</span>
                         </div>
-                        <a href="{{ route('admin.payment-logs.index') }}" class="gateway-link-btn">
-                            عرض سجل العمليات (Payment Logs) &larr;
-                        </a>
                     </div>
 
                     <!-- PayPal -->
                     <div class="gateway-item">
                         <div class="gateway-top-row">
                             <div class="gateway-title-wrap">
-                                <span class="gateway-dot"></span>
+                                <span class="gateway-dot {{ $stats['paypal_active'] ? '' : 'inactive' }}"></span>
                                 <span class="gateway-name">PayPal (المبيعات الدولية)</span>
                             </div>
-                            <span class="gateway-status-tag">🟢 متصل ومفعل</span>
-                        </div>
-                        <div class="gateway-amount-row">
-                            <span style="font-size: 12px; color: #64748B;">الإجمالي المسدد:</span>
-                            <span class="gateway-revenue-num">{{ number_format($stats['paypal_revenue'] > 0 ? $stats['paypal_revenue'] : 6400.40, 2) }} USD</span>
-                        </div>
-                        <a href="{{ route('admin.settings.index') }}" class="gateway-link-btn">
-                            إعدادات الربط وحساب الأعمال &larr;
-                        </a>
-                    </div>
-
-                    <!-- CRM Summary -->
-                    <div class="gateway-item" style="background: #F0FDF4; border-color: #DCFCE7;">
-                        <div class="gateway-top-row">
-                            <span style="font-size: 12.5px; font-weight: 700; color: #166534;">الفواتير المحصلة (CRM):</span>
-                            <span style="font-size: 12px; font-weight: 800; color: #15803D; font-family: var(--font-code);">
-                                {{ number_format($stats['total_collected'], 0) }} SAR
+                            <span class="gateway-status-tag {{ $stats['paypal_active'] ? '' : 'inactive' }}">
+                                {{ $stats['paypal_active'] ? '🟢 متصل' : '⚪ غير مهيأ' }}
                             </span>
                         </div>
-                        <a href="{{ route('admin.crm.invoices.index') }}" class="gateway-link-btn" style="color: #15803D;">
-                            إدارة الفواتير والمستحقات &larr;
-                        </a>
+                        <div class="gateway-amount-row">
+                            <span style="font-size: 11.5px; color: #64748B;">الإجمالي المسدد الفعلي:</span>
+                            <span class="gateway-revenue-num">{{ number_format($stats['paypal_revenue'], 2) }} {{ $stats['currency'] }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -795,7 +933,7 @@
                                         </span>
                                     </td>
                                     <td style="font-weight: 800; font-family: var(--font-code);">
-                                        {{ number_format($order->total_amount, 2) }} {{ $order->currency ?? 'USD' }}
+                                        {{ number_format($order->total_amount, 2) }} {{ $order->currency ?? $stats['currency'] }}
                                     </td>
                                     <td>
                                         <span class="status-badge {{ $order->payment_status === 'paid' ? 'completed' : 'warning' }}">
@@ -887,7 +1025,7 @@
 @endsection
 
 @push('admin-scripts')
-<!-- Chart.js CDN for Interactive Spline Curve -->
+<!-- Chart.js CDN for Interactive Multi-Mode Dynamic Chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -895,38 +1033,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = document.getElementById('monthlyIncomeChart');
     if (!ctx) return;
 
-    // Server-provided chart data
-    const serverLabels = @json($chartLabels);
-    const serverRevenue = @json($chartRevenue);
+    // 100% Dynamic datasets from database
+    const labels7M = @json($chartLabels7M);
+    const revenue7M = @json($chartRevenue7M);
 
-    // If all server revenue points are zero (fresh database), display the exact curve from Reference Image 1
-    const isAllZero = serverRevenue.every(v => v === 0);
+    const labels30D = @json($chartLabels30D);
+    const revenue30D = @json($chartRevenue30D);
 
-    // Reference Image 1 spline data points: [0, 1950, 2680, 6650, 5500, 1800, 0, 150]
-    const sampleLabels = ['6/2021', '10/2022', '11/2022', '12/2022', '1/2023', '3/2023', '12/2023', '10/2024'];
-    const sampleData = [0, 1950, 2680, 6650, 5500, 1800, 0, 150];
+    const labelsYear = @json($chartLabelsYear);
+    const revenueYear = @json($chartRevenueYear);
 
-    const initialLabels = isAllZero ? sampleLabels : serverLabels;
-    const initialData = isAllZero ? sampleData : serverRevenue;
+    const labelsTraffic = @json($chartLabelsTraffic);
+    const viewsTraffic = @json($chartViewsTraffic);
+    const visitorsTraffic = @json($chartVisitorsTraffic);
+
+    const currency = @json($stats['currency']);
 
     const chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: initialLabels,
+            labels: labels7M,
             datasets: [{
-                label: 'Monthly income (USD)',
-                data: initialData,
-                // Exact Red Spline Curve from Reference Image 1
-                borderColor: '#E11D48',
+                label: `الإيرادات الشهرية (${currency})`,
+                data: revenue7M,
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16, 185, 129, 0.08)',
                 borderWidth: 2.6,
-                tension: 0.45, // Smooth cubic spline bezier
-                fill: false,
-                pointBackgroundColor: '#E11D48',
+                tension: 0.38,
+                fill: true,
+                pointBackgroundColor: '#10B981',
                 pointBorderColor: '#FFFFFF',
                 pointBorderWidth: 2,
                 pointRadius: 4.5,
                 pointHoverRadius: 7,
-                pointHoverBackgroundColor: '#BE123C',
+                pointHoverBackgroundColor: '#047857',
                 pointHoverBorderColor: '#FFFFFF',
                 pointHoverBorderWidth: 2.5
             }]
@@ -935,74 +1075,55 @@ document.addEventListener('DOMContentLoaded', () => {
             responsive: true,
             maintainAspectRatio: false,
             layout: {
-                padding: {
-                    top: 15,
-                    bottom: 5,
-                    left: 10,
-                    right: 15
-                }
+                padding: { top: 15, bottom: 5, left: 10, right: 15 }
             },
             interaction: {
                 intersect: false,
                 mode: 'index'
             },
             plugins: {
-                legend: {
-                    display: false
-                },
+                legend: { display: false },
                 tooltip: {
+                    rtl: true,
                     backgroundColor: '#071B19',
                     titleColor: '#FFFFFF',
                     bodyColor: '#F8FAFC',
                     titleFont: {
-                        family: "'Space Grotesk', sans-serif",
+                        family: "'Alexandria', 'Cairo', sans-serif",
                         size: 13,
                         weight: 'bold'
                     },
                     bodyFont: {
                         family: "'Space Grotesk', sans-serif",
-                        size: 13
+                        size: 12
                     },
                     padding: 12,
                     cornerRadius: 10,
                     displayColors: false,
                     callbacks: {
                         label: function(context) {
-                            return context.parsed.y.toLocaleString() + ' USD';
+                            return context.dataset.label + ': ' + context.parsed.y.toLocaleString();
                         }
                     }
                 }
             },
             scales: {
                 x: {
-                    grid: {
-                        display: false,
-                        drawBorder: false
-                    },
+                    grid: { display: false, drawBorder: false },
                     ticks: {
                         color: '#64748B',
-                        font: {
-                            family: "'Space Grotesk', sans-serif",
-                            size: 11.5,
-                            weight: '600'
-                        },
+                        font: { family: "'Alexandria', sans-serif", size: 11, weight: '600' },
                         padding: 8
                     }
                 },
                 y: {
-                    min: 0,
-                    suggestedMax: 7000,
-                    grid: {
-                        color: '#F1F5F9',
-                        drawBorder: false
-                    },
+                    beginAtZero: true,
+                    grid: { color: '#F1F5F9', drawBorder: false },
                     ticks: {
                         color: '#64748B',
-                        font: {
-                            family: "'Space Grotesk', sans-serif",
-                            size: 11.5
-                        },
+                        font: { family: "'Space Grotesk', sans-serif", size: 11 },
                         padding: 10,
+                        precision: 0,
                         callback: function(value) {
                             return value.toLocaleString();
                         }
@@ -1016,30 +1137,125 @@ document.addEventListener('DOMContentLoaded', () => {
     const tab7M = document.getElementById('tab7M');
     const tab30D = document.getElementById('tab30D');
     const tabYear = document.getElementById('tabYear');
+    const tabTraffic = document.getElementById('tabTraffic');
+    const chartTitle = document.getElementById('chartDynamicTitle');
+    const chartSubtitle = document.getElementById('chartDynamicSubtitle');
+    const chartCaption = document.getElementById('chartBottomCaption');
 
     const setTabActive = (activeBtn) => {
-        [tab7M, tab30D, tabYear].forEach(btn => btn?.classList.remove('active'));
+        [tab7M, tab30D, tabYear, tabTraffic].forEach(btn => btn?.classList.remove('active'));
         activeBtn?.classList.add('active');
     };
 
     tab7M?.addEventListener('click', () => {
         setTabActive(tab7M);
-        chartInstance.data.labels = initialLabels;
-        chartInstance.data.datasets[0].data = initialData;
+        chartTitle.textContent = 'حركة المبيعات والدخل الشهري (Income Trend)';
+        chartSubtitle.textContent = 'مخطط بياني يوضح تدفق الإيرادات الفعلية ومبيعات المتجر الرقمي';
+        chartCaption.textContent = `Dynamic Income Data (${currency})`;
+
+        chartInstance.data.labels = labels7M;
+        chartInstance.data.datasets = [{
+            label: `الإيرادات الشهرية (${currency})`,
+            data: revenue7M,
+            borderColor: '#10B981',
+            backgroundColor: 'rgba(16, 185, 129, 0.08)',
+            borderWidth: 2.6,
+            tension: 0.38,
+            fill: true,
+            pointBackgroundColor: '#10B981',
+            pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 2,
+            pointRadius: 4.5,
+            pointHoverRadius: 7
+        }];
         chartInstance.update();
     });
 
     tab30D?.addEventListener('click', () => {
         setTabActive(tab30D);
-        chartInstance.data.labels = ['الأسبوع 1', 'الأسبوع 2', 'الأسبوع 3', 'الأسبوع 4'];
-        chartInstance.data.datasets[0].data = isAllZero ? [1200, 3400, 2800, 4100] : [0, 0, serverRevenue[serverRevenue.length - 1] || 0, serverRevenue[serverRevenue.length - 1] || 0];
+        chartTitle.textContent = 'مبيعات آخر 30 يوماً (Last 30 Days)';
+        chartSubtitle.textContent = 'تدفق المبيعات المسددة أسبوعياً خلال الشهر الأخير';
+        chartCaption.textContent = `Weekly Revenue (${currency})`;
+
+        chartInstance.data.labels = labels30D;
+        chartInstance.data.datasets = [{
+            label: `مبيعات الأسبوع (${currency})`,
+            data: revenue30D,
+            borderColor: '#10B981',
+            backgroundColor: 'rgba(16, 185, 129, 0.08)',
+            borderWidth: 2.6,
+            tension: 0.38,
+            fill: true,
+            pointBackgroundColor: '#10B981',
+            pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 2,
+            pointRadius: 4.5,
+            pointHoverRadius: 7
+        }];
         chartInstance.update();
     });
 
     tabYear?.addEventListener('click', () => {
         setTabActive(tabYear);
-        chartInstance.data.labels = ['الربع 1', 'الربع 2', 'الربع 3', 'الربع 4'];
-        chartInstance.data.datasets[0].data = isAllZero ? [2800, 6800, 5400, 3200] : [1000, 2500, 4200, serverRevenue.reduce((a,b)=>a+b, 0)];
+        chartTitle.textContent = 'إيرادات أرباع العام الحالي (Current Year Quarters)';
+        chartSubtitle.textContent = 'التوزيع الربعي للمبيعات والتحصيلات في العام الجاري';
+        chartCaption.textContent = `Quarterly Revenue (${currency})`;
+
+        chartInstance.data.labels = labelsYear;
+        chartInstance.data.datasets = [{
+            label: `إيرادات الربع (${currency})`,
+            data: revenueYear,
+            borderColor: '#10B981',
+            backgroundColor: 'rgba(16, 185, 129, 0.08)',
+            borderWidth: 2.6,
+            tension: 0.38,
+            fill: true,
+            pointBackgroundColor: '#10B981',
+            pointBorderColor: '#FFFFFF',
+            pointBorderWidth: 2,
+            pointRadius: 4.5,
+            pointHoverRadius: 7
+        }];
+        chartInstance.update();
+    });
+
+    tabTraffic?.addEventListener('click', () => {
+        setTabActive(tabTraffic);
+        chartTitle.textContent = 'حركة الزوار والمشاهدات اليومية (Daily Visitors & Views)';
+        chartSubtitle.textContent = 'رصد مباشر لحركة المشاهدات والزوار الفريدين على مدار آخر 7 أيام';
+        chartCaption.textContent = 'Daily Traffic: Views & Unique Visitors';
+
+        chartInstance.data.labels = labelsTraffic;
+        chartInstance.data.datasets = [
+            {
+                label: 'مشاهدات الصفحات (Pageviews)',
+                data: viewsTraffic,
+                borderColor: '#10B981',
+                backgroundColor: 'rgba(16, 185, 129, 0.08)',
+                borderWidth: 2.5,
+                tension: 0.35,
+                fill: true,
+                pointBackgroundColor: '#10B981',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            },
+            {
+                label: 'الزوار الفريدين (Visitors)',
+                data: visitorsTraffic,
+                borderColor: '#2563EB',
+                backgroundColor: 'rgba(37, 99, 235, 0.04)',
+                borderWidth: 2.5,
+                tension: 0.35,
+                fill: true,
+                pointBackgroundColor: '#2563EB',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6
+            }
+        ];
         chartInstance.update();
     });
 });
