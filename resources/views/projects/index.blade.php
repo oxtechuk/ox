@@ -451,7 +451,264 @@
         <div class="container">
             <!-- Smart Client-Friendly Filter Bar -->
             <div class="portfolio-filter-container" id="archiveFilterContainer">
-                <!-- Row 1: Visual Country Flags Strip (User Mockup Replica) -->
+                <!-- Row 1: Visual Country Flags Strip (User Reference Replica) -->
+                <style>
+                    .portfolio-country-flags-strip-wrap {
+                        width: 100%;
+                        background: #ffffff;
+                        border: 1px solid #eef2f6;
+                        border-radius: 20px;
+                        padding: 16px 20px;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+                        margin-bottom: 20px;
+                        position: relative;
+                    }
+                    .portfolio-country-flags-strip {
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: flex-start !important;
+                        gap: 26px !important;
+                        width: 100% !important;
+                        overflow-x: auto !important;
+                        scrollbar-width: none !important;
+                        -ms-overflow-style: none !important;
+                        -webkit-overflow-scrolling: touch !important;
+                        padding: 4px 2px !important;
+                    }
+                    .portfolio-country-flags-strip::-webkit-scrollbar {
+                        display: none !important;
+                    }
+                    .country-flag-strip-btn {
+                        display: flex !important;
+                        flex-direction: column !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        gap: 6px !important;
+                        background: transparent !important;
+                        border: none !important;
+                        outline: none !important;
+                        box-shadow: none !important;
+                        cursor: pointer !important;
+                        padding: 2px 4px !important;
+                        margin: 0 !important;
+                        border-radius: 12px !important;
+                        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease !important;
+                        min-width: 52px !important;
+                        flex-shrink: 0 !important;
+                        user-select: none !important;
+                        -webkit-tap-highlight-color: transparent !important;
+                    }
+                    .country-flag-strip-btn:hover {
+                        transform: translateY(-2px) !important;
+                    }
+                    .country-flag-strip-btn:active {
+                        transform: scale(0.96) !important;
+                    }
+                    .flag-strip-avatar {
+                        width: 44px !important;
+                        height: 44px !important;
+                        min-width: 44px !important;
+                        min-height: 44px !important;
+                        max-width: 44px !important;
+                        max-height: 44px !important;
+                        border-radius: 50% !important;
+                        overflow: hidden !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        position: relative !important;
+                        background: #ffffff !important;
+                        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+                        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                        box-sizing: border-box !important;
+                    }
+                    .country-flag-strip-btn:hover .flag-strip-avatar {
+                        border-color: #cbd5e1 !important;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+                    }
+                    .flag-strip-img {
+                        width: 100% !important;
+                        height: 100% !important;
+                        object-fit: cover !important;
+                        border-radius: 50% !important;
+                        display: block !important;
+                    }
+                    .flag-strip-emoji {
+                        font-size: 22px !important;
+                        line-height: 1 !important;
+                    }
+                    .flag-strip-label {
+                        font-size: 13.5px !important;
+                        font-weight: 700 !important;
+                        color: #1e293b !important;
+                        text-align: center !important;
+                        white-space: nowrap !important;
+                        line-height: 1.25 !important;
+                        font-family: inherit !important;
+                        transition: color 0.2s ease !important;
+                    }
+                    .country-flag-strip-btn:hover .flag-strip-label {
+                        color: #1D8A68 !important;
+                    }
+                    .country-flag-strip-btn.active .flag-strip-avatar {
+                        border-color: #1D8A68 !important;
+                        box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22), 0 6px 14px rgba(29, 138, 104, 0.25) !important;
+                        transform: scale(1.06) !important;
+                    }
+                    .country-flag-strip-btn.active .flag-strip-label {
+                        color: #1D8A68 !important;
+                        font-weight: 800 !important;
+                    }
+                    .globe-avatar {
+                        background: #f8fafc !important;
+                        border-color: #e2e8f0 !important;
+                        color: #475569 !important;
+                    }
+                    .country-flag-strip-btn.active .globe-avatar {
+                        background: #ecfdf5 !important;
+                        color: #1D8A68 !important;
+                        border-color: #1D8A68 !important;
+                        box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22), 0 6px 14px rgba(29, 138, 104, 0.25) !important;
+                    }
+                    .country-flag-strip-dropdown-wrap {
+                        position: relative !important;
+                        display: inline-flex !important;
+                        flex-direction: column !important;
+                        align-items: center !important;
+                        flex-shrink: 0 !important;
+                    }
+                    .other-avatar {
+                        background: #ffffff !important;
+                        border: 1.5px solid #cbd5e1 !important;
+                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+                    }
+                    .other-count-text {
+                        font-size: 13.5px !important;
+                        font-weight: 800 !important;
+                        color: #334155 !important;
+                        letter-spacing: -0.3px !important;
+                    }
+                    .country-flag-strip-btn.other-countries-btn.active .other-avatar {
+                        border-color: #1D8A68 !important;
+                        background: #ecfdf5 !important;
+                        box-shadow: 0 0 0 3px rgba(29, 138, 104, 0.22) !important;
+                    }
+                    .country-flag-strip-btn.other-countries-btn.active .other-count-text {
+                        color: #1D8A68 !important;
+                    }
+                    .other-countries-menu {
+                        position: absolute !important;
+                        top: calc(100% + 12px) !important;
+                        z-index: 9999 !important;
+                        width: 320px !important;
+                        background: #ffffff !important;
+                        border: 1px solid #e2e8f0 !important;
+                        border-radius: 18px !important;
+                        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+                        padding: 14px !important;
+                        display: none;
+                    }
+                    html[dir="rtl"] .other-countries-menu {
+                        left: 0 !important;
+                        right: auto !important;
+                    }
+                    html[dir="ltr"] .other-countries-menu {
+                        right: 0 !important;
+                        left: auto !important;
+                    }
+                    .other-countries-menu.show {
+                        display: block !important;
+                        animation: oxDropdownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                    }
+                    .other-countries-header {
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: space-between !important;
+                        padding: 2px 4px 10px 4px !important;
+                        border-bottom: 1px solid #f1f5f9 !important;
+                        font-size: 13px !important;
+                        font-weight: 800 !important;
+                        color: #475569 !important;
+                    }
+                    .other-header-count {
+                        background: #f1f5f9 !important;
+                        color: #334155 !important;
+                        font-size: 11px !important;
+                        font-weight: 800 !important;
+                        padding: 2px 8px !important;
+                        border-radius: 10px !important;
+                    }
+                    .other-countries-grid {
+                        display: grid !important;
+                        grid-template-columns: 1fr 1fr !important;
+                        gap: 6px !important;
+                        max-height: 280px !important;
+                        overflow-y: auto !important;
+                        padding-top: 10px !important;
+                        scrollbar-width: thin !important;
+                    }
+                    .other-country-item {
+                        display: flex !important;
+                        align-items: center !important;
+                        gap: 8px !important;
+                        padding: 8px 10px !important;
+                        border-radius: 10px !important;
+                        background: #f8fafc !important;
+                        border: 1px solid transparent !important;
+                        cursor: pointer !important;
+                        transition: all 0.15s ease !important;
+                        font-family: inherit !important;
+                        text-align: inherit !important;
+                        width: 100% !important;
+                        box-sizing: border-box !important;
+                    }
+                    .other-country-item:hover {
+                        background: #f0fdf4 !important;
+                        border-color: #a7f3d0 !important;
+                        transform: translateY(-1px) !important;
+                    }
+                    .other-country-item.active {
+                        background: #ecfdf5 !important;
+                        border-color: #1D8A68 !important;
+                        font-weight: 800 !important;
+                        color: #1D8A68 !important;
+                    }
+                    .other-item-flag {
+                        width: 22px !important;
+                        height: 22px !important;
+                        border-radius: 50% !important;
+                        overflow: hidden !important;
+                        flex-shrink: 0 !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                    }
+                    .other-flag-img {
+                        width: 100% !important;
+                        height: 100% !important;
+                        object-fit: cover !important;
+                        border-radius: 50% !important;
+                    }
+                    .other-item-name {
+                        font-size: 12.5px !important;
+                        font-weight: 700 !important;
+                        color: #1e293b !important;
+                        flex: 1 !important;
+                        white-space: nowrap !important;
+                        overflow: hidden !important;
+                        text-overflow: ellipsis !important;
+                    }
+                    .other-item-count {
+                        font-size: 10.5px !important;
+                        font-weight: 800 !important;
+                        color: #1D8A68 !important;
+                        background: #ffffff !important;
+                        border: 1px solid #a7f3d0 !important;
+                        padding: 1px 6px !important;
+                        border-radius: 8px !important;
+                    }
+                </style>
                 <div class="portfolio-country-flags-strip-wrap">
                     <div class="portfolio-country-flags-strip" id="archiveCountryStrip" role="tablist" aria-label="{{ $locale === 'ar' ? 'فلتر المشاريع حسب الدولة' : 'Filter projects by country' }}">
                         <!-- 1. All Countries Option (Default Active) -->
@@ -490,9 +747,6 @@
                                     @else
                                         <span class="flag-strip-emoji">🌐</span>
                                     @endif
-                                    @if($cCount > 0)
-                                        <span class="flag-strip-badge">{{ $cCount }}</span>
-                                    @endif
                                 </span>
                                 <span class="flag-strip-label">{{ $cName }}</span>
                             </button>
@@ -509,9 +763,9 @@
                                         aria-expanded="false" 
                                         title="{{ $locale === 'ar' ? 'دول أخرى' : 'Other Countries' }}">
                                     <span class="flag-strip-avatar other-avatar" id="archiveOtherCountriesAvatar">
-                                        <span class="other-count-text">+{{ $otherCountries->count() }}</span>
+                                        <span class="other-count-text">{{ $otherCountries->count() }}+</span>
                                     </span>
-                                    <span class="flag-strip-label" id="archiveOtherCountriesLabel">{{ $locale === 'ar' ? 'دول أخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}</span>
+                                    <span class="flag-strip-label" id="archiveOtherCountriesLabel">{{ $locale === 'ar' ? 'دول اخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}</span>
                                 </button>
 
                                 <div class="other-countries-menu" id="archiveOtherCountriesMenu">
@@ -785,8 +1039,8 @@
         if (code === 'all') {
             const allBtn = document.getElementById('archiveFlagBtnAll');
             if (allBtn) allBtn.classList.add('active');
-            if (otherLabel) otherLabel.textContent = '{{ $locale === 'ar' ? 'دول أخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}';
-            if (otherAvatar) otherAvatar.innerHTML = '<span class="other-count-text">+{{ $otherCountries->count() }}</span>';
+            if (otherLabel) otherLabel.textContent = '{{ $locale === 'ar' ? 'دول اخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}';
+            if (otherAvatar) otherAvatar.innerHTML = '<span class="other-count-text">{{ $otherCountries->count() }}+</span>';
         } else if (isFromOtherMenu) {
             if (otherBtn) otherBtn.classList.add('active');
             if (otherLabel) otherLabel.textContent = name;
@@ -802,8 +1056,8 @@
         } else {
             const stripBtn = document.getElementById(`archiveFlagBtn_${code}`);
             if (stripBtn) stripBtn.classList.add('active');
-            if (otherLabel) otherLabel.textContent = '{{ $locale === 'ar' ? 'دول أخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}';
-            if (otherAvatar) otherAvatar.innerHTML = '<span class="other-count-text">+{{ $otherCountries->count() }}</span>';
+            if (otherLabel) otherLabel.textContent = '{{ $locale === 'ar' ? 'دول اخرى' : ($locale === 'fr' ? 'Autres pays' : 'Other countries') }}';
+            if (otherAvatar) otherAvatar.innerHTML = '<span class="other-count-text">{{ $otherCountries->count() }}+</span>';
         }
 
         closeArchiveOtherCountriesDropdown();
