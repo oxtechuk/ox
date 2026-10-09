@@ -60,7 +60,7 @@
 
     /* Hero Section (Light & Elegant) */
     .portfolio-hero-section {
-        padding: 130px 0 55px;
+        padding: 40px 0 5px;
         position: relative;
         text-align: center;
         background: linear-gradient(180deg, #edf7f2 0%, #f8faf9 100%);
@@ -432,12 +432,12 @@
           
 
             <h1 class="portfolio-page-title">
-                {{ $locale === 'ar' ? 'أعمالنا تتكلم: ابتكار برمجي يصنع فارقاً حقيقياً' : ($locale === 'fr' ? 'Nos Réalisations: Impact & Excellence' : 'Our Proven Track Record: Built for Real Impact') }}
+                {{ $locale === 'ar' ? 'لأن طموحك أعلى من المألوف.. ابتكرنا لك أنظمة تسبق السوق' : ($locale === 'fr' ? 'Nos Réalisations: Impact & Excellence' : 'Our Proven Track Record: Built for Real Impact') }}
             </h1>
 
             <p class="portfolio-page-subtitle">
                 {{ $locale === 'ar' 
-                    ? 'استكشف كافة الحلول والمنصات السحابية وتطبيقات الجوال والأنظمة المؤسسية التي طوّرناها لشركائنا في السعودية ومصر والإمارات مع مؤشرات أداء ونتائج واقعية.' 
+                    ? 'من قلب الرياض، القاهرة، ودبي.. هكذا نترجم الرؤى الكبرى إلى أنظمة ذكية وحلول سحابية تتحدث عنها لغة النجاح ومؤشرات الأداء الحقيقية. تصفح أعمالنا واكتشف الفرق.' 
                     : ($locale === 'fr' 
                         ? 'Explorez l\'ensemble de nos plateformes cloud, applications mobiles et solutions logicielles d\'entreprise conçues pour nos partenaires régionaux et internationaux.' 
                         : 'Discover the complete showcase of custom cloud architectures, SaaS products, and mobile applications engineered for enterprise partners across Saudi Arabia, Egypt, and the Gulf.') }}
@@ -663,17 +663,8 @@
                                     </span>
                                     <span>{{ $project->country_name }}</span>
                                 </span>
-                                @if($project->sector_name)
-                                    <span class="portfolio-sector-badge">
-                                        {{ $project->sector_name }}
-                                    </span>
-                                @endif
-                                @if($project->is_featured)
-                                    <span class="portfolio-featured-badge" style="display: inline-flex; align-items: center; gap: 5px; background: rgba(184, 255, 44, 0.18); border: 1px solid rgba(184, 255, 44, 0.4); padding: 5px 11px; border-radius: 99px; color: #b8ff2c; font-size: 11px; font-weight: 700; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);">
-                                        <svg width="11" height="11" viewBox="0 0 24 24" fill="#b8ff2c" stroke="#b8ff2c" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                        <span>{{ app()->getLocale() === 'en' ? 'Featured' : (app()->getLocale() === 'fr' ? 'En vedette' : 'مشروع مميز') }}</span>
-                                    </span>
-                                @endif
+                             
+                              
                             </div>
 
                             @if($project->impact_stat)
@@ -696,14 +687,7 @@
                                 </p>
                             </div>
 
-                            <!-- Tech Tags -->
-                            @if(!empty($project->technologies) && is_array($project->technologies))
-                                <div class="portfolio-tech-tags">
-                                    @foreach(array_slice($project->technologies, 0, 4) as $tech)
-                                        <span class="tech-tag">{{ $tech }}</span>
-                                    @endforeach
-                                </div>
-                            @endif
+                           
 
                             <!-- Card Footer -->
                             <div class="portfolio-card-foot">

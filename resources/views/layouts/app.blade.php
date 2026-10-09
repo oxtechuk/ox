@@ -1893,6 +1893,33 @@
                     }, 250);
                 }
             }
+
+            // Realtime Marketing & Traffic Analytics: Track WhatsApp clicks
+            document.addEventListener('click', function(e) {
+                const waLink = e.target.closest('a[href*="wa.me"], a[href*="whatsapp.com"]');
+                if (waLink) {
+                    try {
+                        const payload = JSON.stringify({
+                            _token: '{{ csrf_token() }}',
+                            event_name: 'whatsapp_click',
+                            page_url: window.location.pathname + window.location.search
+                        });
+                        if (navigator.sendBeacon) {
+                            navigator.sendBeacon('{{ route('traffic.event') }}', new Blob([payload], { type: 'application/json' }));
+                        } else {
+                            fetch('{{ route('traffic.event') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: payload,
+                                keepalive: true
+                            });
+                        }
+                    } catch(err) {}
+                }
+            });
         });
     </script>
 

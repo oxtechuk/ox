@@ -372,6 +372,28 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Realtime Visitor Traffic -->
+            <div class="hub-card" style="border-color: rgba(16, 185, 129, 0.4); background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);">
+                <div>
+                    <div class="hub-card-header">
+                        <div class="hub-icon-box" style="background: #ECFDF5; color: #10B981; border-color: #A7F3D0;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                        </div>
+                        <span class="hub-card-tag" style="background: #10B981; color: #FFFFFF; font-weight: 800;">مباشر LIVE</span>
+                    </div>
+                    <div class="hub-card-content">
+                        <h3>تحليلات الزوار والترافيك المباشر</h3>
+                        <p>رصد فوري لزيارات الموقع، مصادر الترافيك (Google, Meta, Direct)، أكثر المشاريع تصفحاً، ونسبة الأجهزة والدول.</p>
+                    </div>
+                </div>
+                <div class="hub-card-actions">
+                    <a href="{{ route('admin.analytics.index') }}" class="hub-enter-btn" style="background: #10B981;">
+                        <span>فتح لوحة التحليلات</span>
+                        <span>&larr;</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

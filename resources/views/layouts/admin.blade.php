@@ -844,6 +844,21 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.analytics.index') }}" class="menu-link {{ request()->routeIs('admin.analytics.*') ? 'active' : '' }}" data-tooltip="تحليلات الزوار والترافيك">
+                    <div class="menu-link-content">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                            </svg>
+                        </span>
+                        <span class="menu-text">تحليلات الزوار والترافيك</span>
+                    </div>
+                    <span class="menu-badge" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 9px; padding: 2px 5px; border-radius: 4px; font-weight: 800;">LIVE</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.digital-orders.index') }}" class="menu-link {{ request()->routeIs('admin.digital-orders.*') ? 'active' : '' }}" data-tooltip="مبيعات وتراخيص المتجر">
                     <div class="menu-link-content">
                         <span class="menu-icon">

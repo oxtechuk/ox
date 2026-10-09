@@ -938,96 +938,140 @@
         </div>
     </section>
 
-    <!-- ─── Divider into Saudi Roots & Story Section ─── -->
-    <div class="sadu-divider" style="color: #0D2925; background-color: #071B19;">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none">
-            <path d="M0,24 L0,12 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 l10,0 0,-12 20,0 0,12 10,0 V24 H0 Z" fill="currentColor"/>
-        </svg>
-    </div>
+   
 
     <!-- =========================================
          ABOUT / SAUDI ROOTS (نحن من السعودية، وكبرنا بثقة شركائنا)
          ========================================= -->
+    <!-- =========================================
+         ABOUT / FOUNDER STORY (قصة OX Tech والرحلة منذ 2021 | Ahmed Gaber Salim)
+         ========================================= -->
     <section class="ox-about-section" id="about">
-        <!-- Background Elements: Riyadh Skyline Fade (Right) & Islamic Arabesque Tracery (Left) -->
-        <div class="ox-about-skyline" style="background-image: url('{{ asset('assets/ox-riyadh-skyline-fade.jpg') }}');"></div>
-        <div class="ox-about-arabesque"></div>
+
 
         <div class="container ox-container">
-            <div class="ox-about-grid">
-                <!-- Video Card Column (Right in RTL) -->
-                <div class="ox-about-video-wrap reveal">
-                    <div class="ox-video-card" onclick="openStoryVideoModal()" role="button" tabindex="0" aria-label="{{ __('مشاهدة قصة نجاح OX Tech') }}">
-                        <img src="{{ asset('assets/ox-saudi-founder-video.webp') }}" alt="شاهد قصة نجاح OX Tech في السعودية" class="ox-video-img" width="560" height="360" loading="lazy">
-                        <div class="ox-video-overlay"></div>
-                        
-                        <!-- Glassmorphism Play Button in Center -->
-                        <div class="ox-video-play-btn" aria-hidden="true">
-                            <span class="play-ripple"></span>
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5.14v14l11-7-11-7z"/>
-                            </svg>
-                        </div>
-
-                        <!-- Bottom-Right Partner Badge inside Card -->
-                        <div class="ox-video-partner-badge">
-                            <div class="badge-title">{{ __('شركاؤنا') }}</div>
-                            <div class="badge-sub">{{ __('في نجاحنا') }}</div>
+            <div class="ox-about-story-card reveal">
+                <div class="ox-about-grid">
+                    
+                    <!-- Founder Card Column (Ahmed Gaber Salim) -->
+                    <div class="ox-founder-col">
+                        <div class="ox-founder-card">
+                            <div class="ox-founder-photo-wrap">
+                                <img src="{{ asset('assets/ahmedga.jpg') }}" alt="Ahmed Gaber Salim - Co-Founder OX Tech" class="ox-founder-img" width="380" height="380" loading="lazy">
+                                <div class="ox-founder-since-pill">
+                                    <span class="since-dot"></span>
+                                    <span>{{ $locale === 'ar' ? 'منذ 2021' : ($locale === 'fr' ? 'Depuis 2021' : 'Since 2021') }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="ox-founder-info">
+                                <div class="ox-founder-role-badge">
+                                    {{ $locale === 'ar' ? 'شريك مؤسس · Co-Founder' : ($locale === 'fr' ? 'Co-Fondateur' : 'Co-Founder & Partner') }}
+                                </div>
+                                <h3 class="ox-founder-name">
+                                    {{ $locale === 'ar' ? 'أحمد جابر سالم' : 'Ahmed Gaber Salim' }}
+                                </h3>
+                                <p class="ox-founder-tagline">
+                                    @if($locale === 'ar')
+                                        "نبني برمجيات تصنع أثراً حقيقياً ونمواً مستداماً لشركائنا."
+                                    @elseif($locale === 'fr')
+                                        "Nous concevons des technologies pour bâtir un impact réel et une croissance durable."
+                                    @else
+                                        "We engineer technology to build tangible impact and sustainable growth for our partners."
+                                    @endif
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="ox-video-caption">{{ __('شاهد قصة النجاح') }}</div>
-                </div>
 
-                <!-- Content Column (Left in RTL) -->
-                <div class="ox-about-content reveal">
-                    <h2 class="ox-about-title">
-                        {{ __('نحن من السعودية،') }}<br>
-                        {{ __('وكبرنا بثقة شركائنا.') }}
-                    </h2>
+                    <!-- Story & Vision Column -->
+                    <div class="ox-story-col">
+                     
 
-                    <p class="ox-about-desc">
-                        {{ __('نفخر بأن نكون جزءًا من رحلة التحول الرقمي في المملكة ونعمل مع شركاء يشاركوننا الطموح.') }}
-                    </p>
+                        <h2 class="ox-story-title">
+                            @if($locale === 'ar')
+                                من انطلاقة 2021..
+                                <span class="ox-gradient-text">إلى صناعة أثر تقني مستدام.</span>
+                            @elseif($locale === 'fr')
+                                Depuis 2021..
+                                <span class="ox-gradient-text">Façonner l'Excellence Numérique.</span>
+                            @else
+                                From Our 2021 Roots..
+                                <span class="ox-gradient-text">To Engineering Lasting Digital Impact.</span>
+                            @endif
+                        </h2>
 
-                    <ul class="ox-about-checklist">
-                        <li class="ox-about-check-item">
-                            <span class="check-item-icon">
-                                <svg viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        <p class="ox-story-lead">
+                            @if($locale === 'ar')
+                                بدأت رحلتنا في عام 2021 برؤية واضحة: ألا نكون مجرد شركة برمجيات، بل شركاء نجاح يبنون حلولاً رقمية ذكية تدوم وتتوسع. على مدار هذه السنوات، طوّرنا تقنياتنا وفريقنا لنلبي طموحات شركائنا في السعودية والمنطقة بأعلى معايير الجودة والابتكار.
+                            @elseif($locale === 'fr')
+                                Notre aventure a débuté en 2021 avec une vision claire : concevoir des architectures logicielles durables et évolutives. Au fil des années, nous avons développé nos technologies et notre équipe pour propulser l'ambition de nos partenaires avec excellence.
+                            @else
+                                Our journey began in 2021 with a clear vision: not just to write code, but to be true growth partners building intelligent, scalable digital systems. Over these years, we evolved our engineering stack and team to power ambitious visions with peak quality.
+                            @endif
+                        </p>
+
+                        <!-- Compact Milestones / Vision Grid -->
+                        <div class="ox-story-milestones">
+                            <div class="ox-milestone-item">
+                                <div class="ox-milestone-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                    </svg>
+                                </div>
+                                <div class="ox-milestone-data">
+                                    <span class="milestone-label">{{ $locale === 'ar' ? '2021 الانطلاقة' : ($locale === 'fr' ? '2021 Lancement' : '2021 Kickoff') }}</span>
+                                    <span class="milestone-desc">{{ $locale === 'ar' ? 'شغف بالابتكار والحلول النوعية' : ($locale === 'fr' ? 'Passion pour l\'ingénierie moderne' : 'Passion for high-impact innovation') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="ox-milestone-item">
+                                <div class="ox-milestone-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                        <polyline points="17 6 23 6 23 12"/>
+                                    </svg>
+                                </div>
+                                <div class="ox-milestone-data">
+                                    <span class="milestone-label">{{ $locale === 'ar' ? 'تطورنا المستمر' : ($locale === 'fr' ? 'Notre Évolution' : 'Continuous Evolution') }}</span>
+                                    <span class="milestone-desc">{{ $locale === 'ar' ? 'بنية سحابية وهندسة برمجية متقدمة' : ($locale === 'fr' ? 'Architectures cloud & systèmes évolutifs' : 'Advanced cloud architecture & modern scale') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="ox-milestone-item">
+                                <div class="ox-milestone-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="m4.93 4.93 4.24 4.24"/>
+                                        <path d="m14.83 9.17 4.24-4.24"/>
+                                        <path d="m14.83 14.83 4.24 4.24"/>
+                                        <path d="m9.17 14.83-4.24 4.24"/>
+                                    </svg>
+                                </div>
+                                <div class="ox-milestone-data">
+                                    <span class="milestone-label">{{ $locale === 'ar' ? 'رؤيتنا للمستقبل' : ($locale === 'fr' ? 'Notre Vision' : 'Future-Ready Vision') }}</span>
+                                    <span class="milestone-desc">{{ $locale === 'ar' ? 'تمكين أعمالك بأحدث أدوات العصر' : ($locale === 'fr' ? 'Partenaire stratégique durable' : 'Empowering businesses with modern tech') }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Row -->
+                        <div class="ox-story-actions">
+                            <a href="#consult" onclick="openConsultModal(); return false;" class="ox-story-btn-primary">
+                                <span>{{ $locale === 'ar' ? 'تواصل معنا وابدأ رحلتك' : ($locale === 'fr' ? 'Démarrez Votre Projet' : 'Connect & Start Your Journey') }}</span>
+                                <svg viewBox="0 0 20 20" fill="currentColor" class="ox-btn-arrow" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                 </svg>
-                            </span>
-                            <span class="check-item-text">{{ __('خبرة في السوق السعودي') }}</span>
-                        </li>
-                        <li class="ox-about-check-item">
-                            <span class="check-item-icon">
-                                <svg viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                </svg>
-                            </span>
-                            <span class="check-item-text">{{ __('فهم عميق لاحتياجات القطاعات') }}</span>
-                        </li>
-                        <li class="ox-about-check-item">
-                            <span class="check-item-icon">
-                                <svg viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                </svg>
-                            </span>
-                            <span class="check-item-text">{{ __('التزام بالجودة والابتكار') }}</span>
-                        </li>
-                    </ul>
+                            </a>
+                        </div>
+                    </div>
 
-                    <button type="button" class="ox-about-cta-btn" onclick="openStoryVideoModal()">
-                        <span>{{ __('شاهد قصتنا') }}</span>
-                        <span class="cta-play-circle">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5.14v14l11-7-11-7z"/>
-                            </svg>
-                        </span>
-                    </button>
                 </div>
             </div>
         </div>
     </section>
+
+  
 
     <!-- OxTech Story Video Modal -->
     <div id="oxStoryVideoModal" class="ox-story-modal-overlay" onclick="closeStoryVideoModal(event)">

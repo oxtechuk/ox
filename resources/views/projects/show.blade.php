@@ -114,7 +114,6 @@
 
     /* Hero Typography */
     .project-main-title {
-        font-size: clamp(32px, 4.5vw, 54px);
         font-weight: 900;
         line-height: 1.25;
         color: #0b1b17;
@@ -618,65 +617,15 @@
                 <p class="project-subtitle-text">{{ $project->subtitle }}</p>
             @endif
 
-            @if($project->short_description || $project->summary)
-                <p class="project-lead-summary">
-                    {{ $project->short_description ?: $project->summary }}
-                </p>
-            @endif
+            
 
-            <!-- Quiet, Purposeful Actions -->
-            <div class="calm-hero-actions">
-                @if($project->live_url)
-                    <a href="{{ $project->live_url }}" target="_blank" rel="noopener noreferrer" class="btn-quiet-primary">
-                        <span>{{ $locale === 'ar' ? 'زيارة الموقع الحي' : 'Visit Live Project' }}</span>
-                        <span style="font-size: 15px;">↗</span>
-                    </a>
-                @endif
-                
-                <button type="button" onclick="openConsultModal()" class="btn-quiet-outline">
-                    <span>{{ $locale === 'ar' ? 'طلب استشارة لمشروعك' : 'Discuss a Project' }}</span>
-                </button>
-            </div>
         </div>
     </section>
 
     <!-- =========================================
          2. MINIMAL PROJECT METADATA STRIP
          ========================================= -->
-    <div class="project-metadata-strip">
-        <div class="container">
-            <div class="metadata-items-flex">
-                <div class="meta-data-cell">
-                    <label>{{ $locale === 'ar' ? 'العميل' : 'Client' }}</label>
-                    <span>{{ $project->client_name ?: $project->title }}</span>
-                </div>
-
-                @if($project->duration)
-                    <div class="meta-data-cell">
-                        <label>{{ $locale === 'ar' ? 'مدة التنفيذ' : 'Timeline' }}</label>
-                        <span>{{ $project->duration }}</span>
-                    </div>
-                @endif
-
-                <div class="meta-data-cell">
-                    <label>{{ $locale === 'ar' ? 'تاريخ التسليم' : 'Delivered' }}</label>
-                    <span>{{ $project->delivery_date ?: '-' }}</span>
-                </div>
-
-                <div class="meta-data-cell">
-                    <label>{{ $locale === 'ar' ? 'السوق والقطاع' : 'Sector' }}</label>
-                    <span>{{ __($project->sector_name) }} · {{ __($project->country_name) }}</span>
-                </div>
-
-                @if($project->impact_stat)
-                    <div class="meta-data-cell">
-                        <label>{{ $locale === 'ar' ? 'الأثر والنتائج' : 'Key Result' }}</label>
-                        <span>{{ $project->impact_stat }}</span>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
+  
 
     <!-- =========================================
          3. MAIN CASE STUDY CONTENT & SIDEBAR
@@ -705,6 +654,19 @@
                         </div>
                     </div>
 
+            <!-- Quiet, Purposeful Actions -->
+            <div class="calm-hero-actions">
+                @if($project->live_url)
+                    <a href="{{ $project->live_url }}" target="_blank" rel="noopener noreferrer" class="btn-quiet-primary">
+                        <span>{{ $locale === 'ar' ? 'زيارة الموقع الحي' : 'Visit Live Project' }}</span>
+                        <span style="font-size: 15px;">↗</span>
+                    </a>
+                @endif
+                
+                <button type="button" onclick="openConsultModal()" class="btn-quiet-outline">
+                    <span>{{ $locale === 'ar' ? 'طلب استشارة لمشروعك' : 'Discuss a Project' }}</span>
+                </button>
+            </div>
                     <!-- Section: About The Project -->
                     <div class="narrative-block">
                         <h2 class="narrative-heading">
@@ -754,6 +716,19 @@
                             </div>
                         </div>
                     @endif
+                  <!-- Technologies -->
+                    @if(!empty($project->technologies) && is_array($project->technologies) && count($project->technologies) > 0)
+                        <div class="sidebar-block">
+                            <h3 class="sidebar-block-title">
+                                {{ $locale === 'ar' ? 'التقنيات المستخدمة' : 'Technologies' }}
+                            </h3>
+                            <div class="sidebar-tech-list">
+                                @foreach($project->technologies as $tech)
+                                    <span class="sidebar-tech-tag">{{ $tech }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif  
 
                     <!-- In-Content Live URL Panel (if live_url exists) -->
                     @if($project->live_url)
@@ -774,20 +749,7 @@
                 <!-- Calm Sidebar Column -->
                 <aside class="project-calm-sidebar">
                     
-                    <!-- Technologies -->
-                    @if(!empty($project->technologies) && is_array($project->technologies) && count($project->technologies) > 0)
-                        <div class="sidebar-block">
-                            <h3 class="sidebar-block-title">
-                                {{ $locale === 'ar' ? 'التقنيات المستخدمة' : 'Technologies' }}
-                            </h3>
-                            <div class="sidebar-tech-list">
-                                @foreach($project->technologies as $tech)
-                                    <span class="sidebar-tech-tag">{{ $tech }}</span>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
+                  
                     <!-- Specifications Table -->
                     <div class="sidebar-block">
                         <h3 class="sidebar-block-title">

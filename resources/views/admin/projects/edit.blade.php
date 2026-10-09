@@ -97,7 +97,13 @@
 
             <div>
                 <label class="form-label">رابط المشروع الحي للمعاينة (Live URL)</label>
-                <input type="url" name="live_url" class="form-control" value="{{ old('live_url', $project->live_url) }}">
+                <input type="url" name="live_url" class="form-control" value="{{ old('live_url', $project->live_url) }}" placeholder="https://example.com">
+            </div>
+
+            <div>
+                <label class="form-label">رابط فيديو المشروع (YouTube / Vimeo / MP4)</label>
+                <input type="url" name="video_url" class="form-control" value="{{ old('video_url', $project->video_url) }}" placeholder="https://www.youtube.com/watch?v=...">
+                <div class="form-hint" style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">يوتيوب أو فيميو ليتم عرضه وتشغيله داخل صفحة المشروع.</div>
             </div>
 
             <div>
@@ -111,7 +117,7 @@
             </div>
 
             <div>
-                <label class="form-label">صورة المشروع (تغيير الصورة الحالية)</label>
+                <label class="form-label">صورة المشروع الرئيسية (تغيير الصورة الحالية)</label>
                 <input type="file" name="hero_image" class="form-control" accept="image/*">
                 @if($project->hero_image)
                     <div style="margin-top: 8px; font-size: 11px; color: var(--text-muted);">
@@ -124,6 +130,33 @@
                 <label class="form-label">ترتيب العرض (Order) *</label>
                 <input type="number" name="order" class="form-control" value="{{ old('order', $project->order) }}" placeholder="1, 2, 3..." required>
                 <div class="form-hint" style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">الترتيب الرقمي (الرقم الأقل يظهر أولاً، مثال: 1 ثم 2 ثم 3).</div>
+            </div>
+
+            <!-- Multiple Screenshots Gallery -->
+            <div style="grid-column: 1 / -1; background: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.15)); border-radius: 12px; padding: 18px; margin: 10px 0;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 13.5px;">📸 معرض لقطات وسكرين شوت المشروع (Project Screenshots Gallery)</label>
+                <input type="file" name="gallery[]" class="form-control" multiple accept="image/*">
+                <div class="form-hint" style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;">يمكنك تحديد ورفع أكثر من صورة أو سكرين شوت معاً في نفس الوقت (Multiple Select).</div>
+
+                @if(!empty($project->gallery) && is_array($project->gallery) && count($project->gallery) > 0)
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--text-heading);">اللقطات الحالية بالمعرض (حدد المربع لحذف الصورة عند الحفظ):</div>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            @foreach($project->gallery as $gItem)
+                                @php
+                                    $gUrl = str_starts_with($gItem, 'http') ? $gItem : (str_starts_with($gItem, 'assets/') ? asset($gItem) : asset('storage/' . ltrim(str_replace('storage/', '', $gItem), '/')));
+                                @endphp
+                                <div style="position: relative; width: 120px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color, #ccc); background: #111;">
+                                    <img src="{{ $gUrl }}" style="width: 100%; height: 80px; object-fit: cover; display: block;">
+                                    <label style="display: flex; align-items: center; justify-content: center; gap: 4px; padding: 4px; font-size: 11px; background: rgba(0,0,0,0.85); color: #ff6b6b; cursor: pointer; margin: 0;">
+                                        <input type="checkbox" name="remove_gallery_items[]" value="{{ $gItem }}" style="accent-color: #ff4d4f;">
+                                        <span>حذف</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 

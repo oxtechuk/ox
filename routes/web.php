@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnalyticsController as AdminAnalyticsController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\ConsultationController as AdminConsultationController;
@@ -39,6 +40,9 @@ Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projec
 Route::post('/consultation/store', [ConsultationController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('consultation.store');
+Route::post('/traffic/event', [AdminAnalyticsController::class, 'recordEvent'])
+    ->middleware('throttle:60,1')
+    ->name('traffic.event');
 
 /*
 |--------------------------------------------------------------------------
@@ -183,6 +187,10 @@ Route::prefix($adminPrefix)->name('admin.')->group(function () {
 
         // Executive Analytics & Attribution Reports
         Route::get('/reports', [AdminReportController::class, 'index'])->name('reports.index');
+
+        // Realtime Visitor Traffic & Marketing Analytics
+        Route::get('/analytics', [AdminAnalyticsController::class, 'index'])->name('analytics.index');
+        Route::post('/analytics/event', [AdminAnalyticsController::class, 'recordEvent'])->name('analytics.event');
 
         // Users & Roles Management
         Route::resource('users', AdminUserController::class);

@@ -84,12 +84,15 @@ class ProjectController extends Controller
             'duration' => 'nullable|string|max:100',
             'delivery_date' => 'nullable|string|max:100',
             'live_url' => 'nullable|url|max:255',
+            'video_url' => 'nullable|string|max:500',
             'summary' => 'nullable|string',
             'challenge' => 'nullable|string',
             'solution' => 'nullable|string',
             'key_features_raw' => 'nullable|string',
             'technologies_raw' => 'nullable|string',
             'hero_image' => 'nullable|image|max:5120',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'nullable|image|max:5120',
         ]);
 
         if (empty($validated['slug'])) {
@@ -118,6 +121,17 @@ class ProjectController extends Controller
         if ($request->hasFile('hero_image')) {
             $opt = $this->imageOptimizer->optimizeAndStore($request->file('hero_image'), 'projects', 'public', 1600, 82);
             $validated['hero_image'] = $opt['path'];
+        }
+
+        if ($request->hasFile('gallery')) {
+            $galleryPaths = [];
+            foreach ($request->file('gallery') as $gFile) {
+                if ($gFile && $gFile->isValid()) {
+                    $opt = $this->imageOptimizer->optimizeAndStore($gFile, 'projects/gallery', 'public', 1600, 82);
+                    $galleryPaths[] = $opt['path'];
+                }
+            }
+            $validated['gallery'] = $galleryPaths;
         }
 
         Project::create($validated);
@@ -164,12 +178,16 @@ class ProjectController extends Controller
             'duration' => 'nullable|string|max:100',
             'delivery_date' => 'nullable|string|max:100',
             'live_url' => 'nullable|url|max:255',
+            'video_url' => 'nullable|string|max:500',
             'summary' => 'nullable|string',
             'challenge' => 'nullable|string',
             'solution' => 'nullable|string',
             'key_features_raw' => 'nullable|string',
             'technologies_raw' => 'nullable|string',
             'hero_image' => 'nullable|image|max:5120',
+            'gallery' => 'nullable|array',
+            'gallery.*' => 'nullable|image|max:5120',
+            'remove_gallery_items' => 'nullable|array',
         ]);
 
         if (empty($validated['slug'])) {
@@ -200,6 +218,29 @@ class ProjectController extends Controller
             $opt = $this->imageOptimizer->optimizeAndStore($request->file('hero_image'), 'projects', 'public', 1600, 82);
             $validated['hero_image'] = $opt['path'];
         }
+
+        // Handle gallery images: preserve existing, remove selected, and append new uploads
+        $currentGallery = is_array($project->gallery) ? $project->gallery : [];
+
+        if ($request->has('remove_gallery_items') && is_array($request->remove_gallery_items)) {
+            foreach ($request->remove_gallery_items as $removePath) {
+                if (! str_starts_with($removePath, 'assets/')) {
+                    Storage::disk('public')->delete($removePath);
+                }
+                $currentGallery = array_values(array_filter($currentGallery, fn ($p) => $p !== $removePath));
+            }
+        }
+
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $gFile) {
+                if ($gFile && $gFile->isValid()) {
+                    $opt = $this->imageOptimizer->optimizeAndStore($gFile, 'projects/gallery', 'public', 1600, 82);
+                    $currentGallery[] = $opt['path'];
+                }
+            }
+        }
+
+        $validated['gallery'] = array_values($currentGallery);
 
         $project->update($validated);
 

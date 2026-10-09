@@ -40,6 +40,7 @@ class Project extends Model
         'delivery_date',
         'delivery_date_en',
         'live_url',
+        'video_url',
         'summary',
         'summary_en',
         'challenge',
@@ -273,5 +274,54 @@ class Project extends Model
         }
 
         return is_string($value) ? json_decode($value, true) : $value;
+    }
+
+    public function getVideoEmbedUrlAttribute(): ?string
+    {
+        if (empty($this->video_url)) {
+            return null;
+        }
+
+        $url = trim($this->video_url);
+
+        // YouTube regex for standard, share, or embed links
+        if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i', $url, $match)) {
+            return 'https://www.youtube-nocookie.com/embed/'.$match[1].'?autoplay=1&rel=0';
+        }
+
+        // Vimeo regex
+        if (preg_match('/vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)/i', $url, $match)) {
+            return 'https://player.vimeo.com/video/'.$match[3].'?autoplay=1';
+        }
+
+        return $url;
+    }
+
+    public function getGalleryImagesAttribute(): array
+    {
+        $images = [];
+
+        if (! empty($this->gallery) && is_array($this->gallery)) {
+            foreach ($this->gallery as $item) {
+                if (empty($item)) {
+                    continue;
+                }
+                if (str_starts_with($item, 'http://') || str_starts_with($item, 'https://')) {
+                    $images[] = $item;
+                } elseif (str_starts_with($item, 'assets/')) {
+                    $images[] = asset($item);
+                } else {
+                    $clean = ltrim(str_replace('storage/', '', $item), '/');
+                    $images[] = asset('storage/'.$clean);
+                }
+            }
+        }
+
+        // Fallback to display_image if gallery is empty
+        if (empty($images)) {
+            $images[] = $this->display_image;
+        }
+
+        return array_values(array_unique($images));
     }
 }
