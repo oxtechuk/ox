@@ -2851,6 +2851,7 @@ async function handleSalesCheckout(e) {
                     TID: data.paysky.TID,
                     AmountTrxn: data.paysky.AmountTrxn,
                     MerchantReference: data.paysky.MerchantReference,
+                    OrderId: data.paysky.OrderNumber || data.paysky.MerchantReference,
                     TrxDateTime: data.paysky.TrxDateTime,
                     CurrencyCode: data.paysky.CurrencyCode || '818',
                     SecureHash: data.paysky.SecureHash,

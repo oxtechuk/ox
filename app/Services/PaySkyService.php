@@ -169,6 +169,7 @@ class PaySkyService
             'DateTimeLocalTrxn' => $trxDateTime,
             'CurrencyCode' => '818',
             'SecureHash' => $secureHash,
+            'OrderId' => $order->order_number,
             'OrderNumber' => $order->order_number,
             'CustomerEmail' => $order->customer_email,
             'CustomerName' => $order->customer_name,

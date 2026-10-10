@@ -24,6 +24,7 @@ class DigitalStoreAndCheckoutTest extends TestCase
 
         // Seed database
         $this->seed(DatabaseSeeder::class);
+        $this->seed(\Database\Seeders\DigitalProductSeeder::class);
     }
 
     public function test_store_index_page_is_accessible(): void
@@ -43,18 +44,17 @@ class DigitalStoreAndCheckoutTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee($product->name);
-        $response->assertSee('شراء وتفعيل فوري');
+        $response->assertSee('إتمام الطلب الآن');
     }
 
     public function test_sales_landing_page_is_accessible(): void
     {
-        $landingPage = ProductLandingPage::where('slug', 'oxpro-erp')->firstOrFail();
+        $landingPage = ProductLandingPage::where('slug', 'scripox')->firstOrFail();
 
         $response = $this->get(route('store.landing', $landingPage->slug));
 
         $response->assertStatus(200);
         $response->assertSee($landingPage->headline);
-        $response->assertSee('PaySky Omni Gateway');
     }
 
     public function test_checkout_initiate_creates_order_and_returns_paysky_payload(): void

@@ -2456,7 +2456,9 @@ async function handleDetailsCheckout(e) {
                     TID: data.paysky.TID,
                     AmountTrxn: data.paysky.AmountTrxn,
                     MerchantReference: data.paysky.MerchantReference,
+                    OrderId: data.paysky.OrderNumber || data.paysky.MerchantReference,
                     TrxDateTime: data.paysky.TrxDateTime,
+                    CurrencyCode: data.paysky.CurrencyCode || '818',
                     SecureHash: data.paysky.SecureHash,
                     completeCallback: () => { 
                         window.location.href = data.callback_url + '?MerchantReference=' + encodeURIComponent(data.paysky.MerchantReference) + '&Success=true'; 

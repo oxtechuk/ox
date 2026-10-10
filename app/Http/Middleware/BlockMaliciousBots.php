@@ -35,6 +35,7 @@ class BlockMaliciousBots
     /**
      * Whitelist of recognized AI search engines and legitimate crawlers.
      * These should NEVER be blocked under any circumstances.
+     *
      * @var list<string>
      */
     protected array $allowedAiAndSearchBots = [
