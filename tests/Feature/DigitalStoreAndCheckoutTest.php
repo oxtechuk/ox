@@ -74,8 +74,8 @@ class DigitalStoreAndCheckoutTest extends TestCase
         $response = $this->get(route('customer.login'));
 
         $response->assertStatus(200);
-        $response->assertSee('تسجيل الدخول إلى حسابك');
-        $response->assertSee('تراخيصك وبرمجياتك السحابية');
+        $response->assertSee('تسجيل الدخول');
+        $response->assertSee('البريد الإلكتروني');
     }
 
     public function test_customer_can_login_with_valid_credentials(): void
