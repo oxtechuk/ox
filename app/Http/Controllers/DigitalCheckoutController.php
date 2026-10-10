@@ -80,7 +80,7 @@ class DigitalCheckoutController extends Controller
             'currency' => $currency,
             'valid_until' => $promo->valid_until ? $promo->valid_until->format('Y-m-d') : null,
             'remaining_time' => $promo->remaining_time,
-            'message' => 'تم تطبيق كود الخصم ' . $promo->code . ' بنجاح! (' . ($promo->discount_type === 'percentage' ? round((float) $promo->discount_value) . '%' : $discountAmount . ' ' . $currency) . ' خصم)',
+            'message' => 'تم تطبيق كود الخصم '.$promo->code.' بنجاح! ('.($promo->discount_type === 'percentage' ? round((float) $promo->discount_value).'%' : $discountAmount.' '.$currency).' خصم)',
         ]);
     }
 
@@ -315,9 +315,14 @@ class DigitalCheckoutController extends Controller
      */
     public function success(string $orderNumber): View
     {
-        $order = Order::with(['items.product', 'downloadTokens'])
+        $order = Order::with(['items.product', 'downloadTokens', 'user'])
             ->where('order_number', $orderNumber)
             ->firstOrFail();
+
+        // Automatically authenticate user so they can access their dashboard immediately
+        if (! Auth::check() && $order->user) {
+            Auth::login($order->user, true);
+        }
 
         return view('checkout.success', compact('order'));
     }

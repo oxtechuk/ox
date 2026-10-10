@@ -26,23 +26,23 @@ body {
 
 .auth-card-box {
     width: 100%;
-    max-width: 410px;
+    max-width: 420px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    padding: 36px 32px;
+    padding: 34px 30px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.03), 0 20px 25px -5px rgba(0, 0, 0, 0.03);
 }
 
 .auth-header {
     text-align: center;
-    margin-bottom: 26px;
+    margin-bottom: 22px;
 }
 
 .auth-header-badge {
     width: 44px;
     height: 44px;
-    margin: 0 auto 14px;
+    margin: 0 auto 12px;
     border-radius: 12px;
     background: #f0fdf9;
     border: 1px solid #ccfbf1;
@@ -57,7 +57,7 @@ body {
     font-size: 21px;
     font-weight: 700;
     color: #0f172a;
-    margin: 0 0 6px;
+    margin: 0 0 5px;
     letter-spacing: -0.3px;
 }
 
@@ -65,6 +65,38 @@ body {
     font-size: 13px;
     color: #64748b;
     margin: 0;
+}
+
+/* Tabs */
+.auth-tabs-row {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 22px;
+    gap: 4px;
+}
+
+.auth-tab-btn {
+    flex: 1;
+    border: none;
+    background: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: inherit;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.auth-tab-btn.active {
+    background: #ffffff;
+    color: #0b6153;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 /* Alerts */
@@ -98,7 +130,14 @@ body {
 
 /* Form */
 .auth-form-group {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
+}
+
+.auth-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
 }
 
 .auth-label {
@@ -106,7 +145,17 @@ body {
     font-size: 13px;
     font-weight: 600;
     color: #334155;
-    margin-bottom: 6px;
+}
+
+.auth-link-forgot {
+    font-size: 12px;
+    color: #0b6153;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link-forgot:hover {
+    text-decoration: underline;
 }
 
 .auth-input-wrapper {
@@ -165,7 +214,7 @@ body {
     justify-content: space-between;
     font-size: 13px;
     color: #64748b;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
 }
 
 .auth-remember-label {
@@ -206,8 +255,8 @@ body {
 }
 
 .auth-note-box {
-    margin-top: 20px;
-    padding: 12px 14px;
+    margin-top: 18px;
+    padding: 11px 13px;
     background: #f8fafc;
     border: 1px solid #edf2f7;
     border-radius: 10px;
@@ -218,13 +267,13 @@ body {
 }
 
 .auth-footer {
-    margin-top: 20px;
+    margin-top: 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 12.5px;
     border-top: 1px solid #f1f5f9;
-    padding-top: 16px;
+    padding-top: 15px;
 }
 
 .auth-link {
@@ -252,9 +301,8 @@ body {
     .auth-page-wrapper {
         padding: 110px 14px 60px;
     }
-
     .auth-card-box {
-        padding: 28px 20px;
+        padding: 26px 18px;
     }
 }
 </style>
@@ -268,6 +316,16 @@ body {
             </div>
             <h1 class="auth-title">تسجيل الدخول</h1>
             <p class="auth-subtitle">بوابة عملاء Ox Tech</p>
+        </div>
+
+        {{-- Switch Tabs --}}
+        <div class="auth-tabs-row">
+            <button type="button" onclick="switchAuthTab('password')" id="tabBtnPassword" class="auth-tab-btn active">
+                بكلمة المرور
+            </button>
+            <button type="button" onclick="switchAuthTab('order')" id="tabBtnOrder" class="auth-tab-btn">
+                برقم الطلب (سريع)
+            </button>
         </div>
 
         @if(session('success'))
@@ -284,11 +342,14 @@ body {
             </div>
         @endif
 
-        <form action="{{ route('customer.login.submit') }}" method="POST">
+        {{-- 1. PASSWORD FORM --}}
+        <form id="formPasswordAuth" action="{{ route('customer.login.submit') }}" method="POST">
             @csrf
 
             <div class="auth-form-group">
-                <label for="customerEmail" class="auth-label">البريد الإلكتروني</label>
+                <div class="auth-label-row">
+                    <label for="customerEmail" class="auth-label">البريد الإلكتروني</label>
+                </div>
                 <div class="auth-input-wrapper">
                     <input 
                         type="email" 
@@ -304,7 +365,12 @@ body {
             </div>
 
             <div class="auth-form-group">
-                <label for="customerPassword" class="auth-label">كلمة المرور</label>
+                <div class="auth-label-row">
+                    <label for="customerPassword" class="auth-label">كلمة المرور</label>
+                    <a href="{{ route('customer.forgot-password') }}" class="auth-link-forgot">
+                        نسيت كلمة المرور؟
+                    </a>
+                </div>
                 <div class="auth-input-wrapper">
                     <input 
                         type="password" 
@@ -339,6 +405,55 @@ body {
             </button>
         </form>
 
+        {{-- 2. ORDER NUMBER FAST LOGIN FORM --}}
+        <form id="formOrderAuth" action="{{ route('customer.login.order') }}" method="POST" style="display: none;">
+            @csrf
+
+            <div class="auth-form-group">
+                <div class="auth-label-row">
+                    <label for="orderEmail" class="auth-label">البريد الإلكتروني</label>
+                </div>
+                <div class="auth-input-wrapper">
+                    <input 
+                        type="email" 
+                        id="orderEmail"
+                        name="email" 
+                        value="{{ old('email') }}" 
+                        required 
+                        placeholder="البريد المستخدم أثناء الشراء" 
+                        class="auth-input"
+                    >
+                </div>
+            </div>
+
+            <div class="auth-form-group">
+                <div class="auth-label-row">
+                    <label for="orderNumber" class="auth-label">رقم الطلب (Order #)</label>
+                </div>
+                <div class="auth-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="orderNumber"
+                        name="order_number" 
+                        value="{{ old('order_number') }}" 
+                        required 
+                        placeholder="مثال: OX-2026-XXXX أو رقم إيصال الدفع" 
+                        class="auth-input"
+                    >
+                </div>
+            </div>
+
+            <div class="auth-options">
+                <span style="font-size: 11.5px; color: #64748b;">
+                    * ستجد رقم الطلب في إيصال الدفع أو رسالة التأكيد
+                </span>
+            </div>
+
+            <button type="submit" class="auth-submit-btn">
+                الدخول عبر رقم الطلب
+            </button>
+        </form>
+
         <div class="auth-note-box">
             <strong>ملاحظة:</strong> يتم إرسال بيانات الدخول إلى بريدك الإلكتروني فور إتمام عملية الشراء.
         </div>
@@ -357,6 +472,25 @@ body {
 </div>
 
 <script>
+function switchAuthTab(type) {
+    const formPass = document.getElementById('formPasswordAuth');
+    const formOrder = document.getElementById('formOrderAuth');
+    const btnPass = document.getElementById('tabBtnPassword');
+    const btnOrder = document.getElementById('tabBtnOrder');
+
+    if (type === 'order') {
+        formPass.style.display = 'none';
+        formOrder.style.display = 'block';
+        btnPass.classList.remove('active');
+        btnOrder.classList.add('active');
+    } else {
+        formOrder.style.display = 'none';
+        formPass.style.display = 'block';
+        btnOrder.classList.remove('active');
+        btnPass.classList.add('active');
+    }
+}
+
 function toggleAuthPassword() {
     const input = document.getElementById('customerPassword');
     const icon = document.getElementById('authEyeIcon');

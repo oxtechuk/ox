@@ -12,6 +12,7 @@ use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\DigitalProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -91,6 +92,76 @@ class DigitalStoreAndCheckoutTest extends TestCase
         ]);
 
         $response->assertRedirect(route('customer.dashboard'));
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_customer_can_login_with_order_number(): void
+    {
+        $order = Order::create([
+            'order_number' => 'OX-2026-9999',
+            'customer_name' => 'محمد أحمد',
+            'customer_email' => 'buyer@example.com',
+            'total_amount' => 1500,
+            'currency' => 'EGP',
+            'payment_status' => 'paid',
+            'merchant_reference' => 'REF-9999',
+        ]);
+
+        $response = $this->post(route('customer.login.order'), [
+            'email' => 'buyer@example.com',
+            'order_number' => 'OX-2026-9999',
+        ]);
+
+        $response->assertRedirect(route('customer.dashboard'));
+        $this->assertAuthenticated();
+        $this->assertEquals('buyer@example.com', auth()->user()->email);
+    }
+
+    public function test_customer_can_request_forgot_password_and_login_via_magic_link(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'forgot@example.com',
+        ]);
+
+        $response = $this->post(route('customer.forgot-password.submit'), [
+            'email' => 'forgot@example.com',
+        ]);
+
+        $response->assertSessionHas('success');
+
+        $magicUrl = URL::temporarySignedRoute(
+            'customer.magic-login',
+            now()->addHours(24),
+            ['user' => $user->id]
+        );
+
+        $loginResponse = $this->get($magicUrl);
+        $loginResponse->assertRedirect(route('customer.dashboard'));
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_customer_is_automatically_logged_in_on_checkout_success(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'auto@example.com',
+        ]);
+
+        $order = Order::create([
+            'user_id' => $user->id,
+            'order_number' => 'OX-AUTO-1234',
+            'customer_name' => 'عميل فوري',
+            'customer_email' => 'auto@example.com',
+            'total_amount' => 100,
+            'currency' => 'USD',
+            'payment_status' => 'paid',
+            'merchant_reference' => 'REF-AUTO-1234',
+        ]);
+
+        $this->assertGuest();
+
+        $response = $this->get(route('checkout.success', $order->order_number));
+
+        $response->assertStatus(200);
         $this->assertAuthenticatedAs($user);
     }
 
@@ -198,7 +269,7 @@ class DigitalStoreAndCheckoutTest extends TestCase
         $this->assertTrue($token->isValid());
 
         // Assert confirmation email dispatched
-        Mail::assertQueued(DigitalProductOrderCompleted::class, function ($mail) {
+        Mail::assertSent(DigitalProductOrderCompleted::class, function ($mail) {
             return $mail->hasTo('sara@example.com');
         });
     }

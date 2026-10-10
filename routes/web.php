@@ -93,6 +93,15 @@ Route::get('/account/login', [CustomerDashboardController::class, 'showLogin'])-
 Route::post('/account/login', [CustomerDashboardController::class, 'login'])
     ->middleware('throttle:6,1')
     ->name('customer.login.submit');
+Route::post('/account/login-order', [CustomerDashboardController::class, 'loginWithOrder'])
+    ->middleware('throttle:6,1')
+    ->name('customer.login.order');
+Route::get('/account/forgot-password', [CustomerDashboardController::class, 'showForgotPassword'])->name('customer.forgot-password');
+Route::post('/account/forgot-password', [CustomerDashboardController::class, 'sendResetOrMagicLink'])
+    ->middleware('throttle:5,1')
+    ->name('customer.forgot-password.submit');
+Route::get('/account/magic-login/{user}', [CustomerDashboardController::class, 'magicLogin'])
+    ->name('customer.magic-login');
 Route::post('/account/logout', [CustomerDashboardController::class, 'logout'])->name('customer.logout');
 Route::get('/downloads/{token}', [CustomerDashboardController::class, 'download'])
     ->middleware('throttle:30,1')

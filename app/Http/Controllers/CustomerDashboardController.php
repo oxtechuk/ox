@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CustomerMagicLoginMail;
 use App\Models\DownloadToken;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -52,7 +58,7 @@ class CustomerDashboardController extends Controller
     }
 
     /**
-     * Handle customer login submission
+     * Handle customer login submission with email and password
      */
     public function login(Request $request): RedirectResponse
     {
@@ -80,6 +86,130 @@ class CustomerDashboardController extends Controller
         return back()->withErrors([
             'email' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
         ])->onlyInput('email');
+    }
+
+    /**
+     * Fast Passwordless Login using Customer Email and Order Number
+     */
+    public function loginWithOrder(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'order_number' => 'required|string|max:100',
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+        $orderQuery = trim($validated['order_number']);
+
+        $order = Order::where(function ($q) use ($email) {
+            $q->where('customer_email', $email)
+                ->orWhereHas('user', fn ($u) => $u->where('email', $email));
+        })
+            ->where(function ($q) use ($orderQuery) {
+                $q->where('order_number', $orderQuery)
+                    ->orWhere('merchant_reference', $orderQuery)
+                    ->orWhere('transaction_id', $orderQuery);
+            })
+            ->where('payment_status', 'paid')
+            ->first();
+
+        if (! $order) {
+            return back()->withErrors([
+                'order_number' => 'لم نتمكن من العثور على طلب مدفوع مطابق لهذا البريد الإلكتروني ورقم الطلب.',
+            ])->withInput();
+        }
+
+        $user = $order->user ?: User::where('email', $email)->first();
+        if (! $user) {
+            $user = User::create([
+                'name' => $order->customer_name ?: 'عميل Ox Tech',
+                'email' => $order->customer_email,
+                'password' => Hash::make(Str::password(12)),
+                'role' => 'client',
+                'is_active' => true,
+            ]);
+            $order->update(['user_id' => $user->id]);
+        }
+
+        if (! $user->is_active) {
+            return back()->withErrors(['order_number' => 'تم تعطيل هذا الحساب. يرجى التواصل مع الدعم الفني.']);
+        }
+
+        Auth::login($user, true);
+        $request->session()->regenerate();
+
+        return redirect()->route('customer.dashboard')
+            ->with('success', 'تم تسجيل دخولك بنجاح عبر رقم الطلب #'.$order->order_number);
+    }
+
+    /**
+     * Show Forgot Password view
+     */
+    public function showForgotPassword(): View|RedirectResponse
+    {
+        if (Auth::check()) {
+            return redirect()->route('customer.dashboard');
+        }
+
+        return view('customer.forgot-password');
+    }
+
+    /**
+     * Send Instant Magic Login Link and Temporary Password to Customer Email
+     */
+    public function sendResetOrMagicLink(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = strtolower(trim($validated['email']));
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            $tempPassword = Str::password(10, letters: true, numbers: true, symbols: false);
+            $user->update(['password' => Hash::make($tempPassword)]);
+
+            $magicUrl = URL::temporarySignedRoute(
+                'customer.magic-login',
+                now()->addHours(24),
+                ['user' => $user->id]
+            );
+
+            try {
+                Mail::to($user->email)->send(
+                    new CustomerMagicLoginMail(
+                        user: $user,
+                        magicUrl: $magicUrl,
+                        tempPassword: $tempPassword
+                    )
+                );
+            } catch (\Exception $e) {
+                Log::error('Failed to send magic login email: '.$e->getMessage());
+            }
+        }
+
+        return back()->with('success', 'إذا كان هذا البريد مسجلاً لدينا، فقد تم إرسال رابط الدخول المباشر إلى بريدك الإلكتروني بنجاح (يرجى فحص صندوق الوارد أو مجلد الرسائل غير المرغوب فيها).');
+    }
+
+    /**
+     * Authenticate Customer via One-Click Magic Link
+     */
+    public function magicLogin(Request $request, User $user): RedirectResponse
+    {
+        if (! $request->hasValidSignature()) {
+            abort(401, 'رابط الدخول غير صالح أو منتهي الصلاحية.');
+        }
+
+        if (! $user->is_active) {
+            return redirect()->route('customer.login')->withErrors(['email' => 'تم تعطيل هذا الحساب.']);
+        }
+
+        Auth::login($user, true);
+        $request->session()->regenerate();
+
+        return redirect()->route('customer.dashboard')
+            ->with('success', 'مرحباً بك! تم تسجيل الدخول بنجاح عبر الرابط المباشر.');
     }
 
     /**
