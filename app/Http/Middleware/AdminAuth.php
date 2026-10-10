@@ -27,6 +27,10 @@ class AdminAuth
             abort(403, 'غير مصرح لك بالوصول إلى لوحة التحكم الإدارية.');
         }
 
+        // Tag admin session & device to exclude the administrator's browsing from traffic analytics
+        $request->session()->put('is_admin_session', true);
+        cookie()->queue(cookie()->forever('ox_admin_device', '1'));
+
         return $next($request);
     }
 }

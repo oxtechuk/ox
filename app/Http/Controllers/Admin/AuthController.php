@@ -35,6 +35,8 @@ class AuthController extends Controller
             }
 
             $request->session()->regenerate();
+            $request->session()->put('is_admin_session', true);
+            cookie()->queue(cookie()->forever('ox_admin_device', '1'));
 
             return redirect()->intended(route('admin.dashboard'))->with('success', 'مرحباً بك مجدداً، '.$user->name);
         }

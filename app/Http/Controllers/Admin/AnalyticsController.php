@@ -27,13 +27,22 @@ class AnalyticsController extends Controller
             default => now()->subDays(7)->startOfDay(),
         };
 
-        $baseQuery = VisitorTraffic::humans()->where('created_at', '>=', $startDate);
+        $adminPrefix = trim(config('app.admin_prefix', env('ADMIN_PREFIX', 'ox-secure-cp')), '/');
+
+        $baseQuery = VisitorTraffic::humans()
+            ->where('created_at', '>=', $startDate)
+            ->where('path', 'not like', $adminPrefix.'%')
+            ->where('path', 'not like', 'ox-secure-cp%')
+            ->where('path', 'not like', 'admin%');
 
         // 1. KPI Stats
         $totalPageviews = (clone $baseQuery)->count();
         $uniqueVisitors = (clone $baseQuery)->distinct('session_id')->count('session_id');
         $liveVisitors = VisitorTraffic::humans()
             ->where('created_at', '>=', now()->subMinutes(10))
+            ->where('path', 'not like', $adminPrefix.'%')
+            ->where('path', 'not like', 'ox-secure-cp%')
+            ->where('path', 'not like', 'admin%')
             ->distinct('session_id')
             ->count('session_id');
 
@@ -55,6 +64,9 @@ class AnalyticsController extends Controller
         $prevStartDate = (clone $startDate)->subDays($daysCount);
         $prevPageviews = VisitorTraffic::humans()
             ->whereBetween('created_at', [$prevStartDate, $startDate])
+            ->where('path', 'not like', $adminPrefix.'%')
+            ->where('path', 'not like', 'ox-secure-cp%')
+            ->where('path', 'not like', 'admin%')
             ->count();
         $growthPageviews = $prevPageviews > 0
             ? round((($totalPageviews - $prevPageviews) / $prevPageviews) * 100, 1)
@@ -79,7 +91,11 @@ class AnalyticsController extends Controller
                 $hStart = now()->copy()->startOfDay()->addHours($h);
                 $hEnd = (clone $hStart)->endOfHour();
 
-                $hQuery = VisitorTraffic::humans()->whereBetween('created_at', [$hStart, $hEnd]);
+                $hQuery = VisitorTraffic::humans()
+                    ->whereBetween('created_at', [$hStart, $hEnd])
+                    ->where('path', 'not like', $adminPrefix.'%')
+                    ->where('path', 'not like', 'ox-secure-cp%')
+                    ->where('path', 'not like', 'admin%');
                 $chartPageviews[] = (clone $hQuery)->count();
                 $chartVisitors[] = (clone $hQuery)->distinct('session_id')->count('session_id');
             }
@@ -90,7 +106,11 @@ class AnalyticsController extends Controller
                 $dStart = (clone $targetDate)->startOfDay();
                 $dEnd = (clone $targetDate)->endOfDay();
 
-                $dQuery = VisitorTraffic::humans()->whereBetween('created_at', [$dStart, $dEnd]);
+                $dQuery = VisitorTraffic::humans()
+                    ->whereBetween('created_at', [$dStart, $dEnd])
+                    ->where('path', 'not like', $adminPrefix.'%')
+                    ->where('path', 'not like', 'ox-secure-cp%')
+                    ->where('path', 'not like', 'admin%');
                 $chartPageviews[] = (clone $dQuery)->count();
                 $chartVisitors[] = (clone $dQuery)->distinct('session_id')->count('session_id');
             }
@@ -185,35 +205,63 @@ class AnalyticsController extends Controller
 
         // 6. Top Countries
         $countriesRaw = (clone $baseQuery)
-            ->whereNotNull('country_code')
-            ->select('country_code', DB::raw('count(*) as count'))
-            ->groupBy('country_code')
+            ->select(
+                DB::raw("LOWER(COALESCE(NULLIF(country_code, ''), 'sa')) as code"),
+                DB::raw('count(*) as count'),
+                DB::raw('count(distinct session_id) as visitors')
+            )
+            ->groupBy('code')
             ->orderByDesc('count')
-            ->take(5)
+            ->take(10)
             ->get();
 
         $countryDictionary = [
-            'sa' => 'السعودية',
-            'ae' => 'الإمارات',
-            'eg' => 'مصر',
-            'kw' => 'الكويت',
-            'qa' => 'قطر',
-            'om' => 'عمان',
-            'bh' => 'البحرين',
-            'jo' => 'الأردن',
+            'sa' => 'المملكة العربية السعودية',
+            'ae' => 'الإمارات العربية المتحدة',
+            'eg' => 'جمهورية مصر العربية',
+            'kw' => 'دولة الكويت',
+            'qa' => 'دولة قطر',
+            'om' => 'سلطنة عُمان',
+            'bh' => 'مملكة البحرين',
+            'jo' => 'المملكة الأردنية',
+            'iq' => 'العراق',
+            'ye' => 'اليمن',
+            'sy' => 'سوريا',
+            'lb' => 'لبنان',
+            'ps' => 'فلسطين',
+            'sd' => 'السودان',
+            'ly' => 'ليبيا',
+            'dz' => 'الجزائر',
+            'ma' => 'المغرب',
+            'tn' => 'تونس',
+            'tr' => 'تركيا',
             'de' => 'ألمانيا',
-            'gb' => 'بريطانيا',
-            'us' => 'الولايات المتحدة',
+            'gb' => 'بريطانيا (المملكة المتحدة)',
+            'us' => 'الولايات المتحدة الأمريكية',
+            'fr' => 'فرنسا',
+            'ca' => 'كندا',
+            'nl' => 'هولندا',
+            'se' => 'السويد',
+            'it' => 'إيطاليا',
+            'es' => 'إسبانيا',
+            'ch' => 'سويسرا',
+            'ru' => 'روسيا',
+            'cn' => 'الصين',
+            'in' => 'الهند',
+            'my' => 'ماليزيا',
         ];
 
         $topCountries = $countriesRaw->map(function ($c) use ($countryDictionary, $totalPageviews) {
-            $code = strtolower($c->country_code);
+            $code = strtolower($c->code);
+            $flagRelPath = "assets/flags/{$code}.webp";
+            $flagUrl = file_exists(public_path($flagRelPath)) ? asset($flagRelPath) : null;
 
             return [
                 'code' => $code,
                 'name' => $countryDictionary[$code] ?? strtoupper($code),
-                'flag_url' => file_exists(public_path("assets/flags/{$code}.webp")) ? asset("assets/flags/{$code}.webp") : null,
-                'count' => $c->count,
+                'flag_url' => $flagUrl,
+                'count' => (int) $c->count,
+                'visitors' => (int) ($c->visitors ?? $c->count),
                 'percentage' => $totalPageviews > 0 ? round(($c->count / $totalPageviews) * 100, 1) : 0,
             ];
         });
@@ -221,8 +269,20 @@ class AnalyticsController extends Controller
         // 7. Tracking Pixels Integration Status
         $pixels = TrackingPixel::all()->keyBy('platform');
 
-        // 8. Recent Live Traffic Log
-        $recentVisits = VisitorTraffic::humans()->latest('id')->take(10)->get();
+        // 8. Recent Live Traffic Log (excluding admin paths)
+        $recentVisits = VisitorTraffic::humans()
+            ->where('path', 'not like', $adminPrefix.'%')
+            ->where('path', 'not like', 'ox-secure-cp%')
+            ->where('path', 'not like', 'admin%')
+            ->latest('id')
+            ->take(10)
+            ->get();
+
+        // 9. Check if current admin browser is excluded
+        $isAdminExcluded = $request->cookie('ox_admin_device') === '1'
+            || $request->cookie('ox_exclude_admin') === '1'
+            || auth()->check()
+            || (bool) session('is_admin_session');
 
         return view('admin.analytics.index', compact(
             'period',
@@ -241,12 +301,23 @@ class AnalyticsController extends Controller
             'devicesStats',
             'topCountries',
             'pixels',
-            'recentVisits'
+            'recentVisits',
+            'isAdminExcluded'
         ));
     }
 
     public function recordEvent(Request $request): JsonResponse
     {
+        // Ignore real-time events from administrators or admin devices
+        if (
+            \Illuminate\Support\Facades\Auth::check() ||
+            $request->cookie('ox_admin_device') === '1' ||
+            $request->cookie('ox_exclude_admin') === '1' ||
+            $request->session()->get('is_admin_session')
+        ) {
+            return response()->json(['ignored' => true, 'reason' => 'admin_excluded']);
+        }
+
         $eventName = $request->input('event_name');
         $pageUrl = $request->input('page_url');
         $data = $request->input('data');
@@ -264,6 +335,17 @@ class AnalyticsController extends Controller
             return response()->json(['error' => 'Missing event_name'], 422);
         }
 
+        // Ignore events triggered on administrative pages
+        $adminPrefix = trim(config('app.admin_prefix', env('ADMIN_PREFIX', 'ox-secure-cp')), '/');
+        $checkUrl = $pageUrl ?? $request->header('referer', '');
+        if (
+            str_contains($checkUrl, $adminPrefix) ||
+            str_contains($checkUrl, '/admin') ||
+            str_contains($checkUrl, 'ox-secure-cp')
+        ) {
+            return response()->json(['ignored' => true, 'reason' => 'admin_page']);
+        }
+
         $sessionId = $request->hasSession() ? $request->session()->getId() : md5($request->ip().$request->userAgent());
 
         TrafficEvent::create([
@@ -274,5 +356,24 @@ class AnalyticsController extends Controller
         ]);
 
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * Toggle the exclusion cookie for the admin's device.
+     */
+    public function toggleExcludeAdmin(Request $request): JsonResponse
+    {
+        $current = $request->cookie('ox_admin_device', '1');
+        $newVal = $current === '1' ? '0' : '1';
+        cookie()->queue(cookie()->forever('ox_admin_device', $newVal));
+        cookie()->queue(cookie()->forever('ox_exclude_admin', $newVal));
+
+        return response()->json([
+            'success' => true,
+            'is_excluded' => $newVal === '1',
+            'message' => $newVal === '1'
+                ? 'تم استبعاد متصفحك من إحصائيات وترافيك الزوار بنجاح.'
+                : 'تم تفعيل التتبع لمتصفحك.',
+        ]);
     }
 }

@@ -28,8 +28,8 @@ class TrackVisitorTraffic
             return;
         }
 
-        // Ignore admin, assets, auth, api, and system endpoints
-        if ($request->is('admin*', 'login*', 'register*', 'logout*', 'api/admin*', 'assets/*', 'storage/*', 'up', '_debugbar*', 'favicon*')) {
+        // Exclude admin routes, authenticated admins, and admin-tagged devices
+        if ($this->shouldExcludeRequest($request)) {
             return;
         }
 
@@ -65,11 +65,8 @@ class TrackVisitorTraffic
                 $projectId = $project?->id;
             }
 
-            // Country from Cloudflare/CDN headers if available
-            $countryCode = strtolower($request->header('CF-IPCountry', $request->header('X-Country-Code', '')));
-            if (strlen($countryCode) > 5) {
-                $countryCode = null;
-            }
+            // Detect visitor country (Cloudflare / CDN headers / Accept-Language / GeoIP)
+            [$countryCode, $countryName] = $this->detectCountry($request);
 
             VisitorTraffic::create([
                 'session_id' => mb_substr($sessionId, 0, 80),
@@ -87,12 +84,149 @@ class TrackVisitorTraffic
                 'browser' => $browser,
                 'platform' => $platform,
                 'country_code' => $countryCode ?: null,
-                'country_name' => null,
+                'country_name' => $countryName ?: null,
                 'is_bot' => $isBot,
             ]);
         } catch (\Throwable $e) {
             // Silently ignore tracking errors to protect user traffic
         }
+    }
+
+    /**
+     * Determine if the request should be excluded from visitor tracking.
+     */
+    protected function shouldExcludeRequest(Request $request): bool
+    {
+        // 1. Exclude logged-in admin users
+        if (\Illuminate\Support\Facades\Auth::check()) {
+            $user = \Illuminate\Support\Facades\Auth::user();
+            if ((method_exists($user, 'isAdmin') && $user->isAdmin()) || ($user->role ?? null) === 'admin' || $user->is_active) {
+                return true;
+            }
+        }
+
+        // 2. Exclude browsers tagged as admin or developer devices
+        if (
+            $request->cookie('ox_admin_device') === '1' ||
+            $request->cookie('ox_exclude_admin') === '1' ||
+            ($request->hasSession() && $request->session()->get('is_admin_session'))
+        ) {
+            return true;
+        }
+
+        // 3. Exclude administrative path prefixes and system endpoints
+        $adminPrefix = trim(config('app.admin_prefix', env('ADMIN_PREFIX', 'ox-secure-cp')), '/');
+
+        if ($request->is(
+            $adminPrefix,
+            $adminPrefix.'/*',
+            'ox-secure-cp',
+            'ox-secure-cp/*',
+            'admin',
+            'admin/*',
+            'api/admin*',
+            'login*',
+            'register*',
+            'logout*',
+            'assets/*',
+            'storage/*',
+            'up',
+            '_debugbar*',
+            'favicon*',
+            'checkout/paypal/config',
+            'traffic/event'
+        )) {
+            return true;
+        }
+
+        // 4. Exclude named admin routes
+        if ($request->route() && str_starts_with($request->route()->getName() ?? '', 'admin.')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Detect visitor country from headers, language, or IP lookup.
+     *
+     * @return array{0: ?string, 1: ?string}
+     */
+    protected function detectCountry(Request $request): array
+    {
+        // 1. Check Cloudflare & CDN headers
+        $headerCode = $request->header('CF-IPCountry')
+            ?: $request->header('X-Country-Code')
+            ?: $request->header('X-Forwarded-Country')
+            ?: $request->header('GEOIP_COUNTRY_CODE')
+            ?: $request->server('GEOIP_COUNTRY_CODE');
+
+        if ($headerCode && is_string($headerCode)) {
+            $code = strtolower(trim($headerCode));
+            if (strlen($code) === 2 && ctype_alpha($code) && $code !== 'xx' && $code !== 't1') {
+                return [$code, $this->resolveCountryName($code)];
+            }
+        }
+
+        // 2. Browser Accept-Language region code (e.g. "ar-SA" => "sa", "ar-EG" => "eg", "en-US" => "us")
+        $acceptLang = $request->header('Accept-Language', '');
+        if ($acceptLang && preg_match('/[a-z]{2}-([a-zA-Z]{2})/i', $acceptLang, $matches)) {
+            $code = strtolower($matches[1]);
+            if (strlen($code) === 2 && ctype_alpha($code)) {
+                return [$code, $this->resolveCountryName($code)];
+            }
+        }
+
+        // 3. Default for Arabic browser locale without country (e.g. "ar")
+        if (str_starts_with(strtolower($acceptLang), 'ar')) {
+            return ['sa', 'السعودية'];
+        }
+
+        return [null, null];
+    }
+
+    /**
+     * Resolve Arabic display name for country code.
+     */
+    protected function resolveCountryName(string $code): string
+    {
+        $dictionary = [
+            'sa' => 'السعودية',
+            'eg' => 'مصر',
+            'ae' => 'الإمارات',
+            'kw' => 'الكويت',
+            'qa' => 'قطر',
+            'om' => 'عُمان',
+            'bh' => 'البحرين',
+            'jo' => 'الأردن',
+            'iq' => 'العراق',
+            'ye' => 'اليمن',
+            'sy' => 'سوريا',
+            'lb' => 'لبنان',
+            'ps' => 'فلسطين',
+            'sd' => 'السودان',
+            'ly' => 'ليبيا',
+            'dz' => 'الجزائر',
+            'ma' => 'المغرب',
+            'tn' => 'تونس',
+            'tr' => 'تركيا',
+            'de' => 'ألمانيا',
+            'gb' => 'المملكة المتحدة',
+            'us' => 'الولايات المتحدة',
+            'fr' => 'فرنسا',
+            'ca' => 'كندا',
+            'nl' => 'هولندا',
+            'se' => 'السويد',
+            'it' => 'إيطاليا',
+            'es' => 'إسبانيا',
+            'ch' => 'سويسرا',
+            'ru' => 'روسيا',
+            'cn' => 'الصين',
+            'in' => 'الهند',
+            'my' => 'ماليزيا',
+        ];
+
+        return $dictionary[$code] ?? strtoupper($code);
     }
 
     protected function detectBot(string $ua): bool

@@ -199,6 +199,7 @@ Route::prefix($adminPrefix)->name('admin.')->group(function () {
         // Realtime Visitor Traffic & Marketing Analytics
         Route::get('/analytics', [AdminAnalyticsController::class, 'index'])->name('analytics.index');
         Route::post('/analytics/event', [AdminAnalyticsController::class, 'recordEvent'])->name('analytics.event');
+        Route::post('/analytics/toggle-exclude-me', [AdminAnalyticsController::class, 'toggleExcludeAdmin'])->name('analytics.toggle_exclude_me');
 
         // Users & Roles Management
         Route::resource('users', AdminUserController::class);
