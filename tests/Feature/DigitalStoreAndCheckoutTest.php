@@ -69,6 +69,31 @@ class DigitalStoreAndCheckoutTest extends TestCase
         $response->assertSee(route('store.landing', $scripox->landingPage->slug));
     }
 
+    public function test_customer_login_page_renders_successfully(): void
+    {
+        $response = $this->get(route('customer.login'));
+
+        $response->assertStatus(200);
+        $response->assertSee('تسجيل الدخول إلى حسابك');
+        $response->assertSee('تراخيصك وبرمجياتك السحابية');
+    }
+
+    public function test_customer_can_login_with_valid_credentials(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'client@oxtech.uk',
+            'password' => bcrypt('secret1234'),
+        ]);
+
+        $response = $this->post(route('customer.login.submit'), [
+            'email' => 'client@oxtech.uk',
+            'password' => 'secret1234',
+        ]);
+
+        $response->assertRedirect(route('customer.dashboard'));
+        $this->assertAuthenticatedAs($user);
+    }
+
     public function test_sales_landing_page_is_accessible(): void
     {
         $landingPage = ProductLandingPage::where('slug', 'scripox')->firstOrFail();
