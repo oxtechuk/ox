@@ -74,9 +74,23 @@ class DigitalProductController extends Controller
             'has_license_key' => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
             'status' => 'required|in:active,draft,archived',
+            'has_sales_page' => 'nullable|boolean',
             'create_landing_page' => 'nullable|boolean',
             'landing_headline' => 'nullable|string|max:255',
             'landing_subheadline' => 'nullable|string',
+            'landing_hero_badge' => 'nullable|string|max:255',
+            'landing_cta_text' => 'nullable|string|max:255',
+            'landing_primary_color' => 'nullable|string|max:50',
+            'external_css_urls' => 'nullable|string',
+            'custom_css' => 'nullable|string',
+            'custom_head_scripts' => 'nullable|string',
+            'custom_body_scripts' => 'nullable|string',
+            'meta_pixel_id' => 'nullable|string|max:100',
+            'google_analytics_id' => 'nullable|string|max:100',
+            'og_title' => 'nullable|string|max:255',
+            'og_description' => 'nullable|string',
+            'og_image' => 'nullable|string|max:255',
+            'og_image_file' => 'nullable|image|max:5120',
         ]);
 
         $slug = ! empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['name']);
@@ -125,13 +139,22 @@ class DigitalProductController extends Controller
         ]);
 
         // Automatically create high-converting landing page if checked
-        if ($request->boolean('create_landing_page', true)) {
+        $hasSalesPage = $request->boolean('has_sales_page', false) || $request->boolean('create_landing_page', false);
+        if ($hasSalesPage) {
+            $ogImage = $request->input('og_image');
+            if ($request->hasFile('og_image_file')) {
+                $ogUploaded = $request->file('og_image_file');
+                $ogImageName = 'og_'.$slug.'_'.time().'.'.$ogUploaded->getClientOriginalExtension();
+                $ogUploaded->move(public_path('uploads/landing'), $ogImageName);
+                $ogImage = '/uploads/landing/'.$ogImageName;
+            }
+
             ProductLandingPage::create([
                 'product_id' => $product->id,
                 'slug' => $slug,
                 'headline' => $validated['landing_headline'] ?: $product->name,
                 'subheadline' => $validated['landing_subheadline'] ?: $product->tagline,
-                'hero_badge' => '🔥 عرض خاص لفترة محدودة: تفعيل فوري مع ترخيص رسمي',
+                'hero_badge' => $validated['landing_hero_badge'] ?? '🔥 عرض خاص لفترة محدودة: تفعيل فوري مع ترخيص رسمي',
                 'timer_ends_at' => now()->addDays(2),
                 'key_benefits' => [
                     ['title' => 'توفير الوقت والجهد', 'desc' => 'نظام آلي بالكامل يقلل الأخطاء ويسرع إنجاز مهامك.'],
@@ -150,12 +173,22 @@ class DigitalProductController extends Controller
                     ['question' => 'هل توجد مصاريف تجديد؟', 'answer' => 'لا، هذا العرض يمنحك ترخيصاً دائماً بدون أي اشتراك شهري.'],
                 ],
                 'guarantee_text' => 'نضمن لك استرجاع المبلغ بالكامل خلال 14 يوماً في حال عدم ملاءمة البرنامج لعملك.',
-                'cta_text' => 'اشترِ الآن واحصل على التفعيل الفوري',
+                'cta_text' => $validated['landing_cta_text'] ?? 'اشترِ الآن واحصل على التفعيل الفوري',
+                'primary_color' => $validated['landing_primary_color'] ?? '#0284c7',
+                'external_css_urls' => $validated['external_css_urls'] ?? null,
+                'custom_css' => $validated['custom_css'] ?? null,
+                'custom_head_scripts' => $validated['custom_head_scripts'] ?? null,
+                'custom_body_scripts' => $validated['custom_body_scripts'] ?? null,
+                'meta_pixel_id' => $validated['meta_pixel_id'] ?? null,
+                'google_analytics_id' => $validated['google_analytics_id'] ?? null,
+                'og_title' => $validated['og_title'] ?? null,
+                'og_description' => $validated['og_description'] ?? null,
+                'og_image' => $ogImage,
                 'is_published' => true,
             ]);
         }
 
-        return redirect()->route('admin.digital-products.index')->with('success', 'تم إضافة المنتج الرقمي وتجهيز صفحة الهبوط بنجاح.');
+        return redirect()->route('admin.digital-products.index')->with('success', 'تم إضافة المنتج الرقمي'.($hasSalesPage ? ' وتجهيز صفحة الهبوط البيعية' : '').' بنجاح.');
     }
 
     /**
@@ -190,6 +223,22 @@ class DigitalProductController extends Controller
             'has_license_key' => 'nullable|boolean',
             'is_featured' => 'nullable|boolean',
             'status' => 'required|in:active,draft,archived',
+            'has_sales_page' => 'nullable|boolean',
+            'landing_headline' => 'nullable|string|max:255',
+            'landing_subheadline' => 'nullable|string',
+            'landing_hero_badge' => 'nullable|string|max:255',
+            'landing_cta_text' => 'nullable|string|max:255',
+            'landing_primary_color' => 'nullable|string|max:50',
+            'external_css_urls' => 'nullable|string',
+            'custom_css' => 'nullable|string',
+            'custom_head_scripts' => 'nullable|string',
+            'custom_body_scripts' => 'nullable|string',
+            'meta_pixel_id' => 'nullable|string|max:100',
+            'google_analytics_id' => 'nullable|string|max:100',
+            'og_title' => 'nullable|string|max:255',
+            'og_description' => 'nullable|string',
+            'og_image' => 'nullable|string|max:255',
+            'og_image_file' => 'nullable|image|max:5120',
         ]);
 
         $features = ! empty($validated['features'])
@@ -200,10 +249,12 @@ class DigitalProductController extends Controller
             ? array_values(array_filter(array_map('trim', explode("\n", $validated['system_requirements']))))
             : $digitalProduct->system_requirements;
 
+        $productSlug = Str::slug($validated['slug']);
+
         $updateData = [
             'category_id' => $validated['category_id'],
             'name' => $validated['name'],
-            'slug' => Str::slug($validated['slug']),
+            'slug' => $productSlug,
             'tagline' => $validated['tagline'] ?? null,
             'description' => $validated['description'],
             'features' => $features,
@@ -221,7 +272,7 @@ class DigitalProductController extends Controller
             $uploaded = $request->file('software_file');
             $fileName = $uploaded->getClientOriginalName();
             $fileSize = round($uploaded->getSize() / 1024 / 1024, 2).' MB';
-            $filePath = $uploaded->storeAs('digital_products', $digitalProduct->slug.'_'.time().'.'.$uploaded->getClientOriginalExtension(), 'local');
+            $filePath = $uploaded->storeAs('digital_products', $productSlug.'_'.time().'.'.$uploaded->getClientOriginalExtension(), 'local');
 
             $updateData['file_path'] = $filePath;
             $updateData['file_name'] = $fileName;
@@ -229,6 +280,66 @@ class DigitalProductController extends Controller
         }
 
         $digitalProduct->update($updateData);
+
+        // Handle Sales Page
+        $hasSalesPage = $request->boolean('has_sales_page', false);
+        $landingPage = $digitalProduct->landingPage;
+
+        if ($hasSalesPage) {
+            $ogImage = $request->input('og_image') ?: $landingPage?->og_image;
+            if ($request->hasFile('og_image_file')) {
+                $ogUploaded = $request->file('og_image_file');
+                $ogImageName = 'og_'.$productSlug.'_'.time().'.'.$ogUploaded->getClientOriginalExtension();
+                $ogUploaded->move(public_path('uploads/landing'), $ogImageName);
+                $ogImage = '/uploads/landing/'.$ogImageName;
+            }
+
+            $landingData = [
+                'slug' => $productSlug,
+                'headline' => $validated['landing_headline'] ?: $digitalProduct->name,
+                'subheadline' => $validated['landing_subheadline'] ?: $digitalProduct->tagline,
+                'hero_badge' => $validated['landing_hero_badge'] ?? ($landingPage?->hero_badge ?? '🔥 عرض خاص لفترة محدودة: تفعيل فوري مع ترخيص رسمي'),
+                'cta_text' => $validated['landing_cta_text'] ?? ($landingPage?->cta_text ?? 'اشترِ الآن واحصل على التفعيل الفوري'),
+                'primary_color' => $validated['landing_primary_color'] ?? ($landingPage?->primary_color ?? '#0284c7'),
+                'external_css_urls' => $validated['external_css_urls'] ?? null,
+                'custom_css' => $validated['custom_css'] ?? null,
+                'custom_head_scripts' => $validated['custom_head_scripts'] ?? null,
+                'custom_body_scripts' => $validated['custom_body_scripts'] ?? null,
+                'meta_pixel_id' => $validated['meta_pixel_id'] ?? null,
+                'google_analytics_id' => $validated['google_analytics_id'] ?? null,
+                'og_title' => $validated['og_title'] ?? null,
+                'og_description' => $validated['og_description'] ?? null,
+                'og_image' => $ogImage,
+                'is_published' => true,
+            ];
+
+            if ($landingPage) {
+                $landingPage->update($landingData);
+            } else {
+                $landingData['product_id'] = $digitalProduct->id;
+                $landingData['timer_ends_at'] = now()->addDays(2);
+                $landingData['key_benefits'] = [
+                    ['title' => 'توفير الوقت والجهد', 'desc' => 'نظام آلي بالكامل يقلل الأخطاء ويسرع إنجاز مهامك.'],
+                    ['title' => 'ترخيص دائم بدون قيود', 'desc' => 'تفعيل مدى الحياة بدون أي اشتراكات دورية إجبارية.'],
+                    ['title' => 'أمان وتشفير كامل', 'desc' => 'حماية بياناتك وحساباتك بأعلى معايير التشفير.'],
+                    ['title' => 'دعم فني وتحديثات مستمرة', 'desc' => 'فريق متخصص لمساعدتك في التثبيت وحل أي استفسار.'],
+                ];
+                $landingData['social_proof_stats'] = [
+                    ['label' => 'مستخدم نشط', 'value' => '+1,200'],
+                    ['label' => 'نسبة رضا العملاء', 'value' => '99%'],
+                    ['label' => 'استقرار وأداء', 'value' => '100%'],
+                    ['label' => 'دعم فني', 'value' => '24/7'],
+                ];
+                $landingData['faq_items'] = [
+                    ['question' => 'كيف أستلم البرنامج ومفتاح الترخيص؟', 'answer' => 'فور إتمام الدفع ستنتقل لصفحة التحميل المباشر وسيصلك إيميل فوري يحتوي على مفتاح الترخيص وبياناتك.'],
+                    ['question' => 'هل توجد مصاريف تجديد؟', 'answer' => 'لا، هذا العرض يمنحك ترخيصاً دائماً بدون أي اشتراك شهري.'],
+                ];
+                $landingData['guarantee_text'] = 'نضمن لك استرجاع المبلغ بالكامل خلال 14 يوماً في حال عدم ملاءمة البرنامج لعملك.';
+                ProductLandingPage::create($landingData);
+            }
+        } elseif ($landingPage) {
+            $landingPage->update(['is_published' => false]);
+        }
 
         return redirect()->route('admin.digital-products.index')->with('success', 'تم تحديث بيانات البرنامج بنجاح.');
     }

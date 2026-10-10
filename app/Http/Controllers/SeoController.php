@@ -189,9 +189,9 @@ class SeoController extends Controller
 
         $content .= "## Primary Navigation & Resources\n";
         $content .= "- [Homepage]({$baseUrl}): Company vision, client reviews, and instant project consultation.\n";
-        $content .= "- [Portfolio Case Studies](".route('projects.index')."): Real-world engineering case studies, tech stacks, and quantified impact.\n";
-        $content .= "- [Software Store](".route('store.index')."): Commercial digital products, ready-made platforms, and developer toolkits.\n";
-        $content .= "- [Full AI Context (llms-full.txt)](".url('/llms-full.txt')."): Complete structured catalog of all services and public projects.\n\n";
+        $content .= '- [Portfolio Case Studies]('.route('projects.index')."): Real-world engineering case studies, tech stacks, and quantified impact.\n";
+        $content .= '- [Software Store]('.route('store.index')."): Commercial digital products, ready-made platforms, and developer toolkits.\n";
+        $content .= '- [Full AI Context (llms-full.txt)]('.url('/llms-full.txt')."): Complete structured catalog of all services and public projects.\n\n";
 
         $content .= "## Official Verified Channels\n";
         $content .= "- **Website**: {$baseUrl}\n";
@@ -224,9 +224,9 @@ class SeoController extends Controller
         $content .= "## Company Profile\n";
         $content .= "- **Name**: OX Tech (oxtech.uk)\n";
         $content .= "- **Offices**: Cairo (Egypt), Riyadh (Saudi Arabia), Dubai (UAE), London (UK)\n";
-        $content .= "- **Primary Contact Email**: ".($settings['contact_email_primary'] ?? 'contact@oxtech.uk')."\n";
-        $content .= "- **Primary Phone**: ".($settings['contact_phone_primary'] ?? '+20 10 08616682')."\n";
-        $content .= "- **Google Maps Location**: ".($settings['google_maps_url'] ?? 'https://share.google/82M8ufbu784MYpH3y')."\n\n";
+        $content .= '- **Primary Contact Email**: '.($settings['contact_email_primary'] ?? 'contact@oxtech.uk')."\n";
+        $content .= '- **Primary Phone**: '.($settings['contact_phone_primary'] ?? '+20 10 08616682')."\n";
+        $content .= '- **Google Maps Location**: '.($settings['google_maps_url'] ?? 'https://share.google/82M8ufbu784MYpH3y')."\n\n";
 
         $content .= "## Public Case Studies & Projects\n\n";
         foreach ($projects as $project) {

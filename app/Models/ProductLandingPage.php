@@ -23,6 +23,15 @@ class ProductLandingPage extends Model
         'guarantee_text',
         'cta_text',
         'primary_color',
+        'external_css_urls',
+        'custom_css',
+        'custom_head_scripts',
+        'custom_body_scripts',
+        'meta_pixel_id',
+        'google_analytics_id',
+        'og_title',
+        'og_description',
+        'og_image',
         'is_published',
     ];
 

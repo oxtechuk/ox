@@ -108,14 +108,18 @@
                                 @endif
                             </td>
                             <td>
-                                <div style="display: flex; gap: 8px;">
-                                    <a href="{{ route('store.product', $product->slug) }}" target="_blank" style="font-size: 11px; color: #2563eb; text-decoration: underline;">
-                                        صفحة المتجر ↗
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <a href="{{ route('store.product', $product->slug) }}" target="_blank" style="font-size: 11px; color: #2563eb; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+                                         صفحة المتجر ↗
                                     </a>
-                                    @if($product->landingPage)
-                                        <a href="{{ route('store.landing', $product->landingPage->slug) }}" target="_blank" style="font-size: 11px; color: #7c3aed; font-weight: 700; text-decoration: underline;">
-                                            صفحة الإعلان (Sales) ↗
+                                    @if($product->landingPage && $product->landingPage->is_published)
+                                        <a href="{{ route('store.landing', $product->landingPage->slug) }}" target="_blank" style="font-size: 10.5px; background: #f5f3ff; color: #6d28d9; padding: 2px 7px; border-radius: 6px; font-weight: 700; text-decoration: none; border: 1px solid #ddd6fe; display: inline-flex; align-items: center; gap: 4px; width: fit-content;">
+                                             صفحة سيلز نشطة ↗
                                         </a>
+                                    @else
+                                        <span style="font-size: 10px; color: var(--text-muted);">
+                                            بدون صفحة سيلز
+                                        </span>
                                     @endif
                                 </div>
                             </td>
