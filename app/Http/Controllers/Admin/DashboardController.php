@@ -241,6 +241,7 @@ class DashboardController extends Controller
             'testimonials_count' => Testimonial::count(),
             'quotations_count' => Quotation::count(),
             'payment_logs_count' => PaymentLog::count(),
+            'promo_codes_count' => \App\Models\PromoCode::count(),
             'users_count' => User::count(),
             'tracking_pixels_count' => TrackingPixel::count(),
             'site_settings_count' => SiteSetting::count(),

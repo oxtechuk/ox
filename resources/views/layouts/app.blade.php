@@ -1812,21 +1812,33 @@
             <nav class="navbar-links" id="mainNavbarLinks">
                 @if($currentLocale === 'ar')
                     <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">الرئيسية</a>
+                    <a href="{{ route('store.index') }}" class="nav-item-link {{ request()->routeIs('store.*') ? 'active' : '' }}" data-target="store">المنتجات</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">خدماتنا</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">أعمالنا</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">من نحن</a>
+                    <a href="{{ route('customer.dashboard') }}" class="nav-item-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" data-target="account">
+                        <i class="fa-regular fa-user" style="margin-left: 5px; font-size: 12px;"></i>حسابي
+                    </a>
                     <a href="{{ route('contact') }}" class="nav-item-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">تواصل معنا</a>
                 @elseif($currentLocale === 'fr')
                     <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">Accueil</a>
+                    <a href="{{ route('store.index') }}" class="nav-item-link {{ request()->routeIs('store.*') ? 'active' : '' }}" data-target="store">Produits</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Réalisations</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">À Propos</a>
+                    <a href="{{ route('customer.dashboard') }}" class="nav-item-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" data-target="account">
+                        <i class="fa-regular fa-user" style="margin-right: 5px; font-size: 12px;"></i>Mon Compte
+                    </a>
                     <a href="{{ route('contact') }}" class="nav-item-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">Contact</a>
                 @else
                     <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">Home</a>
+                    <a href="{{ route('store.index') }}" class="nav-item-link {{ request()->routeIs('store.*') ? 'active' : '' }}" data-target="store">Products</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Work</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">About</a>
+                    <a href="{{ route('customer.dashboard') }}" class="nav-item-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" data-target="account">
+                        <i class="fa-regular fa-user" style="margin-right: 5px; font-size: 12px;"></i>My Account
+                    </a>
                     <a href="{{ route('contact') }}" class="nav-item-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">Contact</a>
                 @endif
             </nav>
@@ -1860,6 +1872,8 @@
         <div class="mobile-drawer-links">
             @if($currentLocale === 'ar')
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ الرئيسية</a>
+                <a href="{{ route('store.index') }}" onclick="closeMobileNav()">✦ المنتجات الرقمية والبرامج</a>
+                <a href="{{ route('customer.dashboard') }}" onclick="closeMobileNav()">✦ حسابي والتراخيص</a>
                 <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ أعمالنا ومشاريعنا</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ الخدمات والحلول</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ قصص وآراء الشركاء</a>
@@ -1867,6 +1881,8 @@
                 <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ تواصل معنا</a>
             @elseif($currentLocale === 'fr')
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Accueil</a>
+                <a href="{{ route('store.index') }}" onclick="closeMobileNav()">✦ Produits & Logiciels</a>
+                <a href="{{ route('customer.dashboard') }}" onclick="closeMobileNav()">✦ Mon Compte & Licences</a>
                 <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Nos Projets</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Témoignages Partenaires</a>
@@ -1874,6 +1890,8 @@
                 <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ Contactez-nous</a>
             @else
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Home</a>
+                <a href="{{ route('store.index') }}" onclick="closeMobileNav()">✦ Products & Software</a>
+                <a href="{{ route('customer.dashboard') }}" onclick="closeMobileNav()">✦ My Account & Licenses</a>
                 <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Work & Projects</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Partner Stories</a>

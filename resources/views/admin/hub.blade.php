@@ -351,6 +351,31 @@
                 </div>
             </div>
 
+            <!-- Promo Codes (كوبونات وأكواد الخصم) -->
+            <div class="hub-card" style="border-color: rgba(5, 150, 105, 0.35);">
+                <div>
+                    <div class="hub-card-header">
+                        <div class="hub-icon-box" style="background: #ECFDF5; color: #059669; border-color: #A7F3D0;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                        </div>
+                        <span class="hub-card-tag" style="background: #ECFDF5; color: #047857; border-color: #A7F3D0;">{{ $hubStats['promo_codes_count'] ?? 0 }} كود</span>
+                    </div>
+                    <div class="hub-card-content">
+                        <h3>كوبونات وأكواد الخصم (Promo Codes)</h3>
+                        <p>إنشاء وتخصيص كوبونات الخصم، تحديد نسب التخفيض، فترات الصلاحية، ومتابعة عدد مرات الاستخدام.</p>
+                    </div>
+                </div>
+                <div class="hub-card-actions">
+                    <a href="{{ route('admin.promo-codes.index') }}" class="hub-enter-btn" style="background: #059669;">
+                        <span>إدارة الخصومات</span>
+                        <span>&larr;</span>
+                    </a>
+                    <a href="{{ route('admin.promo-codes.create') }}" class="hub-quick-add-btn" title="إنشاء كود خصم جديد">
+                        <span>+ إنشاء كود</span>
+                    </a>
+                </div>
+            </div>
+
             <!-- Analytics Reports -->
             <div class="hub-card">
                 <div>
