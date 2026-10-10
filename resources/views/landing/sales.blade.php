@@ -1354,6 +1354,58 @@
             margin-bottom: 18px;
         }
 
+        /* Promo Code Toggle & Collapse */
+        .sp-promo-toggle-wrap {
+            margin-bottom: 14px;
+        }
+
+        .sp-promo-toggle-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 16px;
+            background: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sp-promo-toggle-btn:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #1e293b;
+        }
+
+        .sp-promo-toggle-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sp-promo-toggle-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--green);
+            font-weight: 800;
+            font-size: 12.5px;
+        }
+
+        .sp-promo-toggle-arrow {
+            transition: transform 0.25s ease;
+            font-size: 11px;
+        }
+
+        .sp-promo-toggle-arrow.open {
+            transform: rotate(180deg);
+        }
+
         /* Promo Code Section */
         .sp-promo-section {
             margin-bottom: 18px;
@@ -1361,6 +1413,12 @@
             border: 1px solid #e2edea;
             border-radius: 12px;
             padding: 14px;
+            animation: fadeInPromo 0.25s ease-out;
+        }
+
+        @keyframes fadeInPromo {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .sp-promo-row {
@@ -1487,103 +1545,159 @@
             gap: 14px;
         }
 
-        /* 3 Unified Payment Methods Grid */
+        /* 3 Unified Payment Methods Grid (Enhanced & Polished) */
         .sp-payment-methods-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 20px;
         }
 
         @media (max-width: 768px) {
             .sp-payment-methods-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 12px;
             }
         }
 
         .sp-method-card {
             border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 14px 12px;
-            background: #f8fafc;
+            border-radius: 16px;
+            padding: 16px 14px 14px;
+            background: #ffffff;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            justify-content: space-between;
+            min-height: 124px;
             text-align: right;
             position: relative;
+            box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+            box-sizing: border-box;
         }
 
         .sp-method-card:hover {
             border-color: #cbd5e1;
-            background: #ffffff;
             transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
         }
 
-        .sp-method-card.active {
-            border-color: var(--green);
-            background: #f0fdf4;
-            box-shadow: 0 4px 16px rgba(8, 123, 104, 0.12);
+        .sp-method-badge-top {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: #f1f5f9;
+            color: #475569;
+            letter-spacing: 0.3px;
+            direction: ltr;
         }
 
-        .sp-method-card.active.card-usd {
-            border-color: #0284c7;
-            background: #f0f9ff;
-            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.15);
+        .sp-method-logo-box {
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 10px;
         }
 
-        .sp-method-card.active.paypal {
-            border-color: #0070ba;
-            background: #f0fdfa;
-            box-shadow: 0 4px 16px rgba(0, 112, 186, 0.15);
+        .sp-method-logo-img.card-brands-img {
+            height: 30px;
+            max-width: 125px;
+            object-fit: contain;
+            display: block;
         }
 
-        .sp-method-header {
+        .sp-method-logo-img.paypal-logo-img {
+            height: 30px;
+            max-width: 44px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .sp-egypt-icons-cluster {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sp-egypt-tag {
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #059669;
+            background: #ecfdf5;
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid #a7f3d0;
+        }
+
+        .sp-method-title-wrap {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            margin-bottom: 4px;
         }
 
-        .sp-method-icon-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13.5px;
+        .sp-method-title {
+            font-size: 14px;
             font-weight: 800;
             color: #0f172a;
         }
 
-        .sp-method-currency-badge {
-            font-size: 11px;
-            font-weight: 800;
-            padding: 2px 7px;
-            border-radius: 6px;
-            background: #e2e8f0;
-            color: #334155;
-        }
-
-        .sp-method-card.active .sp-method-currency-badge {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .sp-method-card.active.card-usd .sp-method-currency-badge {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .sp-method-card.active.paypal .sp-method-currency-badge {
-            background: #e0f2fe;
-            color: #0284c7;
+        .sp-method-check {
+            font-size: 16px;
+            color: #cbd5e1;
+            transition: color 0.2s ease;
         }
 
         .sp-method-desc {
             font-size: 11.5px;
             color: #64748b;
             line-height: 1.45;
+        }
+
+        /* Active states */
+        .sp-method-card.active.card-usd {
+            border-color: #0284c7;
+            background: #f8fafc;
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.15);
+        }
+        .sp-method-card.active.card-usd .sp-method-badge-top {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        .sp-method-card.active.card-usd .sp-method-check {
+            color: #0284c7;
+        }
+
+        .sp-method-card.active.paypal {
+            border-color: #0070ba;
+            background: #f8fafc;
+            box-shadow: 0 6px 20px rgba(0, 112, 186, 0.15);
+        }
+        .sp-method-card.active.paypal .sp-method-badge-top {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+        .sp-method-card.active.paypal .sp-method-check {
+            color: #0070ba;
+        }
+
+        .sp-method-card.active.egp {
+            border-color: #059669;
+            background: #f8fafc;
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.15);
+        }
+        .sp-method-card.active.egp .sp-method-badge-top {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .sp-method-card.active.egp .sp-method-check {
+            color: #059669;
         }
 
         /* ─── 10. FAQ & SUPPORT ─── */
@@ -2564,8 +2678,8 @@
                 </div>
 
                 {{-- 1. 3-Way Payment Method Selector --}}
-                <div style="margin-bottom: 18px;">
-                    <div style="font-size: 13.5px; font-weight: 800; color: #1e293b; margin-bottom: 10px; display: flex; align-items: center; gap: 7px;">
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 7px;">
                         <i class="fa-solid fa-wallet" style="color: var(--green);"></i>
                         <span>اختر وسيلة الدفع المناسبة لك:</span>
                     </div>
@@ -2573,38 +2687,44 @@
                     <div class="sp-payment-methods-grid">
                         <!-- Option 1: فيزا دولاري -->
                         <div class="sp-method-card active card-usd" id="pmc-card_usd" onclick="selectPaymentMethod('card_usd')">
-                            <div class="sp-method-header">
-                                <div class="sp-method-icon-title">
-                                    <i class="fa-solid fa-credit-card" style="color: #0284c7; font-size: 17px;"></i>
-                                    <span>فيزا دولاري</span>
-                                </div>
-                                <span class="sp-method-currency-badge">USD $</span>
+                            <div class="sp-method-badge-top">USD $</div>
+                            <div class="sp-method-logo-box">
+                                <img src="{{ asset('assets/Visa-Mastercard-1-1024x378-1.png') }}" alt="Visa & Mastercard" class="sp-method-logo-img card-brands-img">
                             </div>
-                            <div class="sp-method-desc">بطاقات بنكية دولية (Visa / Mastercard)</div>
+                            <div class="sp-method-title-wrap">
+                                <span class="sp-method-title">فيزا دولاري</span>
+                                <span class="sp-method-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="sp-method-desc">بطاقات بنكية دولية (Visa / Mastercard) بالدولار</div>
                         </div>
 
                         <!-- Option 2: بيبال -->
                         <div class="sp-method-card paypal" id="pmc-paypal" onclick="selectPaymentMethod('paypal')">
-                            <div class="sp-method-header">
-                                <div class="sp-method-icon-title">
-                                    <i class="fa-brands fa-paypal" style="color: #0070ba; font-size: 18px;"></i>
-                                    <span>بيبال (PayPal)</span>
-                                </div>
-                                <span class="sp-method-currency-badge">USD $</span>
+                            <div class="sp-method-badge-top">USD $</div>
+                            <div class="sp-method-logo-box">
+                                <img src="{{ asset('assets/paypal-icon.webp') }}" alt="PayPal" class="sp-method-logo-img paypal-logo-img">
                             </div>
-                            <div class="sp-method-desc">حساب أو رصيد PayPal المباشر</div>
+                            <div class="sp-method-title-wrap">
+                                <span class="sp-method-title">بيبال (PayPal)</span>
+                                <span class="sp-method-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="sp-method-desc">حساب ورصيد PayPal السريع والمباشر</div>
                         </div>
 
                         <!-- Option 3: دفع محلي مصري -->
                         <div class="sp-method-card egp" id="pmc-egp" onclick="selectPaymentMethod('egp')">
-                            <div class="sp-method-header">
-                                <div class="sp-method-icon-title">
-                                    <i class="fa-solid fa-building-columns" style="color: #059669; font-size: 16px;"></i>
-                                    <span>دفع محلي مصري</span>
+                            <div class="sp-method-badge-top">EGP ج.م</div>
+                            <div class="sp-method-logo-box">
+                                <div class="sp-egypt-icons-cluster">
+                                    <i class="fa-solid fa-building-columns" style="color: #059669; font-size: 22px;"></i>
+                                    <span class="sp-egypt-tag">PaySky مصر</span>
                                 </div>
-                                <span class="sp-method-currency-badge">EGP ج.م</span>
                             </div>
-                            <div class="sp-method-desc">كروت مصرية، ميزة ومحافظ عبر PaySky</div>
+                            <div class="sp-method-title-wrap">
+                                <span class="sp-method-title">دفع محلي مصري</span>
+                                <span class="sp-method-check"><i class="fa-solid fa-circle-check"></i></span>
+                            </div>
+                            <div class="sp-method-desc">كروت البنوك، ميزة، والمحافظ الذكية بالجنيه</div>
                         </div>
                     </div>
                 </div>
@@ -2615,12 +2735,12 @@
                         <div style="font-weight: 800; font-size: 14px; color: #0f172a;">{{ $product->name }} (ترخيص دائم)</div>
                         <div style="font-size: 12px; color: #059669; font-weight: 700;">✓ تفعيل رقمي فوري + رابط التحميل المباشر</div>
                         <div id="appliedPromoBadge" style="display:none; font-size: 12px; color: #087b68; font-weight: 800; margin-top: 4px;">
-                            🏷️ كود الخصم المفعّل: <span id="appliedPromoCodeText">OX50</span> (<span id="appliedPromoDiscountText">-50%</span>)
+                            🏷️ كود الخصم المفعّل: <span id="appliedPromoCodeText"></span> (<span id="appliedPromoDiscountText"></span>)
                         </div>
                     </div>
                     <div style="text-align: left; min-width: 130px;">
                         <div id="originalPriceLine" style="display:none; text-decoration: line-through; color: #94a3b8; font-size: 13px;">
-                            <span id="displayOriginalAmount">100</span> <span class="displayCurrencyLabel">USD</span>
+                            <span id="displayOriginalAmount"></span> <span class="displayCurrencyLabel">USD</span>
                         </div>
                         <div>
                             <span style="font-size: 24px; font-weight: 900; color: #065f46;" id="displayFinalAmount">{{ number_format($effectivePrice, 0) }}</span>
@@ -2629,18 +2749,31 @@
                     </div>
                 </div>
 
-                {{-- 3. Promo Code Box with Duration and Expiry --}}
-                <div class="sp-promo-section">
+                {{-- 3. Promo Code Toggle & Expandable Box --}}
+                <div class="sp-promo-toggle-wrap">
+                    <button type="button" class="sp-promo-toggle-btn" id="btnTogglePromo" onclick="togglePromoBox()">
+                        <span class="sp-promo-toggle-title">
+                            <i class="fa-solid fa-ticket" style="color: var(--green);"></i>
+                            <span>معك كود خصم أو كوبون تخفيض؟</span>
+                        </span>
+                        <span class="sp-promo-toggle-action">
+                            <span id="promoToggleActionText">اضغط هنا لإدخاله</span>
+                            <i class="fa-solid fa-chevron-down sp-promo-toggle-arrow" id="promoToggleArrow"></i>
+                        </span>
+                    </button>
+                </div>
+
+                <div class="sp-promo-section" id="spPromoCollapseBox" style="display: none;">
                     <div class="sp-promo-row">
                         <div style="position: relative; flex: 1;">
                             <i class="fa-solid fa-ticket sp-promo-input-icon"></i>
-                            <input type="text" id="spPromoInput" placeholder="أدخل كود الخصم (مثال: OX50)" class="sp-promo-input" value="OX50" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPromoCode();}">
+                            <input type="text" id="spPromoInput" placeholder="أدخل كود الخصم (مثال: OX50)" class="sp-promo-input" value="" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPromoCode();}">
                         </div>
                         <button type="button" class="sp-promo-submit-btn" id="btnApplyPromo" onclick="applyPromoCode()">
                             <span id="promoBtnText">تطبيق الكود</span>
                         </button>
                     </div>
-                    <div id="spPromoFeedback" class="sp-promo-feedback" style="display: none; margin-top: 10px; padding: 8px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 700;"></div>
+                    <div id="spPromoFeedback" class="sp-promo-feedback" style="display: none;"></div>
                 </div>
 
                 {{-- 4. Fast Checkout Form --}}
@@ -2855,11 +2988,32 @@ function selectCurrency(curr) {
     selectPaymentMethod(curr === 'EGP' ? 'egp' : 'card_usd');
 }
 
+function togglePromoBox() {
+    const box = document.getElementById('spPromoCollapseBox');
+    const arrow = document.getElementById('promoToggleArrow');
+    const actionText = document.getElementById('promoToggleActionText');
+    const input = document.getElementById('spPromoInput');
+
+    if (!box) return;
+
+    if (box.style.display === 'none' || !box.style.display) {
+        box.style.display = 'block';
+        if (arrow) arrow.classList.add('open');
+        if (actionText) actionText.textContent = 'إغلاق نافذة الكود';
+        if (input) setTimeout(() => input.focus(), 150);
+    } else {
+        box.style.display = 'none';
+        if (arrow) arrow.classList.remove('open');
+        if (actionText) actionText.textContent = appliedPromoData ? 'تم تطبيق الخصم (' + appliedPromoData.code + ') ✓' : 'اضغط هنا لإدخاله';
+    }
+}
+
 async function applyPromoCode() {
     const input = document.getElementById('spPromoInput');
     const feedback = document.getElementById('spPromoFeedback');
     const btn = document.getElementById('btnApplyPromo');
     const promoBtnText = document.getElementById('promoBtnText');
+    const actionText = document.getElementById('promoToggleActionText');
     const code = input ? input.value.trim().toUpperCase() : '';
 
     if (!code) {
@@ -2897,6 +3051,7 @@ async function applyPromoCode() {
             appliedPromoData = data;
             const appliedPromoInput = document.getElementById('spAppliedPromo');
             if (appliedPromoInput) appliedPromoInput.value = data.code;
+            if (actionText) actionText.textContent = 'تم تطبيق الخصم (' + data.code + ') ✓';
             if (feedback) {
                 feedback.style.display = 'block';
                 feedback.style.background = '#ECFDF5';
@@ -2909,6 +3064,7 @@ async function applyPromoCode() {
             appliedPromoData = null;
             const appliedPromoInput = document.getElementById('spAppliedPromo');
             if (appliedPromoInput) appliedPromoInput.value = '';
+            if (actionText) actionText.textContent = 'اضغط هنا لإدخاله';
             if (feedback) {
                 feedback.style.display = 'block';
                 feedback.style.background = '#FEF2F2';
@@ -3221,11 +3377,7 @@ async function handleSalesCheckout(e) {
 // Initial price display on load & Reviews Slider
 document.addEventListener('DOMContentLoaded', function() {
     selectPaymentMethod('card_usd'); // Default: USD Card
-    // Automatically pre-apply OX50 promo if valid
-    const promoInput = document.getElementById('spPromoInput');
-    if (promoInput && promoInput.value) {
-        applyPromoCode();
-    }
+    updatePriceUI(); // Default product displayed with its original price
 
     // ─── Mobile Reviews Slider Logic ───
     (function initMobileReviewsSlider() {

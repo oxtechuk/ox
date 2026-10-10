@@ -61,7 +61,7 @@ class PromoCodeController extends Controller
     public function create(): View
     {
         $products = DigitalProduct::where('is_active', true)->orderBy('name')->get();
-        $suggestedCode = 'OX' . strtoupper(Str::random(4));
+        $suggestedCode = 'OX'.strtoupper(Str::random(4));
 
         return view('admin.promo-codes.create', compact('products', 'suggestedCode'));
     }
@@ -100,7 +100,7 @@ class PromoCodeController extends Controller
         PromoCode::create($validated);
 
         return redirect()->route('admin.promo-codes.index')
-            ->with('success', 'تم إنشاء كود الخصم ' . $validated['code'] . ' بنجاح.');
+            ->with('success', 'تم إنشاء كود الخصم '.$validated['code'].' بنجاح.');
     }
 
     /**
@@ -124,7 +124,7 @@ class PromoCodeController extends Controller
         ]);
 
         $validated = $request->validate([
-            'code' => ['required', 'string', 'max:50', 'unique:promo_codes,code,' . $promoCode->id],
+            'code' => ['required', 'string', 'max:50', 'unique:promo_codes,code,'.$promoCode->id],
             'discount_type' => ['required', 'in:percentage,fixed'],
             'discount_value' => [
                 'required',
