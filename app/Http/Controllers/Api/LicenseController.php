@@ -19,8 +19,10 @@ class LicenseController extends Controller
             return $authError;
         }
 
+        $credentials = $this->extractCredentials($request);
+
         // 1. Validate request payload
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($credentials, [
             'license_key' => ['required', 'string', 'max:191'],
             'hardware_id' => ['required', 'string', 'max:191'],
         ], [
@@ -35,11 +37,13 @@ class LicenseController extends Controller
             ], 400);
         }
 
-        $licenseKey = trim((string) $request->input('license_key'));
-        $hardwareId = trim((string) $request->input('hardware_id'));
+        $licenseKey = $credentials['license_key'];
+        $hardwareId = $credentials['hardware_id'];
 
-        // 2. Locate license
-        $license = License::where('license_key', $licenseKey)->first();
+        // 2. Locate license (case-tolerant)
+        $license = License::where('license_key', $licenseKey)
+            ->orWhere('license_key', strtoupper($licenseKey))
+            ->first();
 
         if (! $license) {
             return response()->json([
@@ -71,10 +75,9 @@ class LicenseController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'License activated successfully.',
-                'data' => [
-                    'expires_at' => $license->expires_at?->toIso8601String(),
-                    'is_active' => true,
-                ],
+                'data' => $this->buildResponseData($license),
+                'is_active' => true,
+                'isActive' => true,
             ], 200);
         }
 
@@ -96,10 +99,9 @@ class LicenseController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'License activated successfully.',
-            'data' => [
-                'expires_at' => $license->expires_at?->toIso8601String(),
-                'is_active' => true,
-            ],
+            'data' => $this->buildResponseData($license),
+            'is_active' => true,
+            'isActive' => true,
         ], 200);
     }
 
@@ -112,8 +114,10 @@ class LicenseController extends Controller
             return $authError;
         }
 
+        $credentials = $this->extractCredentials($request);
+
         // 1. Validate request payload
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($credentials, [
             'license_key' => ['required', 'string', 'max:191'],
             'hardware_id' => ['required', 'string', 'max:191'],
         ], [
@@ -128,11 +132,13 @@ class LicenseController extends Controller
             ], 400);
         }
 
-        $licenseKey = trim((string) $request->input('license_key'));
-        $hardwareId = trim((string) $request->input('hardware_id'));
+        $licenseKey = $credentials['license_key'];
+        $hardwareId = $credentials['hardware_id'];
 
-        // 2. Locate license
-        $license = License::where('license_key', $licenseKey)->first();
+        // 2. Locate license (case-tolerant)
+        $license = License::where('license_key', $licenseKey)
+            ->orWhere('license_key', strtoupper($licenseKey))
+            ->first();
 
         if (! $license) {
             return response()->json([
@@ -171,11 +177,61 @@ class LicenseController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'License verified successfully.',
-            'data' => [
-                'expires_at' => $license->expires_at?->toIso8601String(),
-                'is_active' => true,
-            ],
+            'data' => $this->buildResponseData($license),
+            'is_active' => true,
+            'isActive' => true,
         ], 200);
+    }
+
+    /**
+     * Extract and normalize license credentials from request.
+     * Supports snake_case, camelCase, and PascalCase from desktop clients.
+     *
+     * @return array{license_key: string, hardware_id: string}
+     */
+    protected function extractCredentials(Request $request): array
+    {
+        $licenseKey = trim((string) (
+            $request->input('license_key')
+            ?? $request->input('LicenseKey')
+            ?? $request->input('licenseKey')
+            ?? $request->input('license')
+            ?? $request->input('key')
+        ));
+
+        $hardwareId = trim((string) (
+            $request->input('hardware_id')
+            ?? $request->input('HardwareId')
+            ?? $request->input('hardwareId')
+            ?? $request->input('machine_id')
+            ?? $request->input('MachineId')
+            ?? $request->input('hwid')
+        ));
+
+        return [
+            'license_key' => $licenseKey,
+            'hardware_id' => $hardwareId,
+        ];
+    }
+
+    /**
+     * Build standard response payload compatible with C# .NET / WPF deserializers.
+     *
+     * @return array<string, mixed>
+     */
+    protected function buildResponseData(License $license): array
+    {
+        $expiresAt = $license->expires_at?->toIso8601String() ?? '2099-12-31T23:59:59Z';
+
+        return [
+            'expires_at' => $expiresAt,
+            'expiresAt' => $expiresAt,
+            'is_active' => true,
+            'isActive' => true,
+            'license_key' => $license->license_key,
+            'licenseKey' => $license->license_key,
+            'max_devices' => $license->max_devices,
+        ];
     }
 
     /**
