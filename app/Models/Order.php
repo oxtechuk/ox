@@ -27,6 +27,8 @@ class Order extends Model
         'utm_medium',
         'utm_campaign',
         'ip_address',
+        'promo_code',
+        'discount_amount',
     ];
 
     protected function casts(): array

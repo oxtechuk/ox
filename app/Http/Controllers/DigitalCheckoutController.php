@@ -7,6 +7,7 @@ use App\Models\DigitalProduct;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentLog;
+use App\Models\PromoCode;
 use App\Services\OrderFulfillmentService;
 use App\Services\PaySkyService;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +26,65 @@ class DigitalCheckoutController extends Controller
     ) {}
 
     /**
+     * Validate a promo code against product and currency
+     */
+    public function validatePromo(Request $request): JsonResponse
+    {
+        $request->validate([
+            'code' => 'required|string|max:50',
+            'product_id' => 'required|exists:digital_products,id',
+            'currency' => 'nullable|string|in:USD,EGP,SAR',
+        ]);
+
+        $product = DigitalProduct::findOrFail($request->product_id);
+        $code = strtoupper(trim((string) $request->code));
+        $promo = PromoCode::where('code', $code)->first();
+
+        if (! $promo) {
+            return response()->json([
+                'valid' => false,
+                'message' => 'كود الخصم غير موجود أو غير صحيح.',
+            ], 422);
+        }
+
+        $check = $promo->checkValidity($product);
+        if (! $check['valid']) {
+            return response()->json([
+                'valid' => false,
+                'message' => $check['message'],
+            ], 422);
+        }
+
+        $currency = strtoupper($request->currency ?: ($product->currency ?: 'USD'));
+
+        // Calculate base price in selected currency (1 USD = 50 EGP)
+        if ($product->currency === 'USD' && $currency === 'EGP') {
+            $basePrice = round((float) $product->effective_price * 50.0, 0);
+        } elseif ($product->currency === 'EGP' && $currency === 'USD') {
+            $basePrice = round((float) $product->effective_price / 50.0, 2);
+        } else {
+            $basePrice = (float) $product->effective_price;
+        }
+
+        $discountAmount = $promo->calculateDiscount($basePrice);
+        $finalPrice = max(1.0, round($basePrice - $discountAmount, 2));
+
+        return response()->json([
+            'valid' => true,
+            'code' => $promo->code,
+            'discount_type' => $promo->discount_type,
+            'discount_value' => (float) $promo->discount_value,
+            'discount_amount' => $discountAmount,
+            'original_price' => $basePrice,
+            'final_price' => $finalPrice,
+            'currency' => $currency,
+            'valid_until' => $promo->valid_until ? $promo->valid_until->format('Y-m-d') : null,
+            'remaining_time' => $promo->remaining_time,
+            'message' => 'تم تطبيق كود الخصم ' . $promo->code . ' بنجاح! (' . ($promo->discount_type === 'percentage' ? round((float) $promo->discount_value) . '%' : $discountAmount . ' ' . $currency) . ' خصم)',
+        ]);
+    }
+
+    /**
      * Initiate instant order and get PaySky Lightbox payload
      */
     public function initiate(InitiateCheckoutRequest $request): JsonResponse
@@ -40,7 +100,36 @@ class DigitalCheckoutController extends Controller
             ], 422);
         }
 
-        $price = $product->effective_price;
+        // Determine requested currency (Default: USD or product currency)
+        $currency = strtoupper($validated['currency'] ?? ($product->currency ?: 'USD'));
+
+        // Calculate base price in selected currency
+        if ($product->currency === 'USD' && $currency === 'EGP') {
+            $basePrice = round((float) $product->effective_price * 50.0, 0);
+        } elseif ($product->currency === 'EGP' && $currency === 'USD') {
+            $basePrice = round((float) $product->effective_price / 50.0, 2);
+        } else {
+            $basePrice = (float) $product->effective_price;
+        }
+
+        // Apply promo code if provided and valid
+        $promoCode = null;
+        $discountAmount = 0.0;
+        $finalPrice = $basePrice;
+
+        if (! empty($validated['promo_code'])) {
+            $promo = PromoCode::where('code', strtoupper(trim((string) $validated['promo_code'])))->first();
+            if ($promo) {
+                $check = $promo->checkValidity($product);
+                if ($check['valid']) {
+                    $promoCode = $promo->code;
+                    $discountAmount = $promo->calculateDiscount($basePrice);
+                    $finalPrice = max(1.0, round($basePrice - $discountAmount, 2));
+                    $promo->increment('used_count');
+                }
+            }
+        }
+
         $orderNumber = 'ORD-'.strtoupper(Str::random(3)).'-'.date('YmdHis');
         $merchantReference = 'REF-'.time().'-'.rand(1000, 9999);
 
@@ -51,11 +140,13 @@ class DigitalCheckoutController extends Controller
             'customer_name' => $validated['customer_name'],
             'customer_email' => $validated['customer_email'],
             'customer_phone' => $validated['customer_phone'] ?? null,
-            'total_amount' => $price,
-            'currency' => $product->currency,
+            'total_amount' => $finalPrice,
+            'currency' => $currency,
             'payment_gateway' => 'paysky',
             'payment_status' => 'pending',
             'merchant_reference' => $merchantReference,
+            'promo_code' => $promoCode,
+            'discount_amount' => $discountAmount,
             'utm_source' => $validated['utm_source'] ?? session('utm_source'),
             'utm_medium' => $validated['utm_medium'] ?? session('utm_medium'),
             'utm_campaign' => $validated['utm_campaign'] ?? session('utm_campaign'),
@@ -66,14 +157,14 @@ class DigitalCheckoutController extends Controller
         OrderItem::create([
             'order_id' => $order->id,
             'product_id' => $product->id,
-            'price' => $price,
+            'price' => $finalPrice,
             'max_activations' => 1,
         ]);
 
         PaymentLog::record(
             event: 'order_created',
             status: 'pending',
-            message: 'تم إنشاء الطلب المبدئي وتجهيز السداد للمنتج: '.$product->name,
+            message: 'تم إنشاء الطلب المبدئي وتجهيز السداد للمنتج: '.$product->name.($promoCode ? " [كود: {$promoCode}]" : ''),
             order: $order,
             requestPayload: $validated
         );

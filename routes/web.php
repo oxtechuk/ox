@@ -61,6 +61,9 @@ Route::get('/p/{slug}', [DigitalStoreController::class, 'landing'])->name('store
 Route::post('/checkout/initiate', [DigitalCheckoutController::class, 'initiate'])
     ->middleware('throttle:15,1')
     ->name('checkout.initiate');
+Route::post('/checkout/validate-promo', [DigitalCheckoutController::class, 'validatePromo'])
+    ->middleware('throttle:30,1')
+    ->name('checkout.validate_promo');
 Route::match(['get', 'post'], '/checkout/paysky/callback', [DigitalCheckoutController::class, 'callback'])->name('checkout.paysky.callback');
 Route::match(['get', 'post'], '/checkout/paysky/webhook', [DigitalCheckoutController::class, 'webhook'])->name('checkout.paysky.webhook');
 Route::post('/checkout/paysky/log-error', [DigitalCheckoutController::class, 'logClientError'])->name('checkout.paysky.log_error');

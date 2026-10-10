@@ -30,6 +30,8 @@ class InitiateCheckoutRequest extends FormRequest
             'utm_source' => 'nullable|string|max:100',
             'utm_medium' => 'nullable|string|max:100',
             'utm_campaign' => 'nullable|string|max:100',
+            'currency' => 'nullable|string|in:USD,EGP,SAR',
+            'promo_code' => 'nullable|string|max:50',
         ];
     }
 }
