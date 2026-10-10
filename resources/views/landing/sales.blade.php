@@ -1487,6 +1487,52 @@
             gap: 14px;
         }
 
+        /* Gateway selector tabs for sales checkout */
+        .sp-gateway-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .sp-gateway-tab {
+            padding: 13px 14px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: #f8fafc;
+            color: #475569;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .sp-gateway-tab:hover {
+            border-color: #cbd5e1;
+            background: #ffffff;
+        }
+
+        .sp-gateway-tab.active {
+            border-color: var(--green);
+            background: #f0fdf4;
+            color: var(--deep);
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(8, 123, 104, 0.12);
+        }
+
+        .sp-gateway-tab.active-paypal {
+            border-color: #0070ba;
+            background: #f0f9ff;
+            color: #003087;
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(0, 112, 186, 0.15);
+        }
+
         /* ─── 10. FAQ & SUPPORT ─── */
         .sx-faq-grid {
             display: grid;
@@ -2543,9 +2589,29 @@
                             <input type="tel" id="spCustPhone" required placeholder="05XXXXXXXX أو 010XXXXXXXX" class="form-input-custom" style="direction: ltr; text-align: left;">
                         </div>
 
-                        <button type="submit" id="btnSubmitSalesOrder" class="sx-btn" style="width: 100%; padding: 16px; font-size: 16px; margin-top: 8px;">
-                            <span id="btnSubmitText">إتمام الشراء والدفع الآمن الآن ←</span>
-                        </button>
+                        <div>
+                            <label class="form-label-custom">طريقة الدفع:</label>
+                            <div class="sp-gateway-selector">
+                                <button type="button" id="tab-paysky" class="sp-gateway-tab active" onclick="switchSalesGateway('paysky')">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                    <span>بطاقة بنكية / فيزا / ميزة</span>
+                                </button>
+                                <button type="button" id="tab-paypal" class="sp-gateway-tab" onclick="switchSalesGateway('paypal')">
+                                    <i class="fa-brands fa-paypal" style="color: #0070ba; font-size: 16px;"></i>
+                                    <span>PayPal (دولي / بالدولار)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="sales-paysky-section">
+                            <button type="submit" id="btnSubmitSalesOrder" class="sx-btn" style="width: 100%; padding: 16px; font-size: 16px; margin-top: 8px;">
+                                <span id="btnSubmitText">إتمام الشراء والدفع الآمن الآن ←</span>
+                            </button>
+                        </div>
+
+                        <div id="sales-paypal-section" style="display:none; margin-top: 10px;">
+                            <div id="sales-paypal-container" style="min-height: 48px;"></div>
+                        </div>
 
                         
                     </div>
@@ -2667,17 +2733,21 @@ function updatePriceUI() {
 
 function selectCurrency(curr) {
     currentCurrency = curr;
-    document.getElementById('spSelectedCurrency').value = curr;
+    const inputCurr = document.getElementById('spSelectedCurrency');
+    if (inputCurr) inputCurr.value = curr;
 
     const btnUsd = document.getElementById('btnCurrUsd');
     const btnEgp = document.getElementById('btnCurrEgp');
 
     if (curr === 'USD') {
-        btnUsd.classList.add('active');
-        btnEgp.classList.remove('active');
+        btnUsd?.classList.add('active');
+        btnEgp?.classList.remove('active');
     } else {
-        btnEgp.classList.add('active');
-        btnUsd.classList.remove('active');
+        btnEgp?.classList.add('active');
+        btnUsd?.classList.remove('active');
+        if (typeof activeSalesGateway !== 'undefined' && activeSalesGateway === 'paypal') {
+            switchSalesGateway('paysky');
+        }
     }
 
     updatePriceUI();
@@ -2794,11 +2864,140 @@ function loadPaySkyAsync(scriptUrl) {
     });
 }
 
-function logGatewayError(ref, message, details, step, status) {
-    console.warn('Gateway Error [' + step + ']:', message, details);
+let activeSalesGateway = 'paysky';
+let salesPayPalButtonsInitialized = false;
+let currentMerchantRef = '';
+
+function switchSalesGateway(gw) {
+    activeSalesGateway = gw;
+    const tabPaysky = document.getElementById('tab-paysky');
+    const tabPaypal = document.getElementById('tab-paypal');
+    if (tabPaysky) {
+        tabPaysky.className = 'sp-gateway-tab' + (gw === 'paysky' ? ' active' : '');
+    }
+    if (tabPaypal) {
+        tabPaypal.className = 'sp-gateway-tab' + (gw === 'paypal' ? ' active-paypal' : '');
+    }
+
+    const payskySec = document.getElementById('sales-paysky-section');
+    const paypalSec = document.getElementById('sales-paypal-section');
+
+    if (gw === 'paypal') {
+        if (currentCurrency !== 'USD') {
+            selectCurrency('USD');
+        }
+        if (payskySec) payskySec.style.display = 'none';
+        if (paypalSec) paypalSec.style.display = 'block';
+        if (!salesPayPalButtonsInitialized) {
+            initSalesPayPalButtons();
+        }
+    } else {
+        if (payskySec) payskySec.style.display = 'block';
+        if (paypalSec) paypalSec.style.display = 'none';
+    }
 }
 
-// Handle Order Submission
+async function initSalesPayPalButtons() {
+    const container = document.getElementById('sales-paypal-container');
+    if (!container) return;
+    container.innerHTML = '<div style="text-align:center;padding:12px;color:#64748b;font-size:13px;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تجهيز أزرار PayPal الرسمية…</div>';
+
+    try {
+        const cfgRes = await fetch('{{ route('checkout.paypal.config') }}');
+        const cfg = await cfgRes.json();
+
+        if (!cfg.enabled || !cfg.client_id) {
+            container.innerHTML = '<div style="background:#FEF2F2;border:1px solid #FECACA;color:#991B1B;padding:10px;border-radius:8px;font-size:12.5px;text-align:center;">بوابة PayPal غير متاحة حالياً، يرجى الدفع عبر البطاقة البنكية.</div>';
+            return;
+        }
+
+        if (!window.paypal) {
+            await new Promise((resolve, reject) => {
+                const s = document.createElement('script');
+                s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(cfg.client_id)}&currency=${encodeURIComponent(cfg.currency || 'USD')}`;
+                s.onload = resolve;
+                s.onerror = reject;
+                document.head.appendChild(s);
+            });
+        }
+
+        container.innerHTML = '';
+        window.paypal.Buttons({
+            style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 48 },
+            createOrder: async function () {
+                const name = (document.getElementById('spCustName')?.value || '').trim();
+                const email = (document.getElementById('spCustEmail')?.value || '').trim();
+                const phone = (document.getElementById('spCustPhone')?.value || '').trim();
+
+                if (!name || !email) {
+                    alert('يرجى ملء الاسم والبريد الإلكتروني أولاً لاستلام الترخيص.');
+                    throw new Error('Missing fields');
+                }
+
+                const res = await fetch('{{ route('checkout.paypal.create') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        product_id: PRODUCT_ID,
+                        customer_name: name,
+                        customer_email: email,
+                        customer_phone: phone,
+                        promo_code: appliedPromoData ? appliedPromoData.code : (document.getElementById('spPromoInput')?.value || ''),
+                        promo_applied: appliedPromoData,
+                        utm_source: '{{ request('utm_source') }}',
+                        utm_medium: '{{ request('utm_medium') }}',
+                        utm_campaign: '{{ request('utm_campaign') }}'
+                    })
+                });
+
+                const d = await res.json();
+                if (!d.success || !d.paypal_order_id) {
+                    alert(d.message || 'تعذر بدء طلب الدفع عبر PayPal.');
+                    throw new Error(d.message);
+                }
+                currentMerchantRef = d.merchant_reference;
+                return d.paypal_order_id;
+            },
+            onApprove: async function (data) {
+                container.innerHTML = '<div style="text-align:center;padding:12px;color:#047857;font-weight:700;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تأكيد الدفع وإصدار مفتاح الترخيص…</div>';
+                const res = await fetch('{{ route('checkout.paypal.capture') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        paypal_order_id: data.orderID,
+                        merchant_reference: currentMerchantRef
+                    })
+                });
+                const d = await res.json();
+                if (d.success && d.redirect_url) {
+                    window.location.href = d.redirect_url;
+                } else {
+                    alert(d.message || 'حدث خطأ في استلام الدفع.');
+                    salesPayPalButtonsInitialized = false;
+                    initSalesPayPalButtons();
+                }
+            },
+            onError: function (err) {
+                console.error('PayPal SDK error:', err);
+                alert('حدث خطأ في بوابة PayPal. يمكنك استخدام الدفع بالبطاقة البنكية أو المحاولة مجدداً.');
+            }
+        }).render('#sales-paypal-container');
+        salesPayPalButtonsInitialized = true;
+    } catch (err) {
+        console.error('PayPal init error:', err);
+        container.innerHTML = '<div style="color:#DC2626;font-size:12.5px;text-align:center;padding:10px;">تعذر تحميل PayPal، يرجى الدفع عبر البطاقة البنكية.</div>';
+    }
+}
+
+// Handle Order Submission (PaySky / Cards)
 async function handleSalesCheckout(e) {
     e.preventDefault();
     const btn = document.getElementById('btnSubmitSalesOrder');

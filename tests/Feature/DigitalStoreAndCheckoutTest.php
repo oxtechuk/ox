@@ -54,7 +54,16 @@ class DigitalStoreAndCheckoutTest extends TestCase
         $response = $this->get(route('store.landing', $landingPage->slug));
 
         $response->assertStatus(200);
-        $response->assertSee($landingPage->headline);
+        $response->assertSee('ScripOx');
+        $response->assertSee('تطبيق الكود');
+    }
+
+    public function test_paypal_config_endpoint_returns_json(): void
+    {
+        $response = $this->getJson(route('checkout.paypal.config'));
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure(['enabled', 'client_id', 'currency', 'mode']);
     }
 
     public function test_checkout_initiate_creates_order_and_returns_paysky_payload(): void

@@ -6,6 +6,7 @@ use App\Models\DigitalProduct;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentLog;
+use App\Models\PromoCode;
 use App\Services\OrderFulfillmentService;
 use App\Services\PayPalService;
 use Exception;
@@ -52,6 +53,8 @@ class PayPalCheckoutController extends Controller
             'customer_name' => 'required|string|max:150',
             'customer_email' => 'required|email|max:190',
             'customer_phone' => 'nullable|string|max:30',
+            'promo_code' => 'nullable|string|max:50',
+            'promo_applied' => 'nullable',
             'utm_source' => 'nullable|string|max:100',
             'utm_medium' => 'nullable|string|max:100',
             'utm_campaign' => 'nullable|string|max:100',
@@ -67,6 +70,27 @@ class PayPalCheckoutController extends Controller
         }
 
         $price = (float) $product->effective_price;
+
+        // Apply promo code if provided
+        $promoCode = $validated['promo_code'] ?? null;
+        if (! $promoCode && ! empty($validated['promo_applied'])) {
+            $promoCode = is_array($validated['promo_applied'])
+                ? ($validated['promo_applied']['code'] ?? null)
+                : (string) $validated['promo_applied'];
+        }
+
+        if (! empty($promoCode)) {
+            $promo = PromoCode::where('code', strtoupper(trim((string) $promoCode)))->first();
+            if ($promo) {
+                $check = $promo->checkValidity($product);
+                if ($check['valid']) {
+                    $discountAmount = $promo->calculateDiscount($price);
+                    $price = max(1.0, round($price - $discountAmount, 2));
+                    $promo->increment('used_count');
+                }
+            }
+        }
+
         $merchantReference = 'PP-'.time().'-'.rand(1000, 9999);
         $orderNumber = 'ORD-'.strtoupper(Str::random(3)).'-'.date('YmdHis');
 
@@ -78,7 +102,7 @@ class PayPalCheckoutController extends Controller
             'customer_email' => $validated['customer_email'],
             'customer_phone' => $validated['customer_phone'] ?? null,
             'total_amount' => $price,
-            'currency' => $product->currency,
+            'currency' => $product->currency ?: 'USD',
             'payment_gateway' => 'paypal',
             'payment_status' => 'pending',
             'merchant_reference' => $merchantReference,
