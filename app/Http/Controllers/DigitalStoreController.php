@@ -28,7 +28,7 @@ class DigitalStoreController extends Controller
         $sort = $request->query('sort', 'latest');
 
         $query = DigitalProduct::query()
-            ->with('category')
+            ->with(['category', 'landingPage'])
             ->where('status', 'active');
 
         if ($selectedCategorySlug) {
@@ -64,7 +64,7 @@ class DigitalStoreController extends Controller
         $products = $query->paginate(12)->withQueryString();
 
         $featuredProducts = DigitalProduct::query()
-            ->with('category')
+            ->with(['category', 'landingPage'])
             ->where('status', 'active')
             ->where('is_featured', true)
             ->take(3)
@@ -74,18 +74,24 @@ class DigitalStoreController extends Controller
     }
 
     /**
-     * Show single product details page
+     * Show single product details page or redirect to sales landing page if available
      */
-    public function show(string $slug): View
+    public function show(string $slug): View|RedirectResponse
     {
         $product = DigitalProduct::with(['category', 'landingPage'])
             ->where('slug', $slug)
             ->where('status', 'active')
             ->firstOrFail();
 
+        // If product has a published sales landing page, make it default and redirect away from standard details
+        if ($product->landingPage && $product->landingPage->is_published) {
+            return redirect()->route('store.landing', $product->landingPage->slug);
+        }
+
         $relatedProducts = DigitalProduct::where('status', 'active')
             ->where('id', '!=', $product->id)
             ->where('category_id', $product->category_id)
+            ->with(['category', 'landingPage'])
             ->take(3)
             ->get();
 

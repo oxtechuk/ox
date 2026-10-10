@@ -983,7 +983,7 @@
                     <div class="product-sales-card">
                         
                         {{-- Visual Mockup Header --}}
-                        <div class="card-visual-header">
+                        <a href="{{ $product->display_url }}" class="card-visual-header" style="text-decoration: none; color: inherit; display: block;">
                             <div class="card-top-badges">
                                 <span class="card-category-tag">
                                     <i class="fa-solid fa-layer-group"></i>
@@ -1005,12 +1005,12 @@
                                     <i class="fa-solid fa-laptop-code"></i>
                                 @endif
                             </div>
-                        </div>
+                        </a>
 
                         {{-- Info Body --}}
                         <div class="card-info-body">
                             <h3 class="product-card-title">
-                                <a href="{{ route('store.product', $product->slug) }}">{{ $product->name }}</a>
+                                <a href="{{ $product->display_url }}">{{ $product->name }}</a>
                             </h3>
 
                             <p class="product-card-tagline">
@@ -1046,8 +1046,8 @@
                             </div>
 
                             <div class="card-actions-row">
-                                <a href="{{ route('store.product', $product->slug) }}" class="btn-card-outline">
-                                    المواصفات
+                                <a href="{{ $product->display_url }}" class="btn-card-outline">
+                                    {{ $product->hasLandingPage() ? 'صفحة العرض والمواصفات' : 'المواصفات' }}
                                 </a>
 
                                 <button type="button" onclick="openInstantCheckout({{ $product->id }}, '{{ addslashes($product->name) }}', {{ $product->effective_price }}, '{{ $product->currency }}')" class="btn-card-primary">
@@ -1057,8 +1057,8 @@
                             </div>
 
                             {{-- Direct Sales Landing Page Link --}}
-                            @if($product->landingPage)
-                                <a href="{{ route('store.landing', $product->landingPage->slug) }}" class="sales-page-feature-banner">
+                            @if($product->hasLandingPage())
+                                <a href="{{ $product->display_url }}" class="sales-page-feature-banner">
                                     <span>🚀 صفحة العرض الحصري (Sales Page)</span>
                                     <i class="fa-solid fa-arrow-left"></i>
                                 </a>

@@ -21,7 +21,7 @@ class SeoController extends Controller
         $locales = ['ar', 'en', 'fr'];
 
         $projects = Project::select('title', 'slug', 'hero_image', 'updated_at')->get();
-        $products = DigitalProduct::where('status', 'active')->select('name', 'slug', 'thumbnail', 'updated_at')->get();
+        $products = DigitalProduct::with('landingPage')->where('status', 'active')->select('id', 'name', 'slug', 'thumbnail', 'updated_at')->get();
         $landingPages = ProductLandingPage::where('is_published', true)->select('slug', 'updated_at')->get();
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
@@ -76,6 +76,10 @@ class SeoController extends Controller
 
         // 3. Digital Products Catalog & Thumbnails
         foreach ($products as $product) {
+            if ($product->hasLandingPage()) {
+                continue;
+            }
+
             $productUrl = route('store.product', $product->slug);
             $lastMod = $product->updated_at ? $product->updated_at->toAtomString() : now()->toAtomString();
 

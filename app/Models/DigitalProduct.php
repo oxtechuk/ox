@@ -107,6 +107,20 @@ class DigitalProduct extends Model
         return (int) round((($this->price - $this->sale_price) / $this->price) * 100);
     }
 
+    public function hasLandingPage(): bool
+    {
+        return (bool) ($this->landingPage && $this->landingPage->is_published);
+    }
+
+    public function getDisplayUrlAttribute(): string
+    {
+        if ($this->hasLandingPage()) {
+            return route('store.landing', $this->landingPage->slug);
+        }
+
+        return route('store.product', $this->slug);
+    }
+
     /**
      * @param  Builder<DigitalProduct>  $query
      * @return Builder<DigitalProduct>

@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\ProductLandingPage;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
+use Database\Seeders\DigitalProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -24,7 +25,7 @@ class DigitalStoreAndCheckoutTest extends TestCase
 
         // Seed database
         $this->seed(DatabaseSeeder::class);
-        $this->seed(\Database\Seeders\DigitalProductSeeder::class);
+        $this->seed(DigitalProductSeeder::class);
     }
 
     public function test_store_index_page_is_accessible(): void
@@ -45,6 +46,27 @@ class DigitalStoreAndCheckoutTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee($product->name);
         $response->assertSee('إتمام الطلب الآن');
+    }
+
+    public function test_product_with_sales_page_redirects_to_sales_landing_page(): void
+    {
+        $scripox = DigitalProduct::where('slug', 'scripox-data-targeting')->firstOrFail();
+        $this->assertNotNull($scripox->landingPage);
+        $this->assertTrue($scripox->landingPage->is_published);
+
+        $response = $this->get(route('store.product', $scripox->slug));
+
+        $response->assertRedirect(route('store.landing', $scripox->landingPage->slug));
+    }
+
+    public function test_store_links_product_with_sales_page_directly_to_sales_landing_page(): void
+    {
+        $scripox = DigitalProduct::where('slug', 'scripox-data-targeting')->firstOrFail();
+
+        $response = $this->get(route('store.index'));
+
+        $response->assertStatus(200);
+        $response->assertSee(route('store.landing', $scripox->landingPage->slug));
     }
 
     public function test_sales_landing_page_is_accessible(): void
