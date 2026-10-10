@@ -7,7 +7,7 @@
     
     <div class="topbar-actions" style="margin-bottom: 24px; justify-content: space-between;">
         <div>
-            <h1 class="topbar-title">💳 مبيعات وتراخيص البرمجيات (PaySky)</h1>
+            <h1 class="topbar-title"> مبيعات وتراخيص البرمجيات </h1>
             <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">
                 متابعة عمليات الشراء الفورية، التراخيص المصدرة، ومردود الحملات الإعلانية
             </p>
