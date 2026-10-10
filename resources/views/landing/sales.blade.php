@@ -2514,7 +2514,7 @@
                             <span id="promoBtnText">تطبيق الكود</span>
                         </button>
                     </div>
-
+                    <div id="spPromoFeedback" class="sp-promo-feedback" style="display: none; margin-top: 10px; padding: 8px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 700;"></div>
                 </div>
 
                 {{-- 4. Fast Checkout Form --}}
@@ -2687,17 +2687,22 @@ async function applyPromoCode() {
     const input = document.getElementById('spPromoInput');
     const feedback = document.getElementById('spPromoFeedback');
     const btn = document.getElementById('btnApplyPromo');
-    const code = input.value.trim().toUpperCase();
+    const promoBtnText = document.getElementById('promoBtnText');
+    const code = input ? input.value.trim().toUpperCase() : '';
 
     if (!code) {
-        feedback.className = 'sp-promo-feedback error';
-        feedback.style.display = 'block';
-        feedback.textContent = 'يرجى كتابة كود الخصم أولاً.';
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.background = '#FEF2F2';
+            feedback.style.color = '#B91C1C';
+            feedback.style.border = '1px solid #FECACA';
+            feedback.textContent = 'يرجى كتابة كود الخصم أولاً.';
+        }
         return;
     }
 
-    btn.disabled = true;
-    document.getElementById('promoBtnText').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> فحص...';
+    if (btn) btn.disabled = true;
+    if (promoBtnText) promoBtnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> فحص...';
 
     try {
         const res = await fetch('{{ route("checkout.validate_promo") }}', {
@@ -2718,26 +2723,40 @@ async function applyPromoCode() {
 
         if (res.ok && data.valid) {
             appliedPromoData = data;
-            document.getElementById('spAppliedPromo').value = data.code;
-            feedback.className = 'sp-promo-feedback success';
-            feedback.style.display = 'block';
-            feedback.innerHTML = `✓ ${data.message} ${data.remaining_time ? '— (' + data.remaining_time + ')' : ''}`;
+            const appliedPromoInput = document.getElementById('spAppliedPromo');
+            if (appliedPromoInput) appliedPromoInput.value = data.code;
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.style.background = '#ECFDF5';
+                feedback.style.color = '#047857';
+                feedback.style.border = '1px solid #A7F3D0';
+                feedback.innerHTML = `✓ ${data.message} ${data.remaining_time ? '— (' + data.remaining_time + ')' : ''}`;
+            }
             updatePriceUI();
         } else {
             appliedPromoData = null;
-            document.getElementById('spAppliedPromo').value = '';
-            feedback.className = 'sp-promo-feedback error';
-            feedback.style.display = 'block';
-            feedback.textContent = data.message || 'كود الخصم غير صحيح أو منتهي الصلاحية.';
+            const appliedPromoInput = document.getElementById('spAppliedPromo');
+            if (appliedPromoInput) appliedPromoInput.value = '';
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.style.background = '#FEF2F2';
+                feedback.style.color = '#B91C1C';
+                feedback.style.border = '1px solid #FECACA';
+                feedback.textContent = data.message || 'كود الخصم غير صحيح أو منتهي الصلاحية.';
+            }
             updatePriceUI();
         }
     } catch (e) {
-        feedback.className = 'sp-promo-feedback error';
-        feedback.style.display = 'block';
-        feedback.textContent = 'تعذر فحص الكود، يرجى مراجعة الاتصال.';
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.background = '#FEF2F2';
+            feedback.style.color = '#B91C1C';
+            feedback.style.border = '1px solid #FECACA';
+            feedback.textContent = 'تعذر فحص الكود، يرجى مراجعة الاتصال.';
+        }
     } finally {
-        btn.disabled = false;
-        document.getElementById('promoBtnText').textContent = 'تطبيق الكود';
+        if (btn) btn.disabled = false;
+        if (promoBtnText) promoBtnText.textContent = 'تطبيق الكود';
     }
 }
 
@@ -2833,6 +2852,7 @@ async function handleSalesCheckout(e) {
                     AmountTrxn: data.paysky.AmountTrxn,
                     MerchantReference: data.paysky.MerchantReference,
                     TrxDateTime: data.paysky.TrxDateTime,
+                    CurrencyCode: data.paysky.CurrencyCode || '818',
                     SecureHash: data.paysky.SecureHash,
                     completeCallback: function () {
                         window.location.href = data.callback_url + '?MerchantReference=' + encodeURIComponent(data.paysky.MerchantReference) + '&Success=true';

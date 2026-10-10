@@ -117,8 +117,13 @@ class PaySkyService
      */
     public function prepareLightboxPayload(Order $order): array
     {
-        // PaySky accepts amount in minor currency units (e.g. 100.00 EGP = 10000)
-        $amountTrxn = (int) round(((float) $order->total_amount) * 100);
+        // PaySky Egypt settlements (MID: 1802573575) are processed in EGP (Currency code 818).
+        // If order was in USD, convert to EGP (1 USD = 50 EGP) so the national gateway processes correctly.
+        $amountInEgp = $order->currency === 'EGP'
+            ? (float) $order->total_amount
+            : round(((float) $order->total_amount) * 50.0, 2);
+
+        $amountTrxn = (int) round($amountInEgp * 100);
         $trxDateTime = now()->format('YmdHis');
 
         // UPG / PaySky Lightbox canonical hash parameters
@@ -143,7 +148,7 @@ class PaySkyService
                 order: $order,
                 requestPayload: array_merge($hashParams, [
                     'AmountTrxn' => (string) $amountTrxn,
-                    'CurrencyCode' => $order->currency === 'EGP' ? '818' : ($order->currency === 'SAR' ? '682' : '840'),
+                    'CurrencyCode' => '818',
                     'TrxDateTime' => $trxDateTime,
                 ]),
                 responsePayload: [
@@ -162,6 +167,7 @@ class PaySkyService
             'MerchantReference' => $order->merchant_reference,
             'TrxDateTime' => $trxDateTime,
             'DateTimeLocalTrxn' => $trxDateTime,
+            'CurrencyCode' => '818',
             'SecureHash' => $secureHash,
             'OrderNumber' => $order->order_number,
             'CustomerEmail' => $order->customer_email,

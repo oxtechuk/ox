@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminAuth;
+use App\Http\Middleware\BlockMaliciousBots;
 use App\Http\Middleware\CaptureMarketingAttribution;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocale;
@@ -18,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->prepend(BlockMaliciousBots::class);
+
         $middleware->web(append: [
             CaptureMarketingAttribution::class,
             SetLocale::class,

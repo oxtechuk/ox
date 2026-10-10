@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\VisitorTraffic;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackVisitorTraffic
@@ -98,8 +99,8 @@ class TrackVisitorTraffic
     protected function shouldExcludeRequest(Request $request): bool
     {
         // 1. Exclude logged-in admin users
-        if (\Illuminate\Support\Facades\Auth::check()) {
-            $user = \Illuminate\Support\Facades\Auth::user();
+        if (Auth::check()) {
+            $user = Auth::user();
             if ((method_exists($user, 'isAdmin') && $user->isAdmin()) || ($user->role ?? null) === 'admin' || $user->is_active) {
                 return true;
             }
@@ -263,6 +264,9 @@ class TrackVisitorTraffic
         }
 
         $r = strtolower($referer);
+        if (str_contains($r, 'chatgpt.com') || str_contains($r, 'openai.com') || str_contains($r, 'perplexity.ai') || str_contains($r, 'claude.ai') || str_contains($r, 'gemini.google') || str_contains($r, 'copilot.microsoft')) {
+            return 'ai_search';
+        }
         if (str_contains($r, 'google.')) {
             return 'google';
         }
