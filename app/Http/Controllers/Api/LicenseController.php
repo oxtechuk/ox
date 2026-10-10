@@ -15,6 +15,10 @@ class LicenseController extends Controller
      */
     public function activate(Request $request): JsonResponse
     {
+        if ($authError = $this->checkApiKey($request)) {
+            return $authError;
+        }
+
         // 1. Validate request payload
         $validator = Validator::make($request->all(), [
             'license_key' => ['required', 'string', 'max:191'],
@@ -104,6 +108,10 @@ class LicenseController extends Controller
      */
     public function verify(Request $request): JsonResponse
     {
+        if ($authError = $this->checkApiKey($request)) {
+            return $authError;
+        }
+
         // 1. Validate request payload
         $validator = Validator::make($request->all(), [
             'license_key' => ['required', 'string', 'max:191'],
@@ -168,5 +176,26 @@ class LicenseController extends Controller
                 'is_active' => true,
             ],
         ], 200);
+    }
+
+    /**
+     * Verify optional API key header if configured in environment (LICENSE_API_KEY).
+     */
+    protected function checkApiKey(Request $request): ?JsonResponse
+    {
+        $configuredKey = config('services.license.api_key', env('LICENSE_API_KEY'));
+
+        if (! empty($configuredKey)) {
+            $headerKey = $request->header('X-API-KEY') ?? $request->header('X-License-Key');
+
+            if ($headerKey !== $configuredKey) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Unauthorized: Invalid API Key header.',
+                ], 401);
+            }
+        }
+
+        return null;
     }
 }
