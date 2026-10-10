@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DigitalOrderController;
 use App\Http\Controllers\Admin\DigitalProductController;
 use App\Http\Controllers\Admin\InvoiceController as AdminInvoiceController;
+use App\Http\Controllers\Admin\LicenseController as AdminLicenseController;
 use App\Http\Controllers\Admin\MediaController as AdminMediaController;
 use App\Http\Controllers\Admin\PaymentLogController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
@@ -155,6 +156,9 @@ Route::prefix($adminPrefix)->name('admin.')->group(function () {
         // Digital Products & Software Store Management
         Route::resource('digital-products', DigitalProductController::class);
         Route::resource('digital-orders', DigitalOrderController::class)->only(['index', 'show']);
+        Route::resource('licenses', AdminLicenseController::class);
+        Route::post('/licenses/{license}/toggle-status', [AdminLicenseController::class, 'toggleStatus'])->name('licenses.toggle_status');
+        Route::delete('/licenses/{license}/devices/{device}', [AdminLicenseController::class, 'removeDevice'])->name('licenses.devices.destroy');
         Route::get('/payment-logs', [PaymentLogController::class, 'index'])->name('payment-logs.index');
         Route::get('/payment-logs/{paymentLog}', [PaymentLogController::class, 'show'])->name('payment-logs.show');
         Route::post('/payment-logs/clear-old', [PaymentLogController::class, 'clearOld'])->name('payment-logs.clear_old');

@@ -876,6 +876,19 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.licenses.index') }}" class="menu-link {{ request()->routeIs('admin.licenses.*') ? 'active' : '' }}" data-tooltip="تراخيص البرامج (Desktop)">
+                    <div class="menu-link-content">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </span>
+                        <span class="menu-text">تراخيص البرامج (Desktop)</span>
+                    </div>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.digital-products.index') }}" class="menu-link {{ request()->routeIs('admin.digital-products.*') ? 'active' : '' }}" data-tooltip="البرامج والمنتجات الرقمية">
                     <div class="menu-link-content">
                         <span class="menu-icon">
@@ -996,6 +1009,10 @@
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="quick-add-menu" id="quickAddMenu">
+                        <a href="{{ route('admin.licenses.create') }}" class="quick-add-item">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <span>إضافة كود ترخيص برامج</span>
+                        </a>
                         <a href="{{ route('admin.digital-products.create') }}" class="quick-add-item">
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line></svg>
                             <span>إضافة برنامج أو منتج</span>
