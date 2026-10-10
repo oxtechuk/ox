@@ -30,6 +30,7 @@ class SeoController extends Controller
         // 1. Static Core Landing Pages with Multilingual Alternates
         $staticPages = [
             ['url' => $baseUrl, 'priority' => '1.0', 'changefreq' => 'daily', 'lastmod' => now()->toAtomString()],
+            ['url' => route('contact'), 'priority' => '0.95', 'changefreq' => 'weekly', 'lastmod' => now()->toAtomString()],
             ['url' => route('projects.index'), 'priority' => '0.9', 'changefreq' => 'weekly', 'lastmod' => now()->toAtomString()],
             ['url' => route('store.index'), 'priority' => '0.9', 'changefreq' => 'weekly', 'lastmod' => now()->toAtomString()],
         ];

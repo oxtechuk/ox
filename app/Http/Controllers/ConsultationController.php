@@ -8,11 +8,32 @@ use App\Mail\ConsultationConfirmationMail;
 use App\Models\Consultation;
 use App\Models\SiteSetting;
 use App\Models\TrafficEvent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class ConsultationController extends Controller
 {
+    /**
+     * Show dedicated contact and consultation booking page
+     */
+    public function contact(Request $request): View
+    {
+        $locale = $request->query('lang');
+        if (! $locale || ! in_array($locale, ['ar', 'en', 'fr'], true)) {
+            $locale = session('locale', app()->getLocale());
+        }
+
+        if (! in_array($locale, ['ar', 'en', 'fr'], true)) {
+            $locale = 'ar';
+        }
+
+        $siteSettings = SiteSetting::all()->pluck('value', 'key');
+
+        return view('contact.index', compact('locale', 'siteSettings'));
+    }
+
     public function store(StoreConsultationRequest $request)
     {
         // 1. Anti-Spam Bot Honeypot Trap

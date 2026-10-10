@@ -265,6 +265,7 @@
     <!-- ─── Main Styles ─── -->
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ @filemtime(public_path('assets/style.css')) ?: time() }}" fetchpriority="high"/>
     <link rel="stylesheet" href="{{ asset('assets/ox-theme.css') }}?v={{ @filemtime(public_path('assets/ox-theme.css')) ?: time() }}" fetchpriority="high"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
     <style>
         html {
@@ -496,14 +497,13 @@
             display: inline-block !important;
         }
         
-        /* ===== CONSULTATION MODAL (SAUDI EXECUTIVE TECH EDITION) ===== */
-        /* ─── Executive Consultation Modal (Luxury Dark Emerald) ─── */
+        /* ===== CONSULTATION & BOOKING MODAL (OX TECH CLEAN WHITE SUITE) ===== */
         .consult-modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(2, 10, 8, 0.86);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 99999;
             display: flex;
             align-items: center;
@@ -511,45 +511,47 @@
             padding: 16px;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
         }
         .consult-modal-backdrop.active {
             opacity: 1;
             visibility: visible;
         }
         .consult-modal-box {
-            background: radial-gradient(130% 120% at 50% -10%, rgba(0, 229, 153, 0.16) 0%, #071f19 38%, #03110d 100%);
-            border: 1px solid rgba(0, 229, 153, 0.28);
-            border-radius: 24px;
-            max-width: 560px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 22px;
+            max-width: 960px;
             width: 100%;
-            max-height: calc(100vh - 28px);
+            max-height: calc(100vh - 32px);
             overflow-y: auto;
             overscroll-behavior: contain;
-            padding: 28px 28px 24px;
+            padding: 26px 24px 22px;
             position: relative;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 229, 153, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            transform: scale(0.96) translateY(12px);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            box-shadow: 0 25px 70px -10px rgba(15, 23, 42, 0.25), 0 0 1px 1px rgba(15, 23, 42, 0.05);
+            transform: scale(0.96) translateY(10px);
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
             scrollbar-width: thin;
-            scrollbar-color: rgba(0, 229, 153, 0.35) transparent;
+            scrollbar-color: #CBD5E1 transparent;
+            color: #334155;
+            font-family: inherit;
         }
         .consult-modal-box::-webkit-scrollbar {
-            width: 5px;
+            width: 6px;
         }
         .consult-modal-box::-webkit-scrollbar-thumb {
-            background: rgba(0, 229, 153, 0.3);
-            border-radius: 4px;
+            background: #CBD5E1;
+            border-radius: 6px;
         }
         .consult-modal-backdrop.active .consult-modal-box {
             transform: scale(1) translateY(0);
         }
         .modal-close {
             position: absolute;
-            top: 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #d1deda;
+            top: 16px;
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            color: #64748B;
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -557,578 +559,527 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.25s ease;
-            z-index: 10;
+            transition: all 0.2s ease;
+            z-index: 30;
         }
         html[dir="rtl"] .modal-close { left: 18px; right: auto; }
         html[dir="ltr"] .modal-close { right: 18px; left: auto; }
         .modal-close:hover {
-            background: rgba(0, 229, 153, 0.2);
-            border-color: #00E599;
-            color: #00E599;
+            background: #E2E8F0;
+            color: #0F172A;
             transform: rotate(90deg) scale(1.05);
         }
 
-        /* Saudi Executive Badge */
-        .consult-modal-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 5px 14px;
-            border-radius: 99px;
-            background: rgba(0, 229, 153, 0.12);
-            border: 1px solid rgba(0, 229, 153, 0.32);
-            font-size: 11.5px;
-            font-weight: 700;
-            color: #00E599;
-            margin-bottom: 10px;
-            box-shadow: 0 0 20px rgba(0, 229, 153, 0.1);
-        }
-        .consult-badge-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #00E599;
-            box-shadow: 0 0 10px #00E599;
-            animation: consultDotPulse 2s infinite;
-        }
-        @keyframes consultDotPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-        }
-        .consult-modal-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
-            margin: 0 0 6px;
-            line-height: 1.35;
-            background: linear-gradient(135deg, #ffffff 40%, #8af3cf 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .consult-modal-desc {
-            font-size: 12.5px;
-            color: #a2b7b0;
-            margin-bottom: 14px;
-            line-height: 1.7;
-        }
-
-        /* Trust Strip */
-        .consult-trust-strip {
+        /* Modal Grid Layout */
+        .ox-contact-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .consult-trust-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 9px;
-            padding: 7px 8px;
-            font-size: 11px;
-            color: #a2b8b1;
-            line-height: 1.3;
-            text-align: center;
-        }
-        .consult-trust-item svg {
-            color: #00E599;
-            flex-shrink: 0;
+            grid-template-columns: 1.55fr 1fr;
+            gap: 20px;
+            align-items: start;
         }
 
-        /* Form Group & Layout */
-        .consult-modal-alert {
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.45);
-            color: #fca5a5;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 12px;
-            margin-bottom: 14px;
-            display: none;
-            align-items: center;
-            gap: 8px;
-            animation: consultShake 0.3s ease;
+        /* Main Form Card */
+        .ox-contact-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 18px;
+            padding: 24px 22px 20px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
         }
-        @keyframes consultShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            75% { transform: translateX(4px); }
+        .ox-card-header {
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #F1F5F9;
         }
-        .form-group {
-            margin-bottom: 12px;
-            position: relative;
+        .ox-card-header h3 {
+            font-size: 19px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 5px;
+            letter-spacing: -0.2px;
         }
-        .form-label {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: #c9dbd6;
-            margin-bottom: 5px;
-        }
-        .form-label .req {
-            color: #00E599;
-            margin-right: 3px;
-        }
-        .form-input, .form-select, .form-textarea {
-            width: 100%;
-            background: rgba(3, 18, 14, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.13);
-            border-radius: 12px;
-            padding: 11px 14px;
-            color: #ffffff;
-            font-family: var(--font);
+        .ox-card-header p {
             font-size: 13px;
-            transition: all 0.2s ease;
-            outline: none;
-            box-sizing: border-box;
-        }
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            border-color: #00E599;
-            background: rgba(3, 26, 20, 0.95);
-            box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.18);
-        }
-        .form-input::placeholder, .form-textarea::placeholder {
-            color: #638077;
-        }
-        .form-select {
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2300E599' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: left 14px center;
-            padding-left: 32px;
-            cursor: pointer;
-        }
-        html[dir="ltr"] .form-select {
-            background-position: right 14px center;
-            padding-right: 32px;
-            padding-left: 14px;
-        }
-        .form-select option {
-            background: #09211c;
-            color: #ffffff;
+            color: #64748B;
+            margin: 0;
+            line-height: 1.5;
         }
 
-        /* Phone & Country Picker Combo */
-        .modal-phone-combo {
+        /* Form Inputs & Fields */
+        .ox-form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .ox-form-group {
+            margin-bottom: 14px;
+        }
+        .ox-form-label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 6px;
+        }
+        .ox-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .ox-input-icon {
+            position: absolute;
+            color: #94A3B8;
+            font-size: 13px;
+            pointer-events: none;
+        }
+        html[dir="rtl"] .ox-input-icon { right: 13px; }
+        html[dir="ltr"] .ox-input-icon { left: 13px; }
+
+        .ox-input-field,
+        .ox-select-field,
+        .ox-textarea-field {
+            width: 100%;
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            color: #0F172A;
+            font-family: inherit;
+            font-size: 13px;
+            padding: 10px 13px;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+            outline: none;
+        }
+        html[dir="rtl"] .ox-input-wrapper .ox-input-field { padding-right: 36px; }
+        html[dir="ltr"] .ox-input-wrapper .ox-input-field { padding-left: 36px; }
+
+        .ox-input-field:focus,
+        .ox-select-field:focus,
+        .ox-textarea-field:focus {
+            border-color: #006848;
+            box-shadow: 0 0 0 3px rgba(0, 104, 72, 0.12);
+        }
+        .ox-select-field {
+            cursor: pointer;
+            background-color: #FFFFFF;
+        }
+
+        /* Phone Row & Country Flag Dropdown */
+        .ox-phone-row {
             display: flex;
             gap: 8px;
             align-items: stretch;
-            direction: ltr;
             position: relative;
         }
-        .modal-country-btn {
-            height: 44px;
-            padding: 0 11px;
-            background: rgba(3, 18, 14, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.13);
-            border-radius: 12px;
-            color: #ffffff;
+        .ox-country-btn {
             display: inline-flex;
             align-items: center;
             gap: 7px;
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            padding: 9px 11px;
             cursor: pointer;
             transition: all 0.2s ease;
             flex-shrink: 0;
             user-select: none;
+            font-family: inherit;
         }
-        .modal-country-btn:hover, .modal-country-btn.active {
-            border-color: #00E599;
-            background: rgba(3, 26, 20, 0.95);
-            box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.14);
+        .ox-country-btn:hover,
+        .ox-country-btn.open {
+            border-color: #006848;
+            background: #F8FAFC;
+            box-shadow: 0 0 0 3px rgba(0, 104, 72, 0.1);
         }
-        .modal-country-flag-img {
+        .ox-country-flag-img {
             width: 22px;
             height: 15px;
             object-fit: cover;
             border-radius: 2px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-            flex-shrink: 0;
-            display: inline-block;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+            display: block;
         }
-        .modal-country-dial {
-            font-family: 'SF Mono', Consolas, Monaco, monospace;
+        .ox-country-dial-code {
             font-size: 13px;
             font-weight: 700;
-            color: #00E599;
-            letter-spacing: 0.3px;
-        }
-        .modal-country-chevron {
-            color: #79988e;
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-        .modal-country-btn.active .modal-country-chevron {
-            transform: rotate(180deg);
-            color: #00E599;
-        }
-        .modal-phone-input {
-            flex: 1;
-            min-width: 0;
-            height: 44px;
-            background: rgba(3, 18, 14, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.13);
-            border-radius: 12px;
-            padding: 0 14px;
-            color: #ffffff;
-            font-family: 'SF Mono', Consolas, Monaco, monospace;
-            font-size: 13.5px;
+            color: #0F172A;
             direction: ltr;
-            text-align: left;
-            outline: none;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
         }
-        .modal-phone-input:focus {
-            border-color: #00E599;
-            background: rgba(3, 26, 20, 0.95);
-            box-shadow: 0 0 0 3px rgba(0, 229, 153, 0.18);
+        .ox-country-chevron {
+            color: #94A3B8;
+            transition: transform 0.2s ease;
         }
-        .modal-phone-input::placeholder {
-            color: #638077;
+        .ox-country-btn.open .ox-country-chevron {
+            transform: rotate(180deg);
         }
-
-        /* Dropdown Popover */
-        .modal-country-dropdown {
+        .ox-country-popover {
             position: absolute;
             top: calc(100% + 6px);
-            left: 0;
-            right: 0;
-            z-index: 250;
-            background: #061c16;
-            border: 1px solid rgba(0, 229, 153, 0.4);
-            border-radius: 14px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 25px rgba(0, 229, 153, 0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            width: 280px;
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+            z-index: 100;
             display: none;
             flex-direction: column;
             overflow: hidden;
-            animation: modalDropIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeIn 0.18s ease;
         }
-        .modal-country-dropdown.show {
+        html[dir="rtl"] .ox-country-popover { right: 0; }
+        html[dir="ltr"] .ox-country-popover { left: 0; }
+        .ox-country-popover.open {
             display: flex;
         }
-        @keyframes modalDropIn {
-            from { opacity: 0; transform: translateY(-6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .modal-country-search-wrap {
+        .ox-country-search-wrap {
+            padding: 8px 10px;
+            border-bottom: 1px solid #F1F5F9;
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            background: rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            direction: rtl;
+            gap: 8px;
+            background: #F8FAFC;
         }
-        html[dir="ltr"] .modal-country-search-wrap {
-            direction: ltr;
-        }
-        .modal-country-search-wrap svg {
-            color: #00E599;
+        .ox-country-search-wrap svg {
+            color: #94A3B8;
             flex-shrink: 0;
         }
-        .modal-country-search-input {
-            flex: 1;
-            background: transparent;
+        .ox-country-search-input {
+            width: 100%;
             border: none;
+            background: transparent;
+            font-size: 12px;
+            color: #0F172A;
             outline: none;
-            color: #ffffff;
             font-family: inherit;
-            font-size: 12.5px;
         }
-        .modal-country-search-input::placeholder {
-            color: #6b867f;
-        }
-        .modal-country-list {
+        .ox-country-list {
             max-height: 200px;
             overflow-y: auto;
-            padding: 6px 0;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(0, 229, 153, 0.35) transparent;
+            padding: 4px;
         }
-        .modal-country-list::-webkit-scrollbar {
-            width: 5px;
-        }
-        .modal-country-list::-webkit-scrollbar-thumb {
-            background: rgba(0, 229, 153, 0.35);
-            border-radius: 4px;
-        }
-        .modal-country-item {
+        .ox-country-item {
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 100%;
-            padding: 8px 14px;
-            background: transparent;
+            padding: 7px 10px;
             border: none;
-            color: #d1deda;
+            background: transparent;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.15s ease;
-            text-align: right;
-            direction: rtl;
+            font-family: inherit;
+            transition: background 0.15s ease;
         }
-        html[dir="ltr"] .modal-country-item {
-            direction: ltr;
-            text-align: left;
+        .ox-country-item:hover {
+            background: #F1F5F9;
         }
-        .modal-country-item:hover, .modal-country-item.selected {
-            background: rgba(0, 229, 153, 0.15);
-            color: #ffffff;
+        .ox-country-item.selected {
+            background: #ECFDF5;
         }
-        .modal-country-item-left {
+        .ox-country-item-left {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        .modal-country-item-name {
-            font-size: 12px;
-            font-weight: 500;
-        }
-        .modal-country-item-dial {
-            font-family: 'SF Mono', Consolas, Monaco, monospace;
-            font-size: 11.5px;
-            color: #00E599;
-            direction: ltr;
-            font-weight: 700;
-        }
-        .modal-country-no-results {
-            padding: 16px;
-            text-align: center;
-            font-size: 12px;
-            color: #6b867f;
-        }
-
-        /* Preferred Channel Chips */
-        .modal-pref-channels {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
-        .pref-channel-chip {
+        .ox-country-item-flag {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .ox-country-item-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1E293B;
+        }
+        .ox-country-item-dial {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #64748B;
+            direction: ltr;
+        }
+        .ox-country-no-results {
+            padding: 14px;
+            text-align: center;
+            font-size: 12px;
+            color: #94A3B8;
+        }
+
+        /* 3 Compact Square Channel Tiles */
+        .ox-channel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .ox-channel-option {
+            cursor: pointer;
+            display: block;
+            margin: 0;
+            user-select: none;
+        }
+        .ox-channel-option input[type="radio"] {
+            display: none;
+        }
+        .ox-channel-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 12px 6px;
+            background: #FFFFFF;
+            border: 1.5px solid #E2E8F0;
+            border-radius: 12px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #1E293B;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            box-sizing: border-box;
+            min-height: 84px;
+            aspect-ratio: 1 / 0.88;
+        }
+        .ox-channel-label:hover {
+            border-color: #CBD5E1;
+            background: #F8FAFC;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+        .ox-channel-option input[type="radio"]:checked + .ox-channel-label {
+            background: #F0FDF4;
+            border-color: #059669;
+            color: #065F46;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.16);
+        }
+        .ox-channel-icon-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: #F1F5F9;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 8px;
-            border-radius: 10px;
-            background: rgba(3, 18, 14, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #b7cac4;
-            font-size: 11.5px;
-            font-weight: 600;
-            cursor: pointer;
+            font-size: 15px;
             transition: all 0.2s ease;
-            user-select: none;
+            flex-shrink: 0;
         }
-        .pref-channel-chip:hover {
-            border-color: rgba(0, 229, 153, 0.4);
-            color: #ffffff;
+        .ox-channel-option input[type="radio"]:checked + .ox-channel-label .ox-channel-icon-circle {
+            background: #DCFCE7;
+            color: #059669;
+            transform: scale(1.05);
         }
-        .pref-channel-chip.active {
-            background: rgba(0, 229, 153, 0.14);
-            border-color: #00E599;
-            color: #00E599;
-            box-shadow: 0 0 15px rgba(0, 229, 153, 0.12);
+        .ox-channel-name {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: inherit;
+            line-height: 1.3;
         }
 
-        /* Submit Button */
-        .form-submit-btn {
+        .ox-textarea-field {
+            min-height: 95px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        .ox-char-counter {
+            font-size: 11px;
+            color: #64748B;
+            text-align: right;
+            margin-top: 4px;
+        }
+        html[dir="ltr"] .ox-char-counter { text-align: left; }
+
+        .ox-submit-cta-btn {
             width: 100%;
-            background: linear-gradient(135deg, #00E599 0%, #10B981 100%);
-            color: #041b14;
+            background: #006848;
+            color: #FFFFFF;
             border: none;
-            border-radius: 14px;
-            padding: 14px 24px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14.5px;
             font-weight: 800;
-            font-family: var(--font);
-            font-size: 14px;
+            padding: 13px 20px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 14px;
-            box-shadow: 0 10px 25px rgba(0, 229, 153, 0.32);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0, 104, 72, 0.25);
+            margin-top: 6px;
         }
-        .form-submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 35px rgba(0, 229, 153, 0.48);
-            filter: brightness(1.05);
+        .ox-submit-cta-btn:hover {
+            background: #004D35;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0, 104, 72, 0.35);
         }
-        .form-submit-btn:active {
-            transform: translateY(0);
-        }
-        .form-submit-btn:disabled {
-            opacity: 0.75;
+        .ox-submit-cta-btn:disabled {
+            opacity: 0.7;
             cursor: not-allowed;
             transform: none;
         }
-        .consult-btn-spinner {
-            width: 16px;
-            height: 16px;
-            border: 2.5px solid rgba(4, 27, 20, 0.3);
-            border-top-color: #041b14;
-            border-radius: 50%;
-            animation: consultSpin 0.7s linear infinite;
-            display: inline-block;
-        }
-        @keyframes consultSpin {
-            to { transform: rotate(360deg); }
-        }
-        .consult-guarantee-note {
+        .ox-nda-strip {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            margin-top: 12px;
             font-size: 11px;
-            color: #78928a;
-            margin-top: 10px;
+            color: #64748B;
             text-align: center;
         }
 
-        /* In-Modal Success State */
-        .consult-success-wrap {
+        /* Sidebar Card & Direct Hotlines */
+        .ox-contact-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .ox-side-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 18px;
+            padding: 22px 20px;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+        }
+        .ox-side-card h4 {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #0F172A;
+            margin: 0 0 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ox-side-card p {
+            font-size: 12px;
+            color: #64748B;
+            margin: 0 0 14px;
+            line-height: 1.5;
+        }
+        .ox-hotline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .ox-hotline-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 13px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 12.5px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            border: 1px solid #E2E8F0;
+            background: #F8FAFC;
+            color: #0F172A;
+        }
+        .ox-hotline-btn:hover {
+            background: #FFFFFF;
+            border-color: #CBD5E1;
+            transform: translateX(-3px);
+        }
+        html[dir="ltr"] .ox-hotline-btn:hover { transform: translateX(3px); }
+        .ox-hotline-btn.ox-hotline-wa {
+            background: #F0FDF4;
+            border-color: #BBF7D0;
+            color: #15803D;
+        }
+        .ox-hotline-btn.ox-hotline-wa:hover {
+            background: #DCFCE7;
+            border-color: #86EFAC;
+        }
+
+        /* In-Modal Success Banner */
+        .ox-success-banner {
+            display: none;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            border-radius: 14px;
+            padding: 22px 18px;
             text-align: center;
-            padding: 24px 10px 14px;
-            animation: consultFadeIn 0.35s ease;
+            margin-bottom: 18px;
+            animation: fadeIn 0.3s ease;
         }
-        @keyframes consultFadeIn {
-            from { opacity: 0; transform: scale(0.96); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .consult-success-icon-ring {
-            width: 70px;
-            height: 70px;
+        .ox-success-icon {
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
-            background: rgba(0, 229, 153, 0.12);
-            border: 2px solid #00E599;
+            background: #059669;
+            color: #FFFFFF;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
-            box-shadow: 0 0 35px rgba(0, 229, 153, 0.3);
-            animation: consultRingPulse 2s infinite;
+            font-size: 19px;
+            margin-bottom: 10px;
         }
-        @keyframes consultRingPulse {
-            0%, 100% { box-shadow: 0 0 25px rgba(0, 229, 153, 0.25); }
-            50% { box-shadow: 0 0 50px rgba(0, 229, 153, 0.5); }
-        }
-        .consult-success-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
-            margin: 0 0 8px;
-            line-height: 1.3;
-        }
-        .consult-success-desc {
-            font-size: 13px;
-            color: #b7cac4;
-            line-height: 1.7;
-            margin-bottom: 18px;
-            max-width: 440px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .consult-success-ref-pill {
+        .ox-success-wa-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px dashed rgba(0, 229, 153, 0.4);
-            padding: 6px 14px;
-            border-radius: 99px;
-            font-size: 11.5px;
-            color: #00E599;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        .consult-success-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        .consult-success-wa-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
             background: #25D366;
-            color: #041f12;
-            padding: 13px 20px;
-            border-radius: 12px;
-            font-size: 13.5px;
+            color: #FFFFFF;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: 800;
             text-decoration: none;
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
-            transition: all 0.2s ease;
+            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+            transition: transform 0.2s ease;
         }
-        .consult-success-wa-btn:hover {
-            background: #2ee571;
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5);
-        }
-        .consult-success-close-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #b8ccc5;
-            padding: 11px 20px;
-            border-radius: 12px;
-            font-size: 12.5px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .consult-success-close-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
+        .ox-success-wa-link:hover {
+            transform: translateY(-1px);
+            color: #FFFFFF;
         }
 
-        /* Responsive */
-        @media (max-width: 640px) {
+        /* Modal Alert Box */
+        .ox-modal-alert {
+            display: none;
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            color: #B91C1C;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 12.5px;
+            margin-bottom: 12px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Responsive Modal */
+        @media (max-width: 860px) {
+            .ox-contact-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
             .consult-modal-box {
                 padding: 22px 16px 18px;
-                border-radius: 20px;
-                max-height: calc(100vh - 20px);
+                border-radius: 18px;
             }
-            .consult-modal-title {
-                font-size: 19px;
+        }
+        @media (max-width: 560px) {
+            .ox-form-grid-2 {
+                grid-template-columns: 1fr;
+                gap: 10px;
             }
-            .consult-trust-strip {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 5px;
-                padding-bottom: 10px;
-                margin-bottom: 12px;
-            }
-            .consult-trust-item {
-                padding: 5px 4px;
-                font-size: 9.5px;
-                flex-direction: column;
-                gap: 3px;
-            }
-            .modal-pref-channels {
-                grid-template-columns: repeat(3, 1fr);
+            .ox-channel-grid {
                 gap: 6px;
             }
-            .pref-channel-chip {
-                padding: 7px 4px;
-                font-size: 10px;
+            .ox-channel-label {
+                padding: 8px 4px;
+                min-height: 76px;
             }
-            .consult-form-grid-2 {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
+            .ox-channel-icon-circle {
+                width: 30px;
+                height: 30px;
+                font-size: 13px;
+            }
+            .ox-channel-name {
+                font-size: 10px;
             }
         }
         .flash-alert {
@@ -1851,7 +1802,7 @@
                     <span></span>
                     <span></span>
                 </button>
-                <a href="#consult" onclick="openConsultModal(); return false;" class="btn-primary nav-cta-btn">
+                <a href="{{ route('contact') }}" onclick="openConsultModal(); return false;" class="btn-primary nav-cta-btn">
                     <span>{{ $currentLocale === 'ar' ? 'ابدأ مشروعك' : ($currentLocale === 'fr' ? 'Démarrer Projet' : 'Start Project') }}</span>
                     <span class="btn-arrow-icon">{{ $currentLocale === 'ar' ? '←' : '→' }}</span>
                 </a>
@@ -1864,19 +1815,19 @@
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">خدماتنا</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">أعمالنا</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">من نحن</a>
-                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="nav-item-link" data-target="consult">تواصل معنا</a>
+                    <a href="{{ route('contact') }}" class="nav-item-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">تواصل معنا</a>
                 @elseif($currentLocale === 'fr')
                     <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">Accueil</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Réalisations</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">À Propos</a>
-                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="nav-item-link" data-target="consult">Contact</a>
+                    <a href="{{ route('contact') }}" class="nav-item-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">Contact</a>
                 @else
                     <a href="{{ $isHome ? '#home' : $homeUrl }}" class="nav-item-link {{ $isHome ? 'active' : '' }}" data-target="home">Home</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Work</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">About</a>
-                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="nav-item-link" data-target="consult">Contact</a>
+                    <a href="{{ route('contact') }}" class="nav-item-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">Contact</a>
                 @endif
             </nav>
 
@@ -1913,27 +1864,27 @@
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ الخدمات والحلول</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ قصص وآراء الشركاء</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ عن OX Tech</a>
-                <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" onclick="closeMobileNav()">✦ احجز استشارتك</a>
+                <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ تواصل معنا</a>
             @elseif($currentLocale === 'fr')
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Accueil</a>
                 <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Nos Projets</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Témoignages Partenaires</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ À Propos de Nous</a>
-                <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" onclick="closeMobileNav()">✦ Réserver Consultation</a>
+                <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ Contactez-nous</a>
             @else
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Home</a>
                 <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Work & Projects</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Partner Stories</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ About OX Tech</a>
-                <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" onclick="closeMobileNav()">✦ Book Consultation</a>
+                <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ Contact Us</a>
             @endif
         </div>
         <div class="mobile-drawer-footer">
-            <button class="primary" onclick="closeMobileNav(); openConsultModal();" style="width: 100%; justify-content: center;">
+            <a href="{{ route('contact') }}" class="primary" onclick="closeMobileNav(); openConsultModal(); return false;" style="width: 100%; justify-content: center; text-decoration: none; display: inline-flex; align-items: center;">
                 {{ $currentLocale === 'ar' ? 'ابدأ مشروعك الآن' : ($currentLocale === 'fr' ? 'Démarrer Votre Projet' : 'Start Your Project Now') }} <b>{{ $currentLocale === 'ar' ? '←' : '→' }}</b>
-            </button>
+            </a>
             <p style="text-align: center; font-size: 11px; color: #8fa59f; margin: 5px 0 0;">
                 {{ $currentLocale === 'ar' ? 'الرياض • القاهرة • دبي' : 'Riyadh • Cairo • Dubai' }} · {{ $siteSettings['contact_email_primary'] ?? 'info@ox-tech.sa' }}
             </p>
@@ -1978,7 +1929,7 @@
 
                 <!-- Navigation Links (Center) -->
                 <nav class="ox-footer-nav" aria-label="Footer Navigation">
-                    <a href="{{ $isHome ? '#consult' : $homeUrl . '#consult' }}" class="ox-footer-nav-link" data-target="consult">
+                    <a href="{{ route('contact') }}" class="ox-footer-nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">
                         {{ $currentLocale === 'ar' ? 'تواصل معنا' : ($currentLocale === 'fr' ? 'Contact' : 'Contact Us') }}
                     </a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="ox-footer-nav-link" data-target="about">
@@ -2153,242 +2104,237 @@
     <div class="consult-modal-backdrop" id="consultModal">
         <div class="consult-modal-box">
             <button type="button" class="modal-close" onclick="closeConsultModal()" aria-label="{{ $currentLocale === 'ar' ? 'إغلاق النافذة' : 'Close modal' }}">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <i class="fa-solid fa-xmark" style="font-size: 16px;"></i>
             </button>
 
-            <!-- Saudi Market Executive Badge -->
-            <div class="consult-modal-badge">
-                <span class="consult-badge-dot"></span>
-                <span style="font-size: 13px;">🇸🇦</span>
-                <span>{{ $currentLocale === 'ar' ? 'جلسة استشارية وتنفيذية معتمدة • السوق السعودي والخليج' : ($currentLocale === 'fr' ? 'Session Stratégique • Arabie Saoudite & Golfe' : 'Executive Advisory • Saudi & GCC Market') }}</span>
-            </div>
+            <div class="ox-contact-grid">
+                <!-- 1. Main Luxury Consultation Form Card -->
+                <div class="ox-contact-card">
+                    <div class="ox-card-header">
+                        <h3>{{ $currentLocale === 'ar' ? 'املأ بيانات مشروعك لحجز الجلسة' : ($currentLocale === 'fr' ? 'Décrivez Votre Projet pour Réserver la Session' : 'Tell Us About Your Project to Book the Session') }}</h3>
+                        <p>{{ $currentLocale === 'ar' ? 'سيقوم مستشار تقني مختص بمراجعة طلبك وإعداد ملخص هندسي لمشروعك.' : ($currentLocale === 'fr' ? 'Un consultant technique senior examinera vos besoins et préparera une synthèse d’ingénierie.' : 'A senior tech consultant will review your specifications and prepare an architectural brief.') }}</p>
+                    </div>
 
-            <h3 class="consult-modal-title">
-                {{ $currentLocale === 'ar' ? 'احجز استشارة تقنية مجانية مع خبرائنا' : ($currentLocale === 'fr' ? 'Réservez Votre Consultation Stratégique' : 'Book an Executive Tech Discovery Session') }}
-            </h3>
+                    <!-- In-Modal Alert Box -->
+                    <div class="ox-modal-alert" id="oxModalAlert" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation" style="font-size: 14px;"></i>
+                        <span id="oxModalAlertText"></span>
+                    </div>
 
-            <p class="consult-modal-desc">
-                @if($currentLocale === 'ar')
-                    جلسة مباشرة لمدة 30 دقيقة لنقاش متطلبات مشروعك، دراسة الجدوى التقنية، واقتراح أفضل خارطة طريق ومعمارية برمجية مخصصة.
-                @elseif($currentLocale === 'fr')
-                    Session ciblée de 30 minutes pour définir l'architecture, le planning et les technologies optimales de votre produit.
-                @else
-                    A high-impact 30-minute discovery call to evaluate your technical scope, architecture, and deployment roadmap.
-                @endif
-            </p>
-
-            <!-- Trust Pillars Strip -->
-            <div class="consult-trust-strip">
-                <div class="consult-trust-item">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                    <span>{{ $currentLocale === 'ar' ? 'تواصل خلال ساعتين عمل' : 'Response in 2h' }}</span>
-                </div>
-                <div class="consult-trust-item">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    <span>{{ $currentLocale === 'ar' ? 'سرية تامة (اتفاقية NDA)' : 'Full NDA Privacy' }}</span>
-                </div>
-                <div class="consult-trust-item">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    <span>{{ $currentLocale === 'ar' ? 'كود ومعمارية مخصصة' : 'Custom Built' }}</span>
-                </div>
-            </div>
-
-            <!-- In-Modal Alert Box -->
-            <div class="consult-modal-alert" id="consultModalAlert" role="alert">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <span id="consultModalAlertText"></span>
-            </div>
-
-            <!-- Interactive Consultation Form -->
-            <form action="{{ route('consultation.store') }}" method="POST" id="consultationForm">
-                @csrf
-                <!-- Anti-Spam Bot Trap (Honeypot & Time-Trap) -->
-                <input type="text" name="hp_check" value="" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
-                <input type="hidden" name="_form_load_time" value="{{ time() }}">
-
-                <!-- Marketing Attribution Hidden Inputs -->
-                <input type="hidden" name="utm_source" value="{{ session('attribution.utm_source', request('utm_source')) }}">
-                <input type="hidden" name="utm_medium" value="{{ session('attribution.utm_medium', request('utm_medium')) }}">
-                <input type="hidden" name="utm_campaign" value="{{ session('attribution.utm_campaign', request('utm_campaign')) }}">
-                <input type="hidden" name="utm_term" value="{{ session('attribution.utm_term', request('utm_term')) }}">
-                <input type="hidden" name="utm_content" value="{{ session('attribution.utm_content', request('utm_content')) }}">
-                <input type="hidden" name="platform_detected" value="{{ session('attribution.platform_detected') }}">
-
-                <!-- Full Name -->
-                <div class="form-group">
-                    <label class="form-label" for="consult_name">
-                        <span>{{ $currentLocale === 'ar' ? 'الاسم الكريم' : ($currentLocale === 'fr' ? 'Nom Complet' : 'Full Name') }} <span class="req">*</span></span>
-                    </label>
-                    <input type="text" name="name" id="consult_name" class="form-input" placeholder="{{ $currentLocale === 'ar' ? 'مثال: سلطان القحطاني' : 'e.g. Sultan Al-Qahtani' }}" maxlength="70" required>
-                </div>
-
-                <!-- Row: Phone & Email -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="consult-form-grid-2">
-                    <!-- Phone with Country Code Flag Picker -->
-                    <div class="form-group" style="position: relative;">
-                        <label class="form-label" for="consult_phone_raw">
-                            <span>{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp' : 'Phone / WhatsApp') }} <span class="req">*</span></span>
-                        </label>
-                        <div class="modal-phone-combo" id="modalPhoneCombo">
-                            <button type="button" class="modal-country-btn" id="modalCountryBtn" onclick="toggleModalCountryPicker(event)" aria-haspopup="listbox" aria-expanded="false" title="{{ $currentLocale === 'ar' ? 'اختر الدولة' : 'Select Country' }}">
-                                <img id="modalSelectedFlag" src="{{ asset('assets/flags/' . $defaultModalCountry['code'] . '.webp') }}" alt="{{ $currentLocale === 'ar' ? $defaultModalCountry['name_ar'] : $defaultModalCountry['name_en'] }}" class="modal-country-flag-img" width="22" height="15" loading="lazy">
-                                <span id="modalSelectedDial" class="modal-country-dial">{{ $defaultModalCountry['dial'] }}</span>
-                                <svg class="modal-country-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M6 9l6 6 6-6"/>
-                                </svg>
-                            </button>
-
-                            <input type="tel" id="consult_phone_raw" class="modal-phone-input" placeholder="{{ $currentLocale === 'ar' ? '50 123 4567' : '50 123 4567' }}" maxlength="20" autocomplete="tel" required>
-                            <input type="hidden" name="phone" id="consult_phone" value="">
-                            <input type="hidden" id="modalCountryDialHidden" value="{{ $defaultModalCountry['dial'] }}">
+                    <!-- In-Modal Success State -->
+                    <div id="contactSuccessState" class="ox-success-banner">
+                        <div class="ox-success-icon">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h3 style="font-size: 20px; font-weight: 800; color: #065F46; margin-bottom: 6px;">
+                            {{ $currentLocale === 'ar' ? 'تم استلام طلب استشارتك بنجاح! 🎉' : ($currentLocale === 'fr' ? 'Votre Demande a été Reçue avec Succès ! 🎉' : 'Your Consultation Request Has Been Received! 🎉') }}
+                        </h3>
+                        <p style="font-size: 13.5px; color: #334155; line-height: 1.6; max-width: 480px; margin: 0 auto 12px;">
+                            {{ $currentLocale === 'ar' 
+                                ? 'شكراً لثقتك بـ OX Tech. سيقوم أحد خبرائنا التقنيين بالتواصل معك خلال أقل من ساعتين عمل لمناقشة متطلبات مشروعك وتقديم دراسة الجدوى ومعمارية النظام.' 
+                                : ($currentLocale === 'fr' 
+                                    ? 'Merci de votre confiance. Un de nos architectes logiciels seniors prendra contact avec vous d’ici 2 heures ouvrées pour examiner votre projet.' 
+                                    : 'Thank you for choosing OX Tech. One of our lead software architects will connect with you within 2 hours to confirm your meeting and review your technical roadmap.') 
+                            }}
+                        </p>
+                        <div style="font-size: 13px; color: #059669; font-weight: 800;" id="contactRefNumber">
+                            {{ $currentLocale === 'ar' ? 'رقم الطلب المرجعي:' : ($currentLocale === 'fr' ? 'N° de référence :' : 'Reference ID:') }} <span id="refCodeSpan">OX-2026</span>
                         </div>
 
-                        <!-- Country Dropdown Popover -->
-                        <div class="modal-country-dropdown" id="modalCountryDropdown" role="listbox">
-                            <div class="modal-country-search-wrap">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                </svg>
-                                <input type="text" id="modalCountrySearchInput" class="modal-country-search-input" placeholder="{{ $currentLocale === 'ar' ? 'ابحث باسم الدولة أو كود الاتصال...' : 'Search country or code...' }}" autocomplete="off" oninput="filterModalCountries(this.value)">
+                        <a id="waDirectFollowupBtn" 
+                           href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '201008616682')) }}?text={{ urlencode($currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بتقديم طلب استشارة تقنية وأرغب بالمتابعة السريعة معكم.' : 'Hello OX Tech, I just booked a tech consultation and would like an instant follow-up.') }}" 
+                           target="_blank" 
+                           class="ox-success-wa-link" 
+                           onclick="trackWaEscalation()">
+                            <i class="fa-brands fa-whatsapp" style="font-size: 17px;"></i>
+                            <span>{{ $currentLocale === 'ar' ? 'محادثة فورية مع المستشار عبر واتساب' : ($currentLocale === 'fr' ? 'Échange Immédiat sur WhatsApp' : 'Direct VIP Chat on WhatsApp') }}</span>
+                        </a>
+                    </div>
+
+                    <!-- Interactive Form -->
+                    <form id="oxContactForm" onsubmit="handleModalContactSubmit(event)">
+                        @csrf
+                        <input type="text" name="hp_check" value="" style="display:none !important;" tabindex="-1" autocomplete="off">
+                        <input type="text" name="website_hp" value="" style="display:none !important;" tabindex="-1" autocomplete="off">
+                        <input type="hidden" name="_form_load_time" value="{{ time() }}">
+                        <input type="hidden" name="utm_source" value="{{ session('attribution.utm_source', request('utm_source')) }}">
+                        <input type="hidden" name="utm_medium" value="{{ session('attribution.utm_medium', request('utm_medium')) }}">
+                        <input type="hidden" name="utm_campaign" value="{{ session('attribution.utm_campaign', request('utm_campaign')) }}">
+                        <input type="hidden" name="referrer_url" value="{{ url()->previous() }}">
+
+                        <!-- Row 1: Name & Email -->
+                        <div class="ox-form-grid-2">
+                            <div class="ox-form-group">
+                                <label class="ox-form-label">{{ $currentLocale === 'ar' ? 'الاسم الكريم *' : ($currentLocale === 'fr' ? 'Nom Complet *' : 'Full Name *') }}</label>
+                                <div class="ox-input-wrapper">
+                                    <i class="fa-solid fa-user ox-input-icon"></i>
+                                    <input type="text" name="name" id="c_name" required placeholder="{{ $currentLocale === 'ar' ? 'مثال: سلطان القحطاني' : ($currentLocale === 'fr' ? 'ex: Alexandre Dubois' : 'e.g. Sultan Al-Qahtani') }}" class="ox-input-field">
+                                </div>
                             </div>
-                            <div class="modal-country-list" id="modalCountryList">
-                                @foreach($modalPhoneCountries as $c)
-                                    <button type="button" class="modal-country-item {{ $c['code'] === $defaultModalCountry['code'] ? 'selected' : '' }}" data-code="{{ $c['code'] }}" data-dial="{{ $c['dial'] }}" data-name="{{ $currentLocale === 'ar' ? $c['name_ar'] : $c['name_en'] }}" onclick="selectModalCountry('{{ $c['code'] }}', '{{ $c['dial'] }}', '{{ asset('assets/flags/' . $c['code'] . '.webp') }}')">
-                                        <span class="modal-country-item-left">
-                                            <img src="{{ asset('assets/flags/' . $c['code'] . '.webp') }}" class="modal-country-flag-img" width="20" height="14" alt="{{ $c['name_en'] }}" loading="lazy">
-                                            <span class="modal-country-item-name">{{ $currentLocale === 'ar' ? $c['name_ar'] : $c['name_en'] }}</span>
-                                        </span>
-                                        <span class="modal-country-item-dial">{{ $c['dial'] }}</span>
-                                    </button>
-                                @endforeach
-                                <div class="modal-country-no-results" id="modalCountryNoResults" style="display: none;">
-                                    {{ $currentLocale === 'ar' ? 'لا توجد نتائج مطابقة' : 'No matching results' }}
+
+                            <div class="ox-form-group">
+                                <label class="ox-form-label">{{ $currentLocale === 'ar' ? 'البريد الإلكتروني المهني *' : ($currentLocale === 'fr' ? 'Email Professionnel *' : 'Business Email *') }}</label>
+                                <div class="ox-input-wrapper">
+                                    <i class="fa-solid fa-envelope ox-input-icon"></i>
+                                    <input type="email" name="email" id="c_email" required placeholder="ceo@company.sa" class="ox-input-field">
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Row 2: Phone with Flag Dropdown & Project Type -->
+                        <div class="ox-form-grid-2">
+                            <div class="ox-form-group">
+                                <label class="ox-form-label">{{ $currentLocale === 'ar' ? 'رقم الجوال / واتساب *' : ($currentLocale === 'fr' ? 'Téléphone / WhatsApp *' : 'Mobile / WhatsApp *') }}</label>
+                                <div class="ox-phone-row">
+                                    <button type="button" class="ox-country-btn" id="modalOxCountryBtn" onclick="toggleModalCountryDropdown(event)" aria-haspopup="listbox" aria-expanded="false" title="{{ $currentLocale === 'ar' ? 'اختر الدولة' : 'Select Country' }}">
+                                        <img id="modalOxSelectedFlagImg" src="{{ asset('assets/flags/' . $defaultModalCountry['code'] . '.webp') }}" alt="{{ $defaultModalCountry['name_en'] }}" class="ox-country-flag-img" width="22" height="15" loading="lazy">
+                                        <span id="modalOxSelectedDialText" class="ox-country-dial-code">{{ $defaultModalCountry['dial'] }}</span>
+                                        <svg class="ox-country-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 9l6 6 6-6"></path>
+                                        </svg>
+                                    </button>
+                                    <input type="hidden" name="country_code" id="modal_c_country_code" value="{{ $defaultModalCountry['dial'] }}">
+
+                                    <div class="ox-input-wrapper" style="flex: 1;">
+                                        <input type="tel" name="phone" id="modal_c_phone" required placeholder="50 123 4567" class="ox-input-field">
+                                    </div>
+
+                                    <!-- Country Dropdown Popover -->
+                                    <div class="ox-country-popover" id="modalOxCountryPopover" role="listbox">
+                                        <div class="ox-country-search-wrap">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            </svg>
+                                            <input type="text" id="modalOxCountrySearchInput" class="ox-country-search-input" placeholder="{{ $currentLocale === 'ar' ? 'ابحث باسم الدولة أو الكود...' : 'Search country or code...' }}" autocomplete="off" oninput="filterModalCountryList(this.value)">
+                                        </div>
+                                        <div class="ox-country-list" id="modalOxCountryList">
+                                            @foreach($modalPhoneCountries as $c)
+                                                <button type="button" class="ox-country-item {{ $c['code'] === $defaultModalCountry['code'] ? 'selected' : '' }}" 
+                                                    data-code="{{ $c['code'] }}" 
+                                                    data-dial="{{ $c['dial'] }}" 
+                                                    data-name="{{ $currentLocale === 'ar' ? $c['name_ar'] : $c['name_en'] }}" 
+                                                    onclick="selectModalContactCountry('{{ $c['code'] }}', '{{ $c['dial'] }}', '{{ asset('assets/flags/' . $c['code'] . '.webp') }}')">
+                                                    <span class="ox-country-item-left">
+                                                        <img src="{{ asset('assets/flags/' . $c['code'] . '.webp') }}" class="ox-country-item-flag" width="20" height="14" alt="{{ $c['name_en'] }}" loading="lazy">
+                                                        <span class="ox-country-item-name">{{ $currentLocale === 'ar' ? $c['name_ar'] : $c['name_en'] }}</span>
+                                                    </span>
+                                                    <span class="ox-country-item-dial">{{ $c['dial'] }}</span>
+                                                </button>
+                                            @endforeach
+                                            <div class="ox-country-no-results" id="modalOxCountryNoResults" style="display: none;">
+                                                {{ $currentLocale === 'ar' ? 'لا توجد نتائج مطابقة' : 'No matching results' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ox-form-group">
+                                <label class="ox-form-label">{{ $currentLocale === 'ar' ? 'نوع المشروع التقني' : ($currentLocale === 'fr' ? 'Type de Projet' : 'Project Classification') }}</label>
+                                <select name="project_type" id="modal_c_proj_type" class="ox-select-field">
+                                    <option value="منصة وبوابة رقمية / ويب متطورة">{{ $currentLocale === 'ar' ? 'منصة وبوابة رقمية / ويب متطورة' : 'Custom Web Platform & Digital Portal' }}</option>
+                                    <option value="تطبيق جوال ذكي (iOS & Android)">{{ $currentLocale === 'ar' ? 'تطبيق جوال ذكي (iOS & Android)' : 'Native Mobile Application (iOS & Android)' }}</option>
+                                    <option value="متجر إلكتروني بنظام تجارة حديث">{{ $currentLocale === 'ar' ? 'متجر إلكتروني بنظام تجارة حديث' : 'Next-Gen E-Commerce Ecosystem' }}</option>
+                                    <option value="نظام ERP / CRM سحابي لإدارة الشركات">{{ $currentLocale === 'ar' ? 'نظام ERP / CRM سحابي لإدارة الشركات' : 'Enterprise ERP / CRM Cloud System' }}</option>
+                                    <option value="حلول الذكاء الاصطناعي والأتمتة الذكية">{{ $currentLocale === 'ar' ? 'حلول الذكاء الاصطناعي والأتمتة الذكية' : 'AI Engineering & Intelligent Automation' }}</option>
+                                    <option value="بنية تحتية سحابية وهندسة DevOps">{{ $currentLocale === 'ar' ? 'بنية تحتية سحابية وهندسة DevOps' : 'Cloud Architecture & DevOps Migration' }}</option>
+                                    <option value="استشارة تقنية وهندسية عامة">{{ $currentLocale === 'ar' ? 'استشارة تقنية وهندسية عامة' : 'General Tech Architecture Consultation' }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: 3 Compact Square Channel Tiles -->
+                        <div class="ox-form-group">
+                            <label class="ox-form-label">{{ $currentLocale === 'ar' ? 'طريقة التواصل المفضلة:' : ($currentLocale === 'fr' ? 'Canal de Contact Préféré :' : 'Preferred Contact Channel:') }}</label>
+                            <div class="ox-channel-grid">
+                                <label class="ox-channel-option">
+                                    <input type="radio" name="contact_preference" value="واتساب" checked>
+                                    <span class="ox-channel-label">
+                                        <span class="ox-channel-icon-circle">
+                                            <i class="fa-brands fa-whatsapp" style="color: #25d366; font-size: 18px;"></i>
+                                        </span>
+                                        <span class="ox-channel-name">{{ $currentLocale === 'ar' ? 'واتساب (الأسرع)' : 'WhatsApp (Fastest)' }}</span>
+                                    </span>
+                                </label>
+                                <label class="ox-channel-option">
+                                    <input type="radio" name="contact_preference" value="مكالمة هاتفية">
+                                    <span class="ox-channel-label">
+                                        <span class="ox-channel-icon-circle">
+                                            <i class="fa-solid fa-phone" style="color: #006848; font-size: 15px;"></i>
+                                        </span>
+                                        <span class="ox-channel-name">{{ $currentLocale === 'ar' ? 'مكالمة هاتفية' : 'Phone Call' }}</span>
+                                    </span>
+                                </label>
+                                <label class="ox-channel-option">
+                                    <input type="radio" name="contact_preference" value="اجتماع زوم / Google Meet">
+                                    <span class="ox-channel-label">
+                                        <span class="ox-channel-icon-circle">
+                                            <i class="fa-solid fa-video" style="color: #0284c7; font-size: 15px;"></i>
+                                        </span>
+                                        <span class="ox-channel-name">{{ $currentLocale === 'ar' ? 'اجتماع Meet / Zoom' : 'Google Meet / Zoom' }}</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Row 4: Message Textarea -->
+                        <div class="ox-form-group">
+                            <label class="ox-form-label">{{ $currentLocale === 'ar' ? 'تفاصيل الفكرة أو المتطلبات الرئيسية *' : ($currentLocale === 'fr' ? 'Spécifications et Objectifs Clés *' : 'Project Scope or Key Objectives *') }}</label>
+                            <textarea name="message" id="modal_c_message" required minlength="10" maxlength="1000" placeholder="{{ $currentLocale === 'ar' ? 'أخبرنا باختصار عن فكرتك، الميزات الرئيسية المطلوبة، أو التحدي التقني الذي ترغب في حله...' : 'Briefly describe your vision, core features required, or the engineering challenge you need solved...' }}" class="ox-textarea-field" oninput="updateModalCharCount(this)"></textarea>
+                            <div class="ox-char-counter">
+                                <span id="modalCharCountSpan">0</span> / 1000 {{ $currentLocale === 'ar' ? 'حرف (الحد الأدنى 10)' : 'characters (min 10)' }}
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="btnModalContactSubmit" class="ox-submit-cta-btn">
+                            <span>{{ $currentLocale === 'ar' ? 'تأكيد وحجز الاستشارة المجانية' : ($currentLocale === 'fr' ? 'Confirmer et Réserver la Session' : 'Confirm & Book Free Session') }}</span>
+                            <i class="fa-solid {{ $currentLocale === 'ar' ? 'fa-arrow-left' : 'fa-arrow-right' }}"></i>
+                        </button>
+
+                        <div class="ox-nda-strip">
+                            <i class="fa-solid fa-shield-halved" style="color: #006848;"></i>
+                            <span>{{ $currentLocale === 'ar' ? 'نلتزم بالسرية التامة للبيانات وفق أفضل المعايير المهنية (NDA)' : 'Strict data confidentiality protected by mutual Non-Disclosure Agreement (NDA)' }}</span>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 2. Direct Channels Executive Sidebar -->
+                <div class="ox-contact-sidebar">
+                    <div class="ox-side-card">
+                        <h4>
+                            <i class="fa-solid fa-bolt" style="color: #006848;"></i>
+                            <span>{{ $currentLocale === 'ar' ? 'قنوات التواصل المباشرة والتنفيذية' : 'Direct Executive Channels' }}</span>
+                        </h4>
+                        <p>{{ $currentLocale === 'ar' ? 'تواصل مباشرة مع فريقنا القيادي والهندسي للاستفسارات السريعة.' : 'Connect directly with our regional leadership and engineering team.' }}</p>
+
+                        <div class="ox-hotline-list">
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '201008616682')) }}?text={{ urlencode($currentLocale === 'ar' ? 'مرحباً فريق OX Tech، أرغب بالتواصل المباشر مع استشاري بخصوص مشروع جديد.' : 'Hello OX Tech, I would like to connect directly with a consultant.') }}" target="_blank" class="ox-hotline-btn ox-hotline-wa" onclick="trackWaDirectClick()">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-brands fa-whatsapp" style="font-size: 18px;"></i>
+                                    <span>{{ $currentLocale === 'ar' ? 'محادثة فورية عبر واتساب (رد فوري)' : 'Instant WhatsApp Hotline' }}</span>
+                                </div>
+                                <i class="fa-solid {{ $currentLocale === 'ar' ? 'fa-chevron-left' : 'fa-chevron-right' }}" style="font-size: 11px;"></i>
+                            </a>
+
+                            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['contact_phone_primary'] ?? '+201008616682') }}" class="ox-hotline-btn">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-phone" style="color: #006848; font-size: 14px;"></i>
+                                    <span>{{ $currentLocale === 'ar' ? 'اتصال هاتفي مباشر' : 'Direct Phone Call' }}</span>
+                                </div>
+                                <span style="font-size: 11px; color: #64748B;" dir="ltr">{{ $siteSettings['contact_phone_primary'] ?? '+20 10 08616682' }}</span>
+                            </a>
+
+                            <a href="mailto:{{ $siteSettings['contact_email_primary'] ?? 'contact@oxtech.uk' }}" class="ox-hotline-btn">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-envelope" style="color: #006848; font-size: 14px;"></i>
+                                    <span>{{ $currentLocale === 'ar' ? 'مراسلة عبر البريد الإلكتروني' : 'Executive Email Inquiries' }}</span>
+                                </div>
+                                <span style="font-size: 11px; color: #64748B;" dir="ltr">{{ $siteSettings['contact_email_primary'] ?? 'contact@oxtech.uk' }}</span>
+                            </a>
+                        </div>
                     </div>
-
-                    <!-- Business Email -->
-                    <div class="form-group">
-                        <label class="form-label" for="consult_email">
-                            <span>{{ $currentLocale === 'ar' ? 'البريد الإلكتروني المهني' : ($currentLocale === 'fr' ? 'Email Pro' : 'Business Email') }} <span class="req">*</span></span>
-                        </label>
-                        <input type="email" name="email" id="consult_email" class="form-input" placeholder="ceo@company.sa" maxlength="100" required>
-                    </div>
-                </div>
-
-                <!-- Row: Project Type & Estimated Budget -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;" class="consult-form-grid-2">
-                    <div class="form-group">
-                        <label class="form-label" for="consult_project_type">
-                            <span>{{ $currentLocale === 'ar' ? 'نوع المشروع' : ($currentLocale === 'fr' ? 'Type de Projet' : 'Project Type') }}</span>
-                        </label>
-                        <select name="project_type" id="consult_project_type" class="form-select">
-                            <option value="تطبيقات جوال (iOS & Android)">{{ $currentLocale === 'ar' ? '📱 تطبيق جوال iOS / Android' : '📱 Mobile App (iOS / Android)' }}</option>
-                            <option value="منصات ومواقع ويب" selected>{{ $currentLocale === 'ar' ? '🌐 منصة وبوابة رقمية / ويب' : '🌐 Web Platform & Portal' }}</option>
-                            <option value="متجر إلكتروني متكامل">{{ $currentLocale === 'ar' ? '🛍️ متجر إلكتروني بنظام تجارة حديث' : '🛍️ E-Commerce Platform' }}</option>
-                            <option value="أنظمة سحابية وSaaS">{{ $currentLocale === 'ar' ? '☁️ نظام سحابي SaaS متكامل' : '☁️ Cloud SaaS System' }}</option>
-                            <option value="حلول الذكاء الاصطناعي والأتمتة">{{ $currentLocale === 'ar' ? '🤖 حلول ذكاء اصطناعي وأتمتة' : '🤖 AI & Automation Solutions' }}</option>
-                            <option value="تكاملات وربط أنظمة ERP">{{ $currentLocale === 'ar' ? '⚡ تكاملات وربط أنظمة ERP / APIs' : '⚡ ERP Integrations & APIs' }}</option>
-                            <option value="استشارة وتخطيط معمارية تقنية">{{ $currentLocale === 'ar' ? '💡 استشارة وتخطيط معمارية تقنية' : '💡 Technical Consulting' }}</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="consult_budget">
-                            <span>{{ $currentLocale === 'ar' ? 'الميزانية المتوقعة (اختياري)' : ($currentLocale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</span>
-                        </label>
-                        <select name="budget" id="consult_budget" class="form-select">
-                            <option value="مرنة / للمناقشة في الجلسة">{{ $currentLocale === 'ar' ? 'مرنة / سنناقشها في الجلسة' : 'Flexible / To Discuss' }}</option>
-                            <option value="أقل من 25,000 ر.س">{{ $currentLocale === 'ar' ? 'أقل من 25,000 ر.س (~ $7,000)' : '< $7,000' }}</option>
-                            <option value="25,000 - 50,000 ر.س">{{ $currentLocale === 'ar' ? '25,000 - 50,000 ر.س (~ $13,000)' : '$7,000 - $13,000' }}</option>
-                            <option value="50,000 - 100,000 ر.س">{{ $currentLocale === 'ar' ? '50,000 - 100,000 ر.س (~ $27,000)' : '$13,000 - $27,000' }}</option>
-                            <option value="أكثر من 100,000 ر.س">{{ $currentLocale === 'ar' ? 'أكثر من 100,000 ر.س (مشاريع كبرى)' : '> $27,000 (Enterprise)' }}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Preferred Communication Channel -->
-                <div class="form-group">
-                    <label class="form-label">
-                        <span>{{ $currentLocale === 'ar' ? 'طريقة التواصل المفضلة' : 'Preferred Contact Channel' }}</span>
-                    </label>
-                    <div class="modal-pref-channels" id="modalPrefChannels">
-                        <label class="pref-channel-chip active" onclick="setContactPref(this, 'واتساب')">
-                            <input type="radio" name="contact_preference" value="واتساب" checked style="display:none;">
-                            <span>💬 {{ $currentLocale === 'ar' ? 'واتساب (الأسرع)' : 'WhatsApp (Fastest)' }}</span>
-                        </label>
-                        <label class="pref-channel-chip" onclick="setContactPref(this, 'اتصال هاتفي')">
-                            <input type="radio" name="contact_preference" value="اتصال هاتفي" style="display:none;">
-                            <span>📞 {{ $currentLocale === 'ar' ? 'مكالمة هاتفية' : 'Phone Call' }}</span>
-                        </label>
-                        <label class="pref-channel-chip" onclick="setContactPref(this, 'اجتماع زوم')">
-                            <input type="radio" name="contact_preference" value="اجتماع زوم" style="display:none;">
-                            <span>💻 {{ $currentLocale === 'ar' ? 'اجتماع زوم / Meet' : 'Zoom / Meet' }}</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Project Scope & Message -->
-                <div class="form-group">
-                    <label class="form-label" for="consult_message">
-                        <span>{{ $currentLocale === 'ar' ? 'تفاصيل الفكرة أو المتطلبات' : ($currentLocale === 'fr' ? 'Détails du Projet' : 'Project Scope or Details') }} <span class="req">*</span></span>
-                    </label>
-                    <textarea name="message" id="consult_message" class="form-textarea" rows="3" placeholder="{{ $currentLocale === 'ar' ? 'أخبرنا باختصار عن فكرتك، الميزات الرئيسية المطلوبة، أو التحدي التقني الذي ترغب في حله...' : 'Tell us briefly about your goals, technical scope, and desired delivery roadmap...' }}" minlength="10" maxlength="1000" required></textarea>
-                    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #7e9890; margin-top: 4px;">
-                        <span>{{ $currentLocale === 'ar' ? 'الحد الأدنى 10 أحرف' : 'Min 10 characters' }}</span>
-                        <span id="modalMsgCounter">0 / 1000 حرف</span>
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="form-submit-btn" id="consultSubmitBtn">
-                    <span>{{ $currentLocale === 'ar' ? 'تأكيد وحجز الاستشارة المجانية' : ($currentLocale === 'fr' ? 'Confirmer la Réservation' : 'Confirm & Request Consultation') }}</span>
-                    <b style="font-size: 16px;">{{ $currentLocale === 'ar' ? '←' : '→' }}</b>
-                </button>
-
-                <div class="consult-guarantee-note">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    <span>{{ $currentLocale === 'ar' ? 'نلتزم بالسرية التامة للبيانات وفق أفضل المعايير المهنية.' : 'We adhere to strict data privacy and professional NDA standards.' }}</span>
-                </div>
-            </form>
-
-            <!-- In-Modal Success State (High Converting & Seamless) -->
-            <div class="consult-success-wrap" id="consultSuccessWrap" style="display: none;">
-                <div class="consult-success-icon-ring">
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#00E599" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 6L9 17l-5-5"/>
-                    </svg>
-                </div>
-                <h3 class="consult-success-title">{{ $currentLocale === 'ar' ? 'تم استلام طلب استشارتك بنجاح! 🎉' : 'Consultation Request Received! 🎉' }}</h3>
-                <p class="consult-success-desc">
-                    {{ $currentLocale === 'ar' 
-                        ? 'شكراً لثقتك بـ OX Tech. سيتواصل معك أحد خبرائنا التقنيين خلال أقل من ساعتين عمل لمناقشة فكرة مشروعك وتقديم دراسة الجدوى ومعمارية النظام.' 
-                        : 'Thank you for choosing OX Tech. One of our senior tech architects will reach out within 2 business hours to review your project scope and architecture roadmap.' 
-                    }}
-                </p>
-                <div class="consult-success-ref-pill">
-                    <span>{{ $currentLocale === 'ar' ? 'رقم طلبك:' : 'Reference ID:' }}</span>
-                    <span id="consultSuccessRefCode">#OX-{{ date('ymd') }}</span>
-                </div>
-                <div class="consult-success-actions">
-                    <a id="consultSuccessWaBtn" 
-                       href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '966500000000')) }}?text={{ urlencode($currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بتقديم طلب استشارة تقنية وأرغب بالمتابعة السريعة معكم.' : 'Hello OX Tech, I just booked a tech consultation and would like an instant follow-up.') }}" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="consult-success-wa-btn">
-                        <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor">
-                            <path d="M16 2C8.28 2 2 8.28 2 16c0 2.72.78 5.28 2.14 7.46L2.05 30.1c-.13.5.34.97.84.84l6.84-2.05C11.84 30.19 13.88 30.8 16 30.8c7.72 0 14-6.28 14-14S23.72 2 16 2zm8.18 19.86c-.34.96-1.7 1.83-2.77 2.06-.73.16-1.68.29-4.88-1.04-4.1-1.7-6.75-5.86-6.95-6.13-.21-.27-1.68-2.24-1.68-4.27s1.06-3.03 1.44-3.45c.38-.42.82-.53 1.1-.53.28 0 .55.01.79.02.26.01.6.09.93.89.34.82 1.16 2.83 1.26 3.04.1.21.17.46.03.74-.14.28-.21.46-.42.71-.21.25-.44.55-.63.74-.21.21-.43.44-.19.86.25.42 1.1 1.81 2.36 2.93 1.62 1.44 2.99 1.89 3.42 2.1.42.21.67.18.92-.1.25-.29 1.08-1.26 1.37-1.69.29-.43.58-.36.98-.21.4.14 2.54 1.2 2.97 1.42.44.21.73.32.84.5.11.18.11 1.04-.23 2z"/>
-                        </svg>
-                        <span>{{ $currentLocale === 'ar' ? 'محادثة فورية مع المستشار عبر واتساب' : 'Instant WhatsApp Follow-up' }}</span>
-                    </a>
-                    <button type="button" class="consult-success-close-btn" onclick="closeConsultModal()">
-                        <span>{{ $currentLocale === 'ar' ? 'إغلاق ومتابعة تصفح الموقع' : 'Close and continue browsing' }}</span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -2405,90 +2351,33 @@
     </div>
 
     <script>
+        // ─── Modal Open & Close Logic ───
         function openConsultModal() {
             const modal = document.getElementById('consultModal');
             if (modal) {
                 modal.classList.add('active');
-                setTimeout(() => {
-                    const nameInput = document.getElementById('consult_name');
-                    if (nameInput) nameInput.focus();
-                }, 100);
+                document.body.style.overflow = 'hidden';
             }
         }
 
         function closeConsultModal() {
             const modal = document.getElementById('consultModal');
-            if (modal) modal.classList.remove('active');
-            closeModalCountryPicker();
-            setTimeout(resetConsultModalForm, 300);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            closeModalCountryPopover();
         }
 
         document.getElementById('consultModal')?.addEventListener('click', function(e) {
             if (e.target === this) closeConsultModal();
         });
 
-        // Live Character Counter for Modal
-        const modalMsg = document.querySelector('#consultationForm textarea[name="message"]');
-        const modalMsgCounter = document.getElementById('modalMsgCounter');
-        if (modalMsg && modalMsgCounter) {
-            modalMsg.addEventListener('input', function() {
-                modalMsgCounter.innerText = `${this.value.length} / 1000 حرف`;
-                if (this.value.length > 900) {
-                    modalMsgCounter.style.color = '#f59e0b';
-                } else {
-                    modalMsgCounter.style.color = '#7e9890';
-                }
-            });
-        }
-
-        // Country Flag Picker Handlers for Consultation Modal
-        function toggleModalCountryPicker(e) {
-            if (e) e.stopPropagation();
-            const dropdown = document.getElementById('modalCountryDropdown');
-            const btn = document.getElementById('modalCountryBtn');
-            if (!dropdown || !btn) return;
-
-            const isOpen = dropdown.classList.contains('show');
-            if (isOpen) {
-                closeModalCountryPicker();
-            } else {
-                dropdown.classList.add('show');
-                btn.classList.add('active');
-                btn.setAttribute('aria-expanded', 'true');
-                const search = document.getElementById('modalCountrySearchInput');
-                if (search) {
-                    search.value = '';
-                    filterModalCountries('');
-                    setTimeout(() => search.focus(), 50);
-                }
-            }
-        }
-
-        function closeModalCountryPicker() {
-            const dropdown = document.getElementById('modalCountryDropdown');
-            const btn = document.getElementById('modalCountryBtn');
-            if (dropdown) dropdown.classList.remove('show');
-            if (btn) {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        document.addEventListener('click', function(e) {
-            const wrap = document.getElementById('modalPhoneCombo');
-            const dropdown = document.getElementById('modalCountryDropdown');
-            if (dropdown && dropdown.classList.contains('show')) {
-                if (wrap && !wrap.contains(e.target) && !dropdown.contains(e.target)) {
-                    closeModalCountryPicker();
-                }
-            }
-        });
-
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                const dropdown = document.getElementById('modalCountryDropdown');
-                if (dropdown && dropdown.classList.contains('show')) {
-                    closeModalCountryPicker();
+                const pop = document.getElementById('modalOxCountryPopover');
+                if (pop && pop.classList.contains('open')) {
+                    closeModalCountryPopover();
                 } else {
                     const modal = document.getElementById('consultModal');
                     if (modal && modal.classList.contains('active')) {
@@ -2498,359 +2387,214 @@
             }
         });
 
-        function filterModalCountries(val) {
-            val = (val || '').toLowerCase().trim();
-            const items = document.querySelectorAll('.modal-country-item');
-            const noRes = document.getElementById('modalCountryNoResults');
+        // ─── Country Flag Picker Handlers for Modal ───
+        function toggleModalCountryDropdown(e) {
+            if (e) e.stopPropagation();
+            const pop = document.getElementById('modalOxCountryPopover');
+            const btn = document.getElementById('modalOxCountryBtn');
+            if (!pop) return;
+
+            const isOpen = pop.classList.contains('open');
+            if (isOpen) {
+                closeModalCountryPopover();
+            } else {
+                pop.classList.add('open');
+                btn?.classList.add('open');
+                setTimeout(() => {
+                    document.getElementById('modalOxCountrySearchInput')?.focus();
+                }, 50);
+            }
+        }
+
+        function closeModalCountryPopover() {
+            const pop = document.getElementById('modalOxCountryPopover');
+            const btn = document.getElementById('modalOxCountryBtn');
+            if (pop) pop.classList.remove('open');
+            if (btn) btn.classList.remove('open');
+        }
+
+        function selectModalContactCountry(code, dial, flagUrl) {
+            const flagImg = document.getElementById('modalOxSelectedFlagImg');
+            const dialText = document.getElementById('modalOxSelectedDialText');
+            const hiddenCode = document.getElementById('modal_c_country_code');
+
+            if (flagImg) flagImg.src = flagUrl;
+            if (dialText) dialText.textContent = dial;
+            if (hiddenCode) hiddenCode.value = dial;
+
+            document.querySelectorAll('#modalOxCountryList .ox-country-item').forEach(item => {
+                item.classList.toggle('selected', item.getAttribute('data-code') === code);
+            });
+
+            closeModalCountryPopover();
+            document.getElementById('modal_c_phone')?.focus();
+        }
+
+        function filterModalCountryList(query) {
+            query = (query || '').toLowerCase().trim();
+            const items = document.querySelectorAll('#modalOxCountryList .ox-country-item');
             let visibleCount = 0;
 
             items.forEach(item => {
                 const name = (item.getAttribute('data-name') || '').toLowerCase();
                 const dial = (item.getAttribute('data-dial') || '').toLowerCase();
-                const code = (item.getAttribute('data-code') || '').toLowerCase();
-
-                if (!val || name.includes(val) || dial.includes(val) || code.includes(val)) {
-                    item.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
+                const matches = name.includes(query) || dial.includes(query);
+                item.style.display = matches ? 'flex' : 'none';
+                if (matches) visibleCount++;
             });
 
-            if (noRes) {
-                noRes.style.display = visibleCount === 0 ? 'block' : 'none';
+            const noResults = document.getElementById('modalOxCountryNoResults');
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
             }
         }
 
-        function selectModalCountry(code, dial, flagUrl) {
-            const flag = document.getElementById('modalSelectedFlag');
-            const dialSpan = document.getElementById('modalSelectedDial');
-            const hiddenDial = document.getElementById('modalCountryDialHidden');
+        document.addEventListener('click', function(e) {
+            const pop = document.getElementById('modalOxCountryPopover');
+            const btn = document.getElementById('modalOxCountryBtn');
+            if (pop && pop.classList.contains('open')) {
+                if (!pop.contains(e.target) && !btn?.contains(e.target)) {
+                    closeModalCountryPopover();
+                }
+            }
+        });
 
-            if (flag) flag.src = flagUrl;
-            if (dialSpan) dialSpan.innerText = dial;
-            if (hiddenDial) hiddenDial.value = dial;
-
-            // Highlight selected item in list
-            document.querySelectorAll('.modal-country-item').forEach(item => {
-                item.classList.toggle('selected', item.getAttribute('data-code') === code);
-            });
-
-            closeModalCountryPicker();
-            syncModalPhone();
-
-            const phoneInput = document.getElementById('consult_phone_raw');
-            if (phoneInput) phoneInput.focus();
+        // ─── Modal Textarea Live Character Counter ───
+        function updateModalCharCount(textarea) {
+            const span = document.getElementById('modalCharCountSpan');
+            if (span && textarea) {
+                span.textContent = textarea.value.length;
+            }
         }
 
-        // Preferred Channel Selector Pill
-        function setContactPref(chip, pref) {
-            document.querySelectorAll('#modalPrefChannels .pref-channel-chip').forEach(el => el.classList.remove('active'));
-            chip.classList.add('active');
-            const radio = chip.querySelector('input[type="radio"]');
-            if (radio) radio.checked = true;
+        // ─── Direct WhatsApp Event Escalation ───
+        function trackWaEscalation() {
+            try {
+                if (typeof window.fbq === 'function') {
+                    window.fbq('trackCustom', 'WhatsAppConsultationClick', { source: 'modal_success_button' });
+                }
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'whatsapp_escalation', { event_category: 'Consultation', event_label: 'Modal Success WhatsApp' });
+                }
+            } catch (e) {}
         }
 
-        // Sync Modal Phone with Country Dial Code
-        const modalPhoneRaw = document.getElementById('consult_phone_raw');
-        const modalFullPhone = document.getElementById('consult_phone');
-        const modalConsultForm = document.getElementById('consultationForm');
-        const modalCountryDialHidden = document.getElementById('modalCountryDialHidden');
+        function trackWaDirectClick() {
+            try {
+                if (typeof window.fbq === 'function') {
+                    window.fbq('trackCustom', 'WhatsAppDirectClick', { source: 'modal_sidebar' });
+                }
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'whatsapp_click', { event_category: 'Hotlines', event_label: 'Modal Sidebar WhatsApp' });
+                }
+            } catch (e) {}
+        }
 
-        function syncModalPhone() {
-            if (!modalPhoneRaw || !modalFullPhone || !modalCountryDialHidden) return;
-            let val = modalPhoneRaw.value.trim();
+        // ─── Form Submission with Instant AJAX & Live Pixels ───
+        function handleModalContactSubmit(e) {
+            e.preventDefault();
+            const form = document.getElementById('oxContactForm');
+            const btn = document.getElementById('btnModalContactSubmit');
+            const alertBox = document.getElementById('oxModalAlert');
+            const alertText = document.getElementById('oxModalAlertText');
+            if (!form || !btn) return;
 
-            if (!val) {
-                modalFullPhone.value = '';
+            if (alertBox) alertBox.style.display = 'none';
+
+            const msgInput = document.getElementById('modal_c_message');
+            if (msgInput && msgInput.value.trim().length < 10) {
+                if (alertBox && alertText) {
+                    alertText.textContent = "{{ $currentLocale === 'ar' ? 'يرجى كتابة 10 أحرف على الأقل لشرح متطلبات مشروعك.' : 'Please enter at least 10 characters explaining your project requirements.' }}";
+                    alertBox.style.display = 'flex';
+                }
+                msgInput.focus();
                 return;
             }
 
-            // Remove leading zero for standard formatting (e.g. 0501234567 -> 501234567)
-            if (val.startsWith('0')) {
-                val = val.replace(/^0+/, '');
-            }
+            const origBtnHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>{{ $currentLocale === 'ar' ? 'جاري تأكيد حجزك...' : ($currentLocale === 'fr' ? 'Confirmation en cours...' : 'Securing your session...') }}</span>`;
 
-            // If user pasted a number with dial code e.g. +966..., detect it
-            if (val.startsWith('+')) {
-                const items = document.querySelectorAll('.modal-country-item');
-                for (let i = 0; i < items.length; i++) {
-                    const optDial = items[i].getAttribute('data-dial');
-                    if (val.startsWith(optDial)) {
-                        const optCode = items[i].getAttribute('data-code');
-                        selectModalCountry(optCode, optDial, `/assets/flags/${optCode}.webp`);
-                        val = val.substring(optDial.length).trim();
-                        modalPhoneRaw.value = val;
-                        break;
+            // Prepare unified international phone number
+            const dialCode = document.getElementById('modal_c_country_code')?.value || '+966';
+            const phoneRaw = document.getElementById('modal_c_phone')?.value || '';
+            let cleanPhone = phoneRaw.trim();
+            if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.replace(/^0+/, '');
+            const fullPhone = cleanPhone.startsWith('+') ? cleanPhone : (dialCode + ' ' + cleanPhone);
+
+            const formData = new FormData(form);
+            formData.set('phone', fullPhone);
+
+            fetch("{{ route('consultation.store') }}", {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(async res => {
+                const data = await res.json().catch(() => null);
+                if (res.ok && data && data.success) {
+                    const leadId = data.consultation_id ? ('OX-' + data.consultation_id) : ('OX-' + Date.now().toString().slice(-6));
+                    
+                    // Dispatch multi-channel marketing pixels
+                    try {
+                        if (typeof window.fbq === 'function') {
+                            window.fbq('track', 'Lead', {
+                                content_name: 'Tech Consultation Discovery',
+                                content_category: formData.get('project_type'),
+                                currency: 'SAR',
+                                value: 0.00
+                            });
+                            window.fbq('trackCustom', 'ConsultationBooked', {
+                                lead_id: leadId,
+                                project_type: formData.get('project_type'),
+                                contact_preference: formData.get('contact_preference')
+                            });
+                        }
+                    } catch (pixelErr) {}
+
+                    try {
+                        if (typeof window.gtag === 'function') {
+                            window.gtag('event', 'generate_lead', {
+                                event_category: 'Consultation',
+                                event_label: formData.get('project_type'),
+                                lead_id: leadId
+                            });
+                            window.gtag('event', 'conversion', { 'send_to': 'AW-17984061932' });
+                        }
+                    } catch (gtagErr) {}
+
+                    // Update Reference Code in Success Banner
+                    const refCodeSpan = document.getElementById('refCodeSpan');
+                    if (refCodeSpan) refCodeSpan.textContent = leadId;
+
+                    // Update WhatsApp VIP direct followup link with custom Reference ID
+                    const waBtn = document.getElementById('waDirectFollowupBtn');
+                    if (waBtn) {
+                        const waBase = "https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '201008616682')) }}";
+                        const waText = encodeURIComponent("{{ $currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بحجز استشارة تقنية برقم مرجعي #' : 'Hello OX Tech, I booked a consultation with reference #' }}" + leadId + " {{ $currentLocale === 'ar' ? 'وأود المتابعة المباشرة معك.' : 'and would like to follow up directly.' }}");
+                        waBtn.href = `${waBase}?text=${waText}`;
                     }
-                }
-            }
 
-            modalFullPhone.value = val ? `${modalCountryDialHidden.value} ${val}` : '';
-        }
-
-        if (modalPhoneRaw) {
-            modalPhoneRaw.addEventListener('input', syncModalPhone);
-        }
-
-        // ─── Multi-Platform Marketing Pixels & Lead Tracker ───
-        function trackConsultationLead(leadData) {
-            leadData = leadData || {};
-            const projType = leadData.project_type || document.getElementById('consult_project_type')?.value || 'Tech Consultation';
-            const budgetVal = leadData.budget || document.getElementById('consult_budget')?.value || 'Flexible';
-            const prefChan = leadData.contact_preference || document.querySelector('input[name="contact_preference"]:checked')?.value || 'واتساب';
-            const leadId = leadData.consultation_id || ('OX-' + Date.now().toString().slice(-6));
-
-            // 1. Meta / Facebook Pixel
-            try {
-                if (typeof window.fbq === 'function') {
-                    window.fbq('track', 'Lead', {
-                        content_name: 'Tech Consultation Discovery',
-                        content_category: projType,
-                        currency: 'SAR',
-                        value: 0.00,
-                        lead_type: 'consultation_modal',
-                        status: 'lead_captured'
-                    });
-                    window.fbq('trackCustom', 'ConsultationBooked', {
-                        lead_id: leadId,
-                        project_type: projType,
-                        budget: budgetVal,
-                        contact_preference: prefChan
-                    });
-                }
-            } catch (err) {
-                console.warn('Meta Pixel dispatch error:', err);
-            }
-
-            // 2. Google Analytics 4 & Google Ads Conversion
-            try {
-                if (typeof window.gtag === 'function') {
-                    window.gtag('event', 'generate_lead', {
-                        event_category: 'Consultation',
-                        event_label: projType,
-                        value: 0,
-                        currency: 'SAR',
-                        lead_id: leadId
-                    });
-                    // Google Ads Direct Conversion Tag
-                    window.gtag('event', 'conversion', {
-                        'send_to': 'AW-17984061932'
-                    });
-                }
-            } catch (err) {
-                console.warn('Google Tag dispatch error:', err);
-            }
-
-            // 3. Google Tag Manager dataLayer
-            try {
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({
-                    event: 'consultation_lead',
-                    lead_source: 'modal_popup',
-                    project_type: projType,
-                    budget: budgetVal,
-                    contact_preference: prefChan,
-                    consultation_id: leadId
-                });
-            } catch (err) {
-                console.warn('GTM dataLayer error:', err);
-            }
-
-            // 4. Snapchat Pixel
-            try {
-                if (typeof window.snaptr === 'function') {
-                    window.snaptr('track', 'SIGN_UP', {
-                        item_category: projType
-                    });
-                    window.snaptr('track', 'CUSTOM_EVENT_1', {
-                        event_name: 'consultation_modal_lead'
-                    });
-                }
-            } catch (err) {
-                console.warn('Snapchat Pixel error:', err);
-            }
-
-            // 5. TikTok Pixel
-            try {
-                if (window.ttq && typeof window.ttq.track === 'function') {
-                    window.ttq.track('SubmitForm', {
-                        contents: [{
-                            content_id: 'consultation_' + leadId,
-                            content_type: 'product',
-                            content_name: projType
-                        }]
-                    });
-                }
-            } catch (err) {
-                console.warn('TikTok Pixel error:', err);
-            }
-
-            // 6. Internal Real-Time Traffic & Lead Analytics Logger
-            try {
-                const payload = JSON.stringify({
-                    _token: '{{ csrf_token() }}',
-                    event_name: 'consultation_submit',
-                    page_url: window.location.pathname + window.location.search,
-                    data: {
-                        source: 'consult_modal',
-                        consultation_id: leadId,
-                        project_type: projType,
-                        budget: budgetVal,
-                        contact_preference: prefChan
-                    }
-                });
-                if (navigator.sendBeacon) {
-                    navigator.sendBeacon('{{ route('traffic.event') }}', new Blob([payload], { type: 'application/json' }));
+                    // Smooth transition to Success State
+                    form.style.display = 'none';
+                    const successState = document.getElementById('contactSuccessState');
+                    if (successState) successState.style.display = 'block';
                 } else {
-                    fetch('{{ route('traffic.event') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: payload,
-                        keepalive: true
-                    }).catch(() => {});
-                }
-            } catch (err) {}
-        }
-        window.trackConsultationLead = trackConsultationLead;
-
-        function showModalAlert(msg) {
-            const alertBox = document.getElementById('consultModalAlert');
-            const alertText = document.getElementById('consultModalAlertText');
-            if (alertBox && alertText) {
-                alertText.textContent = msg;
-                alertBox.style.display = 'flex';
-            }
-        }
-
-        function hideModalAlert() {
-            const alertBox = document.getElementById('consultModalAlert');
-            if (alertBox) alertBox.style.display = 'none';
-        }
-
-        function resetConsultModalForm() {
-            const form = document.getElementById('consultationForm');
-            const successWrap = document.getElementById('consultSuccessWrap');
-            const badge = document.querySelector('.consult-modal-badge');
-            const title = document.querySelector('.consult-modal-title');
-            const desc = document.querySelector('.consult-modal-desc');
-            const trust = document.querySelector('.consult-trust-strip');
-
-            if (successWrap && successWrap.style.display === 'block') {
-                if (form) {
-                    form.reset();
-                    form.style.display = 'block';
-                }
-                if (badge) badge.style.display = 'inline-flex';
-                if (title) title.style.display = 'block';
-                if (desc) desc.style.display = 'block';
-                if (trust) trust.style.display = 'grid';
-                successWrap.style.display = 'none';
-                hideModalAlert();
-
-                const btn = document.getElementById('consultSubmitBtn');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                    btn.innerHTML = `<span>{{ $currentLocale === 'ar' ? 'تأكيد وحجز الاستشارة المجانية' : ($currentLocale === 'fr' ? 'Confirmer la Réservation' : 'Confirm & Request Consultation') }}</span><b style="font-size: 16px;">{{ $currentLocale === 'ar' ? '←' : '→' }}</b>`;
-                }
-            }
-        }
-
-        // Consultation Form AJAX Submission with Live Tracking & In-Modal Success
-        if (modalConsultForm) {
-            modalConsultForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                syncModalPhone();
-                hideModalAlert();
-
-                // Validate minimum message length
-                const msgEl = document.getElementById('consult_message');
-                if (msgEl && msgEl.value.trim().length < 10) {
-                    showModalAlert("{{ $currentLocale === 'ar' ? 'يرجى كتابة 10 أحرف على الأقل لشرح فكرة مشروعك بشكل أوضح.' : 'Please provide at least 10 characters explaining your project requirements.' }}");
-                    msgEl.focus();
-                    return;
-                }
-
-                // Append selected contact preference to message so the team receives it clearly
-                const pref = document.querySelector('input[name="contact_preference"]:checked')?.value || 'واتساب';
-                if (msgEl && !msgEl.value.includes('[طريقة التواصل:')) {
-                    msgEl.value = `[طريقة التواصل المفضلة: ${pref}]\n` + msgEl.value;
-                }
-
-                const btn = document.getElementById('consultSubmitBtn');
-                const origHtml = btn ? btn.innerHTML : '';
-                if (btn) {
-                    btn.disabled = true;
-                    btn.style.opacity = '0.85';
-                    btn.innerHTML = `<span class="consult-btn-spinner"></span> <span>{{ $currentLocale === 'ar' ? 'جاري تأكيد حجز الاستشارة...' : 'Securing your advisory slot...' }}</span>`;
-                }
-
-                const formData = new FormData(this);
-
-                fetch(this.action, {
-                    method: 'POST',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'application/json'
-                    },
-                    body: formData
-                })
-                .then(async res => {
-                    const data = await res.json().catch(() => null);
-                    if (res.ok && data && data.success) {
-                        // 1. Dispatch multi-channel marketing pixels
-                        trackConsultationLead({
-                            consultation_id: data.consultation_id,
-                            project_type: formData.get('project_type'),
-                            budget: formData.get('budget'),
-                            contact_preference: pref
-                        });
-
-                        // 2. Update reference code in in-modal success view
-                        const refCodeEl = document.getElementById('consultSuccessRefCode');
-                        if (refCodeEl && data.consultation_id) {
-                            refCodeEl.textContent = '#' + data.consultation_id;
-                        }
-
-                        // 3. Update WhatsApp follow-up link with custom reference number
-                        const waBtn = document.getElementById('consultSuccessWaBtn');
-                        if (waBtn && data.consultation_id) {
-                            const waBase = "https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '966500000000')) }}";
-                            const waText = encodeURIComponent("{{ $currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بحجز استشارة تقنية برقم طلب #' : 'Hello OX Tech, I booked a consultation with reference #' }}" + data.consultation_id + " {{ $currentLocale === 'ar' ? 'وأود المتابعة المباشرة معك.' : 'and would like to follow up directly.' }}");
-                            waBtn.href = `${waBase}?text=${waText}`;
-                        }
-
-                        // 4. Smoothly switch to in-modal success state
-                        modalConsultForm.style.display = 'none';
-                        const badge = document.querySelector('.consult-modal-badge');
-                        const title = document.querySelector('.consult-modal-title');
-                        const desc = document.querySelector('.consult-modal-desc');
-                        const trust = document.querySelector('.consult-trust-strip');
-                        if (badge) badge.style.display = 'none';
-                        if (title) title.style.display = 'none';
-                        if (desc) desc.style.display = 'none';
-                        if (trust) trust.style.display = 'none';
-
-                        const successWrap = document.getElementById('consultSuccessWrap');
-                        if (successWrap) successWrap.style.display = 'block';
-                    } else {
-                        const errMsg = (data && data.message) ? data.message : "{{ $currentLocale === 'ar' ? 'حدث خطأ أثناء إرسال البيانات، يرجى التأكد من الحقول والمحاولة مجدداً.' : 'An error occurred while sending your request. Please check inputs and retry.' }}";
-                        showModalAlert(errMsg);
-                        if (btn) {
-                            btn.disabled = false;
-                            btn.style.opacity = '1';
-                            btn.innerHTML = origHtml;
-                        }
+                    const errMsg = (data && data.message) ? data.message : "{{ $currentLocale === 'ar' ? 'حدث خطأ أثناء إرسال البيانات، يرجى المحاولة مرة أخرى.' : 'An error occurred while submitting. Please try again.' }}";
+                    if (alertBox && alertText) {
+                        alertText.textContent = errMsg;
+                        alertBox.style.display = 'flex';
                     }
-                })
-                .catch(err => {
-                    console.warn('Network issue during modal fetch, submitting standard form:', err);
-                    modalConsultForm.submit();
-                });
+                    btn.disabled = false;
+                    btn.innerHTML = origBtnHtml;
+                }
+            })
+            .catch(err => {
+                console.warn('Network issue during modal submission, submitting standard form:', err);
+                form.submit();
             });
         }
 

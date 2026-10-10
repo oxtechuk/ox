@@ -37,6 +37,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio.index');
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
+Route::get('/contact', [ConsultationController::class, 'contact'])->name('contact');
+Route::get('/consultation', [ConsultationController::class, 'contact'])->name('consultation');
+Route::post('/contact', [ConsultationController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('contact.store');
 Route::post('/consultation/store', [ConsultationController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('consultation.store');
