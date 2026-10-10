@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class ClientController extends Controller
 {
@@ -69,6 +70,13 @@ class ClientController extends Controller
             'notes' => 'nullable|string|max:2000',
         ]);
 
+        if (! Schema::hasColumn('clients', 'address')) {
+            if (! empty($validated['address'])) {
+                $validated['notes'] = trim(($validated['notes'] ?? '')."\nالعنوان: ".$validated['address']);
+            }
+            unset($validated['address']);
+        }
+
         $client = Client::create($validated);
 
         return redirect()->route('admin.crm.clients.show', $client)->with('success', 'تم إنشاء ملف العميل بنجاح!');
@@ -104,6 +112,13 @@ class ClientController extends Controller
             'lead_source' => 'nullable|string|max:100',
             'notes' => 'nullable|string|max:2000',
         ]);
+
+        if (! Schema::hasColumn('clients', 'address')) {
+            if (! empty($validated['address'])) {
+                $validated['notes'] = trim(($validated['notes'] ?? '')."\nالعنوان: ".$validated['address']);
+            }
+            unset($validated['address']);
+        }
 
         $client->update($validated);
 
