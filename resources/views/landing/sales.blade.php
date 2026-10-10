@@ -1487,50 +1487,103 @@
             gap: 14px;
         }
 
-        /* Gateway selector tabs for sales checkout */
-        .sp-gateway-selector {
+        /* 3 Unified Payment Methods Grid */
+        .sp-payment-methods-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
-            margin-top: 4px;
+            margin-bottom: 20px;
         }
 
-        .sp-gateway-tab {
-            padding: 13px 14px;
-            border-radius: 12px;
+        @media (max-width: 768px) {
+            .sp-payment-methods-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        .sp-method-card {
             border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px 12px;
             background: #f8fafc;
-            color: #475569;
-            font-size: 13.5px;
-            font-weight: 700;
-            font-family: inherit;
             cursor: pointer;
+            transition: all 0.25s ease;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
+            flex-direction: column;
+            gap: 6px;
+            text-align: right;
+            position: relative;
         }
 
-        .sp-gateway-tab:hover {
+        .sp-method-card:hover {
             border-color: #cbd5e1;
             background: #ffffff;
+            transform: translateY(-2px);
         }
 
-        .sp-gateway-tab.active {
+        .sp-method-card.active {
             border-color: var(--green);
             background: #f0fdf4;
-            color: var(--deep);
-            font-weight: 800;
-            box-shadow: 0 2px 8px rgba(8, 123, 104, 0.12);
+            box-shadow: 0 4px 16px rgba(8, 123, 104, 0.12);
         }
 
-        .sp-gateway-tab.active-paypal {
-            border-color: #0070ba;
+        .sp-method-card.active.card-usd {
+            border-color: #0284c7;
             background: #f0f9ff;
-            color: #003087;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.15);
+        }
+
+        .sp-method-card.active.paypal {
+            border-color: #0070ba;
+            background: #f0fdfa;
+            box-shadow: 0 4px 16px rgba(0, 112, 186, 0.15);
+        }
+
+        .sp-method-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .sp-method-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
             font-weight: 800;
-            box-shadow: 0 2px 8px rgba(0, 112, 186, 0.15);
+            color: #0f172a;
+        }
+
+        .sp-method-currency-badge {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .sp-method-card.active .sp-method-currency-badge {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .sp-method-card.active.card-usd .sp-method-currency-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .sp-method-card.active.paypal .sp-method-currency-badge {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+
+        .sp-method-desc {
+            font-size: 11.5px;
+            color: #64748b;
+            line-height: 1.45;
         }
 
         /* ─── 10. FAQ & SUPPORT ─── */
@@ -2506,26 +2559,53 @@
                         املأ بياناتك للشراء واستلام الترخيص
                     </h3>
                     <p style="font-size: 13.5px; color: var(--muted); margin: 0 0 16px;">
-                        تشفير بنكي 256-bit عبر بوابة PaySky Omni Gateway المعتمدة وتوليد مفتاح الترخيص آلياً
+                        تشفير بنكي 256-bit عبر بوابات الدفع الرسمية المعتمدة (فيزا دولاري / PayPal / PaySky مصر) وتوليد الترخيص آلياً
                     </p>
                 </div>
 
-                {{-- 1. Currency Selector (USD as default, or EGP) --}}
-                <div class="sp-currency-toggle-wrapper">
-                    <div class="sp-currency-label">
-                        <i class="fa-solid fa-coins" style="color: var(--green);"></i>
-                        <span>اختر عملة الدفع المناسبة لك:</span>
+                {{-- 1. 3-Way Payment Method Selector --}}
+                <div style="margin-bottom: 18px;">
+                    <div style="font-size: 13.5px; font-weight: 800; color: #1e293b; margin-bottom: 10px; display: flex; align-items: center; gap: 7px;">
+                        <i class="fa-solid fa-wallet" style="color: var(--green);"></i>
+                        <span>اختر وسيلة الدفع المناسبة لك:</span>
                     </div>
-                    <div class="sp-currency-selector">
-                        <button type="button" class="sp-currency-btn active" id="btnCurrUsd" onclick="selectCurrency('USD')">
-                            <span>🇺🇸</span>
-                            <span>الدفع بالدولار (USD $)</span>
-                            <span class="sp-curr-badge">الافتراضي</span>
-                        </button>
-                        <button type="button" class="sp-currency-btn" id="btnCurrEgp" onclick="selectCurrency('EGP')">
-                            <span>🇪🇬</span>
-                            <span>الدفع بالجنيه المصري (EGP ج.م)</span>
-                        </button>
+
+                    <div class="sp-payment-methods-grid">
+                        <!-- Option 1: فيزا دولاري -->
+                        <div class="sp-method-card active card-usd" id="pmc-card_usd" onclick="selectPaymentMethod('card_usd')">
+                            <div class="sp-method-header">
+                                <div class="sp-method-icon-title">
+                                    <i class="fa-solid fa-credit-card" style="color: #0284c7; font-size: 17px;"></i>
+                                    <span>فيزا دولاري</span>
+                                </div>
+                                <span class="sp-method-currency-badge">USD $</span>
+                            </div>
+                            <div class="sp-method-desc">بطاقات بنكية دولية (Visa / Mastercard)</div>
+                        </div>
+
+                        <!-- Option 2: بيبال -->
+                        <div class="sp-method-card paypal" id="pmc-paypal" onclick="selectPaymentMethod('paypal')">
+                            <div class="sp-method-header">
+                                <div class="sp-method-icon-title">
+                                    <i class="fa-brands fa-paypal" style="color: #0070ba; font-size: 18px;"></i>
+                                    <span>بيبال (PayPal)</span>
+                                </div>
+                                <span class="sp-method-currency-badge">USD $</span>
+                            </div>
+                            <div class="sp-method-desc">حساب أو رصيد PayPal المباشر</div>
+                        </div>
+
+                        <!-- Option 3: دفع محلي مصري -->
+                        <div class="sp-method-card egp" id="pmc-egp" onclick="selectPaymentMethod('egp')">
+                            <div class="sp-method-header">
+                                <div class="sp-method-icon-title">
+                                    <i class="fa-solid fa-building-columns" style="color: #059669; font-size: 16px;"></i>
+                                    <span>دفع محلي مصري</span>
+                                </div>
+                                <span class="sp-method-currency-badge">EGP ج.م</span>
+                            </div>
+                            <div class="sp-method-desc">كروت مصرية، ميزة ومحافظ عبر PaySky</div>
+                        </div>
                     </div>
                 </div>
 
@@ -2589,28 +2669,33 @@
                             <input type="tel" id="spCustPhone" required placeholder="05XXXXXXXX أو 010XXXXXXXX" class="form-input-custom" style="direction: ltr; text-align: left;">
                         </div>
 
-                        <div>
-                            <label class="form-label-custom">طريقة الدفع:</label>
-                            <div class="sp-gateway-selector">
-                                <button type="button" id="tab-paysky" class="sp-gateway-tab active" onclick="switchSalesGateway('paysky')">
-                                    <i class="fa-solid fa-credit-card"></i>
-                                    <span>بطاقة بنكية / فيزا / ميزة</span>
-                                </button>
-                                <button type="button" id="tab-paypal" class="sp-gateway-tab" onclick="switchSalesGateway('paypal')">
-                                    <i class="fa-brands fa-paypal" style="color: #0070ba; font-size: 16px;"></i>
-                                    <span>PayPal (دولي / بالدولار)</span>
-                                </button>
+                        <!-- Section 1: فيزا / ماستركارد دولاري -->
+                        <div id="sec-card-usd" class="pmc-action-sec" style="margin-top: 6px;">
+                            <div style="font-size: 12.5px; color: #0284c7; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                                <i class="fa-solid fa-lock"></i>
+                                <span>دفع آمن بالدولار ببطاقات Visa و Mastercard الدولية:</span>
                             </div>
+                            <div id="paypal-card-container" style="min-height: 48px;"></div>
                         </div>
 
-                        <div id="sales-paysky-section">
-                            <button type="submit" id="btnSubmitSalesOrder" class="sx-btn" style="width: 100%; padding: 16px; font-size: 16px; margin-top: 8px;">
-                                <span id="btnSubmitText">إتمام الشراء والدفع الآمن الآن ←</span>
+                        <!-- Section 2: حساب PayPal -->
+                        <div id="sec-paypal" class="pmc-action-sec" style="display:none; margin-top: 6px;">
+                            <div style="font-size: 12.5px; color: #0070ba; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                                <i class="fa-brands fa-paypal"></i>
+                                <span>دفع فوري بحساب أو رصيد PayPal بالدولار:</span>
+                            </div>
+                            <div id="paypal-button-container" style="min-height: 48px;"></div>
+                        </div>
+
+                        <!-- Section 3: دفع محلي مصري PaySky -->
+                        <div id="sec-egp" class="pmc-action-sec" style="display:none; margin-top: 6px;">
+                            <div style="font-size: 12.5px; color: #047857; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                                <i class="fa-solid fa-building-columns"></i>
+                                <span>بوابة PaySky المعتمدة (كروت البنوك المصرية، ميزة والمحافظ):</span>
+                            </div>
+                            <button type="submit" id="btnSubmitSalesOrder" class="sx-btn" style="width: 100%; padding: 16px; font-size: 16px;">
+                                <span id="btnSubmitText">إتمام الدفع بالجنيه المصري عبر PaySky ←</span>
                             </button>
-                        </div>
-
-                        <div id="sales-paypal-section" style="display:none; margin-top: 10px;">
-                            <div id="sales-paypal-container" style="min-height: 48px;"></div>
                         </div>
 
                         
@@ -2727,30 +2812,47 @@ function updatePriceUI() {
     // Update submit button text
     const btnSubmit = document.getElementById('btnSubmitText');
     if (btnSubmit) {
-        btnSubmit.textContent = `إتمام الشراء والدفع الآمن (${finalPrice.toLocaleString()} ${currSymbol}) ←`;
+        btnSubmit.textContent = `إتمام الدفع بالجنيه المصري (${finalPrice.toLocaleString()} ${currSymbol}) عبر PaySky ←`;
     }
 }
 
-function selectCurrency(curr) {
-    currentCurrency = curr;
-    const inputCurr = document.getElementById('spSelectedCurrency');
-    if (inputCurr) inputCurr.value = curr;
+let currentPaymentMethod = 'card_usd'; // 'card_usd', 'paypal', 'egp'
 
-    const btnUsd = document.getElementById('btnCurrUsd');
-    const btnEgp = document.getElementById('btnCurrEgp');
+function selectPaymentMethod(method) {
+    currentPaymentMethod = method;
 
-    if (curr === 'USD') {
-        btnUsd?.classList.add('active');
-        btnEgp?.classList.remove('active');
+    document.querySelectorAll('.sp-method-card').forEach(el => el.classList.remove('active'));
+    const activeCard = document.getElementById('pmc-' + method);
+    if (activeCard) {
+        activeCard.classList.add('active');
+    }
+
+    if (method === 'egp') {
+        currentCurrency = 'EGP';
     } else {
-        btnEgp?.classList.add('active');
-        btnUsd?.classList.remove('active');
-        if (typeof activeSalesGateway !== 'undefined' && activeSalesGateway === 'paypal') {
-            switchSalesGateway('paysky');
-        }
+        currentCurrency = 'USD';
+    }
+
+    const inputCurr = document.getElementById('spSelectedCurrency');
+    if (inputCurr) inputCurr.value = currentCurrency;
+
+    const secCardUsd = document.getElementById('sec-card-usd');
+    const secPaypal = document.getElementById('sec-paypal');
+    const secEgp = document.getElementById('sec-egp');
+
+    if (secCardUsd) secCardUsd.style.display = method === 'card_usd' ? 'block' : 'none';
+    if (secPaypal) secPaypal.style.display = method === 'paypal' ? 'block' : 'none';
+    if (secEgp) secEgp.style.display = method === 'egp' ? 'block' : 'none';
+
+    if ((method === 'card_usd' || method === 'paypal') && !salesPayPalInitialized) {
+        initSalesPayPalOptions();
     }
 
     updatePriceUI();
+}
+
+function selectCurrency(curr) {
+    selectPaymentMethod(curr === 'EGP' ? 'egp' : 'card_usd');
 }
 
 async function applyPromoCode() {
@@ -2864,50 +2966,28 @@ function loadPaySkyAsync(scriptUrl) {
     });
 }
 
-let activeSalesGateway = 'paysky';
-let salesPayPalButtonsInitialized = false;
+let salesPayPalInitialized = false;
 let currentMerchantRef = '';
 
-function switchSalesGateway(gw) {
-    activeSalesGateway = gw;
-    const tabPaysky = document.getElementById('tab-paysky');
-    const tabPaypal = document.getElementById('tab-paypal');
-    if (tabPaysky) {
-        tabPaysky.className = 'sp-gateway-tab' + (gw === 'paysky' ? ' active' : '');
-    }
-    if (tabPaypal) {
-        tabPaypal.className = 'sp-gateway-tab' + (gw === 'paypal' ? ' active-paypal' : '');
-    }
+async function initSalesPayPalOptions() {
+    const cardContainer = document.getElementById('paypal-card-container');
+    const paypalContainer = document.getElementById('paypal-button-container');
 
-    const payskySec = document.getElementById('sales-paysky-section');
-    const paypalSec = document.getElementById('sales-paypal-section');
-
-    if (gw === 'paypal') {
-        if (currentCurrency !== 'USD') {
-            selectCurrency('USD');
-        }
-        if (payskySec) payskySec.style.display = 'none';
-        if (paypalSec) paypalSec.style.display = 'block';
-        if (!salesPayPalButtonsInitialized) {
-            initSalesPayPalButtons();
-        }
-    } else {
-        if (payskySec) payskySec.style.display = 'block';
-        if (paypalSec) paypalSec.style.display = 'none';
+    if (cardContainer) {
+        cardContainer.innerHTML = '<div style="text-align:center;padding:12px;color:#64748b;font-size:13px;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تجهيز بوابة الدفع بالبطاقة بالدولار…</div>';
     }
-}
-
-async function initSalesPayPalButtons() {
-    const container = document.getElementById('sales-paypal-container');
-    if (!container) return;
-    container.innerHTML = '<div style="text-align:center;padding:12px;color:#64748b;font-size:13px;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تجهيز أزرار PayPal الرسمية…</div>';
+    if (paypalContainer) {
+        paypalContainer.innerHTML = '<div style="text-align:center;padding:12px;color:#64748b;font-size:13px;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تجهيز بوابة PayPal الرسمية…</div>';
+    }
 
     try {
         const cfgRes = await fetch('{{ route('checkout.paypal.config') }}');
         const cfg = await cfgRes.json();
 
         if (!cfg.enabled || !cfg.client_id) {
-            container.innerHTML = '<div style="background:#FEF2F2;border:1px solid #FECACA;color:#991B1B;padding:10px;border-radius:8px;font-size:12.5px;text-align:center;">بوابة PayPal غير متاحة حالياً، يرجى الدفع عبر البطاقة البنكية.</div>';
+            const errHtml = '<div style="background:#FEF2F2;border:1px solid #FECACA;color:#991B1B;padding:10px;border-radius:8px;font-size:12.5px;text-align:center;">بوابة الدفع الدولي غير متاحة حالياً. يرجى اختيار الدفع المحلي المصري أو التواصل عبر الواتساب.</div>';
+            if (cardContainer) cardContainer.innerHTML = errHtml;
+            if (paypalContainer) paypalContainer.innerHTML = errHtml;
             return;
         }
 
@@ -2921,49 +3001,53 @@ async function initSalesPayPalButtons() {
             });
         }
 
-        container.innerHTML = '';
-        window.paypal.Buttons({
-            style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 48 },
-            createOrder: async function () {
-                const name = (document.getElementById('spCustName')?.value || '').trim();
-                const email = (document.getElementById('spCustEmail')?.value || '').trim();
-                const phone = (document.getElementById('spCustPhone')?.value || '').trim();
+        const createOrderCallback = async function () {
+            const name = (document.getElementById('spCustName')?.value || '').trim();
+            const email = (document.getElementById('spCustEmail')?.value || '').trim();
+            const phone = (document.getElementById('spCustPhone')?.value || '').trim();
 
-                if (!name || !email) {
-                    alert('يرجى ملء الاسم والبريد الإلكتروني أولاً لاستلام الترخيص.');
-                    throw new Error('Missing fields');
-                }
+            if (!name || !email) {
+                alert('يرجى ملء الاسم والبريد الإلكتروني أولاً لاستلام مفتاح الترخيص فوراً.');
+                const firstMissing = !name ? document.getElementById('spCustName') : document.getElementById('spCustEmail');
+                if (firstMissing) firstMissing.focus();
+                throw new Error('Missing required customer fields');
+            }
 
-                const res = await fetch('{{ route('checkout.paypal.create') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        product_id: PRODUCT_ID,
-                        customer_name: name,
-                        customer_email: email,
-                        customer_phone: phone,
-                        promo_code: appliedPromoData ? appliedPromoData.code : (document.getElementById('spPromoInput')?.value || ''),
-                        promo_applied: appliedPromoData,
-                        utm_source: '{{ request('utm_source') }}',
-                        utm_medium: '{{ request('utm_medium') }}',
-                        utm_campaign: '{{ request('utm_campaign') }}'
-                    })
-                });
+            const res = await fetch('{{ route('checkout.paypal.create') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    product_id: PRODUCT_ID,
+                    customer_name: name,
+                    customer_email: email,
+                    customer_phone: phone,
+                    promo_code: appliedPromoData ? appliedPromoData.code : (document.getElementById('spPromoInput')?.value || ''),
+                    promo_applied: appliedPromoData,
+                    utm_source: '{{ request('utm_source') }}',
+                    utm_medium: '{{ request('utm_medium') }}',
+                    utm_campaign: '{{ request('utm_campaign') }}'
+                })
+            });
 
-                const d = await res.json();
-                if (!d.success || !d.paypal_order_id) {
-                    alert(d.message || 'تعذر بدء طلب الدفع عبر PayPal.');
-                    throw new Error(d.message);
-                }
-                currentMerchantRef = d.merchant_reference;
-                return d.paypal_order_id;
-            },
-            onApprove: async function (data) {
-                container.innerHTML = '<div style="text-align:center;padding:12px;color:#047857;font-weight:700;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تأكيد الدفع وإصدار مفتاح الترخيص…</div>';
+            const d = await res.json();
+            if (!d.success || !d.paypal_order_id) {
+                alert(d.message || 'تعذر بدء طلب الدفع. يرجى المحاولة لاحقاً.');
+                throw new Error(d.message || 'PayPal order creation failed');
+            }
+            currentMerchantRef = d.merchant_reference;
+            return d.paypal_order_id;
+        };
+
+        const onApproveCallback = async function (data) {
+            const loadingHtml = '<div style="text-align:center;padding:14px;color:#047857;font-weight:700;font-size:13.5px;"><i class="fa-solid fa-spinner fa-spin"></i> جاري تأكيد الدفع وإصدار مفتاح الترخيص فوراً…</div>';
+            if (cardContainer) cardContainer.innerHTML = loadingHtml;
+            if (paypalContainer) paypalContainer.innerHTML = loadingHtml;
+
+            try {
                 const res = await fetch('{{ route('checkout.paypal.capture') }}', {
                     method: 'POST',
                     headers: {
@@ -2976,24 +3060,70 @@ async function initSalesPayPalButtons() {
                         merchant_reference: currentMerchantRef
                     })
                 });
+
                 const d = await res.json();
                 if (d.success && d.redirect_url) {
                     window.location.href = d.redirect_url;
                 } else {
-                    alert(d.message || 'حدث خطأ في استلام الدفع.');
-                    salesPayPalButtonsInitialized = false;
-                    initSalesPayPalButtons();
+                    alert(d.message || 'حدث خطأ في تأكيد الدفع. يرجى مراجعة الدعم الفني.');
+                    salesPayPalInitialized = false;
+                    initSalesPayPalOptions();
                 }
-            },
-            onError: function (err) {
-                console.error('PayPal SDK error:', err);
-                alert('حدث خطأ في بوابة PayPal. يمكنك استخدام الدفع بالبطاقة البنكية أو المحاولة مجدداً.');
+            } catch (err) {
+                console.error('PayPal capture error:', err);
+                alert('حدث خطأ أثناء معالجة تأكيد الدفع.');
+                salesPayPalInitialized = false;
+                initSalesPayPalOptions();
             }
-        }).render('#sales-paypal-container');
-        salesPayPalButtonsInitialized = true;
+        };
+
+        const onErrorCallback = function (err) {
+            console.error('PayPal error:', err);
+            alert('حدث خطأ في بوابة الدفع. يمكنك إعادة المحاولة أو الدفع بالجنيه المصري.');
+        };
+
+        // Render Card USD Button
+        if (cardContainer) {
+            cardContainer.innerHTML = '';
+            const cardButton = window.paypal.Buttons({
+                fundingSource: window.paypal.FUNDING.CARD,
+                style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay', height: 48 },
+                createOrder: createOrderCallback,
+                onApprove: onApproveCallback,
+                onError: onErrorCallback
+            });
+
+            if (cardButton.isEligible()) {
+                cardButton.render('#paypal-card-container');
+            } else {
+                // If standalone card button not eligible in this browser/region, render fallback buttons
+                window.paypal.Buttons({
+                    style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay', height: 48 },
+                    createOrder: createOrderCallback,
+                    onApprove: onApproveCallback,
+                    onError: onErrorCallback
+                }).render('#paypal-card-container');
+            }
+        }
+
+        // Render PayPal Wallet Button
+        if (paypalContainer) {
+            paypalContainer.innerHTML = '';
+            window.paypal.Buttons({
+                fundingSource: window.paypal.FUNDING.PAYPAL,
+                style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 48 },
+                createOrder: createOrderCallback,
+                onApprove: onApproveCallback,
+                onError: onErrorCallback
+            }).render('#paypal-button-container');
+        }
+
+        salesPayPalInitialized = true;
     } catch (err) {
         console.error('PayPal init error:', err);
-        container.innerHTML = '<div style="color:#DC2626;font-size:12.5px;text-align:center;padding:10px;">تعذر تحميل PayPal، يرجى الدفع عبر البطاقة البنكية.</div>';
+        const errHtml = '<div style="color:#DC2626;font-size:12.5px;text-align:center;padding:10px;">تعذر تحميل وسيلة الدفع بالدولار، يرجى المحاولة لاحقاً أو اختيار الدفع بالجنيه المصري.</div>';
+        if (cardContainer) cardContainer.innerHTML = errHtml;
+        if (paypalContainer) paypalContainer.innerHTML = errHtml;
     }
 }
 
@@ -3090,7 +3220,7 @@ async function handleSalesCheckout(e) {
 
 // Initial price display on load & Reviews Slider
 document.addEventListener('DOMContentLoaded', function() {
-    selectCurrency('USD'); // Default: Dollar
+    selectPaymentMethod('card_usd'); // Default: USD Card
     // Automatically pre-apply OX50 promo if valid
     const promoInput = document.getElementById('spPromoInput');
     if (promoInput && promoInput.value) {
