@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\LicenseController as AdminLicenseController;
 use App\Http\Controllers\Admin\MediaController as AdminMediaController;
 use App\Http\Controllers\Admin\PaymentLogController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\PromoCodeController as AdminPromoCodeController;
 use App\Http\Controllers\Admin\QuotationController as AdminQuotationController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
@@ -159,6 +160,8 @@ Route::prefix($adminPrefix)->name('admin.')->group(function () {
         Route::resource('licenses', AdminLicenseController::class);
         Route::post('/licenses/{license}/toggle-status', [AdminLicenseController::class, 'toggleStatus'])->name('licenses.toggle_status');
         Route::delete('/licenses/{license}/devices/{device}', [AdminLicenseController::class, 'removeDevice'])->name('licenses.devices.destroy');
+        Route::resource('promo-codes', AdminPromoCodeController::class);
+        Route::post('/promo-codes/{promo_code}/toggle-status', [AdminPromoCodeController::class, 'toggleStatus'])->name('promo-codes.toggle_status');
         Route::get('/payment-logs', [PaymentLogController::class, 'index'])->name('payment-logs.index');
         Route::get('/payment-logs/{paymentLog}', [PaymentLogController::class, 'show'])->name('payment-logs.show');
         Route::post('/payment-logs/clear-old', [PaymentLogController::class, 'clearOld'])->name('payment-logs.clear_old');
