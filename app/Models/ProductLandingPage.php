@@ -32,6 +32,10 @@ class ProductLandingPage extends Model
         'og_title',
         'og_description',
         'og_image',
+        'laptop_mockup',
+        'window_mockup',
+        'box_art_image',
+        'video_file',
         'is_published',
     ];
 

@@ -167,6 +167,29 @@
             <input type="file" name="software_file" class="form-control" style="padding: 12px;">
         </div>
 
+        {{-- 4.5 Product Card Cover Image (for store .card-visual-header) --}}
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+            <h3 style="font-size: 15px; font-weight: 800; color: var(--text-heading); margin-bottom: 18px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+                🖼️ صورة غلاف البرنامج في المتجر (Store Card Thumbnail)
+            </h3>
+
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+                صورة الغلاف أو الـ Mockup التي تظهر أعلى كارت المنتج في المتجر (<code>.card-visual-header</code>).
+            </p>
+
+            @if($digitalProduct->thumbnail)
+                <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 14px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <img src="{{ asset($digitalProduct->thumbnail) }}" alt="الغلاف الحالي" style="height: 60px; max-width: 90px; object-fit: contain; border-radius: 6px; background: #fff; border: 1px solid #cbd5e1; padding: 4px;">
+                    <div>
+                        <span style="font-size: 12px; font-weight: 700; color: #166534; display: block;">✓ يوجد صورة غلاف مرفوعة حالياً</span>
+                        <small style="color: var(--text-muted); font-size: 11px;">ارفع صورة جديدة فقط إذا كنت ترغب في استبدالها.</small>
+                    </div>
+                </div>
+            @endif
+
+            <input type="file" name="thumbnail_file" accept="image/*" class="form-control" style="padding: 10px;">
+        </div>
+
         @php
             $lp = $digitalProduct->landingPage;
             $hasSalesPageActive = $lp && $lp->is_published;
@@ -178,7 +201,7 @@
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid #e0e7ff; padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
                 <div>
                     <h3 style="font-size: 16px; font-weight: 800; color: #1e40af; display: flex; align-items: center; gap: 8px;">
-                        <span></span> صفحة هبوط بيعية مخصصة (Sales Landing Page)
+                        <span>🚀</span> صفحة هبوط بيعية مخصصة (Sales Landing Page)
                     </h3>
                     <p style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">
                         تتيح لك إطلاق صفحة بيع سريعة وعالية التحويل للمسار <code>/p/{{ $digitalProduct->slug }}</code> مع حقن استايل خارجي وتتبع دقيق لميتا وجوجل.
@@ -204,10 +227,10 @@
                     </div>
                     <div style="display: flex; gap: 8px;">
                         <button type="button" onclick="navigator.clipboard.writeText('{{ $salesUrl }}'); alert('تم نسخ رابط صفحة السيلز بنجاح!');" class="btn btn-outline" style="font-size: 11.5px; padding: 6px 12px; background: #fff;">
-                             نسخ الرابط
+                            📋 نسخ الرابط
                         </button>
                         <a href="{{ $salesUrl }}" target="_blank" class="btn btn-primary" style="font-size: 11.5px; padding: 6px 14px; background: #16a34a; border-color: #16a34a;">
-                             معاينة الصفحة
+                            🔗 معاينة الصفحة
                         </a>
                     </div>
                 </div>
@@ -215,19 +238,22 @@
                 {{-- Settings Tabs Navigation --}}
                 <div style="display: flex; gap: 8px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; overflow-x: auto; padding-bottom: 2px;">
                     <button type="button" class="sales-tab-btn active" onclick="switchSalesTab(event, 'tab-content')" style="padding: 10px 18px; font-size: 13px; font-weight: 800; border: none; background: transparent; cursor: pointer; color: #2563eb; border-bottom: 3px solid #2563eb; margin-bottom: -4px;">
-                         المحتوى والعرض
+                        📝 المحتوى والعرض
+                    </button>
+                    <button type="button" class="sales-tab-btn" onclick="switchSalesTab(event, 'tab-media')" style="padding: 10px 18px; font-size: 13px; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -4px;">
+                        🎬 وسائط السيلز (Mockups & Video)
                     </button>
                     <button type="button" class="sales-tab-btn" onclick="switchSalesTab(event, 'tab-styling')" style="padding: 10px 18px; font-size: 13px; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -4px;">
-                        كود الاستايل والـ CSS الخارجي
+                        🎨 كود الاستايل والـ CSS الخارجي
                     </button>
                     <button type="button" class="sales-tab-btn" onclick="switchSalesTab(event, 'tab-tracking')" style="padding: 10px 18px; font-size: 13px; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -4px;">
-                        ميتا بيكسل والتحليلات (Tracking)
+                        📊 ميتا بيكسل والتحليلات (Tracking)
                     </button>
                     <button type="button" class="sales-tab-btn" onclick="switchSalesTab(event, 'tab-social')" style="padding: 10px 18px; font-size: 13px; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -4px;">
-                         وسوم المعاينة (Open Graph)
+                        🌐 وسوم المعاينة (Open Graph)
                     </button>
                     <button type="button" class="sales-tab-btn" onclick="switchSalesTab(event, 'tab-scripts')" style="padding: 10px 18px; font-size: 13px; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -4px;">
-                         أكواد Head و Body مخصصة
+                        ⚙️ أكواد Head و Body مخصصة
                     </button>
                 </div>
 
@@ -257,6 +283,110 @@
                                 <input type="color" name="landing_primary_color" value="{{ old('landing_primary_color', $lp?->primary_color ?? '#0284c7') }}" style="height: 42px; width: 100%; border-radius: 8px; border: 1px solid var(--border-card); cursor: pointer; padding: 2px;">
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {{-- Tab Media: Sales Page Mockups & Video --}}
+                <div id="tab-media" class="sales-tab-content" style="display: none;">
+                    <div style="display: grid; gap: 18px;">
+                        
+                        {{-- Laptop Hero Screen Mockup --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                💻 صورة شاشة اللابتوب التفاعلية (Hero 3D Laptop Screen)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                تظهر داخل إطار شاشة اللابتوب ثلاثي الأبعاد في أول صفحة السيلز (<code>.sx-laptop-screen</code>) بدلاً من الجدول الافتراضي.
+                            </p>
+
+                            @if($lp?->laptop_mockup)
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                                    <img src="{{ asset($lp->laptop_mockup) }}" alt="شاشة اللابتوب الحالية" style="height: 50px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                                    <div>
+                                        <span style="font-size: 11.5px; font-weight: 700; color: #166534; display: block;">✓ صورة شاشة اللابتوب مرفوعة</span>
+                                        <small style="color: var(--text-muted); font-size: 11px;">ارفع صورة جديدة للاستبدال</small>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <input type="file" name="laptop_mockup_file" accept="image/*" class="form-control">
+                        </div>
+
+                        {{-- App Window Mockup --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                🪟 صورة معاينة واجهة النظام (App Window Mockup)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                تظهر داخل إطار نافذة البرنامج في قسم المميزات (<code>.sx-window-body</code>).
+                            </p>
+
+                            @if($lp?->window_mockup)
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                                    <img src="{{ asset($lp->window_mockup) }}" alt="واجهة البرنامج الحالية" style="height: 50px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                                    <div>
+                                        <span style="font-size: 11.5px; font-weight: 700; color: #166534; display: block;">✓ صورة واجهة النظام مرفوعة</span>
+                                        <small style="color: var(--text-muted); font-size: 11px;">ارفع صورة جديدة للاستبدال</small>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <input type="file" name="window_mockup_file" accept="image/*" class="form-control">
+                        </div>
+
+                        {{-- 3D Box Art --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                📦 صورة بوكس / علبة البرنامج ثلاثية الأبعاد (3D Box Art)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                غلاف العلبة المجسم في قسم الأسعار بجانب خطة الشراء (<code>.sx-box-art</code>).
+                            </p>
+
+                            @if($lp?->box_art_image)
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                                    <img src="{{ asset($lp->box_art_image) }}" alt="غلاف البوكس الحالي" style="height: 50px; border-radius: 4px; border: 1px solid #e2e8f0;">
+                                    <div>
+                                        <span style="font-size: 11.5px; font-weight: 700; color: #166534; display: block;">✓ صورة البوكس 3D مرفوعة</span>
+                                        <small style="color: var(--text-muted); font-size: 11px;">ارفع صورة جديدة للاستبدال</small>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <input type="file" name="box_art_file" accept="image/*" class="form-control">
+                        </div>
+
+                        {{-- Video Demo File & URL --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                🎥 فيديو تعريفي للبرنامج (Product Demo Video)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                يظهر داخل مشغل الفيديو المخصص بصفحة السيلز (<code>.sx-video</code>). يمكنك رفع ملف فيديو مباشر أو إدخال رابط YouTube / Vimeo.
+                            </p>
+
+                            @if($lp?->video_file)
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                                    <span style="font-size: 18px;">🎬</span>
+                                    <div>
+                                        <span style="font-size: 11.5px; font-weight: 700; color: #166534; display: block;">✓ يوجد ملف فيديو مرفوع: {{ basename($lp->video_file) }}</span>
+                                        <small style="color: var(--text-muted); font-size: 11px;">ارفع فيديو جديد فقط إذا كنت ترغب في استبداله</small>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <div>
+                                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">رفع ملف فيديو جديد (MP4, WebM):</label>
+                                    <input type="file" name="video_file" accept="video/mp4,video/webm,video/ogg" class="form-control">
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">أو رابط يوتيوب / فيميو مباشر:</label>
+                                    <input type="url" name="video_url" value="{{ old('video_url', $lp?->video_url) }}" placeholder="https://www.youtube.com/watch?v=..." class="form-control" style="direction: ltr;">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

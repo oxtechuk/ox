@@ -2234,35 +2234,39 @@
                 {{-- Hero Visual 3D Laptop with High-Tech CRM Dashboard --}}
                 <div class="sx-visual">
                     <div class="sx-laptop">
-                        <div class="sx-laptop-screen">
-                            <div class="sx-dash-side">
-                                <div class="sx-dash-logo">◉ Scrip OX</div>
-                                <div class="sx-dash-item"><i class="fa-solid fa-chart-pie"></i> Overview</div>
-                                <div class="sx-dash-item"><i class="fa-solid fa-users"></i> Customers</div>
-                                <div class="sx-dash-item"><i class="fa-solid fa-filter"></i> Filters</div>
-                                <div class="sx-dash-item"><i class="fa-solid fa-bag-shopping"></i> Orders</div>
-                                <div class="sx-dash-item"><i class="fa-solid fa-gear"></i> Settings</div>
-                            </div>
-                            <div class="sx-dash-main">
-                                <div class="sx-dash-top">
-                                    <span>Customer dashboard</span>
-                                    <span>⌕　◉</span>
+                        <div class="sx-laptop-screen" style="position: relative;">
+                            @if(!empty($landingPage->laptop_mockup))
+                                <img src="{{ asset($landingPage->laptop_mockup) }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 7px;">
+                            @else
+                                <div class="sx-dash-side">
+                                    <div class="sx-dash-logo">◉ Scrip OX</div>
+                                    <div class="sx-dash-item"><i class="fa-solid fa-chart-pie"></i> Overview</div>
+                                    <div class="sx-dash-item"><i class="fa-solid fa-users"></i> Customers</div>
+                                    <div class="sx-dash-item"><i class="fa-solid fa-filter"></i> Filters</div>
+                                    <div class="sx-dash-item"><i class="fa-solid fa-bag-shopping"></i> Orders</div>
+                                    <div class="sx-dash-item"><i class="fa-solid fa-gear"></i> Settings</div>
                                 </div>
-                                <div class="sx-statgrid">
-                                    <div class="sx-stat">Total leads<b>12,480</b></div>
-                                    <div class="sx-stat">Qualified<b>8,320</b></div>
-                                    <div class="sx-stat">New today<b>2,150</b></div>
-                                </div>
-                                <div class="sx-table">
-                                    <div class="sx-row" style="font-weight:bold">
-                                        <span>Name</span><span>Company</span><span>Status</span><span>Score</span>
+                                <div class="sx-dash-main">
+                                    <div class="sx-dash-top">
+                                        <span>Customer dashboard</span>
+                                        <span>⌕　◉</span>
                                     </div>
-                                    <div class="sx-row"><span>Ahmed Mohamed</span><span>Digital Co.</span><span><i class="sx-pill">Qualified</i></span><span>94</span></div>
-                                    <div class="sx-row"><span>Salma Ali</span><span>Store Plus</span><span><i class="sx-pill">New</i></span><span>87</span></div>
-                                    <div class="sx-row"><span>Omar Hassan</span><span>Modern Biz</span><span><i class="sx-pill">Contacted</i></span><span>81</span></div>
-                                    <div class="sx-row"><span>Mona Samir</span><span>Smart House</span><span><i class="sx-pill">Qualified</i></span><span>78</span></div>
+                                    <div class="sx-statgrid">
+                                        <div class="sx-stat">Total leads<b>12,480</b></div>
+                                        <div class="sx-stat">Qualified<b>8,320</b></div>
+                                        <div class="sx-stat">New today<b>2,150</b></div>
+                                    </div>
+                                    <div class="sx-table">
+                                        <div class="sx-row" style="font-weight:bold">
+                                            <span>Name</span><span>Company</span><span>Status</span><span>Score</span>
+                                        </div>
+                                        <div class="sx-row"><span>Ahmed Mohamed</span><span>Digital Co.</span><span><i class="sx-pill">Qualified</i></span><span>94</span></div>
+                                        <div class="sx-row"><span>Salma Ali</span><span>Store Plus</span><span><i class="sx-pill">New</i></span><span>87</span></div>
+                                        <div class="sx-row"><span>Omar Hassan</span><span>Modern Biz</span><span><i class="sx-pill">Contacted</i></span><span>81</span></div>
+                                        <div class="sx-row"><span>Mona Samir</span><span>Smart House</span><span><i class="sx-pill">Qualified</i></span><span>78</span></div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                         <div class="sx-laptop-base"></div>
                     </div>
@@ -2336,21 +2340,25 @@
                         <span>⌕　⚙</span>
                     </div>
                     <div class="sx-window-body">
-                        <div class="sx-window-nav">
-                            <div>▣ Dashboard</div>
-                            <div>◉ Contacts</div>
-                            <div>▤ Orders</div>
-                            <div>⌕ Filters</div>
-                        </div>
-                        <div class="sx-window-content">
-                            <div class="sx-row" style="font-weight:bold">
-                                <span>Customer</span><span>Source</span><span>Status</span><span>Score</span>
+                        @if(!empty($landingPage->window_mockup))
+                            <img src="{{ asset($landingPage->window_mockup) }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        @else
+                            <div class="sx-window-nav">
+                                <div>▣ Dashboard</div>
+                                <div>◉ Contacts</div>
+                                <div>▤ Orders</div>
+                                <div>⌕ Filters</div>
                             </div>
-                            <div class="sx-row"><span>Ahmed M.</span><span>Website</span><span>Active</span><span>92</span></div>
-                            <div class="sx-row"><span>Salma A.</span><span>Store</span><span>New</span><span>87</span></div>
-                            <div class="sx-row"><span>Omar H.</span><span>Meta</span><span>Follow up</span><span>79</span></div>
-                            <div class="sx-row"><span>Mona S.</span><span>Google</span><span>Active</span><span>74</span></div>
-                        </div>
+                            <div class="sx-window-content">
+                                <div class="sx-row" style="font-weight:bold">
+                                    <span>Customer</span><span>Source</span><span>Status</span><span>Score</span>
+                                </div>
+                                <div class="sx-row"><span>Ahmed M.</span><span>Website</span><span>Active</span><span>92</span></div>
+                                <div class="sx-row"><span>Salma A.</span><span>Store</span><span>New</span><span>87</span></div>
+                                <div class="sx-row"><span>Omar H.</span><span>Meta</span><span>Follow up</span><span>79</span></div>
+                                <div class="sx-row"><span>Mona S.</span><span>Google</span><span>Active</span><span>74</span></div>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -2531,10 +2539,24 @@
             </div>
 
             <div class="sx-video" id="sx-video">
-                <div class="sx-play" onclick="scrollToCheckout()">
-                    <i class="fa-solid fa-play"></i>
-                </div>
-                <div class="sx-video-caption">جولة سريعة على أهم مميزات Scrip OX</div>
+                @if(!empty($landingPage->video_file))
+                    <video src="{{ asset($landingPage->video_file) }}" controls preload="metadata" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;"></video>
+                @elseif(!empty($landingPage->video_url))
+                    @php
+                        $embedUrl = $landingPage->video_url;
+                        if (str_contains($embedUrl, 'youtube.com/watch?v=')) {
+                            $embedUrl = str_replace('watch?v=', 'embed/', $embedUrl);
+                        } elseif (str_contains($embedUrl, 'youtu.be/')) {
+                            $embedUrl = str_replace('youtu.be/', 'youtube.com/embed/', $embedUrl);
+                        }
+                    @endphp
+                    <iframe src="{{ $embedUrl }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; border-radius: 16px;"></iframe>
+                @else
+                    <div class="sx-play" onclick="scrollToCheckout()">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <div class="sx-video-caption">جولة سريعة على أهم مميزات {{ $product->name ?: 'Scrip OX' }}</div>
+                @endif
             </div>
 
         </div>
@@ -2619,11 +2641,15 @@
         <div class="sx-wrap sx-price-grid">
             
             <div class="sx-box-art">
-                <div>
-                    <strong>S</strong>
-                    <b style="display:block; font-size: 15px; margin: 4px 0;">Scrip OX</b>
-                    <span>OX TECH</span>
-                </div>
+                @if(!empty($landingPage->box_art_image))
+                    <img src="{{ asset($landingPage->box_art_image) }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+                @else
+                    <div>
+                        <strong>{{ strtoupper(substr($product->name ?: 'S', 0, 1)) }}</strong>
+                        <b style="display:block; font-size: 15px; margin: 4px 0;">{{ $product->name ?: 'Scrip OX' }}</b>
+                        <span>OX TECH</span>
+                    </div>
+                @endif
             </div>
 
             <div class="sx-price-copy">

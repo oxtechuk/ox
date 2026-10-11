@@ -156,6 +156,19 @@
             <input type="file" name="software_file" class="form-control" style="padding: 12px;">
         </div>
 
+        {{-- 4.5 Product Card Cover Image (for store .card-visual-header) --}}
+        <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+            <h3 style="font-size: 15px; font-weight: 800; color: var(--text-heading); margin-bottom: 18px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+                🖼️ صورة غلاف البرنامج في المتجر (Store Card Thumbnail)
+            </h3>
+
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">
+                صورة الغلاف أو الـ Mockup التي تظهر أعلى كارت المنتج في المتجر (<code>.card-visual-header</code>). صيغ مدعومة: JPG, PNG, WebP. (في حال عدم رفعها، يظهر تصميم أيقوني تلقائياً).
+            </p>
+
+            <input type="file" name="thumbnail_file" accept="image/*" class="form-control" style="padding: 10px;">
+        </div>
+
         {{-- Landing Page Setup --}}
         <div style="background: var(--bg-card); border: 1px solid #bfdbfe; border-radius: 14px; padding: 24px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(37, 99, 235, 0.04);">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid #e0e7ff; padding-bottom: 12px; flex-wrap: wrap; gap: 10px;">
@@ -192,6 +205,9 @@
                 <div style="display: flex; gap: 8px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; overflow-x: auto; padding-bottom: 2px;">
                     <button type="button" class="sales-tab-btn active" onclick="switchSalesTab(event, 'tab-content')" style="padding: 10px 18px; font-size: 13px; font-weight: 800; border: none; background: transparent; cursor: pointer; color: #2563eb; border-bottom: 3px solid #2563eb; margin-bottom: -4px;">
                         📝 المحتوى والعرض
+                    </button>
+                    <button type="button" class="sales-tab-btn" onclick="switchSalesTab(event, 'tab-media')" style="padding: 10px 18px; font-size: 13px; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -4px;">
+                        🎬 وسائط السيلز (Mockups & Video)
                     </button>
                     <button type="button" class="sales-tab-btn" onclick="switchSalesTab(event, 'tab-styling')" style="padding: 10px 18px; font-size: 13px; font-weight: 700; border: none; background: transparent; cursor: pointer; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -4px;">
                         🎨 كود الاستايل والـ CSS الخارجي
@@ -233,6 +249,66 @@
                                 <input type="color" name="landing_primary_color" value="{{ old('landing_primary_color', '#0284c7') }}" style="height: 42px; width: 100%; border-radius: 8px; border: 1px solid var(--border-card); cursor: pointer; padding: 2px;">
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {{-- Tab Media: Sales Page Mockups & Video --}}
+                <div id="tab-media" class="sales-tab-content" style="display: none;">
+                    <div style="display: grid; gap: 18px;">
+                        
+                        {{-- Laptop Hero Screen Mockup --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                💻 صورة شاشة اللابتوب التفاعلية (Hero 3D Laptop Screen)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                تظهر داخل إطار شاشة اللابتوب ثلاثي الأبعاد في أول صفحة السيلز (<code>.sx-laptop-screen</code>) بدلاً من الجدول الافتراضي.
+                            </p>
+                            <input type="file" name="laptop_mockup_file" accept="image/*" class="form-control">
+                        </div>
+
+                        {{-- App Window Mockup --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                🪟 صورة معاينة واجهة النظام (App Window Mockup)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                تظهر داخل إطار نافذة البرنامج في قسم المميزات (<code>.sx-window-body</code>).
+                            </p>
+                            <input type="file" name="window_mockup_file" accept="image/*" class="form-control">
+                        </div>
+
+                        {{-- 3D Box Art --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                📦 صورة بوكس / علبة البرنامج ثلاثية الأبعاد (3D Box Art)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                غلاف العلبة المجسم في قسم الأسعار بجانب خطة الشراء (<code>.sx-box-art</code>).
+                            </p>
+                            <input type="file" name="box_art_file" accept="image/*" class="form-control">
+                        </div>
+
+                        {{-- Video Demo File & URL --}}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px;">
+                            <label style="display: block; font-size: 13px; font-weight: 800; color: var(--text-heading); margin-bottom: 4px;">
+                                🎥 فيديو تعريفي للبرنامج (Product Demo Video)
+                            </label>
+                            <p style="font-size: 11.5px; color: var(--text-muted); margin-bottom: 10px;">
+                                يظهر داخل مشغل الفيديو المخصص بصفحة السيلز (<code>.sx-video</code>). يمكنك رفع ملف فيديو مباشر أو إدخال رابط YouTube / Vimeo.
+                            </p>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                                <div>
+                                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">رفع ملف فيديو (MP4, WebM):</label>
+                                    <input type="file" name="video_file" accept="video/mp4,video/webm,video/ogg" class="form-control">
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">أو رابط يوتيوب / فيميو مباشر:</label>
+                                    <input type="url" name="video_url" value="{{ old('video_url') }}" placeholder="https://www.youtube.com/watch?v=..." class="form-control" style="direction: ltr;">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

@@ -444,17 +444,67 @@
 
 .card-actions-row {
     display: grid;
-    grid-template-columns: 1fr 1.25fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.card-product-cover-wrap {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.card-product-cover-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.product-sales-card:hover .card-product-cover-img {
+    transform: scale(1.05);
+}
+
+.btn-card-sales {
+    padding: 10px 10px;
+    border-radius: 12px;
+    background: #ecfdf5;
+    color: #047857;
+    border: 1.5px solid #a7f3d0;
+    font-size: 12.5px;
+    font-weight: 800;
+    font-family: inherit;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.btn-card-sales:hover {
+    background: #d1fae5;
+    border-color: #34d399;
+    color: #065f46;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
 }
 
 .btn-card-outline {
-    padding: 10px 14px;
+    padding: 10px 10px;
     border-radius: 12px;
     background: #ffffff;
     color: var(--store-green);
     border: 1.5px solid var(--store-border-green);
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 800;
     font-family: inherit;
     text-align: center;
@@ -465,6 +515,7 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
+    white-space: nowrap;
 }
 
 .btn-card-outline:hover {
@@ -473,7 +524,7 @@
 }
 
 .btn-card-primary {
-    padding: 10px 14px;
+    padding: 10px 10px;
     border-radius: 12px;
     background: linear-gradient(135deg, var(--store-green) 0%, var(--store-dark-green) 100%);
     color: #ffffff;
@@ -994,17 +1045,23 @@
                                 </span>
                             </div>
 
-                            <div class="card-mockup-icon">
-                                @if(!empty($product->category) && str_contains(strtolower($product->category->name), 'pos'))
-                                    <i class="fa-solid fa-cash-register"></i>
-                                @elseif(!empty($product->category) && str_contains(strtolower($product->category->name), 'crm'))
-                                    <i class="fa-solid fa-users-gear"></i>
-                                @elseif(!empty($product->category) && str_contains(strtolower($product->category->name), 'erp'))
-                                    <i class="fa-solid fa-cubes-stacked"></i>
-                                @else
-                                    <i class="fa-solid fa-laptop-code"></i>
-                                @endif
-                            </div>
+                            @if(!empty($product->thumbnail))
+                                <div class="card-product-cover-wrap">
+                                    <img src="{{ asset($product->thumbnail) }}" alt="{{ $product->name }}" class="card-product-cover-img" loading="lazy">
+                                </div>
+                            @else
+                                <div class="card-mockup-icon">
+                                    @if(!empty($product->category) && str_contains(strtolower($product->category->name), 'pos'))
+                                        <i class="fa-solid fa-cash-register"></i>
+                                    @elseif(!empty($product->category) && str_contains(strtolower($product->category->name), 'crm'))
+                                        <i class="fa-solid fa-users-gear"></i>
+                                    @elseif(!empty($product->category) && str_contains(strtolower($product->category->name), 'erp'))
+                                        <i class="fa-solid fa-cubes-stacked"></i>
+                                    @else
+                                        <i class="fa-solid fa-laptop-code"></i>
+                                    @endif
+                                </div>
+                            @endif
                         </a>
 
                         {{-- Info Body --}}
@@ -1046,23 +1103,23 @@
                             </div>
 
                             <div class="card-actions-row">
-                                <a href="{{ $product->display_url }}" class="btn-card-outline">
-                                    {{ $product->hasLandingPage() ? 'صفحة العرض والمواصفات' : 'المواصفات' }}
-                                </a>
+                                @if($product->hasLandingPage())
+                                    <a href="{{ $product->display_url }}" class="btn-card-sales">
+                                        <span>🚀 صفحة العرض الحصري</span>
+                                        <i class="fa-solid fa-arrow-left" style="font-size: 11px;"></i>
+                                    </a>
+                                @else
+                                    <a href="{{ $product->display_url }}" class="btn-card-outline">
+                                        <span>المواصفات</span>
+                                        <i class="fa-solid fa-circle-info" style="font-size: 11px;"></i>
+                                    </a>
+                                @endif
 
                                 <button type="button" onclick="openInstantCheckout({{ $product->id }}, '{{ addslashes($product->name) }}', {{ $product->effective_price }}, '{{ $product->currency }}')" class="btn-card-primary">
                                     <i class="fa-solid fa-bolt"></i>
                                     <span>شراء وتفعيل</span>
                                 </button>
                             </div>
-
-                            {{-- Direct Sales Landing Page Link --}}
-                            @if($product->hasLandingPage())
-                                <a href="{{ $product->display_url }}" class="sales-page-feature-banner">
-                                    <span>🚀 صفحة العرض الحصري (Sales Page)</span>
-                                    <i class="fa-solid fa-arrow-left"></i>
-                                </a>
-                            @endif
                         </div>
 
                     </div>

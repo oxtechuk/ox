@@ -91,6 +91,12 @@ class DigitalProductController extends Controller
             'og_description' => 'nullable|string',
             'og_image' => 'nullable|string|max:255',
             'og_image_file' => 'nullable|image|max:5120',
+            'thumbnail_file' => 'nullable|image|max:10240',
+            'laptop_mockup_file' => 'nullable|image|max:10240',
+            'window_mockup_file' => 'nullable|image|max:10240',
+            'box_art_file' => 'nullable|image|max:10240',
+            'video_file' => 'nullable|mimes:mp4,mov,ogg,qt,webm|max:51200',
+            'video_url' => 'nullable|string|max:500',
         ]);
 
         $slug = ! empty($validated['slug']) ? Str::slug($validated['slug']) : Str::slug($validated['name']);
@@ -118,6 +124,14 @@ class DigitalProductController extends Controller
             $filePath = $uploaded->storeAs('digital_products', $slug.'_'.time().'.'.$uploaded->getClientOriginalExtension(), 'local');
         }
 
+        $thumbnailPath = null;
+        if ($request->hasFile('thumbnail_file')) {
+            $thumbUpload = $request->file('thumbnail_file');
+            $thumbName = 'thumb_'.$slug.'_'.time().'.'.$thumbUpload->getClientOriginalExtension();
+            $thumbUpload->move(public_path('uploads/products'), $thumbName);
+            $thumbnailPath = '/uploads/products/'.$thumbName;
+        }
+
         $product = DigitalProduct::create([
             'category_id' => $validated['category_id'],
             'name' => $validated['name'],
@@ -130,6 +144,7 @@ class DigitalProductController extends Controller
             'sale_price' => $validated['sale_price'] ?? null,
             'currency' => $validated['currency'],
             'version' => $validated['version'],
+            'thumbnail' => $thumbnailPath,
             'file_path' => $filePath,
             'file_name' => $fileName,
             'file_size' => $fileSize,
@@ -149,12 +164,49 @@ class DigitalProductController extends Controller
                 $ogImage = '/uploads/landing/'.$ogImageName;
             }
 
+            $laptopMockup = null;
+            if ($request->hasFile('laptop_mockup_file')) {
+                $lapUpload = $request->file('laptop_mockup_file');
+                $lapName = 'laptop_'.$slug.'_'.time().'.'.$lapUpload->getClientOriginalExtension();
+                $lapUpload->move(public_path('uploads/products'), $lapName);
+                $laptopMockup = '/uploads/products/'.$lapName;
+            }
+
+            $windowMockup = null;
+            if ($request->hasFile('window_mockup_file')) {
+                $winUpload = $request->file('window_mockup_file');
+                $winName = 'win_'.$slug.'_'.time().'.'.$winUpload->getClientOriginalExtension();
+                $winUpload->move(public_path('uploads/products'), $winName);
+                $windowMockup = '/uploads/products/'.$winName;
+            }
+
+            $boxArtImage = null;
+            if ($request->hasFile('box_art_file')) {
+                $boxUpload = $request->file('box_art_file');
+                $boxName = 'box_'.$slug.'_'.time().'.'.$boxUpload->getClientOriginalExtension();
+                $boxUpload->move(public_path('uploads/products'), $boxName);
+                $boxArtImage = '/uploads/products/'.$boxName;
+            }
+
+            $videoFilePath = null;
+            if ($request->hasFile('video_file')) {
+                $vidUpload = $request->file('video_file');
+                $vidName = 'vid_'.$slug.'_'.time().'.'.$vidUpload->getClientOriginalExtension();
+                $vidUpload->move(public_path('uploads/products'), $vidName);
+                $videoFilePath = '/uploads/products/'.$vidName;
+            }
+
             ProductLandingPage::create([
                 'product_id' => $product->id,
                 'slug' => $slug,
                 'headline' => $validated['landing_headline'] ?: $product->name,
                 'subheadline' => $validated['landing_subheadline'] ?: $product->tagline,
                 'hero_badge' => $validated['landing_hero_badge'] ?? '🔥 عرض خاص لفترة محدودة: تفعيل فوري مع ترخيص رسمي',
+                'video_url' => $validated['video_url'] ?? null,
+                'video_file' => $videoFilePath,
+                'laptop_mockup' => $laptopMockup,
+                'window_mockup' => $windowMockup,
+                'box_art_image' => $boxArtImage,
                 'timer_ends_at' => now()->addDays(2),
                 'key_benefits' => [
                     ['title' => 'توفير الوقت والجهد', 'desc' => 'نظام آلي بالكامل يقلل الأخطاء ويسرع إنجاز مهامك.'],
@@ -239,6 +291,12 @@ class DigitalProductController extends Controller
             'og_description' => 'nullable|string',
             'og_image' => 'nullable|string|max:255',
             'og_image_file' => 'nullable|image|max:5120',
+            'thumbnail_file' => 'nullable|image|max:10240',
+            'laptop_mockup_file' => 'nullable|image|max:10240',
+            'window_mockup_file' => 'nullable|image|max:10240',
+            'box_art_file' => 'nullable|image|max:10240',
+            'video_file' => 'nullable|mimes:mp4,mov,ogg,qt,webm|max:51200',
+            'video_url' => 'nullable|string|max:500',
         ]);
 
         $features = ! empty($validated['features'])
@@ -279,6 +337,13 @@ class DigitalProductController extends Controller
             $updateData['file_size'] = $fileSize;
         }
 
+        if ($request->hasFile('thumbnail_file')) {
+            $thumbUpload = $request->file('thumbnail_file');
+            $thumbName = 'thumb_'.$productSlug.'_'.time().'.'.$thumbUpload->getClientOriginalExtension();
+            $thumbUpload->move(public_path('uploads/products'), $thumbName);
+            $updateData['thumbnail'] = '/uploads/products/'.$thumbName;
+        }
+
         $digitalProduct->update($updateData);
 
         // Handle Sales Page
@@ -294,6 +359,38 @@ class DigitalProductController extends Controller
                 $ogImage = '/uploads/landing/'.$ogImageName;
             }
 
+            $laptopMockup = $landingPage?->laptop_mockup;
+            if ($request->hasFile('laptop_mockup_file')) {
+                $lapUpload = $request->file('laptop_mockup_file');
+                $lapName = 'laptop_'.$productSlug.'_'.time().'.'.$lapUpload->getClientOriginalExtension();
+                $lapUpload->move(public_path('uploads/products'), $lapName);
+                $laptopMockup = '/uploads/products/'.$lapName;
+            }
+
+            $windowMockup = $landingPage?->window_mockup;
+            if ($request->hasFile('window_mockup_file')) {
+                $winUpload = $request->file('window_mockup_file');
+                $winName = 'win_'.$productSlug.'_'.time().'.'.$winUpload->getClientOriginalExtension();
+                $winUpload->move(public_path('uploads/products'), $winName);
+                $windowMockup = '/uploads/products/'.$winName;
+            }
+
+            $boxArtImage = $landingPage?->box_art_image;
+            if ($request->hasFile('box_art_file')) {
+                $boxUpload = $request->file('box_art_file');
+                $boxName = 'box_'.$productSlug.'_'.time().'.'.$boxUpload->getClientOriginalExtension();
+                $boxUpload->move(public_path('uploads/products'), $boxName);
+                $boxArtImage = '/uploads/products/'.$boxName;
+            }
+
+            $videoFilePath = $landingPage?->video_file;
+            if ($request->hasFile('video_file')) {
+                $vidUpload = $request->file('video_file');
+                $vidName = 'vid_'.$productSlug.'_'.time().'.'.$vidUpload->getClientOriginalExtension();
+                $vidUpload->move(public_path('uploads/products'), $vidName);
+                $videoFilePath = '/uploads/products/'.$vidName;
+            }
+
             $landingData = [
                 'slug' => $productSlug,
                 'headline' => $validated['landing_headline'] ?: $digitalProduct->name,
@@ -301,6 +398,11 @@ class DigitalProductController extends Controller
                 'hero_badge' => $validated['landing_hero_badge'] ?? ($landingPage?->hero_badge ?? '🔥 عرض خاص لفترة محدودة: تفعيل فوري مع ترخيص رسمي'),
                 'cta_text' => $validated['landing_cta_text'] ?? ($landingPage?->cta_text ?? 'اشترِ الآن واحصل على التفعيل الفوري'),
                 'primary_color' => $validated['landing_primary_color'] ?? ($landingPage?->primary_color ?? '#0284c7'),
+                'video_url' => $validated['video_url'] ?? $landingPage?->video_url,
+                'video_file' => $videoFilePath,
+                'laptop_mockup' => $laptopMockup,
+                'window_mockup' => $windowMockup,
+                'box_art_image' => $boxArtImage,
                 'external_css_urls' => $validated['external_css_urls'] ?? null,
                 'custom_css' => $validated['custom_css'] ?? null,
                 'custom_head_scripts' => $validated['custom_head_scripts'] ?? null,
