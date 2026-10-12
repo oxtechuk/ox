@@ -1878,6 +1878,7 @@
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ الخدمات والحلول</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ قصص وآراء الشركاء</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ عن OX Tech</a>
+                <a href="{{ route('privacy.policy') }}" onclick="closeMobileNav()">✦ سياسة الخصوصية</a>
                 <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ تواصل معنا</a>
             @elseif($currentLocale === 'fr')
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Accueil</a>
@@ -1887,6 +1888,7 @@
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Témoignages Partenaires</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ À Propos de Nous</a>
+                <a href="{{ route('privacy.policy') }}" onclick="closeMobileNav()">✦ Confidentialité</a>
                 <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ Contactez-nous</a>
             @else
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Home</a>
@@ -1896,6 +1898,7 @@
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Partner Stories</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ About OX Tech</a>
+                <a href="{{ route('privacy.policy') }}" onclick="closeMobileNav()">✦ Privacy Policy</a>
                 <a href="{{ route('contact') }}" onclick="closeMobileNav()">✦ Contact Us</a>
             @endif
         </div>
@@ -1949,6 +1952,9 @@
                 <nav class="ox-footer-nav" aria-label="Footer Navigation">
                     <a href="{{ route('contact') }}" class="ox-footer-nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">
                         {{ $currentLocale === 'ar' ? 'تواصل معنا' : ($currentLocale === 'fr' ? 'Contact' : 'Contact Us') }}
+                    </a>
+                    <a href="{{ route('privacy.policy') }}" class="ox-footer-nav-link {{ request()->routeIs('privacy.*') ? 'active' : '' }}">
+                        {{ $currentLocale === 'ar' ? 'سياسة الخصوصية' : ($currentLocale === 'fr' ? 'Confidentialité' : 'Privacy Policy') }}
                     </a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="ox-footer-nav-link" data-target="about">
                         {{ $currentLocale === 'ar' ? 'من نحن' : ($currentLocale === 'fr' ? 'À Propos' : 'About Us') }}
@@ -2011,10 +2017,16 @@
                 @if($currentLocale === 'ar')
                     <span>جميع الحقوق محفوظة</span>
                     <span dir="ltr">OxTech &copy; 2025</span>
+                    <span class="ox-footer-sep" style="opacity: 0.35; margin: 0 8px;">•</span>
+                    <a href="{{ route('privacy.policy') }}" style="color: var(--ox-emerald); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">سياسة الخصوصية</a>
                 @elseif($currentLocale === 'fr')
                     <span dir="ltr">&copy; 2025 OxTech. Tous droits réservés.</span>
+                    <span class="ox-footer-sep" style="opacity: 0.35; margin: 0 8px;">•</span>
+                    <a href="{{ route('privacy.policy') }}" style="color: var(--ox-emerald); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Politique de Confidentialité</a>
                 @else
                     <span dir="ltr">&copy; 2025 OxTech. All rights reserved.</span>
+                    <span class="ox-footer-sep" style="opacity: 0.35; margin: 0 8px;">•</span>
+                    <a href="{{ route('privacy.policy') }}" style="color: var(--ox-emerald); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Privacy Policy</a>
                 @endif
             </p>
         </div>

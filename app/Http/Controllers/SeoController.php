@@ -33,6 +33,7 @@ class SeoController extends Controller
             ['url' => route('contact'), 'priority' => '0.95', 'changefreq' => 'weekly', 'lastmod' => now()->toAtomString()],
             ['url' => route('projects.index'), 'priority' => '0.9', 'changefreq' => 'weekly', 'lastmod' => now()->toAtomString()],
             ['url' => route('store.index'), 'priority' => '0.9', 'changefreq' => 'weekly', 'lastmod' => now()->toAtomString()],
+            ['url' => route('privacy.policy'), 'priority' => '0.7', 'changefreq' => 'monthly', 'lastmod' => now()->toAtomString()],
         ];
 
         foreach ($staticPages as $page) {

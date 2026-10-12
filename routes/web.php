@@ -25,6 +25,7 @@ use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\DigitalCheckoutController;
 use App\Http\Controllers\DigitalStoreController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LegalController;
 use App\Http\Controllers\PayPalCheckoutController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SeoController;
@@ -41,6 +42,8 @@ Route::get('/portfolio', [ProjectController::class, 'index'])->name('portfolio.i
 Route::get('/projects/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 Route::get('/contact', [ConsultationController::class, 'contact'])->name('contact');
 Route::get('/consultation', [ConsultationController::class, 'contact'])->name('consultation');
+Route::get('/privacy-policy', [LegalController::class, 'privacy'])->name('privacy.policy');
+Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
 Route::post('/contact', [ConsultationController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('contact.store');
