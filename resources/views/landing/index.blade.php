@@ -1572,10 +1572,11 @@
                                         <div class="ox-consult-select-wrap">
                                             <select name="budget" id="inline_budget" class="ox-consult-select" aria-label="{{ $locale === 'ar' ? 'الميزانية التقديرية' : ($locale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}" required>
                                                 <option value="" disabled selected hidden>{{ $locale === 'ar' ? 'الميزانية التقديرية' : ($locale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</option>
-                                                <option value="أقل من $10,000">{{ $locale === 'ar' ? 'أقل من $10,000' : '< $10,000' }}</option>
-                                                <option value="$10,000 - $25,000">$10,000 - $25,000</option>
-                                                <option value="$25,000 - $50,000">$25,000 - $50,000</option>
-                                                <option value="أكثر من $50,000">{{ $locale === 'ar' ? 'أكثر من $50,000' : '> $50,000' }}</option>
+                                                <option value="$800 - $1,500">$800 - $1,500</option>
+                                                <option value="$1,500 - $3,000">$1,500 - $3,000</option>
+                                                <option value="$3,000 - $5,000">$3,000 - $5,000</option>
+                                                <option value="$5,000 - $10,000">$5,000 - $10,000</option>
+                                                <option value="أكثر من $10,000">{{ $locale === 'ar' ? 'أكثر من $10,000' : ($locale === 'fr' ? 'Plus de 10,000 $' : '> $10,000') }}</option>
                                             </select>
                                             <span class="ox-consult-select-chevron">
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
