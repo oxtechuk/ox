@@ -10,6 +10,7 @@ use App\Models\TrafficEvent;
 use App\Models\VisitorTraffic;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
@@ -205,8 +206,10 @@ class AnalyticsController extends Controller
 
         // 6. Top Countries
         $countriesRaw = (clone $baseQuery)
+            ->whereNotNull('country_code')
+            ->where('country_code', '!=', '')
             ->select(
-                DB::raw("LOWER(COALESCE(NULLIF(country_code, ''), 'sa')) as code"),
+                DB::raw('LOWER(country_code) as code'),
                 DB::raw('count(*) as count'),
                 DB::raw('count(distinct session_id) as visitors')
             )
@@ -310,7 +313,7 @@ class AnalyticsController extends Controller
     {
         // Ignore real-time events from administrators or admin devices
         if (
-            \Illuminate\Support\Facades\Auth::check() ||
+            Auth::check() ||
             $request->cookie('ox_admin_device') === '1' ||
             $request->cookie('ox_exclude_admin') === '1' ||
             $request->session()->get('is_admin_session')

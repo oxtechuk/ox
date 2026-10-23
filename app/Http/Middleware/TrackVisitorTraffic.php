@@ -160,7 +160,8 @@ class TrackVisitorTraffic
             ?: $request->header('X-Country-Code')
             ?: $request->header('X-Forwarded-Country')
             ?: $request->header('GEOIP_COUNTRY_CODE')
-            ?: $request->server('GEOIP_COUNTRY_CODE');
+            ?: $request->server('GEOIP_COUNTRY_CODE')
+            ?: $request->server('HTTP_CF_IPCOUNTRY');
 
         if ($headerCode && is_string($headerCode)) {
             $code = strtolower(trim($headerCode));
@@ -176,11 +177,6 @@ class TrackVisitorTraffic
             if (strlen($code) === 2 && ctype_alpha($code)) {
                 return [$code, $this->resolveCountryName($code)];
             }
-        }
-
-        // 3. Default for Arabic browser locale without country (e.g. "ar")
-        if (str_starts_with(strtolower($acceptLang), 'ar')) {
-            return ['sa', 'السعودية'];
         }
 
         return [null, null];
