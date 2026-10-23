@@ -35,6 +35,7 @@
             'submit_btn' => 'تأكيد وحجز الاستشارة المجانية',
             'submitting' => 'جاري تأكيد حجزك...',
             'nda_note' => 'نلتزم بالسرية التامة للبيانات وفق أفضل المعايير المهنية (NDA)',
+            'recaptcha_note' => 'محمي بواسطة Google reCAPTCHA ضد البوتات والرسائل العشوائية',
             'success_title' => 'تم استلام طلب استشارتك بنجاح! 🎉',
             'success_desc' => 'شكراً لثقتك بـ OX Tech. سيقوم أحد خبرائنا التقنيين بالتواصل معك خلال أقل من ساعتين عمل لمناقشة متطلبات مشروعك وتقديم دراسة الجدوى ومعمارية النظام.',
             'ref_num' => 'رقم الطلب المرجعي:',
@@ -87,6 +88,7 @@
             'submit_btn' => 'Confirm & Book Free Discovery Session',
             'submitting' => 'Securing your session...',
             'nda_note' => 'Strict data confidentiality protected by mutual Non-Disclosure Agreement (NDA)',
+            'recaptcha_note' => 'Protected by Google reCAPTCHA against automated bots and spam',
             'success_title' => 'Your Consultation Request Has Been Received! 🎉',
             'success_desc' => 'Thank you for choosing OX Tech. One of our lead software architects will connect with you within 2 hours to confirm your meeting and review your technical roadmap.',
             'ref_num' => 'Reference ID:',
@@ -139,6 +141,7 @@
             'submit_btn' => 'Confirmer et Réserver la Session Offerte',
             'submitting' => 'Confirmation en cours...',
             'nda_note' => 'Confidentialité absolue garantie par accord de non-divulgation (NDA)',
+            'recaptcha_note' => 'Protégé par Google reCAPTCHA contre les robots et le spam',
             'success_title' => 'Votre Demande a été Reçue avec Succès ! 🎉',
             'success_desc' => 'Merci de votre confiance. Un de nos architectes logiciels seniors prendra contact avec vous d’ici 2 heures ouvrées.',
             'ref_num' => 'N° de référence :',
@@ -751,6 +754,59 @@
     text-align: center;
 }
 
+.ox-field-error {
+    font-size: 12px;
+    color: #DC2626;
+    margin-top: 6px;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+.ox-field-error i {
+    font-size: 11px;
+}
+.ox-input-field.has-error,
+.ox-textarea-field.has-error,
+.ox-select-field.has-error {
+    border-color: #EF4444 !important;
+    background-color: #FEF2F2 !important;
+}
+.ox-input-wrapper.has-error {
+    border-color: #EF4444 !important;
+}
+.ox-phone-row.has-error {
+    border-radius: 12px;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+.ox-form-alert {
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: #FEF2F2;
+    border: 1px solid #FCA5A5;
+    color: #991B1B;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+}
+.ox-recaptcha-shield {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 11.5px;
+    color: #64748B;
+    text-align: center;
+    background: #F8FAFC;
+    border: 1px dashed #CBD5E1;
+    border-radius: 8px;
+    padding: 7px 12px;
+}
+
 /* ─── 5. SIDEBAR CARD (UNCLUTTERED & DIRECT) ─── */
 .ox-contact-sidebar {
     display: flex;
@@ -1009,7 +1065,12 @@
                 </div>
 
                 {{-- Interactive Form --}}
-                <form id="oxContactForm" onsubmit="handleContactSubmit(event)">
+                <div id="oxFormAlert" class="ox-form-alert" style="display: none;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span id="oxFormAlertText"></span>
+                </div>
+
+                <form id="oxContactForm" onsubmit="handleContactSubmit(event)" novalidate>
                     @csrf
 
                     {{-- Anti-Spam Honeypots & Time Traps --}}
@@ -1024,27 +1085,29 @@
                     {{-- Row 1: Full Name & Business Email in 2 columns --}}
                     <div class="ox-form-grid-2">
                         <div class="ox-form-group">
-                            <label class="ox-form-label">{{ $txt['name_label'] }}</label>
-                            <div class="ox-input-wrapper">
+                            <label class="ox-form-label" for="c_name">{{ $txt['name_label'] }}</label>
+                            <div class="ox-input-wrapper" id="wrap_c_name">
                                 <i class="fa-solid fa-user ox-input-icon"></i>
-                                <input type="text" name="name" id="c_name" required placeholder="{{ $txt['name_ph'] }}" class="ox-input-field">
+                                <input type="text" name="name" id="c_name" required placeholder="{{ $txt['name_ph'] }}" class="ox-input-field" autocomplete="name" maxlength="70">
                             </div>
+                            <div class="ox-field-error" id="err_c_name"></div>
                         </div>
 
                         <div class="ox-form-group">
-                            <label class="ox-form-label">{{ $txt['email_label'] }}</label>
-                            <div class="ox-input-wrapper">
+                            <label class="ox-form-label" for="c_email">{{ $txt['email_label'] }}</label>
+                            <div class="ox-input-wrapper" id="wrap_c_email">
                                 <i class="fa-solid fa-envelope ox-input-icon"></i>
-                                <input type="email" name="email" id="c_email" required placeholder="{{ $txt['email_ph'] }}" class="ox-input-field">
+                                <input type="email" name="email" id="c_email" required placeholder="{{ $txt['email_ph'] }}" class="ox-input-field" autocomplete="email" maxlength="100">
                             </div>
+                            <div class="ox-field-error" id="err_c_email"></div>
                         </div>
                     </div>
 
                     {{-- Row 2: Phone with Country Code & Project Classification in 2 columns --}}
                     <div class="ox-form-grid-2">
                         <div class="ox-form-group">
-                            <label class="ox-form-label">{{ $txt['phone_label'] }}</label>
-                            <div class="ox-phone-row">
+                            <label class="ox-form-label" for="c_phone">{{ $txt['phone_label'] }}</label>
+                            <div class="ox-phone-row" id="wrap_c_phone">
                                 <button type="button" class="ox-country-btn" id="oxCountryBtn" onclick="toggleCountryDropdown(event)" aria-haspopup="listbox" aria-expanded="false" title="{{ $currentLang === 'ar' ? 'اختر الدولة' : 'Select Country' }}">
                                     <img id="oxSelectedFlagImg" src="{{ asset('assets/flags/' . $defaultCountry['code'] . '.webp') }}" alt="{{ $defaultCountry['name_en'] }}" class="ox-country-flag-img" width="22" height="15" loading="lazy">
                                     <span id="oxSelectedDialText" class="ox-country-dial-code">{{ $defaultCountry['dial'] }}</span>
@@ -1055,7 +1118,7 @@
                                 <input type="hidden" name="country_code" id="c_country_code" value="{{ $defaultCountry['dial'] }}">
 
                                 <div class="ox-input-wrapper" style="flex: 1;">
-                                    <input type="tel" name="phone" id="c_phone" required placeholder="{{ $txt['phone_ph'] }}" class="ox-input-field">
+                                    <input type="tel" name="phone" id="c_phone" required placeholder="{{ $txt['phone_ph'] }}" class="ox-input-field" autocomplete="tel" maxlength="30">
                                 </div>
 
                                 {{-- Country Dropdown Popover --}}
@@ -1087,10 +1150,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="ox-field-error" id="err_c_phone"></div>
                         </div>
 
                         <div class="ox-form-group">
-                            <label class="ox-form-label">{{ $txt['proj_type_label'] }}</label>
+                            <label class="ox-form-label" for="c_proj_type">{{ $txt['proj_type_label'] }}</label>
                             <select name="project_type" id="c_proj_type" class="ox-select-field">
                                 @foreach($txt['proj_types'] as $ptype)
                                     <option value="{{ $ptype }}">{{ $ptype }}</option>
@@ -1135,8 +1199,9 @@
 
                     {{-- Project Details & Live Counter --}}
                     <div class="ox-form-group">
-                        <label class="ox-form-label">{{ $txt['msg_label'] }}</label>
+                        <label class="ox-form-label" for="c_message">{{ $txt['msg_label'] }}</label>
                         <textarea name="message" id="c_message" required minlength="10" maxlength="1000" placeholder="{{ $txt['msg_ph'] }}" class="ox-textarea-field" oninput="updateCharCount(this)"></textarea>
+                        <div class="ox-field-error" id="err_c_message"></div>
                         <div class="ox-char-counter">
                             <span id="charCountSpan">0</span> / 1000 {{ $txt['char_count'] }}
                         </div>
@@ -1151,6 +1216,11 @@
                     <div class="ox-nda-strip">
                         <i class="fa-solid fa-shield-halved" style="color: var(--ox-primary);"></i>
                         <span>{{ $txt['nda_note'] }}</span>
+                    </div>
+
+                    <div class="ox-recaptcha-shield">
+                        <i class="fa-solid fa-shield-cat" style="color: var(--ox-primary);"></i>
+                        <span>{{ $txt['recaptcha_note'] }}</span>
                     </div>
                 </form>
             </div>
@@ -1243,7 +1313,59 @@ function trackWaEscalation() {
     }
 }
 
-// ─── AJAX Form Submission ───
+// ─── Form Validation & Error Display Helpers ───
+function clearAllErrors() {
+    document.querySelectorAll('.ox-field-error').forEach(el => {
+        el.innerHTML = '';
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('.has-error').forEach(el => {
+        el.classList.remove('has-error');
+    });
+    const alertBox = document.getElementById('oxFormAlert');
+    if (alertBox) {
+        alertBox.style.display = 'none';
+    }
+}
+
+function showFieldError(inputId, errorText) {
+    const input = document.getElementById(inputId);
+    const wrap = document.getElementById('wrap_' + inputId);
+    const errEl = document.getElementById('err_' + inputId);
+
+    if (input) input.classList.add('has-error');
+    if (wrap) wrap.classList.add('has-error');
+
+    if (errEl) {
+        errEl.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> <span>${errorText}</span>`;
+        errEl.style.display = 'flex';
+    }
+}
+
+// Bind real-time input error clearing
+document.addEventListener('DOMContentLoaded', function() {
+    ['c_name', 'c_email', 'c_phone', 'c_message'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', function() {
+                this.classList.remove('has-error');
+                const wrap = document.getElementById('wrap_' + id);
+                if (wrap) wrap.classList.remove('has-error');
+                const err = document.getElementById('err_' + id);
+                if (err) {
+                    err.innerHTML = '';
+                    err.style.display = 'none';
+                }
+                const alertBox = document.getElementById('oxFormAlert');
+                if (alertBox && !document.querySelector('.ox-field-error[style*="display: flex"]')) {
+                    alertBox.style.display = 'none';
+                }
+            });
+        }
+    });
+});
+
+// ─── AJAX Form Submission With Full Validation & Bot Verification ───
 async function handleContactSubmit(e) {
     e.preventDefault();
     const form = document.getElementById('oxContactForm');
@@ -1251,17 +1373,85 @@ async function handleContactSubmit(e) {
     const successBanner = document.getElementById('contactSuccessState');
     const refCodeSpan = document.getElementById('refCodeSpan');
     const waFollowupBtn = document.getElementById('waDirectFollowupBtn');
+    const alertBox = document.getElementById('oxFormAlert');
+    const alertText = document.getElementById('oxFormAlertText');
 
     if (!form) return;
 
-    // Build Form Data with combined country code & phone
-    const formData = new FormData(form);
+    // Reset previous errors
+    clearAllErrors();
+
+    // 1. Client-side field validations
+    let hasError = false;
+    let firstErrorField = null;
+
+    const nameInput = document.getElementById('c_name');
+    const emailInput = document.getElementById('c_email');
+    const phoneInput = document.getElementById('c_phone');
+    const msgInput = document.getElementById('c_message');
+
+    // Validate Name
+    const nameVal = nameInput ? nameInput.value.trim() : '';
+    if (!nameVal || nameVal.length < 2) {
+        showFieldError('c_name', "{{ $currentLang === 'ar' ? 'يرجى كتابة الاسم الكريم (حرفين على الأقل).' : 'Please enter your full name (at least 2 characters).' }}");
+        hasError = true;
+        if (!firstErrorField) firstErrorField = nameInput;
+    } else if (nameVal.length > 70) {
+        showFieldError('c_name', "{{ $currentLang === 'ar' ? 'الاسم يجب ألا يتجاوز 70 حرفاً.' : 'Name must not exceed 70 characters.' }}");
+        hasError = true;
+        if (!firstErrorField) firstErrorField = nameInput;
+    }
+
+    // Validate Email
+    const emailVal = emailInput ? emailInput.value.trim() : '';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailVal || !emailRegex.test(emailVal)) {
+        showFieldError('c_email', "{{ $currentLang === 'ar' ? 'يرجى إدخال بريد إلكتروني صحيح (مثال: name@company.com).' : 'Please enter a valid email address (e.g. name@company.com).' }}");
+        hasError = true;
+        if (!firstErrorField) firstErrorField = emailInput;
+    }
+
+    // Validate Phone Number
+    const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+    const digitsOnly = rawPhone.replace(/[^0-9]/g, '');
+    if (!rawPhone || digitsOnly.length < 6) {
+        showFieldError('c_phone', "{{ $currentLang === 'ar' ? 'يرجى إدخال رقم جوال صحيح (6 أرقام على الأقل).' : 'Please enter a valid mobile number (at least 6 digits).' }}");
+        hasError = true;
+        if (!firstErrorField) firstErrorField = phoneInput;
+    }
+
+    // Validate Message Details
+    const msgVal = msgInput ? msgInput.value.trim() : '';
+    if (!msgVal || msgVal.length < 10) {
+        showFieldError('c_message', "{{ $currentLang === 'ar' ? 'يرجى كتابة 10 أحرف على الأقل لشرح متطلبات وفكرة مشروعك.' : 'Please write at least 10 characters detailing your project.' }}");
+        hasError = true;
+        if (!firstErrorField) firstErrorField = msgInput;
+    }
+
+    // Stop if any client-side error
+    if (hasError) {
+        if (alertBox && alertText) {
+            alertText.textContent = "{{ $currentLang === 'ar' ? 'يرجى تصحيح الحقول المحددة باللون الأحمر أدناه للمتابعة.' : 'Please correct the highlighted fields below to proceed.' }}";
+            alertBox.style.display = 'flex';
+        }
+        if (firstErrorField) {
+            firstErrorField.focus();
+            firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
+    }
+
+    // Prepare unified international phone number
     const countryCode = document.getElementById('c_country_code')?.value || '';
-    const rawPhone = document.getElementById('c_phone')?.value || '';
-    const combinedPhone = countryCode ? (countryCode + ' ' + rawPhone.trim()) : rawPhone.trim();
+    let cleanPhone = rawPhone;
+    if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.replace(/^0+/, '');
+    const combinedPhone = cleanPhone.startsWith('+') ? cleanPhone : (countryCode ? (countryCode + ' ' + cleanPhone) : cleanPhone);
+
+    const formData = new FormData(form);
     formData.set('phone', combinedPhone);
 
     // Disable button & show spinner
+    const origBtnHtml = submitBtn ? submitBtn.innerHTML : '';
     if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
@@ -1271,6 +1461,14 @@ async function handleContactSubmit(e) {
     }
 
     try {
+        // Fetch reCAPTCHA Bot Verification Token if configured
+        if (typeof getRecaptchaToken === 'function') {
+            const token = await getRecaptchaToken('contact_page');
+            if (token) {
+                formData.set('g-recaptcha-response', token);
+            }
+        }
+
         const response = await fetch("{{ route('contact.store') }}", {
             method: 'POST',
             headers: {
@@ -1280,10 +1478,10 @@ async function handleContactSubmit(e) {
             body: formData
         });
 
-        const data = await response.json();
+        const data = await response.json().catch(() => null);
 
-        if (response.ok && (data.success || data.message)) {
-            // 1. Fire Meta Pixel Lead & ConsultationBooked Events
+        if (response.ok && data && (data.success || data.message)) {
+            // 1. Fire Meta Pixel Lead & Custom Consultation Events
             if (typeof fbq === 'function') {
                 fbq('track', 'Lead', {
                     content_name: 'consultation_request',
@@ -1306,7 +1504,7 @@ async function handleContactSubmit(e) {
             }
 
             // 3. Dynamic Reference Number
-            const generatedRef = 'OX-' + Math.floor(100000 + Math.random() * 900000);
+            const generatedRef = data.consultation_id ? ('OX-' + data.consultation_id) : ('OX-' + Math.floor(100000 + Math.random() * 900000));
             if (refCodeSpan) refCodeSpan.textContent = generatedRef;
 
             // 4. Update WhatsApp Followup Link
@@ -1319,24 +1517,46 @@ async function handleContactSubmit(e) {
             }
 
         } else {
-            alert(data.message || 'حدث خطأ أثناء إرسال الطلب، يرجى المحاولة لاحقاً أو التواصل عبر واتساب مباشرة.');
+            // Handle server-side validation & error responses (HTTP 422, 500, etc.)
+            let generalMessage = (data && data.message) ? data.message : "{{ $currentLang === 'ar' ? 'حدث خطأ أثناء إرسال البيانات، يرجى المحاولة مرة أخرى.' : 'An error occurred while submitting. Please try again.' }}";
+
+            if (data && data.errors) {
+                for (const [field, fieldMessages] of Object.entries(data.errors)) {
+                    const firstMsg = fieldMessages[0];
+                    let fieldId = null;
+                    if (field === 'name') fieldId = 'c_name';
+                    else if (field === 'email') fieldId = 'c_email';
+                    else if (field === 'phone') fieldId = 'c_phone';
+                    else if (field === 'message') fieldId = 'c_message';
+
+                    if (fieldId && firstMsg) {
+                        showFieldError(fieldId, firstMsg);
+                    }
+                }
+                const firstErr = Object.values(data.errors)[0]?.[0];
+                if (firstErr) generalMessage = firstErr;
+            }
+
+            if (alertBox && alertText) {
+                alertText.textContent = generalMessage;
+                alertBox.style.display = 'flex';
+                alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
             if (submitBtn) {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = `
-                    <span>{{ $txt['submit_btn'] }}</span>
-                    <i class="fa-solid {{ $isRtl ? 'fa-arrow-left' : 'fa-arrow-right' }}"></i>
-                `;
+                submitBtn.innerHTML = origBtnHtml;
             }
         }
     } catch (err) {
-        console.error(err);
-        alert('تعذر الاتصال بالخادم، يرجى المحاولة مجدداً أو مراسلتنا مباشرة عبر واتساب.');
+        console.error('Contact form submission error:', err);
+        if (alertBox && alertText) {
+            alertText.textContent = "{{ $currentLang === 'ar' ? 'تعذر الاتصال بالخادم، يرجى المحاولة لاحقاً أو مراسلتنا مباشرة عبر واتساب.' : 'Network connection error. Please try again later or reach out via WhatsApp.' }}";
+            alertBox.style.display = 'flex';
+        }
         if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.innerHTML = `
-                <span>{{ $txt['submit_btn'] }}</span>
-                <i class="fa-solid {{ $isRtl ? 'fa-arrow-left' : 'fa-arrow-right' }}"></i>
-            `;
+            submitBtn.innerHTML = origBtnHtml;
         }
     }
 }

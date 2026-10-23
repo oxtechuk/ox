@@ -10,6 +10,7 @@ use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\PaymentLog;
 use App\Models\Project;
+use App\Models\PromoCode;
 use App\Models\Quotation;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
@@ -241,7 +242,7 @@ class DashboardController extends Controller
             'testimonials_count' => Testimonial::count(),
             'quotations_count' => Quotation::count(),
             'payment_logs_count' => PaymentLog::count(),
-            'promo_codes_count' => \App\Models\PromoCode::count(),
+            'promo_codes_count' => PromoCode::count(),
             'users_count' => User::count(),
             'tracking_pixels_count' => TrackingPixel::count(),
             'site_settings_count' => SiteSetting::count(),

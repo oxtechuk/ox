@@ -10,7 +10,7 @@
     
     $seoTitle = $siteSettings['seo_meta_title'] ?? 'OX Tech | أفضل شركة برمجة وتطوير تطبيقات وسوفت وير في السعودية ومصر والإمارات';
     $seoDesc = $siteSettings['seo_meta_description'] ?? 'أوكس تك (OX Tech) بيت خبرة تقني وتطوير برمجيات متكامل يقدم حلول البرمجة السحابية، تطوير تطبيقات الجوال، المتاجر الإلكترونية، وحلول الذكاء الاصطناعي في الرياض، القاهرة، ودبي.';
-    $seoKeywords = $siteSettings['seo_meta_keywords'] ?? 'شركة برمجة في الرياض, افضل سوفت وير هاوس في السعودية, شركة تطوير تطبيقات دبي, برمجة مواقع القاهرة, شركة تقنية معلومات الرياض';
+    $seoKeywords = $siteSettings['seo_meta_keywords'] ?? 'OX Tech, شركة OX Tech, أوكس تك, شركة برمجة في الرياض, افضل سوفت وير هاوس في السعودية, شركة تطوير تطبيقات دبي, برمجة مواقع القاهرة, شركة تقنية معلومات الرياض';
 
     $resolveAssetUrl = function (?string $path, ?string $fallback = null): ?string {
         if (empty($path)) {
@@ -41,8 +41,9 @@
             [
                 '@type' => ['Organization', 'ProfessionalService', 'Corporation'],
                 '@id' => url('/') . '#organization',
-                'name' => !empty($siteSettings['site_name']) ? $siteSettings['site_name'] : 'OX Tech Software House',
-                'alternateName' => ['OxTech', 'OxTech UK', 'أوكس تك'],
+                'name' => 'OX Tech',
+                'legalName' => !empty($siteSettings['site_name']) ? $siteSettings['site_name'] : 'OX Tech Software House',
+                'alternateName' => ['OX Tech', 'OX Tech UK', 'شركة OX Tech', 'OxTech', 'أوكس تك'],
                 'url' => url('/'),
                 'logo' => [
                     '@type' => 'ImageObject',
@@ -98,7 +99,8 @@
                 '@type' => 'WebSite',
                 '@id' => url('/') . '#website',
                 'url' => url('/'),
-                'name' => $siteSettings['site_name'] ?? 'OX Tech',
+                'name' => 'OX Tech',
+                'alternateName' => ['OX Tech UK', 'شركة OX Tech', 'OxTech', 'أوكس تك'],
                 'description' => $seoDesc,
                 'publisher' => ['@id' => url('/') . '#organization'],
                 'inLanguage' => ['ar', 'en', 'fr'],
@@ -146,6 +148,8 @@
     <meta name="description" content="@yield('meta_description', $seoDesc)">
     <meta name="keywords" content="{{ $seoKeywords }}">
     <meta name="author" content="OX Tech Software House">
+    <meta name="application-name" content="OX Tech">
+    <meta name="apple-mobile-web-app-title" content="OX Tech">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="{{ $currentUrl }}"/>
     <link rel="alternate" hreflang="ar" href="{{ request()->fullUrlWithQuery(['lang' => 'ar']) }}"/>
@@ -183,6 +187,43 @@
 
     <!-- AI & LLM Engine Optimization Context -->
     <link rel="alternate" type="text/markdown" href="{{ url('/llms.txt') }}" title="LLM Context for AI Engines">
+
+    <!-- Google reCAPTCHA Anti-Bot Protection -->
+    @php
+        $recaptchaSiteKey = config('services.recaptcha.site_key');
+        if (empty($recaptchaSiteKey) && class_exists(\App\Models\SiteSetting::class)) {
+            $recaptchaSiteKey = \App\Models\SiteSetting::get('recaptcha_site_key', '');
+        }
+    @endphp
+    @if(!empty($recaptchaSiteKey))
+        <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
+        <script>
+            window.OX_RECAPTCHA_KEY = "{{ $recaptchaSiteKey }}";
+            async function getRecaptchaToken(action = 'form_submit') {
+                if (typeof grecaptcha !== 'undefined' && window.OX_RECAPTCHA_KEY) {
+                    return new Promise((resolve) => {
+                        grecaptcha.ready(function() {
+                            grecaptcha.execute(window.OX_RECAPTCHA_KEY, {action: action}).then(function(token) {
+                                resolve(token);
+                            }).catch(function(err) {
+                                console.warn('reCAPTCHA execute failed:', err);
+                                resolve(null);
+                            });
+                        });
+                    });
+                }
+                return null;
+            }
+        </script>
+    @else
+        <script>
+            window.OX_RECAPTCHA_KEY = null;
+            async function getRecaptchaToken(action = 'form_submit') {
+                return null;
+            }
+        </script>
+    @endif
+
     @if(!empty($siteSettings['seo_schema_custom']))
         {!! $siteSettings['seo_schema_custom'] !!}
     @endif
@@ -2016,15 +2057,15 @@
             <p class="ox-footer-copy">
                 @if($currentLocale === 'ar')
                     <span>جميع الحقوق محفوظة</span>
-                    <span dir="ltr">OxTech &copy; 2025</span>
+                    <span dir="ltr">OX Tech &copy; 2025</span>
                     <span class="ox-footer-sep" style="opacity: 0.35; margin: 0 8px;">•</span>
                     <a href="{{ route('privacy.policy') }}" style="color: var(--ox-emerald); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">سياسة الخصوصية</a>
                 @elseif($currentLocale === 'fr')
-                    <span dir="ltr">&copy; 2025 OxTech. Tous droits réservés.</span>
+                    <span dir="ltr">&copy; 2025 OX Tech. Tous droits réservés.</span>
                     <span class="ox-footer-sep" style="opacity: 0.35; margin: 0 8px;">•</span>
                     <a href="{{ route('privacy.policy') }}" style="color: var(--ox-emerald); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Politique de Confidentialité</a>
                 @else
-                    <span dir="ltr">&copy; 2025 OxTech. All rights reserved.</span>
+                    <span dir="ltr">&copy; 2025 OX Tech. All rights reserved.</span>
                     <span class="ox-footer-sep" style="opacity: 0.35; margin: 0 8px;">•</span>
                     <a href="{{ route('privacy.policy') }}" style="color: var(--ox-emerald); text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Privacy Policy</a>
                 @endif
@@ -2531,6 +2572,38 @@
 
             if (alertBox) alertBox.style.display = 'none';
 
+            const nameInput = document.getElementById('modal_c_name');
+            if (nameInput && nameInput.value.trim().length < 2) {
+                if (alertBox && alertText) {
+                    alertText.textContent = "{{ $currentLocale === 'ar' ? 'يرجى إدخال اسمك الكريم (حرفين على الأقل).' : 'Please enter your full name (at least 2 characters).' }}";
+                    alertBox.style.display = 'flex';
+                }
+                nameInput.focus();
+                return;
+            }
+
+            const emailInput = document.getElementById('modal_c_email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailInput && !emailRegex.test(emailInput.value.trim())) {
+                if (alertBox && alertText) {
+                    alertText.textContent = "{{ $currentLocale === 'ar' ? 'يرجى إدخال بريد إلكتروني صحيح.' : 'Please enter a valid email address.' }}";
+                    alertBox.style.display = 'flex';
+                }
+                emailInput.focus();
+                return;
+            }
+
+            const phoneRawInput = document.getElementById('modal_c_phone');
+            const digitsOnly = phoneRawInput ? phoneRawInput.value.replace(/[^0-9]/g, '') : '';
+            if (!phoneRawInput || digitsOnly.length < 6) {
+                if (alertBox && alertText) {
+                    alertText.textContent = "{{ $currentLocale === 'ar' ? 'يرجى إدخال رقم هاتف صحيح (6 أرقام على الأقل).' : 'Please enter a valid phone number (at least 6 digits).' }}";
+                    alertBox.style.display = 'flex';
+                }
+                phoneRawInput?.focus();
+                return;
+            }
+
             const msgInput = document.getElementById('modal_c_message');
             if (msgInput && msgInput.value.trim().length < 10) {
                 if (alertBox && alertText) {
@@ -2543,7 +2616,7 @@
 
             const origBtnHtml = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>{{ $currentLocale === 'ar' ? 'جاري تأكيد حجزك...' : ($currentLocale === 'fr' ? 'Confirmation en cours...' : 'Securing your session...') }}</span>`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>{{ $currentLocale === 'ar' ? 'جاري التحقق وتأكيد حجزك...' : ($currentLocale === 'fr' ? 'Vérification en cours...' : 'Securing your session...') }}</span>`;
 
             // Prepare unified international phone number
             const dialCode = document.getElementById('modal_c_country_code')?.value || '+966';
@@ -2555,73 +2628,88 @@
             const formData = new FormData(form);
             formData.set('phone', fullPhone);
 
-            fetch("{{ route('consultation.store') }}", {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-            .then(async res => {
-                const data = await res.json().catch(() => null);
-                if (res.ok && data && data.success) {
-                    const leadId = data.consultation_id ? ('OX-' + data.consultation_id) : ('OX-' + Date.now().toString().slice(-6));
-                    
-                    // Dispatch multi-channel marketing pixels
-                    try {
-                        if (typeof window.fbq === 'function') {
-                            window.fbq('track', 'Lead', {
-                                content_name: 'Tech Consultation Discovery',
-                                content_category: formData.get('project_type'),
-                                currency: 'SAR',
-                                value: 0.00
-                            });
-                            window.fbq('trackCustom', 'ConsultationBooked', {
-                                lead_id: leadId,
-                                project_type: formData.get('project_type'),
-                                contact_preference: formData.get('contact_preference')
-                            });
-                        }
-                    } catch (pixelErr) {}
-
-                    try {
-                        if (typeof window.gtag === 'function') {
-                            window.gtag('event', 'generate_lead', {
-                                event_category: 'Consultation',
-                                event_label: formData.get('project_type'),
-                                lead_id: leadId
-                            });
-                            window.gtag('event', 'conversion', { 'send_to': 'AW-17984061932' });
-                        }
-                    } catch (gtagErr) {}
-
-                    // Update Reference Code in Success Banner
-                    const refCodeSpan = document.getElementById('refCodeSpan');
-                    if (refCodeSpan) refCodeSpan.textContent = leadId;
-
-                    // Update WhatsApp VIP direct followup link with custom Reference ID
-                    const waBtn = document.getElementById('waDirectFollowupBtn');
-                    if (waBtn) {
-                        const waBase = "https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '201008616682')) }}";
-                        const waText = encodeURIComponent("{{ $currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بحجز استشارة تقنية برقم مرجعي #' : 'Hello OX Tech, I booked a consultation with reference #' }}" + leadId + " {{ $currentLocale === 'ar' ? 'وأود المتابعة المباشرة معك.' : 'and would like to follow up directly.' }}");
-                        waBtn.href = `${waBase}?text=${waText}`;
-                    }
-
-                    // Smooth transition to Success State
-                    form.style.display = 'none';
-                    const successState = document.getElementById('contactSuccessState');
-                    if (successState) successState.style.display = 'block';
-                } else {
-                    const errMsg = (data && data.message) ? data.message : "{{ $currentLocale === 'ar' ? 'حدث خطأ أثناء إرسال البيانات، يرجى المحاولة مرة أخرى.' : 'An error occurred while submitting. Please try again.' }}";
-                    if (alertBox && alertText) {
-                        alertText.textContent = errMsg;
-                        alertBox.style.display = 'flex';
-                    }
-                    btn.disabled = false;
-                    btn.innerHTML = origBtnHtml;
+            // Fetch reCAPTCHA token if available
+            getRecaptchaToken('consultation_modal').then(token => {
+                if (token) {
+                    formData.set('g-recaptcha-response', token);
                 }
-            })
+
+                fetch("{{ route('consultation.store') }}", {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(async res => {
+                    const data = await res.json().catch(() => null);
+                    if (res.ok && data && data.success) {
+                        const leadId = data.consultation_id ? ('OX-' + data.consultation_id) : ('OX-' + Date.now().toString().slice(-6));
+                        
+                        // Dispatch multi-channel marketing pixels
+                        try {
+                            if (typeof window.fbq === 'function') {
+                                window.fbq('track', 'Lead', {
+                                    content_name: 'Tech Consultation Discovery',
+                                    content_category: formData.get('project_type'),
+                                    currency: 'SAR',
+                                    value: 0.00
+                                });
+                                window.fbq('trackCustom', 'ConsultationBooked', {
+                                    lead_id: leadId,
+                                    project_type: formData.get('project_type'),
+                                    contact_preference: formData.get('contact_preference')
+                                });
+                            }
+                        } catch (pixelErr) {}
+
+                        try {
+                            if (typeof window.gtag === 'function') {
+                                window.gtag('event', 'generate_lead', {
+                                    event_category: 'Consultation',
+                                    event_label: formData.get('project_type'),
+                                    lead_id: leadId
+                                });
+                                window.gtag('event', 'conversion', { 'send_to': 'AW-17984061932' });
+                            }
+                        } catch (gtagErr) {}
+
+                        // Update Reference Code in Success Banner
+                        const refCodeSpan = document.getElementById('refCodeSpan');
+                        if (refCodeSpan) refCodeSpan.textContent = leadId;
+
+                        // Update WhatsApp VIP direct followup link with custom Reference ID
+                        const waBtn = document.getElementById('waDirectFollowupBtn');
+                        if (waBtn) {
+                            const waBase = "https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? ($siteSettings['social_whatsapp'] ?? '201008616682')) }}";
+                            const waText = encodeURIComponent("{{ $currentLocale === 'ar' ? 'مرحباً فريق OX Tech، قمت بحجز استشارة تقنية برقم مرجعي #' : 'Hello OX Tech, I booked a consultation with reference #' }}" + leadId + " {{ $currentLocale === 'ar' ? 'وأود المتابعة المباشرة معك.' : 'and would like to follow up directly.' }}");
+                            waBtn.href = `${waBase}?text=${waText}`;
+                        }
+
+                        // Smooth transition to Success State
+                        form.style.display = 'none';
+                        const successState = document.getElementById('contactSuccessState');
+                        if (successState) successState.style.display = 'block';
+                    } else {
+                        let errMsg = (data && data.message) ? data.message : "{{ $currentLocale === 'ar' ? 'حدث خطأ أثناء إرسال البيانات، يرجى المحاولة مرة أخرى.' : 'An error occurred while submitting. Please try again.' }}";
+                        if (data && data.errors) {
+                            const firstErr = Object.values(data.errors)[0];
+                            if (firstErr && firstErr[0]) errMsg = firstErr[0];
+                        }
+                        if (alertBox && alertText) {
+                            alertText.textContent = errMsg;
+                            alertBox.style.display = 'flex';
+                        }
+                        btn.disabled = false;
+                        btn.innerHTML = origBtnHtml;
+                    }
+                })
+                .catch(err => {
+                    console.warn('Network issue during modal submission, submitting standard form:', err);
+                    form.submit();
+                });
+            });
             .catch(err => {
                 console.warn('Network issue during modal submission, submitting standard form:', err);
                 form.submit();

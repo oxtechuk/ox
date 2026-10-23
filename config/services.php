@@ -53,4 +53,10 @@ return [
         'egp_to_usd_rate' => (float) env('PAYPAL_EGP_TO_USD_RATE', 0.021), // ~48 EGP = 1 USD
     ],
 
+    'recaptcha' => [
+        'site_key' => env('RECAPTCHA_SITE_KEY', ''),
+        'secret_key' => env('RECAPTCHA_SECRET_KEY', ''),
+        'minimum_score' => (float) env('RECAPTCHA_MIN_SCORE', 0.5),
+    ],
+
 ];

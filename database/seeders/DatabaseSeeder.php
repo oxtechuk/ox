@@ -238,7 +238,7 @@ class DatabaseSeeder extends Seeder
             // Regional Tech SEO (KSA, Egypt, UAE)
             ['key' => 'seo_meta_title', 'value' => 'OX Tech | أفضل بيت برمجيات وتطوير تطبيقات ومواقع في السعودية والإمارات ومصر', 'group' => 'seo', 'type' => 'text', 'label' => 'عنوان الـ SEO الأساسي (Meta Title)'],
             ['key' => 'seo_meta_description', 'value' => 'شريكك التقني المعتمد لتطوير التطبيقات، المتاجر الإلكترونية، المنصات السحابية SaaS، وتكاملات الدفع في الرياض ودبي والقاهرة. استشارة مجانية مع خبرائنا.', 'group' => 'seo', 'type' => 'textarea', 'label' => 'وصف الـ SEO (Meta Description)'],
-            ['key' => 'seo_meta_keywords', 'value' => 'شركة برمجيات بالرياض, شركة تطوير تطبيقات السعودية, Software House Dubai, برمجة متاجر سلة وزد, برمجة تطبيقات مصر, بيت برمجيات, برمجة SaaS', 'group' => 'seo', 'type' => 'textarea', 'label' => 'الكلمات المفتاحية (Meta Keywords)'],
+            ['key' => 'seo_meta_keywords', 'value' => 'OX Tech, شركة OX Tech, أوكس تك, OX Tech Software House, شركة برمجيات بالرياض, شركة تطوير تطبيقات السعودية, Software House Dubai, برمجة متاجر سلة وزد, برمجة تطبيقات مصر, بيت برمجيات, برمجة SaaS', 'group' => 'seo', 'type' => 'textarea', 'label' => 'الكلمات المفتاحية (Meta Keywords)'],
             ['key' => 'seo_canonical_url', 'value' => 'https://oxtech.studio', 'group' => 'seo', 'type' => 'text', 'label' => 'الرابط الأساسي (Canonical URL)'],
             ['key' => 'default_currency', 'value' => 'SAR', 'group' => 'general', 'type' => 'text', 'label' => 'العملة الافتراضية (SAR / USD / AED / EGP)'],
             ['key' => 'vat_rate', 'value' => '15', 'group' => 'general', 'type' => 'text', 'label' => 'نسبة ضريبة القيمة المضافة %'],

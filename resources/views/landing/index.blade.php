@@ -70,7 +70,7 @@
                         <span class="text-green">رؤية أكبر</span>
                     </h1>
                     <p class="ox-hero-subtitle">
-                        في OxTech لا نبني برامج فقط<br/>
+                        في OX Tech لا نبني برامج فقط<br/>
                         نحن نبني عملك للمستقبل.
                     </p>
                 @elseif($locale === 'fr')
@@ -79,7 +79,7 @@
                         <span class="text-green">Une Vision Plus Grande</span>
                     </h1>
                     <p class="ox-hero-subtitle">
-                        Chez OxTech, nous ne concevons pas seulement des logiciels.<br/>
+                        Chez OX Tech, nous ne concevons pas seulement des logiciels.<br/>
                         Nous bâtissons votre entreprise pour l'avenir.
                     </p>
                 @else
@@ -88,7 +88,7 @@
                         <span class="text-green">A Bigger Vision</span>
                     </h1>
                     <p class="ox-hero-subtitle">
-                        At OxTech, we don't just build software.<br/>
+                        At OX Tech, we don't just build software.<br/>
                         We engineer your business for the future.
                     </p>
                 @endif
@@ -2464,44 +2464,59 @@
 
             const formData = new FormData(this);
 
-            fetch(this.action, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    if (inlineFormContent) inlineFormContent.style.display = 'none';
-                    if (inlineSuccessBox) inlineSuccessBox.style.display = 'block';
-                    if (data.message) {
-                        const msgEl = document.getElementById('successMsgText');
-                        if (msgEl) msgEl.textContent = data.message;
+            (async () => {
+                try {
+                    if (typeof getRecaptchaToken === 'function') {
+                        const token = await getRecaptchaToken('inline_consultation');
+                        if (token) {
+                            formData.set('g-recaptcha-response', token);
+                        }
                     }
-                    if (typeof window.trackConsultationLead === 'function') {
-                        window.trackConsultationLead({
-                            consultation_id: data.consultation_id,
-                            project_type: formData.get('project_type'),
-                            budget: formData.get('budget'),
-                            contact_preference: 'inline_form'
-                        });
+
+                    const res = await fetch(inlineForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+
+                    const data = await res.json().catch(() => null);
+
+                    if (res.ok && data && data.success) {
+                        if (inlineFormContent) inlineFormContent.style.display = 'none';
+                        if (inlineSuccessBox) inlineSuccessBox.style.display = 'block';
+                        if (data.message) {
+                            const msgEl = document.getElementById('successMsgText');
+                            if (msgEl) msgEl.textContent = data.message;
+                        }
+                        if (typeof window.trackConsultationLead === 'function') {
+                            window.trackConsultationLead({
+                                consultation_id: data.consultation_id,
+                                project_type: formData.get('project_type'),
+                                budget: formData.get('budget'),
+                                contact_preference: 'inline_form'
+                            });
+                        }
+                    } else {
+                        let errMsg = (data && data.message) ? data.message : "{{ __('حدث خطأ أثناء الإرسال، يرجى التحقق من البيانات والمحاولة مجدداً.') }}";
+                        if (data && data.errors) {
+                            const firstErr = Object.values(data.errors)[0]?.[0];
+                            if (firstErr) errMsg = firstErr;
+                        }
+                        alert(errMsg);
+                        if (inlineSubmitBtn) {
+                            inlineSubmitBtn.disabled = false;
+                            const span = inlineSubmitBtn.querySelector('span');
+                            if (span) span.textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
+                        }
                     }
-                } else {
-                    alert("{{ __('حدث خطأ أثناء الإرسال، يرجى التحقق من البيانات والمحاولة مجدداً.') }}");
-                    if (inlineSubmitBtn) {
-                        inlineSubmitBtn.disabled = false;
-                        const span = inlineSubmitBtn.querySelector('span');
-                        if (span) span.textContent = "{{ $locale === 'ar' ? 'إرسال الطلب' : ($locale === 'fr' ? 'Envoyer la demande' : 'Send Request') }}";
-                    }
+                } catch (err) {
+                    console.error('Inline consultation form submit error:', err);
+                    inlineForm.submit();
                 }
-            })
-            .catch(err => {
-                console.error(err);
-                inlineForm.submit();
-            });
+            })();
         });
     }
 

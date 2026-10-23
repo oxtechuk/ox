@@ -69,6 +69,8 @@ class SettingController extends Controller
                 $group = 'paysky';
             } elseif (str_starts_with($key, 'paypal_')) {
                 $group = 'paypal';
+            } elseif (str_starts_with($key, 'recaptcha_')) {
+                $group = 'recaptcha';
             }
 
             SiteSetting::set($key, is_array($value) ? json_encode($value) : $value, $group);

@@ -171,6 +171,10 @@
             <span>🅿️</span>
             <span>بوابة PayPal (العالمية)</span>
         </a>
+        <a href="{{ route('admin.settings.index', ['tab' => 'recaptcha']) }}" class="settings-nav-item {{ $activeTab === 'recaptcha' ? 'active' : '' }}">
+            <span>🛡️</span>
+            <span>حماية reCAPTCHA</span>
+        </a>
     </div>
 
     <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
@@ -611,6 +615,51 @@
                         <span class="form-hint" style="margin-top: 8px;">
                             أضف هذا الرابط في خانة <strong>Webhook URL</strong> داخل لوحة PayPal Developer مع تفعيل حدث <code>PAYMENT.CAPTURE.COMPLETED</code>.
                         </span>
+                    </div>
+                </div>
+            </div>
+        @elseif($activeTab === 'recaptcha')
+            <!-- Google reCAPTCHA Protection -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إعدادات الحماية ومكافحة البوتات (Google reCAPTCHA)</h3>
+                </div>
+
+                <div class="callout callout-info" style="margin-bottom: 24px; padding: 14px 18px; border-radius: 8px;">
+                    <div style="font-weight: 700; margin-bottom: 4px;">🛡️ حماية نماذج التواصل وحجز الاستشارات ضد البوتات والرسائل المزعجة</div>
+                    <div style="font-size: 13px; line-height: 1.6;">
+                        تدعم المنصة حماية <strong>Google reCAPTCHA v3</strong> (الذكية غير المرئية) و <strong>v2</strong>. يمكنك إنشاء مفاتيح مجانية من خلال 
+                        <a href="https://www.google.com/recaptcha/admin" target="_blank" style="color: #006848; font-weight: 700; text-decoration: underline;">Google reCAPTCHA Console</a> 
+                        ثم حفظها هنا أو عبر ملف <code>.env</code>. عند ترك المفاتيح فارغة في بيئة التطوير المحلي، يتم السماح بالإرسال لتسهيل الاختبار.
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">مفتاح الموقع العام (Site Key)</label>
+                        <input type="text" name="recaptcha_site_key" class="form-control" value="{{ $settings['recaptcha_site_key'] ?? config('services.recaptcha.site_key', '') }}" placeholder="6LeIx0cYAAAAA..." style="font-family: monospace;">
+                        <span class="form-hint">المفتاح العام المستخدم في الواجهة والمتصفح لاستدعاء كود التحقق.</span>
+                    </div>
+
+                    <div>
+                        <label class="form-label">المفتاح السري (Secret Key)</label>
+                        <input type="password" name="recaptcha_secret_key" id="recaptchaSecretInput" class="form-control" value="{{ $settings['recaptcha_secret_key'] ?? config('services.recaptcha.secret_key', '') }}" placeholder="6LeIx0cYAAAAA..." style="font-family: monospace;">
+                        <span class="form-hint">المفتاح السري المستخدم للتحقق من أمان الرد من خلال سيرفرات Google.</span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div>
+                        <label class="form-label">الحد الأدنى لدرجة الأمان الموثوقة (reCAPTCHA v3 Minimum Score)</label>
+                        <input type="number" step="0.1" min="0.1" max="1.0" name="recaptcha_min_score" class="form-control" value="{{ $settings['recaptcha_min_score'] ?? (string) config('services.recaptcha.minimum_score', '0.5') }}" placeholder="0.5">
+                        <span class="form-hint">مستوى الأمان من 0.0 (بوت مؤكد) إلى 1.0 (إنسان طبيعي). القيمة القياسية هي <strong>0.5</strong>.</span>
+                    </div>
+
+                    <div>
+                        <label class="form-label">حالة الحماية الحالية</label>
+                        <div style="padding: 11px 16px; border-radius: 8px; background: {{ !empty($settings['recaptcha_site_key'] ?? config('services.recaptcha.site_key')) ? '#ECFDF5; border: 1px solid #A7F3D0; color: #065F46;' : '#FFFBEB; border: 1px solid #FDE68A; color: #92400E;' }}; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                            <span>{{ !empty($settings['recaptcha_site_key'] ?? config('services.recaptcha.site_key')) ? '✅ مفعلة ومربوطة بـ Google reCAPTCHA' : '⚠️ غير مفعلة حالياً (يرجى إدخال المفاتيح لتفعيل الفحص التلقائي)' }}</span>
+                        </div>
                     </div>
                 </div>
             </div>

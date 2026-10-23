@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -45,7 +44,7 @@ class PromoCode extends Model
     /**
      * Scope for active promo codes
      *
-     * @param Builder<PromoCode> $query
+     * @param  Builder<PromoCode>  $query
      * @return Builder<PromoCode>
      */
     public function scopeActive(Builder $query): Builder
@@ -76,14 +75,14 @@ class PromoCode extends Model
         if ($this->valid_from && now()->lt($this->valid_from)) {
             return [
                 'valid' => false,
-                'message' => 'عذراً، يبدأ سريان كود الخصم في تاريخ ' . $this->valid_from->format('Y-m-d') . '.',
+                'message' => 'عذراً، يبدأ سريان كود الخصم في تاريخ '.$this->valid_from->format('Y-m-d').'.',
             ];
         }
 
         if ($this->valid_until && now()->gt($this->valid_until)) {
             return [
                 'valid' => false,
-                'message' => 'عذراً، انتهت صلاحية كود الخصم في تاريخ ' . $this->valid_until->format('Y-m-d') . '.',
+                'message' => 'عذراً، انتهت صلاحية كود الخصم في تاريخ '.$this->valid_until->format('Y-m-d').'.',
             ];
         }
 
@@ -140,6 +139,7 @@ class PromoCode extends Model
         }
 
         $diffMinutes = now()->diffInMinutes($this->valid_until) % 60;
+
         return "متبقي {$diffHours} ساعة و {$diffMinutes} دقيقة";
     }
 }
