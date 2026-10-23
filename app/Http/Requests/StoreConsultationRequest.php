@@ -26,6 +26,9 @@ class StoreConsultationRequest extends FormRequest
             if (! $this->has('phone') || empty($this->input('phone'))) {
                 $this->merge(['phone' => '+966500000000']);
             }
+            if (! $this->has('g-recaptcha-response') || empty($this->input('g-recaptcha-response'))) {
+                $this->merge(['g-recaptcha-response' => 'honeypot-trap']);
+            }
         }
     }
 
@@ -41,9 +44,11 @@ class StoreConsultationRequest extends FormRequest
             $secretKey = SiteSetting::get('recaptcha_secret_key', '');
         }
 
-        $recaptchaRule = ! empty($secretKey)
+        $isHoneypotTriggered = $this->filled('hp_check') || $this->filled('website_hp');
+
+        $recaptchaRule = (! empty($secretKey) && ! $isHoneypotTriggered)
             ? ['required', 'string', new RecaptchaRule]
-            : ['nullable', new RecaptchaRule];
+            : ['nullable'];
 
         return [
             'name' => 'required|string|min:2|max:70',
