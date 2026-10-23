@@ -139,6 +139,7 @@ class SeoController extends Controller
         $content .= "Disallow: /account/\n";
         $content .= "Disallow: /checkout/\n";
         $content .= "Disallow: /downloads/\n";
+        $content .= "Disallow: /lang/\n";
         $content .= "Disallow: /.env\n";
         $content .= "Disallow: /.git/\n";
         $content .= "Disallow: /.aws/\n";
@@ -313,16 +314,22 @@ class SeoController extends Controller
         $referer = $request->header('referer');
         if ($referer) {
             $parsed = parse_url($referer);
-            if (! empty($parsed['query'])) {
-                parse_str($parsed['query'], $queryParams);
-                unset($queryParams['lang']);
-                $newQuery = http_build_query($queryParams);
-                $cleanUrl = ($parsed['scheme'] ?? 'http').'://'.($parsed['host'] ?? '').($parsed['path'] ?? '').($newQuery ? '?'.$newQuery : '');
+            $host = $parsed['host'] ?? null;
+            $currentHost = $request->getHost();
 
-                return redirect($cleanUrl);
+            // Strictly allow redirection only if referer belongs to the same domain/host
+            if ($host && ($host === $currentHost || str_ends_with($host, '.'.$currentHost))) {
+                if (! empty($parsed['query'])) {
+                    parse_str($parsed['query'], $queryParams);
+                    unset($queryParams['lang']);
+                    $newQuery = http_build_query($queryParams);
+                    $cleanUrl = ($parsed['scheme'] ?? 'http').'://'.$host.($parsed['path'] ?? '').($newQuery ? '?'.$newQuery : '');
+
+                    return redirect($cleanUrl);
+                }
+
+                return redirect($referer);
             }
-
-            return redirect($referer);
         }
 
         return redirect()->route('home');

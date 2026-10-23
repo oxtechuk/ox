@@ -60,7 +60,7 @@ class PromoCodeController extends Controller
      */
     public function create(): View
     {
-        $products = DigitalProduct::where('is_active', true)->orderBy('name')->get();
+        $products = DigitalProduct::active()->orderBy('name')->get();
         $suggestedCode = 'OX'.strtoupper(Str::random(4));
 
         return view('admin.promo-codes.create', compact('products', 'suggestedCode'));
@@ -108,7 +108,7 @@ class PromoCodeController extends Controller
      */
     public function edit(PromoCode $promoCode): View
     {
-        $products = DigitalProduct::where('is_active', true)->orderBy('name')->get();
+        $products = DigitalProduct::active()->orderBy('name')->get();
 
         return view('admin.promo-codes.edit', compact('promoCode', 'products'));
     }

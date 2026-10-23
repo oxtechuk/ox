@@ -148,9 +148,9 @@
     <meta name="author" content="OX Tech Software House">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="canonical" href="{{ $currentUrl }}"/>
-    <link rel="alternate" hreflang="ar" href="{{ route('lang.switch', 'ar') }}"/>
-    <link rel="alternate" hreflang="en" href="{{ route('lang.switch', 'en') }}"/>
-    <link rel="alternate" hreflang="fr" href="{{ route('lang.switch', 'fr') }}"/>
+    <link rel="alternate" hreflang="ar" href="{{ request()->fullUrlWithQuery(['lang' => 'ar']) }}"/>
+    <link rel="alternate" hreflang="en" href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}"/>
+    <link rel="alternate" hreflang="fr" href="{{ request()->fullUrlWithQuery(['lang' => 'fr']) }}"/>
     <link rel="alternate" hreflang="x-default" href="{{ url('/') }}"/>
     <link rel="icon" type="image/x-icon" href="{{ $favicon }}">
 

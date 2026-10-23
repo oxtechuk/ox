@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\DigitalProduct;
 use App\Models\ProductCategory;
 use App\Models\ProductLandingPage;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DigitalProductSeeder extends Seeder
@@ -104,7 +105,6 @@ class DigitalProductSeeder extends Seeder
             ]
         );
 
-
         // ═══════════════════════════════════════════════════════════
         //  ScripOx — Customer Data Aggregator & Targeting Suite
         // ═══════════════════════════════════════════════════════════
@@ -168,7 +168,7 @@ class DigitalProductSeeder extends Seeder
                 'subheadline' => 'برنامجان في ترخيص واحد: Extension يجمع بيانات عملائك من كل منصة، وDesktop App يحوّلها إلى جمهور إعلاني مستهدف على Meta وGoogle بضغطة زر — بدون اشتراكات، ادفع مرة واحدة.',
                 'hero_badge' => '🔥 عرض إطلاق حصري: احصل عليه بـ 5$ فقط مع كود الترقية — ينتهي 19 أكتوبر',
                 'video_url' => null,
-                'timer_ends_at' => \Carbon\Carbon::create(2026, 10, 19, 23, 59, 59, 'Africa/Cairo'),
+                'timer_ends_at' => Carbon::create(2026, 10, 19, 23, 59, 59, 'Africa/Cairo'),
                 'key_benefits' => [
                     [
                         'title' => 'وفّر 80% من ميزانية الإعلانات',
@@ -264,6 +264,55 @@ class DigitalProductSeeder extends Seeder
                 'guarantee_text' => 'إذا لم يوفر ScripOx ما وعدنا به خلال 14 يوماً من الشراء، نعيد لك المبلغ بالكامل بدون أي أسئلة.',
                 'cta_text' => 'احصل على ScripOx الآن — 100$ ترخيص دائم',
                 'primary_color' => '#F59E0B',
+                'is_published' => true,
+            ]
+        );
+
+        // 4. Proposal Ox - Browser Extension for Freelancers
+        $proposalOx = DigitalProduct::updateOrCreate(
+            ['slug' => 'proposal-ox'],
+            [
+                'category_id' => $catCrm->id,
+                'name' => 'إضافة Proposal Ox لتجهيز عروض الأسعار والمقترحات',
+                'slug' => 'proposal-ox',
+                'tagline' => 'أداة احترافية للفريلانسرز ومقدمي الخدمات لتنظيم وتقديم عروض أسعار مقنعة للعملاء',
+                'description' => 'إضافة متصفح Chrome عملية من OxTech، موجهة للفريلانسرز ومقدمي الخدمات والوكالات الصغيرة لتنظيم وتجهيز عروض الأسعار والبنود وتكلفة المشاريع بدقة وسرعة بدون الحاجة لتعديل ملفات قديمة كل مرة.',
+                'features' => [
+                    'عروض أسعار منظمة واحترافية تترك انطباعاً قوياً لدى العميل من أول صفحة',
+                    'توفير ساعات من التنسيق اليدوي وإعادة كتابة نفس التفاصيل مع كل عميل',
+                    'مرونة كاملة لمختلف مجالات العمل الحر: تصميم، برمجة، تسويق، استشارات',
+                    'تحديد نطاق العمل والبنود والشروط لضمان حقوقك وحق العميل',
+                    'ترخيص فوري ودعم فني متكامل عبر واتساب',
+                ],
+                'system_requirements' => [
+                    'المتصفح: Google Chrome أو Microsoft Edge أو أي متصفح مبني على Chromium',
+                    'نظام التشغيل: Windows أو macOS أو Linux',
+                ],
+                'price' => 1000.00,
+                'sale_price' => 200.00,
+                'currency' => 'EGP',
+                'version' => '1.0.0',
+                'file_name' => 'Proposal_Ox_Extension_v1.0.zip',
+                'download_limit' => 10,
+                'expiry_days' => 365,
+                'has_license_key' => true,
+                'is_featured' => true,
+                'status' => 'active',
+                'meta_title' => 'Proposal Ox · أداة احترافية للفريلانسرز | OX TECH',
+                'meta_description' => 'اعمل عروض أسعار ومقترحات شغل بشكل احترافي، وخلّي العميل يشوف قيمة شغلك من أول صفحة. عرض إطلاق بـ 200 جنيه فقط.',
+            ]
+        );
+
+        ProductLandingPage::updateOrCreate(
+            ['slug' => 'proposal-ox'],
+            [
+                'product_id' => $proposalOx->id,
+                'slug' => 'proposal-ox',
+                'headline' => 'شغلك يستاهل يتقدّم بشكل أحسن',
+                'subheadline' => 'قدّم خدماتك باحتراف، وسيب انطباع يليق بقيمة شغلك. بدل ما تضيّع وقتك كل مرة في تنسيق عرض سعر من الصفر، استخدم Proposal Ox.',
+                'hero_badge' => 'عرض إطلاق خاص · خصم 80%',
+                'primary_color' => '#10B981',
+                'cta_text' => 'احصل على Proposal Ox الآن — 200 جنيه',
                 'is_published' => true,
             ]
         );

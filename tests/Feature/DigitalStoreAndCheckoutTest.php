@@ -70,6 +70,17 @@ class DigitalStoreAndCheckoutTest extends TestCase
         $response->assertSee(route('store.landing', $scripox->landingPage->slug));
     }
 
+    public function test_proposal_ox_landing_page_renders_successfully(): void
+    {
+        $response = $this->get('/p/proposal-ox');
+
+        $response->assertStatus(200);
+        $response->assertSee('Proposal Ox');
+        $response->assertSee('200');
+        $response->assertSee('شغلك يستاهل يتقدّم بشكل أحسن');
+        $response->assertSee('CREATE · SEND · WIN');
+    }
+
     public function test_customer_login_page_renders_successfully(): void
     {
         $response = $this->get(route('customer.login'));

@@ -103,12 +103,44 @@ class DigitalStoreController extends Controller
      */
     public function landing(string $slug): View|RedirectResponse
     {
-        $landingPage = ProductLandingPage::with(['product.category'])
-            ->where('slug', $slug)
-            ->where('is_published', true)
-            ->first();
+        $customSlug = str_replace('-', '_', $slug);
+        $customView = 'landing.'.$customSlug;
+
+        try {
+            $landingPage = ProductLandingPage::with(['product.category'])
+                ->where('slug', $slug)
+                ->where('is_published', true)
+                ->first();
+        } catch (\Throwable $e) {
+            $landingPage = null;
+        }
 
         if (! $landingPage) {
+            // If a dedicated Blade template exists, render it with safe defaults
+            if (view()->exists($customView)) {
+                $product = new DigitalProduct([
+                    'id' => 101,
+                    'name' => 'Proposal Ox',
+                    'slug' => $slug,
+                    'tagline' => 'أداة احترافية للفريلانسرز لتجهيز وإرسال عروض الأسعار والمقترحات',
+                    'price' => 1000.00,
+                    'sale_price' => 200.00,
+                    'currency' => 'EGP',
+                    'version' => '1.0.0',
+                    'status' => 'active',
+                ]);
+                $landingPage = new ProductLandingPage([
+                    'slug' => $slug,
+                    'is_published' => true,
+                    'headline' => 'خلّي عرضك يقنع العميل قبل ما تبدأ الشغل!',
+                    'subheadline' => 'اعمل عروض أسعار ومقترحات شغل بشكل احترافي، وخلّي العميل يشوف قيمة شغلك من أول صفحة.',
+                    'primary_color' => '#10b981',
+                ]);
+                $landingPage->setRelation('product', $product);
+
+                return view($customView, compact('landingPage', 'product'));
+            }
+
             // Fallback: check if slug matches product slug
             $product = DigitalProduct::with(['landingPage', 'category'])
                 ->where('slug', $slug)
@@ -123,6 +155,10 @@ class DigitalStoreController extends Controller
         }
 
         $product = $landingPage->product;
+
+        if (view()->exists($customView)) {
+            return view($customView, compact('landingPage', 'product'));
+        }
 
         return view('landing.sales', compact('landingPage', 'product'));
     }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\DigitalProduct;
 use App\Models\PromoCode;
+use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -136,5 +137,31 @@ class PromoCodeAndCurrencyCheckoutTest extends TestCase
 
         // Check promo usage count incremented
         $this->assertEquals(1, PromoCode::where('code', 'SUPER50')->value('used_count'));
+    }
+
+    public function test_admin_can_view_create_and_edit_promo_code_pages(): void
+    {
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@ox-tech.sa'],
+            [
+                'name' => 'Admin User',
+                'password' => bcrypt('password123'),
+                'role' => 'admin',
+                'is_active' => true,
+            ]
+        );
+
+        $promo = PromoCode::create([
+            'code' => 'ADMINPAGE10',
+            'discount_type' => 'percentage',
+            'discount_value' => 10,
+            'is_active' => true,
+        ]);
+
+        $createResponse = $this->actingAs($admin)->get(route('admin.promo-codes.create'));
+        $createResponse->assertStatus(200);
+
+        $editResponse = $this->actingAs($admin)->get(route('admin.promo-codes.edit', $promo));
+        $editResponse->assertStatus(200);
     }
 }

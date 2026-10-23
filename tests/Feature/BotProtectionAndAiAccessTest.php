@@ -101,4 +101,31 @@ class BotProtectionAndAiAccessTest extends TestCase
         $response->assertHeader('X-Frame-Options', 'SAMEORIGIN');
         $response->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     }
+
+    public function test_language_switch_protects_against_external_referer_redirect_loop(): void
+    {
+        // When clicking from Google search, referrer is external
+        $response = $this->withServerVariables(['HTTP_REFERER' => 'https://www.google.com/search?q=oxtech'])
+            ->get('/lang/en');
+
+        // Must redirect safely to home, NEVER back to Google
+        $response->assertRedirect(route('home'));
+        $this->assertNotEquals('https://www.google.com/search?q=oxtech', $response->headers->get('Location'));
+    }
+
+    public function test_language_switch_allows_internal_referer(): void
+    {
+        $internalUrl = url('/projects');
+        $response = $this->withServerVariables(['HTTP_REFERER' => $internalUrl])
+            ->get('/lang/en');
+
+        $response->assertRedirect($internalUrl);
+    }
+
+    public function test_robots_txt_disallows_lang_path(): void
+    {
+        $response = $this->get('/robots.txt');
+        $response->assertStatus(200);
+        $this->assertStringContainsString('Disallow: /lang/', $response->getContent());
+    }
 }
