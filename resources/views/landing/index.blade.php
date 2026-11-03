@@ -614,19 +614,20 @@
                         <!-- 2. Display Countries (Circular Flags) -->
                         @foreach($displayCountries as $country)
                             @php
-                                $cLower = strtolower($country->country_code);
-                                $cName = ($locale === 'en' && !empty($country->country_name_en)) ? $country->country_name_en : $country->country_name;
-                                $cCount = $projects->filter(fn($p) => strtolower($p->country_code) === $cLower)->count();
+                                $cLower = is_object($country) ? strtolower($country->country_code ?? '') : (is_array($country) ? strtolower($country['country_code'] ?? '') : strtolower((string)$country));
+                                $cName = is_object($country) ? (($locale === 'en' && !empty($country->country_name_en)) ? $country->country_name_en : ($country->country_name ?? strtoupper($cLower))) : (is_array($country) ? (($locale === 'en' && !empty($country['country_name_en'])) ? $country['country_name_en'] : ($country['country_name'] ?? strtoupper($cLower))) : strtoupper($cLower));
+                                $flagUrl = is_object($country) ? ($country->flag_url ?? null) : (is_array($country) ? ($country['flag_url'] ?? null) : (file_exists(public_path("assets/flags/{$cLower}.webp")) ? asset("assets/flags/{$cLower}.webp") : null));
+                                $cCount = $projects->filter(fn($p) => is_object($p) ? (strtolower($p->country_code ?? '') === $cLower) : (is_array($p) ? (strtolower($p['country_code'] ?? '') === $cLower) : false))->count();
                             @endphp
                             <button type="button" 
                                     class="country-flag-strip-btn" 
                                     data-country="{{ $cLower }}" 
                                     id="flagBtn_{{ $cLower }}" 
-                                    onclick="selectPortfolioCountry('{{ $cLower }}', '{{ addslashes($cName) }}', '{{ $country->flag_url }}')" 
+                                    onclick="selectPortfolioCountry('{{ $cLower }}', '{{ addslashes($cName) }}', '{{ $flagUrl }}')" 
                                     title="{{ $cName }}">
                                 <span class="flag-strip-avatar">
-                                    @if(!empty($country->flag_url))
-                                        <img src="{{ $country->flag_url }}" class="flag-strip-img" alt="{{ $cName }}" loading="lazy">
+                                    @if(!empty($flagUrl))
+                                        <img src="{{ $flagUrl }}" class="flag-strip-img" alt="{{ $cName }}" loading="lazy">
                                     @else
                                         <span class="flag-strip-emoji">🌐</span>
                                     @endif
@@ -659,17 +660,18 @@
                                     <div class="other-countries-grid">
                                         @foreach($otherCountries as $oCountry)
                                             @php
-                                                $ocLower = strtolower($oCountry->country_code);
-                                                $ocName = ($locale === 'en' && !empty($oCountry->country_name_en)) ? $oCountry->country_name_en : $oCountry->country_name;
-                                                $ocCount = $projects->filter(fn($p) => strtolower($p->country_code) === $ocLower)->count();
+                                                $ocLower = is_object($oCountry) ? strtolower($oCountry->country_code ?? '') : (is_array($oCountry) ? strtolower($oCountry['country_code'] ?? '') : strtolower((string)$oCountry));
+                                                $ocName = is_object($oCountry) ? (($locale === 'en' && !empty($oCountry->country_name_en)) ? $oCountry->country_name_en : ($oCountry->country_name ?? strtoupper($ocLower))) : (is_array($oCountry) ? (($locale === 'en' && !empty($oCountry['country_name_en'])) ? $oCountry['country_name_en'] : ($oCountry['country_name'] ?? strtoupper($ocLower))) : strtoupper($ocLower));
+                                                $ocFlagUrl = is_object($oCountry) ? ($oCountry->flag_url ?? null) : (is_array($oCountry) ? ($oCountry['flag_url'] ?? null) : (file_exists(public_path("assets/flags/{$ocLower}.webp")) ? asset("assets/flags/{$ocLower}.webp") : null));
+                                                $ocCount = $projects->filter(fn($p) => is_object($p) ? (strtolower($p->country_code ?? '') === $ocLower) : (is_array($p) ? (strtolower($p['country_code'] ?? '') === $ocLower) : false))->count();
                                             @endphp
                                             <button type="button" 
                                                     class="other-country-item" 
                                                     data-country="{{ $ocLower }}" 
-                                                    onclick="selectPortfolioCountry('{{ $ocLower }}', '{{ addslashes($ocName) }}', '{{ $oCountry->flag_url }}', true)">
+                                                    onclick="selectPortfolioCountry('{{ $ocLower }}', '{{ addslashes($ocName) }}', '{{ $ocFlagUrl }}', true)">
                                                 <span class="other-item-flag">
-                                                    @if(!empty($oCountry->flag_url))
-                                                        <img src="{{ $oCountry->flag_url }}" class="other-flag-img" alt="{{ $ocName }}" loading="lazy">
+                                                    @if(!empty($ocFlagUrl))
+                                                        <img src="{{ $ocFlagUrl }}" class="other-flag-img" alt="{{ $ocName }}" loading="lazy">
                                                     @else
                                                         <span>🌐</span>
                                                     @endif
