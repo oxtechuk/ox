@@ -27,6 +27,22 @@
     $favicon = $resolveAssetUrl($siteSettings['site_favicon'] ?? null, 'favicon.ico');
     $ogImage = $resolveAssetUrl($siteSettings['seo_og_image'] ?? null, 'assets/hero-bg.jpg');
 
+    $bgAudioFile = $siteSettings['bg_audio_file'] ?? null;
+    $bgAudioUrlSetting = $siteSettings['bg_audio_url'] ?? null;
+    $activeAudioUrl = '';
+    if (!empty($bgAudioFile)) {
+        $activeAudioUrl = str_starts_with($bgAudioFile, 'http') ? $bgAudioFile : asset(ltrim($bgAudioFile, '/'));
+    } elseif (!empty($bgAudioUrlSetting)) {
+        $activeAudioUrl = $bgAudioUrlSetting;
+    } else {
+        $activeAudioUrl = 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3';
+    }
+    $bgAudioEnabled = ($siteSettings['bg_audio_enabled'] ?? '1') !== '0';
+    $bgAudioTitle = $siteSettings['bg_audio_title'] ?? 'OX Tech Ambient Experience';
+    $bgAudioVolume = (float) ($siteSettings['bg_audio_volume'] ?? 0.35);
+    $bgAudioAutoplay = ($siteSettings['bg_audio_autoplay'] ?? '1') !== '0';
+    $bgAudioLoop = ($siteSettings['bg_audio_loop'] ?? '1') !== '0';
+
     $socialLinks = array_values(array_filter([
         !empty($siteSettings['social_instagram']) ? $siteSettings['social_instagram'] : 'https://www.instagram.com/oxtech.uk',
         !empty($siteSettings['social_github']) ? $siteSettings['social_github'] : 'https://github.com/oxtechuk',
@@ -371,7 +387,7 @@
         .site-nav-logo-img {
             height: 38px;
             max-height: 38px;
-            width: auto;
+            width: 86%;
             max-width: 170px;
             object-fit: contain;
             display: block;
@@ -1437,18 +1453,373 @@
         }
 
         @media (max-width: 640px) {
-            .ox-floating-actions {
-                bottom: 18px;
-                left: 16px;
-                gap: 10px;
-            }
             .ox-whatsapp-btn {
-                width: 50px;
-                height: 50px;
+                width: 48px;
+                height: 48px;
             }
             .ox-whatsapp-btn svg {
-                width: 24px;
-                height: 24px;
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           Mobile Fast Navigation Dock (Bottom Floating Island)
+           ═══════════════════════════════════════════════════════════════ */
+        .ox-mobile-nav-dock {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .ox-floating-actions {
+                bottom: 84px !important;
+                left: 14px !important;
+                gap: 8px !important;
+            }
+            .ox-mobile-nav-dock {
+                display: flex;
+                position: fixed;
+                bottom: 12px;
+                left: 10px;
+                right: 10px;
+                max-width: 460px;
+                margin: 0 auto;
+                background: rgba(5, 16, 26, 0.94);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                border-radius: 99px;
+                padding: 6px 6px;
+                justify-content: space-around;
+                align-items: center;
+                gap: 4px;
+                z-index: 99990;
+                box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75), 0 0 24px rgba(16, 185, 129, 0.18);
+                direction: rtl;
+                user-select: none;
+            }
+            .ox-dock-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                color: #94a3b8;
+                text-decoration: none;
+                font-size: 10px;
+                font-weight: 600;
+                padding: 6px 8px;
+                border-radius: 20px;
+                transition: all 0.2s ease;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                font-family: var(--font);
+                flex: 1;
+                min-width: 0;
+            }
+            .ox-dock-item svg {
+                width: 18px;
+                height: 18px;
+                stroke: currentColor;
+                transition: transform 0.2s ease, stroke 0.2s ease;
+            }
+            .ox-dock-item:hover, .ox-dock-item.active {
+                color: #ffffff;
+            }
+            .ox-dock-item:hover svg, .ox-dock-item.active svg {
+                stroke: #10B981;
+                transform: scale(1.1);
+            }
+            .ox-dock-item.ox-dock-contact {
+                background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                color: #ffffff !important;
+                border-radius: 99px;
+                padding: 7px 12px;
+                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.45);
+                font-weight: 700;
+                flex: 1.25;
+            }
+            .ox-dock-item.ox-dock-contact svg {
+                stroke: #ffffff !important;
+            }
+            .ox-dock-item.ox-dock-contact:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           Quick Contact Bottom Sheet Widget
+           ═══════════════════════════════════════════════════════════════ */
+        .ox-contact-sheet-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 10, 18, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+        }
+        .ox-contact-sheet-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .ox-contact-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 520px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #091e2a 0%, #05131c 100%);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-bottom: none;
+            border-radius: 28px 28px 0 0;
+            padding: 20px 20px 28px;
+            z-index: 100001;
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 -15px 45px rgba(0, 0, 0, 0.85), 0 0 35px rgba(16, 185, 129, 0.18);
+            direction: rtl;
+            font-family: var(--font);
+            color: #ffffff;
+        }
+        .ox-contact-sheet.active {
+            transform: translateY(0);
+        }
+        .ox-sheet-drag-handle {
+            width: 44px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 99px;
+            margin: -6px auto 16px;
+        }
+        .ox-sheet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+        .ox-sheet-title-group h3 {
+            font-size: 16.5px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ox-sheet-title-group p {
+            font-size: 11.5px;
+            color: #94a3b8;
+            margin: 0;
+        }
+        .ox-sheet-close-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .ox-sheet-close-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+        .ox-sheet-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .ox-sheet-action-tile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+        .ox-sheet-action-tile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .ox-sheet-tile-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+        .ox-sheet-tile-content {
+            flex: 1;
+            text-align: right;
+        }
+        .ox-sheet-tile-content b {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+        .ox-sheet-tile-content small {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .ox-sheet-tile-arrow {
+            color: #64748b;
+            font-size: 14px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .ox-sheet-action-tile:hover .ox-sheet-tile-arrow {
+            color: #10B981;
+            transform: translateX(-4px);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           Floating Background Music Widget
+           ═══════════════════════════════════════════════════════════════ */
+        .ox-audio-widget {
+            position: fixed;
+            bottom: 26px;
+            right: 24px;
+            z-index: 99997;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font);
+            direction: rtl;
+        }
+        .ox-audio-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(6, 18, 28, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 7px 14px 7px 10px;
+            border-radius: 99px;
+            color: #ffffff;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5), 0 0 16px rgba(16, 185, 129, 0.12);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+        .ox-audio-pill:hover {
+            border-color: #10B981;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 24px rgba(16, 185, 129, 0.25);
+            transform: translateY(-2px);
+        }
+        .ox-audio-equalizer {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 2.5px;
+            height: 14px;
+            padding: 0 2px;
+        }
+        .ox-audio-equalizer span {
+            width: 2.5px;
+            background: #10B981;
+            border-radius: 2px;
+            height: 4px;
+            transition: height 0.2s ease;
+        }
+        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(1) {
+            animation: oxAudioWave 1s infinite ease-in-out;
+        }
+        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(2) {
+            animation: oxAudioWave 1.2s infinite ease-in-out 0.2s;
+        }
+        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(3) {
+            animation: oxAudioWave 0.9s infinite ease-in-out 0.4s;
+        }
+        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(4) {
+            animation: oxAudioWave 1.1s infinite ease-in-out 0.1s;
+        }
+        @keyframes oxAudioWave {
+            0%, 100% { height: 3px; }
+            50% { height: 14px; }
+        }
+        .ox-audio-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            max-width: 140px;
+        }
+        .ox-audio-track-title {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ox-audio-track-status {
+            font-size: 9.5px;
+            color: #94a3b8;
+            letter-spacing: 0.3px;
+        }
+        .ox-audio-play-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            color: #10B981;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 11px;
+            padding-right: 1px;
+        }
+        .ox-audio-play-btn:hover {
+            background: #10B981;
+            color: #041210;
+            transform: scale(1.08);
+        }
+        .ox-audio-mute-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 4px;
+            display: grid;
+            place-items: center;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+        .ox-audio-mute-btn:hover {
+            color: #ffffff;
+        }
+        @media (max-width: 768px) {
+            .ox-audio-widget {
+                bottom: 84px;
+                right: 14px;
+            }
+            .ox-audio-text-group {
+                max-width: 95px;
+            }
+            .ox-audio-track-title {
+                font-size: 10px;
             }
         }
 
@@ -1856,6 +2227,7 @@
                     <a href="{{ route('store.index') }}" class="nav-item-link {{ request()->routeIs('store.*') ? 'active' : '' }}" data-target="store">المنتجات</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">خدماتنا</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">أعمالنا</a>
+                    <a href="{{ route('projects.index') }}" class="nav-item-link {{ request()->routeIs('projects.*') ? 'active' : '' }}" data-target="projects">مشاريعنا</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">من نحن</a>
                     <a href="{{ route('customer.dashboard') }}" class="nav-item-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" data-target="account">
                         <i class="fa-regular fa-user" style="margin-left: 5px; font-size: 12px;"></i>حسابي
@@ -1866,6 +2238,7 @@
                     <a href="{{ route('store.index') }}" class="nav-item-link {{ request()->routeIs('store.*') ? 'active' : '' }}" data-target="store">Produits</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Réalisations</a>
+                    <a href="{{ route('projects.index') }}" class="nav-item-link {{ request()->routeIs('projects.*') ? 'active' : '' }}" data-target="projects">Projets</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">À Propos</a>
                     <a href="{{ route('customer.dashboard') }}" class="nav-item-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" data-target="account">
                         <i class="fa-regular fa-user" style="margin-right: 5px; font-size: 12px;"></i>Mon Compte
@@ -1876,9 +2249,9 @@
                     <a href="{{ route('store.index') }}" class="nav-item-link {{ request()->routeIs('store.*') ? 'active' : '' }}" data-target="store">Products</a>
                     <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="nav-item-link" data-target="services">Services</a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="nav-item-link" data-target="work">Work</a>
+                    <a href="{{ route('projects.index') }}" class="nav-item-link {{ request()->routeIs('projects.*') ? 'active' : '' }}" data-target="projects">Projects</a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="nav-item-link" data-target="about">About</a>
-                    <a href="{{ route('customer.dashboard') }}" class="nav-item-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" data-target="account">
-                        <i class="fa-regular fa-user" style="margin-right: 5px; font-size: 12px;"></i>My Account
+                    <a href="{{ route('customer.dashboard') }}" class="nav-item-link {{ request()->routeIs('customer.*') ? 'active' : '' }}" data-target="account">Account
                     </a>
                     <a href="{{ route('contact') }}" class="nav-item-link {{ request()->routeIs('contact') ? 'active' : '' }}" data-target="consult">Contact</a>
                 @endif
@@ -1914,8 +2287,9 @@
             @if($currentLocale === 'ar')
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ الرئيسية</a>
                 <a href="{{ route('store.index') }}" onclick="closeMobileNav()">✦ المنتجات الرقمية والبرامج</a>
+                <a href="{{ route('projects.index') }}" onclick="closeMobileNav()">✦ مشاريعنا (معرض الأعمال)</a>
                 <a href="{{ route('customer.dashboard') }}" onclick="closeMobileNav()">✦ حسابي والتراخيص</a>
-                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ أعمالنا ومشاريعنا</a>
+                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ أعمالنا المميزة</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ الخدمات والحلول</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ قصص وآراء الشركاء</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ عن OX Tech</a>
@@ -1924,8 +2298,9 @@
             @elseif($currentLocale === 'fr')
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Accueil</a>
                 <a href="{{ route('store.index') }}" onclick="closeMobileNav()">✦ Produits & Logiciels</a>
+                <a href="{{ route('projects.index') }}" onclick="closeMobileNav()">✦ Nos Projets</a>
                 <a href="{{ route('customer.dashboard') }}" onclick="closeMobileNav()">✦ Mon Compte & Licences</a>
-                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Nos Projets</a>
+                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Réalisations</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Témoignages Partenaires</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ À Propos de Nous</a>
@@ -1934,8 +2309,9 @@
             @else
                 <a href="{{ $isHome ? '#home' : $homeUrl }}" onclick="closeMobileNav()">✦ Home</a>
                 <a href="{{ route('store.index') }}" onclick="closeMobileNav()">✦ Products & Software</a>
+                <a href="{{ route('projects.index') }}" onclick="closeMobileNav()">✦ Projects</a>
                 <a href="{{ route('customer.dashboard') }}" onclick="closeMobileNav()">✦ My Account & Licenses</a>
-                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Work & Projects</a>
+                <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" onclick="closeMobileNav()">✦ Featured Work</a>
                 <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" onclick="closeMobileNav()">✦ Services & Solutions</a>
                 <a href="{{ $isHome ? '#stories' : $homeUrl . '#stories' }}" onclick="closeMobileNav()">✦ Partner Stories</a>
                 <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" onclick="closeMobileNav()">✦ About OX Tech</a>
@@ -1999,6 +2375,9 @@
                     </a>
                     <a href="{{ $isHome ? '#about' : $homeUrl . '#about' }}" class="ox-footer-nav-link" data-target="about">
                         {{ $currentLocale === 'ar' ? 'من نحن' : ($currentLocale === 'fr' ? 'À Propos' : 'About Us') }}
+                    </a>
+                    <a href="{{ route('projects.index') }}" class="ox-footer-nav-link {{ request()->routeIs('projects.*') ? 'active' : '' }}" data-target="projects">
+                        {{ $currentLocale === 'ar' ? 'مشاريعنا' : ($currentLocale === 'fr' ? 'Projets' : 'Projects') }}
                     </a>
                     <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="ox-footer-nav-link" data-target="work">
                         {{ $currentLocale === 'ar' ? 'أعمالنا' : ($currentLocale === 'fr' ? 'Réalisations' : 'Portfolio') }}
@@ -2077,7 +2456,7 @@
     <div class="ox-floating-actions" id="oxFloatingActions">
         <!-- Language Switcher with Flag (Above WhatsApp) -->
         <div class="ox-floating-item ox-lang-widget" id="floatingLangWidget">
-            <button type="button" class="ox-lang-trigger" id="floatingLangBtn" onclick="toggleFloatingLang(event)" aria-label="Language Selector" title="{{ $currentLocale === 'ar' ? 'تغيير اللغة' : ($currentLocale === 'fr' ? 'Changer de langue' : 'Switch Language') }}">
+            <button type="button" class="ox-lang-trigger" id="floatingLangBtn" onclick="toggleFloatingLang(event)" aria-label="Language Selector" aria-expanded="false" aria-haspopup="true" title="{{ $currentLocale === 'ar' ? 'تغيير اللغة' : ($currentLocale === 'fr' ? 'Changer de langue' : 'Switch Language') }}">
                 <span class="ox-lang-flag">
                     @if($currentLocale === 'ar')
                         <img src="{{ asset('assets/flags/sa.webp') }}" class="ox-flag-img" alt="" aria-hidden="true">
@@ -2128,6 +2507,164 @@
             </div>
             <span class="ox-whatsapp-tooltip">{{ $currentLocale === 'ar' ? 'تواصل معنا مباشرة عبر واتساب' : ($currentLocale === 'fr' ? 'Discuter sur WhatsApp' : 'Chat on WhatsApp') }}</span>
         </a>
+    </div>
+
+    <!-- ─── Floating Background Music Widget (Right Side) ─── -->
+    @if($bgAudioEnabled && !empty($activeAudioUrl))
+        <div class="ox-audio-widget" id="oxAudioWidget">
+            <audio id="oxBgAudio" 
+                   preload="auto" 
+                   {{ $bgAudioLoop ? 'loop' : '' }} 
+                   src="{{ $activeAudioUrl }}"></audio>
+
+            <div class="ox-audio-pill" id="oxAudioPill" onclick="toggleBgAudio()" title="{{ $currentLocale === 'ar' ? 'تشغيل / إيقاف موسيقى الموقع' : 'Play / Pause background audio' }}">
+                <div class="ox-audio-equalizer" id="oxAudioEqualizer" title="{{ $currentLocale === 'ar' ? 'مؤثرات الصوت التفاعلية' : 'Audio Visualizer' }}">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="ox-audio-text-group">
+                    <span class="ox-audio-track-title" id="oxAudioTrackTitle">{{ $bgAudioTitle }}</span>
+                    <span class="ox-audio-track-status" id="oxAudioTrackStatus">{{ $currentLocale === 'ar' ? 'موسيقى الخلفية' : 'Background Audio' }}</span>
+                </div>
+                <button type="button" class="ox-audio-play-btn" id="oxAudioPlayBtn" aria-label="{{ $currentLocale === 'ar' ? 'تشغيل / إيقاف' : 'Play / Pause' }}">
+                    <span id="oxAudioPlayIcon">▶</span>
+                </button>
+                <button type="button" class="ox-audio-mute-btn" id="oxAudioMuteBtn" onclick="event.stopPropagation(); toggleBgAudioMute()" title="{{ $currentLocale === 'ar' ? 'كتم / إلغاء الكتم' : 'Mute / Unmute' }}" aria-label="Mute">
+                    <span id="oxAudioMuteIcon">🔊</span>
+                </button>
+            </div>
+        </div>
+    @endif
+
+    <!-- ─── Mobile Fast Navigation Dock (Bottom Island - Mobile Only) ─── -->
+    <nav class="ox-mobile-nav-dock" id="oxMobileNavDock" aria-label="Mobile Quick Navigation">
+        <!-- 1. الرئيسية -->
+        <a href="{{ $isHome ? '#home' : $homeUrl }}" class="ox-dock-item {{ $isHome ? 'active' : '' }}" data-target="home">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>{{ $currentLocale === 'ar' ? 'الرئيسية' : ($currentLocale === 'fr' ? 'Accueil' : 'Home') }}</span>
+        </a>
+
+        <!-- 2. خدماتنا -->
+        <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="ox-dock-item" data-target="services">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+            <span>{{ $currentLocale === 'ar' ? 'خدماتنا' : ($currentLocale === 'fr' ? 'Services' : 'Services') }}</span>
+        </a>
+
+        <!-- 3. أعمالنا -->
+        <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="ox-dock-item" data-target="work">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>{{ $currentLocale === 'ar' ? 'أعمالنا' : ($currentLocale === 'fr' ? 'Projets' : 'Work') }}</span>
+        </a>
+
+        <!-- 4. المتجر -->
+        <a href="{{ route('store.index') }}" class="ox-dock-item {{ request()->routeIs('store.*') ? 'active' : '' }}" data-target="store">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>{{ $currentLocale === 'ar' ? 'المتجر' : ($currentLocale === 'fr' ? 'Boutique' : 'Store') }}</span>
+        </a>
+
+        <!-- 5. تواصل معنا (ويدجت التواصل السريع) -->
+        <button type="button" class="ox-dock-item ox-dock-contact" onclick="toggleQuickContactSheet()" aria-label="Quick Contact Widget">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>{{ $currentLocale === 'ar' ? 'تواصل معنا' : ($currentLocale === 'fr' ? 'Contact' : 'Contact Us') }}</span>
+        </button>
+    </nav>
+
+    <!-- ─── Quick Contact Bottom Sheet Widget (Mobile & Desktop) ─── -->
+    <div class="ox-contact-sheet-backdrop" id="oxContactSheetBackdrop" onclick="closeQuickContactSheet()"></div>
+    <div class="ox-contact-sheet" id="oxQuickContactSheet" role="dialog" aria-modal="true" aria-labelledby="oxSheetTitle">
+        <div class="ox-sheet-drag-handle" onclick="closeQuickContactSheet()"></div>
+        <div class="ox-sheet-header">
+            <div class="ox-sheet-title-group">
+                <h3 id="oxSheetTitle">
+                    <span>⚡</span>
+                    <span>{{ $currentLocale === 'ar' ? 'تواصل مباشر مع OX Tech' : ($currentLocale === 'fr' ? 'Contact Direct avec OX Tech' : 'Direct Contact with OX Tech') }}</span>
+                </h3>
+                <p>{{ $currentLocale === 'ar' ? 'فريقنا الهندسي متاح للرد الفوري ومناقشة مشروعك' : 'Our engineering consultants are ready to discuss your project' }}</p>
+            </div>
+            <button type="button" class="ox-sheet-close-btn" onclick="closeQuickContactSheet()" aria-label="Close">✕</button>
+        </div>
+
+        <div class="ox-sheet-grid">
+            <!-- 1. WhatsApp VIP -->
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $siteSettings['contact_phone_primary'] ?? '966500000000') }}?text={{ urlencode($currentLocale === 'ar' ? 'مرحباً فريق OX Tech، أرغب في استشارة فورية لتطوير مشروعي البرمجي.' : 'Hello OX Tech, I would like an instant consultation for my project.') }}" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="ox-sheet-action-tile"
+               onclick="closeQuickContactSheet()">
+                <div class="ox-sheet-tile-icon" style="background: rgba(37, 211, 102, 0.15); color: #25D366;">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="ox-sheet-tile-content">
+                    <b>{{ $currentLocale === 'ar' ? 'محادثة واتساب فورية' : ($currentLocale === 'fr' ? 'WhatsApp Direct' : 'Instant WhatsApp Chat') }}</b>
+                    <small>{{ $currentLocale === 'ar' ? 'استجابة سريعة ومباشرة مع المستشار' : 'Chat directly with senior tech lead' }}</small>
+                </div>
+                <div class="ox-sheet-tile-arrow">{{ $currentLocale === 'ar' ? '←' : '→' }}</div>
+            </a>
+
+            <!-- 2. Phone Call Hotline -->
+            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings['contact_phone_primary'] ?? '+966500000000') }}" 
+               class="ox-sheet-action-tile"
+               onclick="closeQuickContactSheet()">
+                <div class="ox-sheet-tile-icon" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6;">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="ox-sheet-tile-content">
+                    <b>{{ $currentLocale === 'ar' ? 'اتصال هاتفي مباشر' : ($currentLocale === 'fr' ? 'Appel Direct' : 'Direct Phone Call') }}</b>
+                    <small dir="ltr">{{ $siteSettings['contact_phone_primary'] ?? '+20 10 08616682' }}</small>
+                </div>
+                <div class="ox-sheet-tile-arrow">{{ $currentLocale === 'ar' ? '←' : '→' }}</div>
+            </a>
+
+            <!-- 3. Book Free Consultation Modal -->
+            <button type="button" 
+                    class="ox-sheet-action-tile" 
+                    onclick="closeQuickContactSheet(); openConsultModal();" 
+                    style="width: 100%; text-align: right; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+                <div class="ox-sheet-tile-icon" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #ffffff;">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div class="ox-sheet-tile-content">
+                    <b style="color: #10B981;">{{ $currentLocale === 'ar' ? 'احجز استشارة تقنية مجانية' : ($currentLocale === 'fr' ? 'Réserver une Consultation' : 'Book Free Tech Consultation') }}</b>
+                    <small>{{ $currentLocale === 'ar' ? 'تحديد نطاق المشروع والحصول على دراسة مبدئية' : 'Define scope & get technical roadmap' }}</small>
+                </div>
+                <div class="ox-sheet-tile-arrow" style="color: #10B981;">{{ $currentLocale === 'ar' ? '←' : '→' }}</div>
+            </button>
+
+            <!-- 4. Email Official -->
+            <a href="mailto:{{ $siteSettings['contact_email_primary'] ?? 'contact@oxtech.uk' }}" 
+               class="ox-sheet-action-tile"
+               onclick="closeQuickContactSheet()">
+                <div class="ox-sheet-tile-icon" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B;">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                <div class="ox-sheet-tile-content">
+                    <b>{{ $currentLocale === 'ar' ? 'البريد الإلكتروني الرسمي' : ($currentLocale === 'fr' ? 'Email Officiel' : 'Official Email') }}</b>
+                    <small dir="ltr">{{ $siteSettings['contact_email_primary'] ?? 'contact@oxtech.uk' }}</small>
+                </div>
+                <div class="ox-sheet-tile-arrow">{{ $currentLocale === 'ar' ? '←' : '→' }}</div>
+            </a>
+        </div>
+
+        <div style="text-align: center; font-size: 11px; color: #64748b; padding-top: 4px;">
+            <span>{{ $currentLocale === 'ar' ? 'متاحون لخدمتكم على مدار 24 ساعة • الرياض • القاهرة • دبي' : '24/7 Enterprise Tech Support • Riyadh • Cairo • Dubai' }}</span>
+        </div>
     </div>
 
     @php
@@ -2709,8 +3246,7 @@
                     console.warn('Network issue during modal submission, submitting standard form:', err);
                     form.submit();
                 });
-            });
-            .catch(err => {
+            }).catch(err => {
                 console.warn('Network issue during modal submission, submitting standard form:', err);
                 form.submit();
             });
@@ -2747,14 +3283,143 @@
         }
         // Floating Language Widget Popover Handler
         function toggleFloatingLang(e) {
-            if (e) e.stopPropagation();
+            if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
             const w = document.getElementById('floatingLangWidget');
-            if (w) w.classList.toggle('open');
+            const btn = document.getElementById('floatingLangBtn');
+            if (w) {
+                const isOpen = w.classList.toggle('open');
+                if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            }
         }
         document.addEventListener('click', (e) => {
             const w = document.getElementById('floatingLangWidget');
-            if (w && !w.contains(e.target)) w.classList.remove('open');
+            if (w && !w.contains(e.target)) {
+                w.classList.remove('open');
+                const btn = document.getElementById('floatingLangBtn');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
         });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeQuickContactSheet();
+                const w = document.getElementById('floatingLangWidget');
+                if (w && w.classList.contains('open')) {
+                    w.classList.remove('open');
+                    const btn = document.getElementById('floatingLangBtn');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+
+        // ─── Quick Contact Bottom Sheet Handlers ───
+        function toggleQuickContactSheet() {
+            const sheet = document.getElementById('oxQuickContactSheet');
+            const backdrop = document.getElementById('oxContactSheetBackdrop');
+            if (!sheet) return;
+            const isOpen = sheet.classList.contains('active');
+            if (isOpen) {
+                closeQuickContactSheet();
+            } else {
+                sheet.classList.add('active');
+                backdrop?.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeQuickContactSheet() {
+            const sheet = document.getElementById('oxQuickContactSheet');
+            const backdrop = document.getElementById('oxContactSheetBackdrop');
+            if (sheet) sheet.classList.remove('active');
+            if (backdrop) backdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ─── Background Music Widget & Autoplay Controller ───
+        (function() {
+            const audio = document.getElementById('oxBgAudio');
+            const widget = document.getElementById('oxAudioWidget');
+            const playIcon = document.getElementById('oxAudioPlayIcon');
+            const muteIcon = document.getElementById('oxAudioMuteIcon');
+            const statusText = document.getElementById('oxAudioTrackStatus');
+            if (!audio || !widget) return;
+
+            const defaultVol = {{ $bgAudioVolume }};
+            const shouldAutoplay = {{ $bgAudioAutoplay ? 'true' : 'false' }};
+            audio.volume = defaultVol;
+
+            function updateAudioUI(isPlaying) {
+                widget.classList.toggle('playing', isPlaying);
+                if (playIcon) playIcon.textContent = isPlaying ? '❚❚' : '▶';
+                if (statusText) {
+                    statusText.textContent = isPlaying ? 
+                        "{{ $currentLocale === 'ar' ? 'يعمل الآن' : 'Playing' }}" : 
+                        "{{ $currentLocale === 'ar' ? 'موسيقى الخلفية' : 'Background Audio' }}";
+                }
+            }
+
+            window.toggleBgAudio = function() {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        updateAudioUI(true);
+                        sessionStorage.setItem('ox_bg_audio_user_action', 'play');
+                    }).catch(err => console.warn('Audio play error:', err));
+                } else {
+                    audio.pause();
+                    updateAudioUI(false);
+                    sessionStorage.setItem('ox_bg_audio_user_action', 'pause');
+                }
+            };
+
+            window.toggleBgAudioMute = function() {
+                audio.muted = !audio.muted;
+                if (muteIcon) muteIcon.textContent = audio.muted ? '🔇' : '🔊';
+            };
+
+            // Intelligent Autoplay on enter (with gesture fallback for strict browsers)
+            if (shouldAutoplay && sessionStorage.getItem('ox_bg_audio_user_action') !== 'pause') {
+                const tryPlay = function() {
+                    const promise = audio.play();
+                    if (promise !== undefined) {
+                        promise.then(() => {
+                            updateAudioUI(true);
+                            removeGestureListeners();
+                        }).catch(() => {
+                            // Autoplay was blocked before user gesture; wait for first touch/click/scroll!
+                            updateAudioUI(false);
+                        });
+                    }
+                };
+
+                const onFirstGesture = function() {
+                    if (sessionStorage.getItem('ox_bg_audio_user_action') !== 'pause') {
+                        tryPlay();
+                    }
+                };
+
+                const removeGestureListeners = function() {
+                    ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
+                        window.removeEventListener(evt, onFirstGesture, { passive: true });
+                    });
+                };
+
+                ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
+                    window.addEventListener(evt, onFirstGesture, { once: true, passive: true });
+                });
+
+                // Immediate attempt on DOM load
+                if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                    tryPlay();
+                } else {
+                    window.addEventListener('DOMContentLoaded', tryPlay, { once: true });
+                }
+            }
+
+            audio.addEventListener('play', () => updateAudioUI(true));
+            audio.addEventListener('pause', () => updateAudioUI(false));
+            audio.addEventListener('ended', () => {
+                if (!audio.loop) updateAudioUI(false);
+            });
+        })();
 
         // Mobile Drawer Handlers
         function toggleMobileNav() {

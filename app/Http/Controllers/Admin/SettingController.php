@@ -23,16 +23,17 @@ class SettingController extends Controller
     {
         $data = $request->except(['_token', '_method', 'active_tab']);
 
-        // Handle File Uploads (Logos, Favicon, etc.)
-        $fileKeys = ['site_logo_main', 'site_logo_dark', 'site_logo_footer', 'site_favicon', 'seo_og_image'];
+        // Handle File Uploads (Logos, Favicon, Audio, etc.)
+        $fileKeys = ['site_logo_main', 'site_logo_dark', 'site_logo_footer', 'site_favicon', 'seo_og_image', 'bg_audio_file'];
         foreach ($fileKeys as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $file = $request->file($fileKey);
-                $path = $file->store('uploads/branding', 'public');
+                $folder = ($fileKey === 'bg_audio_file') ? 'uploads/audio' : 'uploads/branding';
+                $path = $file->store($folder, 'public');
 
                 // Fail-safe: Ensure directory and file are mirrored directly into public/storage
                 try {
-                    $publicUploadsDir = public_path('storage/uploads/branding');
+                    $publicUploadsDir = public_path('storage/'.$folder);
                     if (! file_exists($publicUploadsDir)) {
                         @mkdir($publicUploadsDir, 0755, true);
                     }
@@ -45,9 +46,16 @@ class SettingController extends Controller
                     // Ignore if environment filesystem is read-only or already symlinked
                 }
 
-                SiteSetting::set($fileKey, '/storage/'.$path, 'branding', 'file');
+                $group = ($fileKey === 'bg_audio_file') ? 'audio' : 'branding';
+                SiteSetting::set($fileKey, '/storage/'.$path, $group, 'file');
                 unset($data[$fileKey]);
             }
+        }
+
+        // Handle File Deletion if requested
+        if ($request->boolean('delete_bg_audio_file')) {
+            SiteSetting::set('bg_audio_file', '', 'audio', 'file');
+            unset($data['delete_bg_audio_file']);
         }
 
         // Determine group by tab or key
@@ -71,6 +79,8 @@ class SettingController extends Controller
                 $group = 'paypal';
             } elseif (str_starts_with($key, 'recaptcha_')) {
                 $group = 'recaptcha';
+            } elseif (str_starts_with($key, 'bg_audio_') || str_starts_with($key, 'audio_')) {
+                $group = 'audio';
             }
 
             SiteSetting::set($key, is_array($value) ? json_encode($value) : $value, $group);

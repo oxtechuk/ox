@@ -228,13 +228,14 @@ footer:not(.ox-premium-footer):not(.ox-modern-footer) small{grid-column:span 2}
 }
 
 .video-stage {
-    height: 460px;
-    max-width: 1100px;
-    margin: 40px auto 10px;
+    height: 620px;
+    min-height: 590px;
+    max-width: 1180px;
+    margin: 36px auto 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 28px;
     perspective: 1200px;
     direction: ltr;
     position: relative;
@@ -249,9 +250,10 @@ footer:not(.ox-premium-footer):not(.ox-modern-footer) small{grid-column:span 2}
     overflow: hidden;
     cursor: pointer;
     background: linear-gradient(155deg, #0e352e 0%, #09241f 60%, #051815 100%);
-    width: 280px;
-    height: 390px;
-    border-radius: 24px;
+    width: 310px;
+    height: 550px;
+    aspect-ratio: 9 / 16;
+    border-radius: 28px;
     box-shadow: 0 30px 65px rgba(0, 0, 0, 0.70);
     transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .6s ease, box-shadow .6s ease;
     padding: 0;
@@ -606,14 +608,15 @@ blockquote {
     }
 
     .video-stage {
-        height: 320px;
-        gap: 8px
+        height: 520px;
+        min-height: 490px;
+        gap: 12px
     }
 
     .video-card {
-        width: 200px;
-        height: 290px;
-        border-radius: 16px
+        width: 250px;
+        height: 444px;
+        border-radius: 22px
     }
 
     .video-card.previous {

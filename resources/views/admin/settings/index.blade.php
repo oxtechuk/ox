@@ -175,6 +175,10 @@
             <span>🛡️</span>
             <span>حماية reCAPTCHA</span>
         </a>
+        <a href="{{ route('admin.settings.index', ['tab' => 'audio']) }}" class="settings-nav-item {{ $activeTab === 'audio' ? 'active' : '' }}">
+            <span>🎵</span>
+            <span>الموسيقى والوسائط</span>
+        </a>
     </div>
 
     <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
@@ -659,6 +663,112 @@
                         <label class="form-label">حالة الحماية الحالية</label>
                         <div style="padding: 11px 16px; border-radius: 8px; background: {{ !empty($settings['recaptcha_site_key'] ?? config('services.recaptcha.site_key')) ? '#ECFDF5; border: 1px solid #A7F3D0; color: #065F46;' : '#FFFBEB; border: 1px solid #FDE68A; color: #92400E;' }}; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px;">
                             <span>{{ !empty($settings['recaptcha_site_key'] ?? config('services.recaptcha.site_key')) ? '✅ مفعلة ومربوطة بـ Google reCAPTCHA' : '⚠️ غير مفعلة حالياً (يرجى إدخال المفاتيح لتفعيل الفحص التلقائي)' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif($activeTab === 'audio')
+            <!-- Background Music & Media Widget Settings -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">إعدادات ودجت الموسيقى والصوت في الموقع</h3>
+                </div>
+
+                <div class="callout callout-info" style="margin-bottom: 24px; padding: 14px 18px; border-radius: 8px;">
+                    <div style="font-weight: 700; margin-bottom: 4px;">🎵 ودجت الموسيقى التفاعلية وخلفية الصوت</div>
+                    <div style="font-size: 13px; line-height: 1.6;">
+                        يظهر هذا الودجت في الموقع لتقديم تجربة صوتية فخمة لزوار الموقع مع مؤثرات صوتية ناعمة. يمكنك رفع ملف صوتي خاص بك (MP3 أو WAV أو M4A) أو وضع رابط صوتي خارجي مباشر، مع إمكانية التحكم الكامل في التشغيل التلقائي ودرجة الصوت الافتراضية.
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">حالة ودجت الموسيقى في الموقع</label>
+                        <select name="bg_audio_enabled" class="form-control">
+                            <option value="1" {{ ($settings['bg_audio_enabled'] ?? '1') === '1' ? 'selected' : '' }}>✅ مفعل (يظهر في الموقع للزوار)</option>
+                            <option value="0" {{ ($settings['bg_audio_enabled'] ?? '1') === '0' ? 'selected' : '' }}>❌ معطل (مخفي)</option>
+                        </select>
+                        <span class="form-hint">يمكنك تعطيل ظهور ودجت الموسيقى والصوت تماماً في أي وقت.</span>
+                    </div>
+
+                    <div>
+                        <label class="form-label">اسم المقطع الصوتي (Track Display Title)</label>
+                        <input type="text" name="bg_audio_title" class="form-control" value="{{ $settings['bg_audio_title'] ?? 'OX Tech Ambient Experience' }}" placeholder="مثال: OX Tech Ambient Experience">
+                        <span class="form-hint">الاسم الذي يظهر للزائر في شريط مشغل الموسيقى عند التشغيل.</span>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">رفع ملف صوتي جديد (Upload MP3 / Audio File)</label>
+                        <input type="file" name="bg_audio_file" class="form-control" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.webm">
+                        <span class="form-hint">الملفات المدعومة: MP3, WAV, M4A, OGG, AAC (بحد أقصى 30MB).</span>
+                        
+                        @if(!empty($settings['bg_audio_file']))
+                            <div style="margin-top: 10px; background: #f8fafc; border: 1px solid var(--border-card); padding: 12px; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-weight: 700; font-size: 12.5px; color: #071B19;">🎧 الملف المرفوع حالياً:</span>
+                                    <label style="font-size: 12px; color: #DC2626; display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                                        <input type="checkbox" name="delete_bg_audio_file" value="1">
+                                        <span>حذف هذا الملف الصوتي</span>
+                                    </label>
+                                </div>
+                                <audio controls style="width: 100%; height: 36px;" src="{{ asset(ltrim($settings['bg_audio_file'], '/')) }}"></audio>
+                                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: monospace;">{{ $settings['bg_audio_file'] }}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div>
+                        <label class="form-label">أو رابط صوتي مباشر بديل (Direct External Audio URL)</label>
+                        <input type="url" name="bg_audio_url" class="form-control" value="{{ $settings['bg_audio_url'] ?? '' }}" placeholder="https://example.com/soundtrack.mp3" style="direction: ltr; font-family: monospace;">
+                        <span class="form-hint">إذا تم ترك رفع الملف فارغاً، سيتم استخدام هذا الرابط المباشر. إذا تُرك الاثنان فارغين، سيتم استخدام مقطع تقني افتراضي هادئ.</span>
+                        @if(empty($settings['bg_audio_file']) && !empty($settings['bg_audio_url']))
+                            <div style="margin-top: 10px; background: #f8fafc; border: 1px solid var(--border-card); padding: 10px; border-radius: 8px;">
+                                <audio controls style="width: 100%; height: 36px;" src="{{ $settings['bg_audio_url'] }}"></audio>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-bottom: 20px;">
+                    <div>
+                        <label class="form-label">التشغيل التلقائي عند دخول الموقع (Autoplay on Enter)</label>
+                        <select name="bg_audio_autoplay" class="form-control">
+                            <option value="1" {{ ($settings['bg_audio_autoplay'] ?? '1') === '1' ? 'selected' : '' }}>✅ تشغيل تلقائي فور الدخول (أو عند أول تفاعل/تمرير حسب سياسة المتصفح)</option>
+                            <option value="0" {{ ($settings['bg_audio_autoplay'] ?? '1') === '0' ? 'selected' : '' }}>⏸ انتظار نقر الزائر على زر التشغيل</option>
+                        </select>
+                        <span class="form-hint">المتصفحات الحديثة تسمح بالتشغيل التلقائي مباشرة أو بمجرد لمس الشاشة/التمرير.</span>
+                    </div>
+
+                    <div>
+                        <label class="form-label">تكرار المقطع باستمرار (Loop Playback)</label>
+                        <select name="bg_audio_loop" class="form-control">
+                            <option value="1" {{ ($settings['bg_audio_loop'] ?? '1') === '1' ? 'selected' : '' }}>🔄 تكرار مستمر تلقائياً (Loop)</option>
+                            <option value="0" {{ ($settings['bg_audio_loop'] ?? '1') === '0' ? 'selected' : '' }}>⏹ يتوقف بعد انتهاء المقطع</option>
+                        </select>
+                        <span class="form-hint">استمرار عزف المقطع الهادئ في الخلفية طوال تصفح الزائر.</span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div>
+                        <label class="form-label">مستوى الصوت الافتراضي (Default Volume)</label>
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <input type="range" name="bg_audio_volume" min="0.05" max="1.0" step="0.05" value="{{ $settings['bg_audio_volume'] ?? '0.35' }}" class="form-control" style="padding: 0; cursor: pointer;" oninput="document.getElementById('volValueDisplay').textContent = Math.round(this.value * 100) + '%'">
+                            <span id="volValueDisplay" style="font-weight: 800; font-family: monospace; font-size: 15px; color: #10B981; min-width: 45px;">{{ round(((float)($settings['bg_audio_volume'] ?? 0.35)) * 100) }}%</span>
+                        </div>
+                        <span class="form-hint">يُنصح بضبط الصوت بنسبة هادئة (25% - 40%) لضمان تجربة تصفح راقية دون إزعاج.</span>
+                    </div>
+
+                    <div>
+                        <label class="form-label">معاينة الصوت الحالي</label>
+                        @php
+                            $previewSrc = !empty($settings['bg_audio_file']) ? asset(ltrim($settings['bg_audio_file'], '/')) : (!empty($settings['bg_audio_url']) ? $settings['bg_audio_url'] : 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3');
+                        @endphp
+                        <div style="padding: 10px 14px; background: #f8fafc; border: 1px solid #E2E8F0; border-radius: 8px;">
+                            <audio controls style="width: 100%; height: 32px;" src="{{ $previewSrc }}"></audio>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">{{ !empty($settings['bg_audio_file']) ? 'ملف مرفوع محلياً' : (!empty($settings['bg_audio_url']) ? 'رابط صوت خارجي' : 'المقطع الافتراضي للمنصة') }}</div>
                         </div>
                     </div>
                 </div>

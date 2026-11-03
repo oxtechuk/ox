@@ -28,6 +28,10 @@ class UpdateSettingRequest extends FormRequest
             'site_logo_footer' => 'nullable|image|mimes:jpeg,png,webp,svg,gif|max:5120',
             'site_favicon' => 'nullable|mimes:ico,png,svg,webp|max:2048',
             'seo_og_image' => 'nullable|image|mimes:jpeg,png,webp,gif|max:5120',
+            'bg_audio_file' => 'nullable|file|mimes:mp3,wav,ogg,m4a,aac,webm,mp4|max:30720',
+            'bg_audio_url' => 'nullable|string|max:500',
+            'bg_audio_title' => 'nullable|string|max:150',
+            'bg_audio_volume' => 'nullable|numeric|min:0|max:1',
             'active_tab' => 'nullable|string|max:50',
         ];
     }

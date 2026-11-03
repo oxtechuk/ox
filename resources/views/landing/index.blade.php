@@ -916,7 +916,6 @@
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
-                        <span class="ox-service-card-tag">Web & SaaS</span>
                         <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'تطوير الويب والسحاب' : ($locale === 'fr' ? 'Web & Plateformes SaaS' : 'Web & SaaS Platforms') }}</h3>
                     </div>
 
@@ -939,7 +938,6 @@
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
-                        <span class="ox-service-card-tag">iOS & Android</span>
                         <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'تطبيقات الجوال الذكية' : ($locale === 'fr' ? 'Applications Mobiles' : 'Mobile Applications') }}</h3>
                     </div>
 
@@ -962,7 +960,6 @@
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
-                        <span class="ox-service-card-tag">E-Commerce</span>
                         <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'المتاجر والتجارة الرقمية' : ($locale === 'fr' ? 'E-Commerce & Boutiques' : 'Digital E-Commerce') }}</h3>
                     </div>
 
@@ -985,7 +982,6 @@
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
-                        <span class="ox-service-card-tag">ERP & Desktop</span>
                         <h3 class="ox-service-card-title">{{ $locale === 'ar' ? 'أنظمة أودو والمؤسسات' : ($locale === 'fr' ? 'Systèmes Odoo & ERP' : 'Enterprise & Odoo ERP') }}</h3>
                     </div>
 
@@ -1152,30 +1148,47 @@
                                 </div>
                             </div>
 
-                            <!-- Active Inline Video Frame Layer -->
+                            <!-- Active Inline Video Frame Layer (9:16 Vertical Reels Player) -->
                             <div class="card-video-frame" id="card-video-frame-{{ $tIndex }}">
                                 <div class="frame-overlay-controls">
-                                    <button type="button" class="frame-btn" title="إغلاق والعودة" 
+                                    <button type="button" class="frame-btn frame-close-btn" title="{{ $locale === 'ar' ? 'إغلاق والعودة' : 'Close Video' }}" 
                                             onclick="event.stopPropagation(); closeCardVideo({{ $tIndex }})">
                                         ✕
                                     </button>
-                                    <button type="button" class="frame-btn" title="تكبير ملء الشاشة" 
-                                            onclick="event.stopPropagation(); triggerCardFullscreen({{ $tIndex }})">
-                                        ⛶
-                                    </button>
+                                    <div class="frame-btn-group">
+                                        <button type="button" class="frame-btn sound-btn" id="sound-btn-{{ $tIndex }}" title="{{ $locale === 'ar' ? 'تشغيل / كتم الصوت' : 'Mute / Unmute' }}" 
+                                                onclick="event.stopPropagation(); toggleCardAudio({{ $tIndex }})">
+                                            <span id="sound-icon-{{ $tIndex }}">🔇</span>
+                                        </button>
+                                        <button type="button" class="frame-btn frame-fs-btn" title="{{ $locale === 'ar' ? 'تكبير ملء الشاشة' : 'Fullscreen' }}" 
+                                                onclick="event.stopPropagation(); triggerCardFullscreen({{ $tIndex }})">
+                                            ⛶
+                                        </button>
+                                    </div>
                                 </div>
                                 @if($t->video_src)
                                     <video id="native-video-{{ $tIndex }}" 
                                            playsinline 
-                                           controls 
-                                           preload="none" 
+                                           webkit-playsinline
+                                           loop
+                                           muted
+                                           preload="{{ $tIndex === 0 ? 'auto' : 'metadata' }}" 
                                            data-src="{{ $t->video_src }}" 
                                            style="width:100%; height:100%; object-fit:cover;"></video>
                                 @else
                                     <div style="display:grid; place-items:center; height:100%; color:#1D8A68; padding:20px; text-align:center;">
-                                        <span>جاري تجهيز فيديو التجربة...</span>
+                                        <span>{{ $locale === 'ar' ? 'جاري تجهيز فيديو التجربة...' : 'Video is being prepared...' }}</span>
                                     </div>
                                 @endif
+                                <div class="frame-bottom-overlay">
+                                    <div class="frame-partner-badge">
+                                        <b>{{ $t->partner_name }}</b>
+                                        <small>{{ $t->partner_role }}</small>
+                                    </div>
+                                    <div class="frame-progress-track">
+                                        <div class="frame-progress-bar" id="frame-progress-{{ $tIndex }}"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -1548,45 +1561,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Row 3: Project Type & Estimated Budget -->
-                                <div class="ox-consult-row">
-                                    <div class="ox-consult-field-wrap">
-                                        <div class="ox-consult-select-wrap">
-                                            <select name="project_type" id="inline_project_type" class="ox-consult-select" aria-label="{{ $locale === 'ar' ? 'نوع المشروع' : ($locale === 'fr' ? 'Type de Projet' : 'Project Type') }}" required>
-                                                <option value="" disabled selected hidden>{{ $locale === 'ar' ? 'نوع المشروع' : ($locale === 'fr' ? 'Type de Projet' : 'Project Type') }}</option>
-                                                <option value="تطبيقات جوال (iOS & Android)">{{ $locale === 'ar' ? 'تطبيق جوال iOS / Android' : 'Mobile App (iOS / Android)' }}</option>
-                                                <option value="منصات ومواقع ويب">{{ $locale === 'ar' ? 'منصات ومواقع ويب' : 'Web & Platforms' }}</option>
-                                                <option value="متجر إلكتروني متكامل">{{ $locale === 'ar' ? 'متجر إلكتروني متكامل' : 'E-Commerce Store' }}</option>
-                                                <option value="أنظمة SaaS وسحابية">{{ $locale === 'ar' ? 'أنظمة SaaS وسحابية' : 'Cloud / SaaS Solutions' }}</option>
-                                                <option value="حلول الذكاء الاصطناعي والأتمتة">{{ $locale === 'ar' ? 'حلول الذكاء الاصطناعي والأتمتة' : 'AI & Automation Solutions' }}</option>
-                                                <option value="استشارة وتخطيط تقني">{{ $locale === 'ar' ? 'استشارة وتخطيط تقني' : 'Technical Consultation' }}</option>
-                                            </select>
-                                            <span class="ox-consult-select-chevron">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M6 9l6 6 6-6"/>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="ox-consult-field-wrap">
-                                        <div class="ox-consult-select-wrap">
-                                            <select name="budget" id="inline_budget" class="ox-consult-select" aria-label="{{ $locale === 'ar' ? 'الميزانية التقديرية' : ($locale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}" required>
-                                                <option value="" disabled selected hidden>{{ $locale === 'ar' ? 'الميزانية التقديرية' : ($locale === 'fr' ? 'Budget Estimé' : 'Estimated Budget') }}</option>
-                                                <option value="$800 - $1,500">$800 - $1,500</option>
-                                                <option value="$1,500 - $3,000">$1,500 - $3,000</option>
-                                                <option value="$3,000 - $5,000">$3,000 - $5,000</option>
-                                                <option value="$5,000 - $10,000">$5,000 - $10,000</option>
-                                                <option value="أكثر من $10,000">{{ $locale === 'ar' ? 'أكثر من $10,000' : ($locale === 'fr' ? 'Plus de 10,000 $' : '> $10,000') }}</option>
-                                            </select>
-                                            <span class="ox-consult-select-chevron">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M6 9l6 6 6-6"/>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <!-- Message Textarea -->
                                 <div class="ox-consult-field-wrap" style="margin-bottom: 12px;">
                                     <textarea name="message" class="ox-consult-textarea" rows="3" placeholder="{{ $locale === 'ar' ? 'رسالتك لنا' : ($locale === 'fr' ? 'Votre message' : 'Your Message') }}" minlength="10" maxlength="1000" required></textarea>
@@ -1922,6 +1896,264 @@
         color: #8fa099;
         font-size: 12.5px;
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       Partner Stories 9:16 Vertical Reels Cards & Modern Player
+       ═══════════════════════════════════════════════════════════════ */
+    .testimonials .video-stage {
+        min-height: 590px;
+        height: 620px;
+        max-width: 1180px;
+        margin: 36px auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        perspective: 1200px;
+        direction: ltr;
+        position: relative;
+        z-index: 3;
+    }
+
+    .testimonials .video-card {
+        border: 1px solid rgba(29, 138, 104, 0.35);
+        color: #fff;
+        position: relative;
+        text-align: right;
+        overflow: hidden;
+        cursor: pointer;
+        background: linear-gradient(155deg, #071b19 0%, #051513 60%, #030d0c 100%);
+        width: 310px;
+        height: 550px;
+        aspect-ratio: 9 / 16;
+        border-radius: 28px;
+        box-shadow: 0 25px 65px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 0, 0, 0.5);
+        transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .6s ease, box-shadow .6s ease, border-color .4s ease;
+        padding: 0;
+        outline: none;
+        user-select: none;
+        flex-shrink: 0;
+    }
+
+    .testimonials .video-card:hover {
+        border-color: rgba(0, 229, 155, 0.6);
+        box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 229, 155, 0.25);
+    }
+
+    .testimonials .video-card.active-video {
+        z-index: 5;
+        transform: scale(1.08) translateZ(35px);
+        border-color: #00e59b;
+        box-shadow: 0 35px 85px rgba(0, 0, 0, 0.9), 0 0 45px rgba(0, 229, 155, 0.4);
+    }
+
+    .testimonials .video-card.side-video {
+        opacity: 0.65;
+        z-index: 2;
+    }
+
+    .testimonials .video-card.side-video:hover {
+        opacity: 0.92;
+    }
+
+    .testimonials .video-card.previous {
+        transform: rotateY(34deg) scale(0.85) translateZ(-40px);
+    }
+
+    .testimonials .video-card.next {
+        transform: rotateY(-34deg) scale(0.85) translateZ(-40px);
+    }
+
+    /* Video Frame (Reels Viewport Inside Card) */
+    .testimonials .card-video-frame {
+        position: absolute;
+        inset: 0;
+        background: #000;
+        z-index: 3;
+        display: none;
+        border-radius: 28px;
+        overflow: hidden;
+    }
+
+    .testimonials .card-video-frame.playing {
+        display: block;
+    }
+
+    .testimonials .card-video-frame video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 28px;
+        display: block;
+        background: #000;
+    }
+
+    /* Reels Top Controls Overlay */
+    .testimonials .frame-overlay-controls {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        right: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .testimonials .frame-overlay-controls .frame-btn-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        pointer-events: auto;
+    }
+
+    .testimonials .frame-btn {
+        pointer-events: auto;
+        background: rgba(6, 20, 18, 0.78);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #F3EFE5;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .testimonials .frame-btn:hover {
+        background: #1D8A68;
+        color: #071B19;
+        border-color: #00E59B;
+        transform: scale(1.08);
+    }
+
+    .testimonials .frame-btn.sound-btn {
+        background: rgba(0, 229, 155, 0.2);
+        border-color: rgba(0, 229, 155, 0.5);
+        color: #00e59b;
+        font-size: 14px;
+    }
+
+    .testimonials .frame-btn.sound-btn.sound-unmuted {
+        background: #00e59b;
+        border-color: #00e59b;
+        color: #071b19;
+    }
+
+    /* Reels Bottom Information & Progress Track */
+    .testimonials .frame-bottom-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 36px 16px 14px;
+        background: linear-gradient(180deg, transparent 0%, rgba(3, 13, 12, 0.85) 55%, rgba(3, 13, 12, 0.98) 100%);
+        z-index: 10;
+        pointer-events: none;
+        direction: rtl;
+        text-align: right;
+    }
+
+    .testimonials .frame-partner-badge {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-bottom: 8px;
+    }
+
+    .testimonials .frame-partner-badge b {
+        font-family: var(--font-ar);
+        font-size: 14px;
+        color: #ffffff;
+        font-weight: 700;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    .testimonials .frame-partner-badge small {
+        font-family: var(--font-ar);
+        font-size: 11px;
+        color: var(--ox-gold, #C8A96B);
+        text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    }
+
+    .testimonials .frame-progress-track {
+        width: 100%;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 99px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .testimonials .frame-progress-bar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 0%;
+        background: #00e59b;
+        box-shadow: 0 0 10px #00e59b;
+        transition: width 0.1s linear;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+        .testimonials .video-stage {
+            height: 560px;
+            min-height: 540px;
+            gap: 18px;
+        }
+        .testimonials .video-card {
+            width: 270px;
+            height: 480px;
+            border-radius: 24px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .testimonials .video-stage {
+            height: 510px;
+            min-height: 490px;
+            gap: 12px;
+        }
+        .testimonials .video-card {
+            width: 245px;
+            height: 435px;
+            border-radius: 22px;
+        }
+        .testimonials .video-card.previous {
+            transform: rotateY(28deg) scale(0.82) translateZ(-30px);
+        }
+        .testimonials .video-card.next {
+            transform: rotateY(-28deg) scale(0.82) translateZ(-30px);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .testimonials .video-stage {
+            height: 460px;
+            min-height: 440px;
+            gap: 8px;
+        }
+        .testimonials .video-card {
+            width: 220px;
+            height: 390px;
+            border-radius: 20px;
+        }
+        .testimonials .video-card.previous {
+            transform: rotateY(22deg) scale(0.78) translateZ(-20px);
+        }
+        .testimonials .video-card.next {
+            transform: rotateY(-22deg) scale(0.78) translateZ(-20px);
+        }
+    }
 </style>
 <noscript>
     <style>
@@ -2164,7 +2396,7 @@
     // Initial filter execution to apply default all countries filter
     applyPortfolioFilters();
 
-    // 4. Partner Stories Video Stage Controller
+    // 4. Partner Stories Video Stage Controller (9:16 Vertical Reels with Autoplay on Scroll)
     const storiesData = {!! $storiesJson ?? '[]' !!};
     let currentStory = 0;
     const videoCards = [...document.querySelectorAll('.video-card')];
@@ -2175,13 +2407,77 @@
             if (vid.duration) {
                 const pct = (vid.currentTime / vid.duration) * 100;
                 const fill = document.getElementById(`timeline-fill-${idx}`);
+                const frameProgress = document.getElementById(`frame-progress-${idx}`);
                 if (fill) fill.style.width = `${pct}%`;
+                if (frameProgress) frameProgress.style.width = `${pct}%`;
             }
         });
         vid.addEventListener('ended', () => {
-            closeCardVideo(idx);
+            if (vid.loop) {
+                vid.currentTime = 0;
+                vid.play();
+            } else {
+                closeCardVideo(idx);
+            }
         });
     });
+
+    let isStoriesInView = false;
+    let isUserAudioEnabled = false;
+
+    window.updateSoundButtonIcon = function(index, isMuted) {
+        const iconSpan = document.getElementById(`sound-icon-${index}`);
+        const btn = document.getElementById(`sound-btn-${index}`);
+        if (iconSpan) {
+            iconSpan.textContent = isMuted ? '🔇' : '🔊';
+        }
+        if (btn) {
+            btn.title = isMuted ? 'تشغيل الصوت' : 'كتم الصوت';
+            btn.setAttribute('aria-label', isMuted ? 'تشغيل الصوت' : 'كتم الصوت');
+            btn.classList.toggle('sound-unmuted', !isMuted);
+        }
+    };
+
+    window.toggleCardAudio = function(index) {
+        const vid = document.getElementById(`native-video-${index}`);
+        if (!vid) return;
+        vid.muted = !vid.muted;
+        isUserAudioEnabled = !vid.muted;
+        updateSoundButtonIcon(index, vid.muted);
+    };
+
+    window.playActiveStoryVideo = function(forceMuted = false) {
+        const index = currentStory;
+        const frame = document.getElementById(`card-video-frame-${index}`);
+        const vid = document.getElementById(`native-video-${index}`);
+        if (!frame || !vid) return;
+
+        if (!vid.src && vid.dataset.src) {
+            vid.src = vid.dataset.src;
+            vid.load();
+        }
+
+        vid.loop = true;
+
+        if (forceMuted || !isUserAudioEnabled) {
+            vid.muted = true;
+        } else {
+            vid.muted = false;
+        }
+        updateSoundButtonIcon(index, vid.muted);
+
+        frame.classList.add('playing');
+
+        const playPromise = vid.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(err => {
+                console.log('Autoplay unmuted blocked, falling back to muted autoplay:', err);
+                vid.muted = true;
+                updateSoundButtonIcon(index, true);
+                vid.play().catch(e => console.warn('Video play retry failed:', e));
+            });
+        }
+    };
 
     window.showStory = function(n) {
         if (!storiesData || storiesData.length === 0) return;
@@ -2208,11 +2504,32 @@
             }
             card.className = `video-card ${cls}`;
         });
+
+        // Automatically start the new center video if stories section is currently in view
+        if (isStoriesInView) {
+            playActiveStoryVideo(!isUserAudioEnabled);
+        }
     };
 
     window.handleCardStageClick = function(index) {
         if (currentStory === index) {
-            startCardVideo(index);
+            const frame = document.getElementById(`card-video-frame-${index}`);
+            const vid = document.getElementById(`native-video-${index}`);
+            if (frame && frame.classList.contains('playing') && vid) {
+                if (vid.paused) {
+                    vid.play();
+                } else {
+                    if (vid.muted) {
+                        vid.muted = false;
+                        isUserAudioEnabled = true;
+                        updateSoundButtonIcon(index, false);
+                    } else {
+                        vid.pause();
+                    }
+                }
+            } else {
+                startCardVideo(index);
+            }
         } else {
             showStory(index);
         }
@@ -2221,24 +2538,8 @@
     window.startCardVideo = function(index) {
         if (currentStory !== index) {
             showStory(index);
-        }
-        const frame = document.getElementById(`card-video-frame-${index}`);
-        const vid = document.getElementById(`native-video-${index}`);
-        if (frame && vid) {
-            if (!vid.src && vid.dataset.src) {
-                vid.src = vid.dataset.src;
-                vid.load();
-            }
-            frame.classList.add('playing');
-            vid.currentTime = 0;
-            const playPromise = vid.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(e => {
-                    console.log('Audio autoplay prevented, retrying muted:', e);
-                    vid.muted = true;
-                    vid.play().catch(err => console.error('Video error:', err));
-                });
-            }
+        } else {
+            playActiveStoryVideo(false);
         }
     };
 
@@ -2282,6 +2583,55 @@
     const nextStoryBtn = document.querySelector('#story-next');
     if (prevStoryBtn) prevStoryBtn.onclick = () => showStory(currentStory - 1);
     if (nextStoryBtn) nextStoryBtn.onclick = () => showStory(currentStory + 1);
+
+    // Autoplay center video automatically on scroll into view
+    const storiesSection = document.getElementById('stories');
+    if (storiesSection && 'IntersectionObserver' in window) {
+        const storiesObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+                    isStoriesInView = true;
+                    playActiveStoryVideo(true); // muted: true ensures browser allows immediate autoplay
+                } else if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
+                    isStoriesInView = false;
+                    pauseAllCardVideos();
+                }
+            });
+        }, {
+            threshold: [0.1, 0.25, 0.5]
+        });
+        storiesObserver.observe(storiesSection);
+    }
+
+    // Preload center video so it starts instantly on scroll
+    const firstActiveVid = document.getElementById(`native-video-${currentStory}`);
+    if (firstActiveVid && firstActiveVid.dataset.src && !firstActiveVid.src) {
+        firstActiveVid.src = firstActiveVid.dataset.src;
+        firstActiveVid.load();
+    }
+
+    // Mobile Touch Swipe for Reels Stage
+    const stageEl = document.querySelector('.video-stage');
+    if (stageEl) {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        stageEl.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        stageEl.addEventListener('touchend', (e) => {
+            const diffX = e.changedTouches[0].screenX - touchStartX;
+            const diffY = e.changedTouches[0].screenY - touchStartY;
+            if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX < 0) {
+                    showStory(currentStory + 1);
+                } else {
+                    showStory(currentStory - 1);
+                }
+            }
+        }, { passive: true });
+    }
 
     // 5. Interactive Pills for Consultation Form
     document.querySelectorAll('#projectTypePills .pill-btn').forEach(btn => {

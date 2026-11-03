@@ -1,191 +1,242 @@
 @extends('layouts.app')
 
 @section('title', 'استرجاع الحساب والدخول السريع | ' . config('app.name', 'Ox Tech'))
+@section('meta_description', 'استرجع كلمة المرور أو اطلب رابط دخول مباشر لحساب عميل Ox Tech وتراخيص البرمجيات.')
 
 @section('content')
 <style>
-body {
-    background-color: #f8fafc !important;
-}
+/* ═══════════════════════════════════════════════════════════════════
+   OX TECH LUXURY CYBER-EMERALD FORGOT PASSWORD
+   ═══════════════════════════════════════════════════════════════════ */
 
-.auth-page-wrapper {
-    background-color: #f8fafc;
+.ox-auth-page {
+    background-color: #030d0c;
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(29, 138, 104, 0.22) 0%, transparent 60%),
+        radial-gradient(circle at 10% 35%, rgba(200, 169, 107, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 90% 70%, rgba(0, 229, 155, 0.07) 0%, transparent 50%);
     min-height: calc(100vh - 80px);
-    padding: 130px 16px 80px;
-    font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+    padding: 130px 16px 90px;
+    font-family: var(--font-ar, 'Cairo', system-ui, -apple-system, sans-serif);
     direction: rtl;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.auth-card-box {
+.ox-auth-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.ox-auth-card {
+    position: relative;
+    z-index: 2;
     width: 100%;
-    max-width: 410px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 36px 32px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.03), 0 20px 25px -5px rgba(0, 0, 0, 0.03);
+    max-width: 440px;
+    background: rgba(7, 27, 25, 0.82);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(29, 138, 104, 0.45);
+    border-radius: 26px;
+    padding: 40px 32px 34px;
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.65), 0 0 35px rgba(0, 229, 155, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.auth-header {
+.ox-auth-header {
     text-align: center;
     margin-bottom: 26px;
 }
 
-.auth-header-badge {
-    width: 44px;
-    height: 44px;
+.ox-auth-badge {
+    width: 54px;
+    height: 54px;
     margin: 0 auto 14px;
-    border-radius: 12px;
-    background: #f0fdf9;
-    border: 1px solid #ccfbf1;
-    color: #0b6153;
+    border-radius: 16px;
+    background: rgba(29, 138, 104, 0.22);
+    border: 1px solid rgba(0, 229, 155, 0.45);
+    color: #00e59b;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 20px;
+    box-shadow: 0 0 25px rgba(0, 229, 155, 0.25);
 }
 
-.auth-title {
-    font-size: 21px;
-    font-weight: 700;
-    color: #0f172a;
+.ox-auth-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
     margin: 0 0 6px;
     letter-spacing: -0.3px;
 }
 
-.auth-subtitle {
+.ox-auth-subtitle {
     font-size: 13px;
-    color: #64748b;
+    color: #94a8a2;
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-.auth-alert-success {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #166534;
-    padding: 12px 14px;
-    border-radius: 10px;
+.ox-auth-alert-success {
+    background: rgba(22, 101, 52, 0.22);
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    color: #bbf7d0;
+    padding: 12px 16px;
+    border-radius: 12px;
     font-size: 13px;
     font-weight: 600;
-    margin-bottom: 20px;
-    line-height: 1.5;
-}
-
-.auth-alert-error {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    line-height: 1.5;
 }
 
-.auth-form-group {
-    margin-bottom: 20px;
+.ox-auth-alert-error {
+    background: rgba(153, 27, 27, 0.22);
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    color: #fecaca;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.auth-label {
+.ox-form-group {
+    margin-bottom: 22px;
+}
+
+.ox-form-label {
     display: block;
     font-size: 13px;
     font-weight: 600;
-    color: #334155;
-    margin-bottom: 6px;
+    color: #e2e8f0;
+    margin-bottom: 8px;
 }
 
-.auth-input {
+.ox-form-input {
     width: 100%;
-    height: 44px;
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    padding: 0 14px;
+    height: 46px;
+    background: rgba(3, 13, 12, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    padding: 0 16px;
     font-size: 14px;
     font-family: inherit;
-    color: #0f172a;
+    color: #ffffff;
     outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: all 0.2s ease;
     box-sizing: border-box;
 }
 
-.auth-input:focus {
-    border-color: #0b6153;
-    box-shadow: 0 0 0 3px rgba(11, 97, 83, 0.12);
+.ox-form-input::placeholder {
+    color: #64748b;
+    font-size: 13px;
 }
 
-.auth-submit-btn {
+.ox-form-input:focus {
+    background: rgba(3, 13, 12, 0.95);
+    border-color: #00e59b;
+    box-shadow: 0 0 18px rgba(0, 229, 155, 0.28);
+}
+
+.ox-btn-auth-submit {
     width: 100%;
-    height: 44px;
-    background: #0b6153;
+    height: 48px;
+    background: linear-gradient(135deg, #1D8A68 0%, #15664d 100%);
+    border: 1px solid rgba(0, 229, 155, 0.55);
+    border-radius: 12px;
     color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 14.5px;
+    font-weight: 800;
     font-family: inherit;
     cursor: pointer;
-    transition: background-color 0.15s;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 6px 22px rgba(0, 229, 155, 0.25);
 }
 
-.auth-submit-btn:hover {
-    background: #084c41;
+.ox-btn-auth-submit:hover {
+    background: linear-gradient(135deg, #00e59b 0%, #1D8A68 100%);
+    color: #030d0c;
+    box-shadow: 0 8px 32px rgba(0, 229, 155, 0.45);
+    transform: translateY(-1px);
 }
 
-.auth-footer {
-    margin-top: 22px;
+.ox-btn-auth-submit:active {
+    transform: translateY(1px);
+}
+
+.ox-auth-footer {
+    margin-top: 24px;
     text-align: center;
     font-size: 13px;
-    border-top: 1px solid #f1f5f9;
-    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 18px;
 }
 
-.auth-link {
-    color: #0b6153;
+.ox-auth-footer-link {
+    color: #00e59b;
     text-decoration: none;
     font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.auth-link:hover {
-    text-decoration: underline;
+.ox-auth-footer-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 229, 155, 0.6);
 }
 
 @media (max-width: 480px) {
-    .auth-page-wrapper {
-        padding: 110px 14px 60px;
+    .ox-auth-page {
+        padding: 105px 14px 60px;
     }
-    .auth-card-box {
-        padding: 28px 20px;
+    .ox-auth-card {
+        padding: 30px 20px 26px;
+        border-radius: 20px;
     }
 }
 </style>
 
-<div class="auth-page-wrapper">
-    <div class="auth-card-box">
+<div class="ox-auth-page">
+    <div class="ox-auth-card">
         
-        <div class="auth-header">
-            <div class="auth-header-badge">
+        <div class="ox-auth-header">
+            <div class="ox-auth-badge">
                 <i class="fa-solid fa-key"></i>
             </div>
-            <h1 class="auth-title">استرجاع الحساب</h1>
-            <p class="auth-subtitle">أدخل بريدك الإلكتروني لاستلام رابط الدخول المباشر إلى لوحة حسابك</p>
+            <h1 class="ox-auth-title">استرجاع الحساب</h1>
+            <p class="ox-auth-subtitle">أدخل بريدك الإلكتروني لاستلام رابط الدخول الفوري إلى لوحة تحكم حسابك وتراخيصك.</p>
         </div>
 
         @if(session('success'))
-            <div class="auth-alert-success">
-                ✓ {{ session('success') }}
+            <div class="ox-auth-alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>{{ session('success') }}</span>
             </div>
         @endif
 
         @if($errors->any())
-            <div class="auth-alert-error">
+            <div class="ox-auth-alert-error">
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span>{{ $errors->first() }}</span>
             </div>
@@ -194,8 +245,8 @@ body {
         <form action="{{ route('customer.forgot-password.submit') }}" method="POST">
             @csrf
 
-            <div class="auth-form-group">
-                <label for="customerEmail" class="auth-label">البريد الإلكتروني</label>
+            <div class="ox-form-group">
+                <label for="customerEmail" class="ox-form-label">البريد الإلكتروني المسجل</label>
                 <input 
                     type="email" 
                     id="customerEmail"
@@ -204,18 +255,20 @@ body {
                     required 
                     autofocus
                     placeholder="name@example.com" 
-                    class="auth-input"
+                    class="ox-form-input"
                 >
             </div>
 
-            <button type="submit" class="auth-submit-btn">
-                إرسال رابط الدخول الفوري
+            <button type="submit" class="ox-btn-auth-submit">
+                <span>إرسال رابط الدخول الفوري</span>
+                <span>←</span>
             </button>
         </form>
 
-        <div class="auth-footer">
-            <a href="{{ route('customer.login') }}" class="auth-link">
-                ← العودة إلى تسجيل الدخول
+        <div class="ox-auth-footer">
+            <a href="{{ route('customer.login') }}" class="ox-auth-footer-link">
+                <span>←</span>
+                <span>العودة إلى تسجيل الدخول</span>
             </a>
         </div>
 
