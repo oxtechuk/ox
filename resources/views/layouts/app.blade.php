@@ -1452,14 +1452,9 @@
             transform: translateY(-50%) translateX(0);
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
             .ox-whatsapp-btn {
-                width: 48px;
-                height: 48px;
-            }
-            .ox-whatsapp-btn svg {
-                width: 22px;
-                height: 22px;
+                display: none !important;
             }
         }
 
@@ -1695,7 +1690,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           Floating Background Music Widget
+           Floating Background Music Compact Button
            ═══════════════════════════════════════════════════════════════ */
         .ox-audio-widget {
             position: fixed;
@@ -1704,122 +1699,56 @@
             z-index: 99997;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-family: var(--font);
-            direction: rtl;
         }
-        .ox-audio-pill {
+        .ox-audio-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(6, 20, 18, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #00e59b;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(6, 18, 28, 0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            padding: 7px 14px 7px 10px;
-            border-radius: 99px;
-            color: #ffffff;
-            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5), 0 0 16px rgba(16, 185, 129, 0.12);
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(0, 229, 155, 0.15);
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             user-select: none;
+            padding: 0;
         }
-        .ox-audio-pill:hover {
-            border-color: #10B981;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 24px rgba(16, 185, 129, 0.25);
-            transform: translateY(-2px);
-        }
-        .ox-audio-equalizer {
-            display: inline-flex;
-            align-items: flex-end;
-            gap: 2.5px;
-            height: 14px;
-            padding: 0 2px;
-        }
-        .ox-audio-equalizer span {
-            width: 2.5px;
-            background: #10B981;
-            border-radius: 2px;
-            height: 4px;
-            transition: height 0.2s ease;
-        }
-        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(1) {
-            animation: oxAudioWave 1s infinite ease-in-out;
-        }
-        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(2) {
-            animation: oxAudioWave 1.2s infinite ease-in-out 0.2s;
-        }
-        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(3) {
-            animation: oxAudioWave 0.9s infinite ease-in-out 0.4s;
-        }
-        .ox-audio-widget.playing .ox-audio-equalizer span:nth-child(4) {
-            animation: oxAudioWave 1.1s infinite ease-in-out 0.1s;
-        }
-        @keyframes oxAudioWave {
-            0%, 100% { height: 3px; }
-            50% { height: 14px; }
-        }
-        .ox-audio-text-group {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-            max-width: 140px;
-        }
-        .ox-audio-track-title {
-            font-size: 11.5px;
-            font-weight: 700;
+        .ox-audio-btn:hover {
+            transform: scale(1.1);
+            border-color: #00e59b;
             color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            background: #1D8A68;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65), 0 0 22px rgba(0, 229, 155, 0.45);
         }
-        .ox-audio-track-status {
-            font-size: 9.5px;
-            color: #94a3b8;
-            letter-spacing: 0.3px;
+        .ox-audio-btn:active {
+            transform: scale(0.95);
         }
-        .ox-audio-play-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: rgba(16, 185, 129, 0.18);
-            border: 1px solid rgba(16, 185, 129, 0.45);
-            color: #10B981;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 11px;
-            padding-right: 1px;
+        .ox-audio-widget.playing .ox-audio-btn {
+            border-color: rgba(0, 229, 155, 0.65);
+            color: #00e59b;
+            animation: oxAudioPulse 2.4s infinite ease-in-out;
         }
-        .ox-audio-play-btn:hover {
-            background: #10B981;
-            color: #041210;
-            transform: scale(1.08);
-        }
-        .ox-audio-mute-btn {
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            padding: 4px;
-            display: grid;
-            place-items: center;
-            font-size: 13px;
-            transition: color 0.2s ease;
-        }
-        .ox-audio-mute-btn:hover {
-            color: #ffffff;
+        @keyframes oxAudioPulse {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 229, 155, 0.2);
+            }
+            50% {
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 22px rgba(0, 229, 155, 0.55);
+            }
         }
         @media (max-width: 768px) {
             .ox-audio-widget {
                 bottom: 84px;
                 right: 14px;
             }
-            .ox-audio-text-group {
-                max-width: 95px;
-            }
-            .ox-audio-track-title {
-                font-size: 10px;
+            .ox-audio-btn {
+                width: 36px;
+                height: 36px;
             }
         }
 
@@ -2207,18 +2136,7 @@
 
     <header id="mainHeader" class="navbar site-header">
         <div class="container navbar-inner">
-            <!-- Right CTA Action in RTL -->
-            <div class="navbar-cta-group">
-                <button type="button" class="ox-menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <a href="{{ route('contact') }}" onclick="openConsultModal(); return false;" class="btn-primary nav-cta-btn">
-                    <span>{{ $currentLocale === 'ar' ? 'ابدأ مشروعك' : ($currentLocale === 'fr' ? 'Démarrer Projet' : 'Start Project') }}</span>
-                    <span class="btn-arrow-icon">{{ $currentLocale === 'ar' ? '←' : '→' }}</span>
-                </a>
-            </div>
+            
 
             <!-- Center Navigation Links -->
             <nav class="navbar-links" id="mainNavbarLinks">
@@ -2509,7 +2427,7 @@
         </a>
     </div>
 
-    <!-- ─── Floating Background Music Widget (Right Side) ─── -->
+    <!-- ─── Floating Background Music Compact Button (Right Side) ─── -->
     @if($bgAudioEnabled && !empty($activeAudioUrl))
         <div class="ox-audio-widget" id="oxAudioWidget">
             <audio id="oxBgAudio" 
@@ -2517,21 +2435,20 @@
                    {{ $bgAudioLoop ? 'loop' : '' }} 
                    src="{{ $activeAudioUrl }}"></audio>
 
-            <div class="ox-audio-pill" id="oxAudioPill" onclick="toggleBgAudio()" title="{{ $currentLocale === 'ar' ? 'تشغيل / إيقاف موسيقى الموقع' : 'Play / Pause background audio' }}">
-                <div class="ox-audio-equalizer" id="oxAudioEqualizer" title="{{ $currentLocale === 'ar' ? 'مؤثرات الصوت التفاعلية' : 'Audio Visualizer' }}">
-                    <span></span><span></span><span></span><span></span>
-                </div>
-                <div class="ox-audio-text-group">
-                    <span class="ox-audio-track-title" id="oxAudioTrackTitle">{{ $bgAudioTitle }}</span>
-                    <span class="ox-audio-track-status" id="oxAudioTrackStatus">{{ $currentLocale === 'ar' ? 'موسيقى الخلفية' : 'Background Audio' }}</span>
-                </div>
-                <button type="button" class="ox-audio-play-btn" id="oxAudioPlayBtn" aria-label="{{ $currentLocale === 'ar' ? 'تشغيل / إيقاف' : 'Play / Pause' }}">
-                    <span id="oxAudioPlayIcon">▶</span>
-                </button>
-                <button type="button" class="ox-audio-mute-btn" id="oxAudioMuteBtn" onclick="event.stopPropagation(); toggleBgAudioMute()" title="{{ $currentLocale === 'ar' ? 'كتم / إلغاء الكتم' : 'Mute / Unmute' }}" aria-label="Mute">
-                    <span id="oxAudioMuteIcon">🔊</span>
-                </button>
-            </div>
+            <button type="button" 
+                    class="ox-audio-btn" 
+                    id="oxAudioBtn" 
+                    onclick="toggleBgAudio()" 
+                    title="{{ $currentLocale === 'ar' ? 'تشغيل / إيقاف موسيقى الموقع' : 'Play / Pause background audio' }}" 
+                    aria-label="{{ $currentLocale === 'ar' ? 'تشغيل / إيقاف موسيقى الموقع' : 'Play / Pause background audio' }}">
+                <svg id="oxAudioSvgPlay" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="margin-left: 2px;">
+                    <polygon points="6,4 20,12 6,20"></polygon>
+                </svg>
+                <svg id="oxAudioSvgPause" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                    <rect x="6" y="4" width="4" height="16" rx="1.5"></rect>
+                    <rect x="14" y="4" width="4" height="16" rx="1.5"></rect>
+                </svg>
+            </button>
         </div>
     @endif
 
@@ -2549,22 +2466,21 @@
         <!-- 2. خدماتنا -->
         <a href="{{ $isHome ? '#services' : $homeUrl . '#services' }}" class="ox-dock-item" data-target="services">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-                <line x1="6" y1="6" x2="6.01" y2="6"></line>
-                <line x1="6" y1="18" x2="6.01" y2="18"></line>
-            </svg>
-            <span>{{ $currentLocale === 'ar' ? 'خدماتنا' : ($currentLocale === 'fr' ? 'Services' : 'Services') }}</span>
-        </a>
-
-        <!-- 3. أعمالنا -->
-        <a href="{{ $isHome ? '#work' : $homeUrl . '#work' }}" class="ox-dock-item" data-target="work">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                 <polyline points="2 17 12 22 22 17"></polyline>
                 <polyline points="2 12 12 17 22 12"></polyline>
             </svg>
-            <span>{{ $currentLocale === 'ar' ? 'أعمالنا' : ($currentLocale === 'fr' ? 'Projets' : 'Work') }}</span>
+            <span>{{ $currentLocale === 'ar' ? 'خدماتنا' : ($currentLocale === 'fr' ? 'Services' : 'Services') }}</span>
+        </a>
+
+        <!-- 3. مشاريعنا -->
+        <a href="{{ route('projects.index') }}" class="ox-dock-item {{ request()->routeIs('projects.*') ? 'active' : '' }}" data-target="projects">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            <span>{{ $currentLocale === 'ar' ? 'مشاريعنا' : ($currentLocale === 'fr' ? 'Projets' : 'Projects') }}</span>
         </a>
 
         <!-- 4. المتجر -->
@@ -2578,9 +2494,9 @@
         </a>
 
         <!-- 5. تواصل معنا (ويدجت التواصل السريع) -->
-        <button type="button" class="ox-dock-item ox-dock-contact" onclick="toggleQuickContactSheet()" aria-label="Quick Contact Widget">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        <button type="button" class="ox-dock-item ox-dock-contact" onclick="toggleQuickContactSheet()" aria-label="{{ $currentLocale === 'ar' ? 'تواصل معنا' : 'Contact Us' }}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
             </svg>
             <span>{{ $currentLocale === 'ar' ? 'تواصل معنا' : ($currentLocale === 'fr' ? 'Contact' : 'Contact Us') }}</span>
         </button>
@@ -2593,7 +2509,7 @@
         <div class="ox-sheet-header">
             <div class="ox-sheet-title-group">
                 <h3 id="oxSheetTitle">
-                    <span>⚡</span>
+                    <i class="fa-solid fa-bolt-lightning" style="color: #00e59b; margin-left: 6px;"></i>
                     <span>{{ $currentLocale === 'ar' ? 'تواصل مباشر مع OX Tech' : ($currentLocale === 'fr' ? 'Contact Direct avec OX Tech' : 'Direct Contact with OX Tech') }}</span>
                 </h3>
                 <p>{{ $currentLocale === 'ar' ? 'فريقنا الهندسي متاح للرد الفوري ومناقشة مشروعك' : 'Our engineering consultants are ready to discuss your project' }}</p>
@@ -3334,13 +3250,13 @@
             document.body.style.overflow = '';
         }
 
-        // ─── Background Music Widget & Autoplay Controller ───
+        // ─── Background Music Compact Controller ───
         (function() {
             const audio = document.getElementById('oxBgAudio');
             const widget = document.getElementById('oxAudioWidget');
-            const playIcon = document.getElementById('oxAudioPlayIcon');
-            const muteIcon = document.getElementById('oxAudioMuteIcon');
-            const statusText = document.getElementById('oxAudioTrackStatus');
+            const btn = document.getElementById('oxAudioBtn');
+            const svgPlay = document.getElementById('oxAudioSvgPlay');
+            const svgPause = document.getElementById('oxAudioSvgPause');
             if (!audio || !widget) return;
 
             const defaultVol = {{ $bgAudioVolume }};
@@ -3349,11 +3265,16 @@
 
             function updateAudioUI(isPlaying) {
                 widget.classList.toggle('playing', isPlaying);
-                if (playIcon) playIcon.textContent = isPlaying ? '❚❚' : '▶';
-                if (statusText) {
-                    statusText.textContent = isPlaying ? 
-                        "{{ $currentLocale === 'ar' ? 'يعمل الآن' : 'Playing' }}" : 
-                        "{{ $currentLocale === 'ar' ? 'موسيقى الخلفية' : 'Background Audio' }}";
+                if (svgPlay && svgPause) {
+                    svgPlay.style.display = isPlaying ? 'none' : 'block';
+                    svgPause.style.display = isPlaying ? 'block' : 'none';
+                }
+                if (btn) {
+                    const label = isPlaying ? 
+                        "{{ $currentLocale === 'ar' ? 'إيقاف موسيقى الموقع' : 'Pause background audio' }}" : 
+                        "{{ $currentLocale === 'ar' ? 'تشغيل موسيقى الموقع' : 'Play background audio' }}";
+                    btn.setAttribute('aria-label', label);
+                    btn.title = label;
                 }
             }
 
@@ -3372,7 +3293,6 @@
 
             window.toggleBgAudioMute = function() {
                 audio.muted = !audio.muted;
-                if (muteIcon) muteIcon.textContent = audio.muted ? '🔇' : '🔊';
             };
 
             // Intelligent Autoplay on enter (with gesture fallback for strict browsers)
@@ -3544,6 +3464,17 @@
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');
+                }
+            });
+
+            // Update mobile dock items active state
+            const dockLinks = document.querySelectorAll('#oxMobileNavDock .ox-dock-item');
+            dockLinks.forEach(item => {
+                const target = item.getAttribute('data-target') || (item.getAttribute('href') || '').replace('#', '');
+                if (target === sectionId) {
+                    item.classList.add('active');
+                } else if (target === 'home' || target === 'services') {
+                    item.classList.remove('active');
                 }
             });
         }

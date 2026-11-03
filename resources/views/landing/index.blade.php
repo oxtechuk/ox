@@ -310,7 +310,6 @@
          OUR SERVICES SECTION (MASTER THEME)
          ========================================= -->
         <section class="ox-services-section ox-portfolio-showcase" id="work">
-        <span id="services" style="display:block; position:relative; top:-90px; visibility:hidden;"></span>
         <!-- Arabesque Corner Motifs -->
         <div class="services-arabesque corner-top-right"></div>
         <div class="services-arabesque corner-top-left"></div>
@@ -878,7 +877,8 @@
     </section>
 
     <!-- ─── Services & Software House / 4 Categories Showcase ─── -->
-    <section class="ox-beneficiaries-section" id="beneficiaries">
+    <section class="ox-beneficiaries-section" id="services">
+        <span id="beneficiaries" style="display:none;" aria-hidden="true"></span>
         <div class="ox-beneficiaries-pattern"></div>
         <div class="ox-beneficiaries-skyline"></div>
         <div class="container">
@@ -908,11 +908,26 @@
                 </p>
             </div>
 
+            @php
+                $serviceImg1 = !empty($siteSettings['service_card_img_1'])
+                    ? (str_starts_with($siteSettings['service_card_img_1'], 'http') ? $siteSettings['service_card_img_1'] : asset(ltrim($siteSettings['service_card_img_1'], '/')))
+                    : asset('assets/services/service-web.webp');
+                $serviceImg2 = !empty($siteSettings['service_card_img_2'])
+                    ? (str_starts_with($siteSettings['service_card_img_2'], 'http') ? $siteSettings['service_card_img_2'] : asset(ltrim($siteSettings['service_card_img_2'], '/')))
+                    : asset('assets/services/service-mobile.webp');
+                $serviceImg3 = !empty($siteSettings['service_card_img_3'])
+                    ? (str_starts_with($siteSettings['service_card_img_3'], 'http') ? $siteSettings['service_card_img_3'] : asset(ltrim($siteSettings['service_card_img_3'], '/')))
+                    : asset('assets/services/service-ecommerce.webp');
+                $serviceImg4 = !empty($siteSettings['service_card_img_4'])
+                    ? (str_starts_with($siteSettings['service_card_img_4'], 'http') ? $siteSettings['service_card_img_4'] : asset(ltrim($siteSettings['service_card_img_4'], '/')))
+                    : asset('assets/services/service-enterprise.webp');
+            @endphp
+
             <!-- 4-Card Luxury Grid matching reference image -->
             <div class="ox-services-cards-grid reveal">
                 <!-- Card 1: Web & SaaS Platforms -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-web.webp') }}" alt="{{ $locale === 'ar' ? 'تطوير الويب والسحاب' : 'Web & SaaS Platforms' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
+                    <img src="{{ $serviceImg1 }}" alt="{{ $locale === 'ar' ? 'تطوير الويب والسحاب' : 'Web & SaaS Platforms' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -934,7 +949,7 @@
 
                 <!-- Card 2: Mobile Applications -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-mobile.webp') }}" alt="{{ $locale === 'ar' ? 'تطبيقات الجوال الذكية' : 'Mobile Applications' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
+                    <img src="{{ $serviceImg2 }}" alt="{{ $locale === 'ar' ? 'تطبيقات الجوال الذكية' : 'Mobile Applications' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -956,7 +971,7 @@
 
                 <!-- Card 3: Digital E-Commerce -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-ecommerce.webp') }}" alt="{{ $locale === 'ar' ? 'المتاجر والتجارة الرقمية' : 'Digital E-Commerce' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
+                    <img src="{{ $serviceImg3 }}" alt="{{ $locale === 'ar' ? 'المتاجر والتجارة الرقمية' : 'Digital E-Commerce' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -978,7 +993,7 @@
 
                 <!-- Card 4: Enterprise, Odoo & Desktop -->
                 <article class="ox-service-card-item" onclick="openConsultModal()">
-                    <img src="{{ asset('assets/services/service-enterprise.webp') }}" alt="{{ $locale === 'ar' ? 'أنظمة أودو والمؤسسات' : 'Enterprise & Odoo ERP' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
+                    <img src="{{ $serviceImg4 }}" alt="{{ $locale === 'ar' ? 'أنظمة أودو والمؤسسات' : 'Enterprise & Odoo ERP' }}" class="ox-service-card-bg" width="380" height="460" loading="lazy">
                     <div class="ox-service-card-overlay"></div>
                     
                     <div class="ox-service-card-top">
@@ -1078,8 +1093,17 @@
                 <div class="video-stage reveal" aria-label="فيديوهات آراء الشركاء">
                     @foreach($testimonials as $tIndex => $t)
                         @php
+                            $totalTestimonials = $testimonials->count();
                             $isCenter = ($tIndex === 0);
-                            $class = $isCenter ? 'active-video' : ($tIndex === 1 ? 'side-video next' : 'side-video previous');
+                            if ($isCenter) {
+                                $class = 'active-video';
+                            } elseif ($tIndex === 1) {
+                                $class = 'side-video next';
+                            } elseif ($tIndex === $totalTestimonials - 1) {
+                                $class = 'side-video previous';
+                            } else {
+                                $class = 'side-video hidden-card';
+                            }
                             $hasCustomPoster = !empty($t->poster_url);
                         @endphp
                         <div class="video-card {{ $class }}" id="video-card-{{ $tIndex }}" data-video="{{ $tIndex }}" 
@@ -1158,7 +1182,13 @@
                                     <div class="frame-btn-group">
                                         <button type="button" class="frame-btn sound-btn" id="sound-btn-{{ $tIndex }}" title="{{ $locale === 'ar' ? 'تشغيل / كتم الصوت' : 'Mute / Unmute' }}" 
                                                 onclick="event.stopPropagation(); toggleCardAudio({{ $tIndex }})">
-                                            <span id="sound-icon-{{ $tIndex }}">🔇</span>
+                                            <span id="sound-icon-{{ $tIndex }}" style="display:flex; align-items:center; justify-content:center;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                                                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                                                </svg>
+                                            </span>
                                         </button>
                                         <button type="button" class="frame-btn frame-fs-btn" title="{{ $locale === 'ar' ? 'تكبير ملء الشاشة' : 'Fullscreen' }}" 
                                                 onclick="event.stopPropagation(); triggerCardFullscreen({{ $tIndex }})">
@@ -1173,8 +1203,9 @@
                                            loop
                                            muted
                                            preload="{{ $tIndex === 0 ? 'auto' : 'metadata' }}" 
+                                           @if($tIndex === 0) src="{{ $t->video_src }}" @endif
                                            data-src="{{ $t->video_src }}" 
-                                           style="width:100%; height:100%; object-fit:cover;"></video>
+                                           style="width:100%; height:100%; object-fit:cover; object-position:center; border-radius:inherit;"></video>
                                 @else
                                     <div style="display:grid; place-items:center; height:100%; color:#1D8A68; padding:20px; text-align:center;">
                                         <span>{{ $locale === 'ar' ? 'جاري تجهيز فيديو التجربة...' : 'Video is being prepared...' }}</span>
@@ -1901,14 +1932,15 @@
        Partner Stories 9:16 Vertical Reels Cards & Modern Player
        ═══════════════════════════════════════════════════════════════ */
     .testimonials .video-stage {
-        min-height: 590px;
-        height: 620px;
+        min-height: 610px;
+        height: auto !important;
         max-width: 1180px;
-        margin: 36px auto 16px;
+        margin: 36px auto 24px;
+        padding: 15px 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 28px;
+        gap: 26px;
         perspective: 1200px;
         direction: ltr;
         position: relative;
@@ -1923,10 +1955,10 @@
         overflow: hidden;
         cursor: pointer;
         background: linear-gradient(155deg, #071b19 0%, #051513 60%, #030d0c 100%);
-        width: 310px;
-        height: 550px;
+        width: 320px;
+        height: 568px;
         aspect-ratio: 9 / 16;
-        border-radius: 28px;
+        border-radius: 26px;
         box-shadow: 0 25px 65px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 0, 0, 0.5);
         transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .6s ease, box-shadow .6s ease, border-color .4s ease;
         padding: 0;
@@ -1940,14 +1972,25 @@
         box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 229, 155, 0.25);
     }
 
+    .testimonials .video-card.previous {
+        order: 1;
+        transform: rotateY(28deg) scale(0.85) translateZ(-40px);
+        opacity: 0.65;
+        z-index: 2;
+    }
+
     .testimonials .video-card.active-video {
+        order: 2;
         z-index: 5;
-        transform: scale(1.08) translateZ(35px);
+        transform: scale(1.06) translateZ(35px);
+        opacity: 1;
         border-color: #00e59b;
         box-shadow: 0 35px 85px rgba(0, 0, 0, 0.9), 0 0 45px rgba(0, 229, 155, 0.4);
     }
 
-    .testimonials .video-card.side-video {
+    .testimonials .video-card.next {
+        order: 3;
+        transform: rotateY(-28deg) scale(0.85) translateZ(-40px);
         opacity: 0.65;
         z-index: 2;
     }
@@ -1956,12 +1999,8 @@
         opacity: 0.92;
     }
 
-    .testimonials .video-card.previous {
-        transform: rotateY(34deg) scale(0.85) translateZ(-40px);
-    }
-
-    .testimonials .video-card.next {
-        transform: rotateY(-34deg) scale(0.85) translateZ(-40px);
+    .testimonials .video-card.hidden-card {
+        display: none !important;
     }
 
     /* Video Frame (Reels Viewport Inside Card) */
@@ -1971,7 +2010,7 @@
         background: #000;
         z-index: 3;
         display: none;
-        border-radius: 28px;
+        border-radius: inherit;
         overflow: hidden;
     }
 
@@ -1983,7 +2022,8 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 28px;
+        object-position: center;
+        border-radius: inherit;
         display: block;
         background: #000;
     }
@@ -1991,9 +2031,9 @@
     /* Reels Top Controls Overlay */
     .testimonials .frame-overlay-controls {
         position: absolute;
-        top: 14px;
-        left: 14px;
-        right: 14px;
+        top: 12px;
+        left: 12px;
+        right: 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -2004,24 +2044,24 @@
     .testimonials .frame-overlay-controls .frame-btn-group {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         pointer-events: auto;
     }
 
     .testimonials .frame-btn {
         pointer-events: auto;
-        background: rgba(6, 20, 18, 0.78);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(3, 13, 12, 0.72);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         color: #F3EFE5;
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 13px;
+        font-size: 11px;
         cursor: pointer;
         transition: all 0.25s ease;
         box-shadow: 0 4px 12px rgba(0,0,0,0.4);
@@ -2035,16 +2075,16 @@
     }
 
     .testimonials .frame-btn.sound-btn {
-        background: rgba(0, 229, 155, 0.2);
-        border-color: rgba(0, 229, 155, 0.5);
+        background: rgba(3, 13, 12, 0.75);
+        border-color: rgba(0, 229, 155, 0.4);
         color: #00e59b;
-        font-size: 14px;
     }
 
     .testimonials .frame-btn.sound-btn.sound-unmuted {
-        background: #00e59b;
+        background: rgba(0, 229, 155, 0.9);
         border-color: #00e59b;
         color: #071b19;
+        box-shadow: 0 0 10px rgba(0, 229, 155, 0.45);
     }
 
     /* Reels Bottom Information & Progress Track */
@@ -2053,8 +2093,8 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 36px 16px 14px;
-        background: linear-gradient(180deg, transparent 0%, rgba(3, 13, 12, 0.85) 55%, rgba(3, 13, 12, 0.98) 100%);
+        padding: 30px 14px 12px;
+        background: linear-gradient(180deg, transparent 0%, rgba(3, 13, 12, 0.6) 50%, rgba(3, 13, 12, 0.92) 100%);
         z-index: 10;
         pointer-events: none;
         direction: rtl;
@@ -2070,7 +2110,7 @@
 
     .testimonials .frame-partner-badge b {
         font-family: var(--font-ar);
-        font-size: 14px;
+        font-size: 13.5px;
         color: #ffffff;
         font-weight: 700;
         text-shadow: 0 2px 6px rgba(0,0,0,0.8);
@@ -2106,52 +2146,59 @@
     /* Responsive Breakpoints */
     @media (max-width: 1024px) {
         .testimonials .video-stage {
-            height: 560px;
-            min-height: 540px;
-            gap: 18px;
+            min-height: 550px;
+            height: auto !important;
+            gap: 16px;
+            margin: 30px auto 20px;
         }
         .testimonials .video-card {
-            width: 270px;
-            height: 480px;
+            width: 280px;
+            height: 498px;
             border-radius: 24px;
         }
     }
 
     @media (max-width: 768px) {
         .testimonials .video-stage {
-            height: 510px;
-            min-height: 490px;
+            min-height: 520px;
+            height: auto !important;
             gap: 12px;
+            margin: 24px auto 18px;
         }
         .testimonials .video-card {
-            width: 245px;
-            height: 435px;
+            width: 270px;
+            height: 480px;
             border-radius: 22px;
         }
         .testimonials .video-card.previous {
-            transform: rotateY(28deg) scale(0.82) translateZ(-30px);
+            transform: rotateY(24deg) scale(0.82) translateZ(-30px);
+            opacity: 0.5;
         }
         .testimonials .video-card.next {
-            transform: rotateY(-28deg) scale(0.82) translateZ(-30px);
+            transform: rotateY(-24deg) scale(0.82) translateZ(-30px);
+            opacity: 0.5;
         }
     }
 
     @media (max-width: 480px) {
         .testimonials .video-stage {
-            height: 460px;
-            min-height: 440px;
+            min-height: 490px;
+            height: auto !important;
             gap: 8px;
+            margin: 20px auto 14px;
         }
         .testimonials .video-card {
-            width: 220px;
-            height: 390px;
+            width: 260px;
+            height: 462px;
             border-radius: 20px;
         }
         .testimonials .video-card.previous {
-            transform: rotateY(22deg) scale(0.78) translateZ(-20px);
+            transform: rotateY(18deg) scale(0.78) translateZ(-20px);
+            opacity: 0.35;
         }
         .testimonials .video-card.next {
-            transform: rotateY(-22deg) scale(0.78) translateZ(-20px);
+            transform: rotateY(-18deg) scale(0.78) translateZ(-20px);
+            opacity: 0.35;
         }
     }
 </style>
@@ -2429,7 +2476,11 @@
         const iconSpan = document.getElementById(`sound-icon-${index}`);
         const btn = document.getElementById(`sound-btn-${index}`);
         if (iconSpan) {
-            iconSpan.textContent = isMuted ? '🔇' : '🔊';
+            if (isMuted) {
+                iconSpan.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
+            } else {
+                iconSpan.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+            }
         }
         if (btn) {
             btn.title = isMuted ? 'تشغيل الصوت' : 'كتم الصوت';
@@ -2496,9 +2547,11 @@
 
         videoCards.forEach((card, i) => {
             const count = videoCards.length;
-            let cls = 'side-video next';
+            let cls = 'side-video hidden-card';
             if (i === currentStory) {
                 cls = 'active-video';
+            } else if (i === (currentStory + 1) % count) {
+                cls = 'side-video next';
             } else if (i === (currentStory + count - 1) % count) {
                 cls = 'side-video previous';
             }
@@ -2589,19 +2642,30 @@
     if (storiesSection && 'IntersectionObserver' in window) {
         const storiesObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
                     isStoriesInView = true;
                     playActiveStoryVideo(true); // muted: true ensures browser allows immediate autoplay
-                } else if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
+                } else if (!entry.isIntersecting || entry.intersectionRatio < 0.05) {
                     isStoriesInView = false;
                     pauseAllCardVideos();
                 }
             });
         }, {
-            threshold: [0.1, 0.25, 0.5]
+            threshold: [0.05, 0.15, 0.35]
         });
         storiesObserver.observe(storiesSection);
     }
+
+    // Check if stories section is already in view on page load
+    setTimeout(() => {
+        if (storiesSection) {
+            const rect = storiesSection.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.85 && rect.bottom > 100) {
+                isStoriesInView = true;
+                playActiveStoryVideo(true);
+            }
+        }
+    }, 400);
 
     // Preload center video so it starts instantly on scroll
     const firstActiveVid = document.getElementById(`native-video-${currentStory}`);

@@ -135,6 +135,67 @@
         border: 1px solid #BFDBFE;
         color: #1E40AF;
     }
+
+    /* ─── Services Cards Media Manager ─── */
+    .service-media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 20px;
+        margin-top: 15px;
+    }
+    .service-media-card {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 14px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .service-media-card:hover {
+        border-color: #CBD5E1;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    }
+    .service-media-preview-box {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #092C22;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .service-media-preview-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .service-media-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    .badge-custom {
+        background: rgba(16, 185, 129, 0.95);
+        color: #FFFFFF;
+    }
+    .badge-default {
+        background: rgba(15, 23, 42, 0.75);
+        color: #E2E8F0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 </style>
 @endpush
 
@@ -178,6 +239,10 @@
         <a href="{{ route('admin.settings.index', ['tab' => 'audio']) }}" class="settings-nav-item {{ $activeTab === 'audio' ? 'active' : '' }}">
             <span>🎵</span>
             <span>الموسيقى والوسائط</span>
+        </a>
+        <a href="{{ route('admin.settings.index', ['tab' => 'services']) }}" class="settings-nav-item {{ $activeTab === 'services' ? 'active' : '' }}">
+            <span>🚀</span>
+            <span>صور كروت الخدمات</span>
         </a>
     </div>
 
@@ -773,6 +838,112 @@
                     </div>
                 </div>
             </div>
+        @elseif($activeTab === 'services')
+            <!-- Services Cards Media & GIF Manager -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <div>
+                        <h3 class="settings-card-title">
+                            <span>🚀</span>
+                            <span>إدارة وسائط وصور كروت الخدمات (Images & Animated GIFs)</span>
+                        </h3>
+                        <div class="settings-card-subtitle">
+                            تحكم بالصور والخلفيات أو ملفات الـ GIF المتحركة لكروت الخدمات الأربعة الرئيسية المعروضة في واجهة الموقع.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="callout-box callout-info">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <div>
+                        <strong>ملاحظة هامة للمصممين:</strong>
+                        يمكنك رفع صور عادية (WebP, PNG, JPG) أو ملفات متحركة بصيغة <strong>GIF</strong> لإعطاء الكروت حيوية تفاعلية جذابة. المقاس الموصى به <strong>380 × 460 بكسل</strong> (أو أي أبعاد طولية متناسقة)، وتتكيف الصورة تلقائياً لتملأ مساحة الكرت (object-fit: cover).
+                    </div>
+                </div>
+
+                @php
+                    $serviceCardsList = [
+                        [
+                            'index' => 1,
+                            'key' => 'service_card_img_1',
+                            'title' => 'الكرت 1: تطوير الويب والسحاب',
+                            'subtitle' => 'Web & SaaS Platforms',
+                            'default' => asset('assets/services/service-web.webp'),
+                        ],
+                        [
+                            'index' => 2,
+                            'key' => 'service_card_img_2',
+                            'title' => 'الكرت 2: تطبيقات الجوال الذكية',
+                            'subtitle' => 'Mobile Applications',
+                            'default' => asset('assets/services/service-mobile.webp'),
+                        ],
+                        [
+                            'index' => 3,
+                            'key' => 'service_card_img_3',
+                            'title' => 'الكرت 3: المتاجر والتجارة الرقمية',
+                            'subtitle' => 'Digital E-Commerce',
+                            'default' => asset('assets/services/service-ecommerce.webp'),
+                        ],
+                        [
+                            'index' => 4,
+                            'key' => 'service_card_img_4',
+                            'title' => 'الكرت 4: أنظمة أودو والمؤسسات',
+                            'subtitle' => 'Enterprise & Odoo ERP',
+                            'default' => asset('assets/services/service-enterprise.webp'),
+                        ],
+                    ];
+                @endphp
+
+                <div class="service-media-grid">
+                    @foreach($serviceCardsList as $card)
+                        @php
+                            $hasCustom = !empty($settings[$card['key']]);
+                            $currentSrc = $hasCustom ? (str_starts_with($settings[$card['key']], 'http') ? $settings[$card['key']] : asset(ltrim($settings[$card['key']], '/'))) : $card['default'];
+                        @endphp
+                        <div class="service-media-card">
+                            <div>
+                                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 10px;">
+                                    <div>
+                                        <div style="font-weight: 800; font-size: 14px; color: #0F172A;">{{ $card['title'] }}</div>
+                                        <div style="font-size: 11.5px; color: #64748B; font-weight: 600;">{{ $card['subtitle'] }}</div>
+                                    </div>
+                                    <span style="background: #E2E8F0; color: #475569; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px;">#{{ $card['index'] }}</span>
+                                </div>
+
+                                <div class="service-media-preview-box">
+                                    <img src="{{ $currentSrc }}" alt="{{ $card['title'] }}" class="service-media-preview-img" id="preview_{{ $card['key'] }}">
+                                    <span class="service-media-badge {{ $hasCustom ? 'badge-custom' : 'badge-default' }}" id="badge_{{ $card['key'] }}">
+                                        {{ $hasCustom ? '✨ وسائط مخصصة' : 'الافتراضي' }}
+                                    </span>
+                                </div>
+
+                                <div style="margin-bottom: 10px;">
+                                    <label class="form-label" style="font-size: 12px; margin-bottom: 4px;">اختر صورة جديدة أو ملف GIF:</label>
+                                    <input type="file" 
+                                           name="{{ $card['key'] }}" 
+                                           class="form-control" 
+                                           accept="image/*,image/gif" 
+                                           onchange="previewServiceImage(this, 'preview_{{ $card['key'] }}', 'badge_{{ $card['key'] }}')">
+                                    <span class="form-hint" style="font-size: 11px;">صورة ثابتة أو GIF متحرك حتى 15 ميجابايت</span>
+                                </div>
+                            </div>
+
+                            @if($hasCustom)
+                                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #CBD5E1;">
+                                    <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #DC2626; cursor: pointer; user-select: none;">
+                                        <input type="checkbox" name="delete_{{ $card['key'] }}" value="1" style="accent-color: #DC2626; width: 15px; height: 15px;">
+                                        <span>حذف الوسائط المخصصة واستعادة الأصل</span>
+                                    </label>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         @endif
 
         <div style="display: flex; align-items: center; gap: 14px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #E2E8F0;">
@@ -792,6 +963,25 @@
 
 @push('admin-scripts')
 <script>
+    function previewServiceImage(input, previewId, badgeId) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewEl = document.getElementById(previewId);
+                if (previewEl) {
+                    previewEl.src = e.target.result;
+                }
+                const badgeEl = document.getElementById(badgeId);
+                if (badgeEl) {
+                    badgeEl.textContent = '✨ تم اختيار ملف جديد';
+                    badgeEl.className = 'service-media-badge badge-custom';
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         // Toggle Secret Visibility
         const toggleBtn = document.getElementById('toggleSecretBtn');

@@ -961,10 +961,7 @@
              1. HERO SECTION & LIGHT SEARCH BAR
              ══════════════════════════════════════════════════════════ --}}
         <div class="store-hero-section">
-            <div class="store-kicker-pill">
-                <span>✨</span>
-                <span>سوق البرمجيات والأنظمة الجاهزة — ترخيص فوري وتفعيل آمن</span>
-            </div>
+          
 
             <h1 class="store-main-title">
                 سوق البرمجيات <span class="highlight-emerald">وتطبيقات الأعمال</span>

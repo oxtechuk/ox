@@ -6,6 +6,7 @@ use App\Models\DigitalProduct;
 use App\Models\ProductCategory;
 use App\Models\Project;
 use App\Models\SiteContent;
+use App\Models\SiteSetting;
 use App\Models\Testimonial;
 
 class HomeController extends Controller
@@ -26,6 +27,7 @@ class HomeController extends Controller
             ->get();
 
         $siteContents = SiteContent::all()->pluck('value', 'key')->toArray();
+        $siteSettings = SiteSetting::all()->pluck('value', 'key');
 
         // Digital Products & Categories
         $digitalProducts = DigitalProduct::where('status', 'active')
@@ -163,6 +165,7 @@ class HomeController extends Controller
             'testimonials',
             'storiesJson',
             'siteContents',
+            'siteSettings',
             'countries',
             'displayCountries',
             'otherCountries',

@@ -32,6 +32,10 @@ class UpdateSettingRequest extends FormRequest
             'bg_audio_url' => 'nullable|string|max:500',
             'bg_audio_title' => 'nullable|string|max:150',
             'bg_audio_volume' => 'nullable|numeric|min:0|max:1',
+            'service_card_img_1' => 'nullable|file|mimes:jpeg,png,jpg,webp,svg,gif|max:15360',
+            'service_card_img_2' => 'nullable|file|mimes:jpeg,png,jpg,webp,svg,gif|max:15360',
+            'service_card_img_3' => 'nullable|file|mimes:jpeg,png,jpg,webp,svg,gif|max:15360',
+            'service_card_img_4' => 'nullable|file|mimes:jpeg,png,jpg,webp,svg,gif|max:15360',
             'active_tab' => 'nullable|string|max:50',
         ];
     }
