@@ -47,11 +47,31 @@ class SiteSetting extends Model
         return $setting;
     }
 
-    public static function cachedDict()
+    public static function cachedDict(): array
     {
-        return Cache::rememberForever('site_settings_dict', function () {
-            return static::all()->pluck('value', 'key');
-        });
+        try {
+            $cached = Cache::get('site_settings_dict');
+            if (is_array($cached)) {
+                return $cached;
+            }
+            if ($cached instanceof \Illuminate\Support\Collection) {
+                return $cached->toArray();
+            }
+            Cache::forget('site_settings_dict');
+        } catch (\Throwable $e) {
+        }
+
+        try {
+            $data = static::all()->pluck('value', 'key')->toArray();
+            try {
+                Cache::put('site_settings_dict', $data, 86400);
+            } catch (\Throwable $e) {
+            }
+
+            return $data;
+        } catch (\Throwable $e) {
+            return [];
+        }
     }
 
     public static function getAllGrouped(): array
