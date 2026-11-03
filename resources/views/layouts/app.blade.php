@@ -2,7 +2,7 @@
     use App\Models\SiteSetting;
     use App\Models\TrackingPixel;
 
-    $siteSettings = SiteSetting::all()->pluck('value', 'key');
+    $siteSettings = SiteSetting::cachedDict();
     $activePixels = TrackingPixel::getActivePixels();
     $currentUrl = url()->current();
     $isHome = request()->routeIs('home');
@@ -35,7 +35,7 @@
     } elseif (!empty($bgAudioUrlSetting)) {
         $activeAudioUrl = $bgAudioUrlSetting;
     } else {
-        $activeAudioUrl = 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3';
+        $activeAudioUrl = asset('assets/audio/ambient-experience.mp3');
     }
     $bgAudioEnabled = ($siteSettings['bg_audio_enabled'] ?? '1') !== '0';
     $bgAudioTitle = $siteSettings['bg_audio_title'] ?? 'OX Tech Ambient Experience';
@@ -204,7 +204,7 @@
     <!-- AI & LLM Engine Optimization Context -->
     <link rel="alternate" type="text/markdown" href="{{ url('/llms.txt') }}" title="LLM Context for AI Engines">
 
-    <!-- Google reCAPTCHA Anti-Bot Protection -->
+    <!-- Google reCAPTCHA Anti-Bot Protection (Optimized Non-Blocking & Deferred on Interaction) -->
     @php
         $recaptchaSiteKey = config('services.recaptcha.site_key');
         if (empty($recaptchaSiteKey) && class_exists(\App\Models\SiteSetting::class)) {
@@ -212,23 +212,52 @@
         }
     @endphp
     @if(!empty($recaptchaSiteKey))
-        <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
         <script>
             window.OX_RECAPTCHA_KEY = "{{ $recaptchaSiteKey }}";
-            async function getRecaptchaToken(action = 'form_submit') {
-                if (typeof grecaptcha !== 'undefined' && window.OX_RECAPTCHA_KEY) {
-                    return new Promise((resolve) => {
-                        grecaptcha.ready(function() {
-                            grecaptcha.execute(window.OX_RECAPTCHA_KEY, {action: action}).then(function(token) {
-                                resolve(token);
-                            }).catch(function(err) {
-                                console.warn('reCAPTCHA execute failed:', err);
-                                resolve(null);
-                            });
-                        });
-                    });
+            let _recaptchaLoaded = false;
+            function loadRecaptchaScript() {
+                if (_recaptchaLoaded || !window.OX_RECAPTCHA_KEY) return;
+                _recaptchaLoaded = true;
+                const script = document.createElement('script');
+                script.src = 'https://www.google.com/recaptcha/api.js?render=' + encodeURIComponent(window.OX_RECAPTCHA_KEY);
+                script.async = true;
+                document.head.appendChild(script);
+            }
+            // Trigger load on user interaction or input focus
+            window.addEventListener('pointerdown', loadRecaptchaScript, { once: true, passive: true });
+            window.addEventListener('keydown', loadRecaptchaScript, { once: true, passive: true });
+            document.addEventListener('focusin', function(e) {
+                if (e.target.matches('input, textarea, select')) {
+                    loadRecaptchaScript();
                 }
-                return null;
+            }, { once: true, passive: true });
+
+            async function getRecaptchaToken(action = 'form_submit') {
+                if (!window.OX_RECAPTCHA_KEY) return null;
+                if (!_recaptchaLoaded) {
+                    loadRecaptchaScript();
+                }
+                return new Promise((resolve) => {
+                    let attempts = 0;
+                    function checkGrecaptcha() {
+                        if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+                            grecaptcha.ready(function() {
+                                grecaptcha.execute(window.OX_RECAPTCHA_KEY, {action: action}).then(function(token) {
+                                    resolve(token);
+                                }).catch(function(err) {
+                                    console.warn('reCAPTCHA execute failed:', err);
+                                    resolve(null);
+                                });
+                            });
+                        } else if (attempts < 20) {
+                            attempts++;
+                            setTimeout(checkGrecaptcha, 150);
+                        } else {
+                            resolve(null);
+                        }
+                    }
+                    checkGrecaptcha();
+                });
             }
         </script>
     @else
@@ -1752,6 +1781,77 @@
             }
         }
 
+        /* ─── Desktop Header 'Call Now' Button ─── */
+        .navbar-cta-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .ox-header-call-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 20px;
+            border-radius: 99px;
+            background: linear-gradient(135deg, rgba(0, 229, 155, 0.16) 0%, rgba(29, 138, 104, 0.32) 100%);
+            border: 1px solid rgba(0, 229, 155, 0.55);
+            color: #00e59b !important;
+            font-family: var(--font-ar), var(--font-latin, sans-serif);
+            font-size: 13.5px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 12px rgba(0, 229, 155, 0.18);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+            overflow: hidden;
+            outline: none;
+        }
+        .ox-header-call-btn i {
+            font-size: 13px;
+            color: #00e59b;
+            transition: transform 0.3s ease;
+            animation: oxPhoneRattle 3.2s infinite ease-in-out;
+        }
+        .ox-header-call-btn:hover {
+            background: linear-gradient(135deg, #00e59b 0%, #1d8a68 100%);
+            color: #051513 !important;
+            border-color: #00e59b;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 229, 155, 0.45), 0 0 20px rgba(0, 229, 155, 0.3);
+        }
+        .ox-header-call-btn:hover i {
+            color: #051513;
+            transform: rotate(15deg) scale(1.15);
+        }
+        .ox-call-btn-pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #00e59b;
+            box-shadow: 0 0 8px #00e59b;
+            animation: oxDotPulse 1.8s infinite ease-in-out;
+        }
+        @keyframes oxDotPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.45); opacity: 0.4; }
+        }
+        @keyframes oxPhoneRattle {
+            0%, 85%, 100% { transform: rotate(0deg); }
+            88% { transform: rotate(-14deg); }
+            92% { transform: rotate(14deg); }
+            96% { transform: rotate(-10deg); }
+            98% { transform: rotate(10deg); }
+        }
+        @media (max-width: 991px) {
+            .navbar-cta-group,
+            .ox-header-call-btn {
+                display: none !important;
+            }
+        }
+
         /* ═══════════════════════════════════════════════════════════════
            Ultra-Premium Executive Regional Footer
            ═══════════════════════════════════════════════════════════════ */
@@ -2137,6 +2237,21 @@
     <header id="mainHeader" class="navbar site-header">
         <div class="container navbar-inner">
             
+            <!-- Mobile Menu Toggle Button -->
+            <button type="button" class="ox-menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle Menu" title="Menu">
+                <span style="display:block;width:20px;height:2px;background:currentColor;border-radius:2px;"></span>
+                <span style="display:block;width:20px;height:2px;background:currentColor;border-radius:2px;"></span>
+                <span style="display:block;width:14px;height:2px;background:currentColor;border-radius:2px;"></span>
+            </button>
+
+            <!-- Call Now Action Button (Desktop Only) -->
+            <div class="navbar-cta-group">
+                <button type="button" class="ox-header-call-btn" onclick="openConsultModal(); return false;" aria-label="{{ $currentLocale === 'ar' ? 'اتصل بنا الآن' : 'Call Now' }}" title="{{ $currentLocale === 'ar' ? 'اتصل بنا الآن واستشر خبرائنا' : 'Call Now & Consult Our Team' }}">
+                    <span class="ox-call-btn-pulse"></span>
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span>{{ $currentLocale === 'ar' ? 'اتصل بنا الآن' : ($currentLocale === 'fr' ? 'Appelez-nous' : 'Call Now') }}</span>
+                </button>
+            </div>
 
             <!-- Center Navigation Links -->
             <nav class="navbar-links" id="mainNavbarLinks">
@@ -2431,7 +2546,7 @@
     @if($bgAudioEnabled && !empty($activeAudioUrl))
         <div class="ox-audio-widget" id="oxAudioWidget">
             <audio id="oxBgAudio" 
-                   preload="auto" 
+                   preload="none" 
                    {{ $bgAudioLoop ? 'loop' : '' }} 
                    src="{{ $activeAudioUrl }}"></audio>
 
@@ -3259,9 +3374,18 @@
             const svgPause = document.getElementById('oxAudioSvgPause');
             if (!audio || !widget) return;
 
+            const fallbackSrc = "{{ asset('assets/audio/ambient-experience.mp3') }}";
             const defaultVol = {{ $bgAudioVolume }};
             const shouldAutoplay = {{ $bgAudioAutoplay ? 'true' : 'false' }};
             audio.volume = defaultVol;
+
+            audio.addEventListener('error', function(e) {
+                console.warn('OX Tech Audio Source Error, switching to local asset:', e);
+                if (audio.src !== fallbackSrc) {
+                    audio.src = fallbackSrc;
+                    audio.load();
+                }
+            });
 
             function updateAudioUI(isPlaying) {
                 widget.classList.toggle('playing', isPlaying);
@@ -3279,11 +3403,26 @@
             }
 
             window.toggleBgAudio = function() {
+                if (!audio.src || audio.src === '' || audio.src.includes('mixkit.co') || audio.error) {
+                    audio.src = fallbackSrc;
+                    audio.load();
+                }
                 if (audio.paused) {
-                    audio.play().then(() => {
-                        updateAudioUI(true);
-                        sessionStorage.setItem('ox_bg_audio_user_action', 'play');
-                    }).catch(err => console.warn('Audio play error:', err));
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            updateAudioUI(true);
+                            sessionStorage.setItem('ox_bg_audio_user_action', 'play');
+                        }).catch(err => {
+                            console.warn('Audio play error, falling back to local ambient mp3:', err);
+                            audio.src = fallbackSrc;
+                            audio.load();
+                            audio.play().then(() => {
+                                updateAudioUI(true);
+                                sessionStorage.setItem('ox_bg_audio_user_action', 'play');
+                            }).catch(finalErr => console.error('Audio play failed:', finalErr));
+                        });
+                    }
                 } else {
                     audio.pause();
                     updateAudioUI(false);
@@ -3298,6 +3437,10 @@
             // Intelligent Autoplay on enter (with gesture fallback for strict browsers)
             if (shouldAutoplay && sessionStorage.getItem('ox_bg_audio_user_action') !== 'pause') {
                 const tryPlay = function() {
+                    if (!audio.src || audio.src === '' || audio.src.includes('mixkit.co')) {
+                        audio.src = fallbackSrc;
+                        audio.load();
+                    }
                     const promise = audio.play();
                     if (promise !== undefined) {
                         promise.then(() => {
@@ -3317,12 +3460,12 @@
                 };
 
                 const removeGestureListeners = function() {
-                    ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
+                    ['pointerdown', 'touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
                         window.removeEventListener(evt, onFirstGesture, { passive: true });
                     });
                 };
 
-                ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
+                ['pointerdown', 'touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
                     window.addEventListener(evt, onFirstGesture, { once: true, passive: true });
                 });
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 class ProductCategory extends Model
 {
@@ -30,5 +31,18 @@ class ProductCategory extends Model
     public function digitalProducts(): HasMany
     {
         return $this->hasMany(DigitalProduct::class, 'category_id');
+    }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('home_product_categories');
+            Cache::forget('home_digital_products');
+        });
+
+        static::deleted(function () {
+            Cache::forget('home_product_categories');
+            Cache::forget('home_digital_products');
+        });
     }
 }

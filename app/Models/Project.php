@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -323,5 +324,22 @@ class Project extends Model
         }
 
         return array_values(array_unique($images));
+    }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('home_projects');
+            Cache::forget('home_sectors');
+            Cache::forget('home_display_countries');
+            Cache::forget('home_other_countries');
+        });
+
+        static::deleted(function () {
+            Cache::forget('home_projects');
+            Cache::forget('home_sectors');
+            Cache::forget('home_display_countries');
+            Cache::forget('home_other_countries');
+        });
     }
 }

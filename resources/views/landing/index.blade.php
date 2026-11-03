@@ -1173,7 +1173,7 @@
                             </div>
 
                             <!-- Active Inline Video Frame Layer (9:16 Vertical Reels Player) -->
-                            <div class="card-video-frame" id="card-video-frame-{{ $tIndex }}">
+                            <div class="card-video-frame {{ $isCenter ? 'playing' : '' }}" id="card-video-frame-{{ $tIndex }}">
                                 <div class="frame-overlay-controls">
                                     <button type="button" class="frame-btn frame-close-btn" title="{{ $locale === 'ar' ? 'إغلاق والعودة' : 'Close Video' }}" 
                                             onclick="event.stopPropagation(); closeCardVideo({{ $tIndex }})">
@@ -1202,20 +1202,17 @@
                                            webkit-playsinline
                                            loop
                                            muted
-                                           preload="{{ $tIndex === 0 ? 'auto' : 'metadata' }}" 
+                                           @if($isCenter) autoplay @endif
+                                           preload="{{ $tIndex === 0 ? 'metadata' : 'none' }}" 
                                            @if($tIndex === 0) src="{{ $t->video_src }}" @endif
                                            data-src="{{ $t->video_src }}" 
-                                           style="width:100%; height:100%; object-fit:cover; object-position:center; border-radius:inherit;"></video>
+                                           style="width:100%; height:100%; object-fit:cover; object-position:center center; border-radius:inherit;"></video>
                                 @else
                                     <div style="display:grid; place-items:center; height:100%; color:#1D8A68; padding:20px; text-align:center;">
                                         <span>{{ $locale === 'ar' ? 'جاري تجهيز فيديو التجربة...' : 'Video is being prepared...' }}</span>
                                     </div>
                                 @endif
                                 <div class="frame-bottom-overlay">
-                                    <div class="frame-partner-badge">
-                                        <b>{{ $t->partner_name }}</b>
-                                        <small>{{ $t->partner_role }}</small>
-                                    </div>
                                     <div class="frame-progress-track">
                                         <div class="frame-progress-bar" id="frame-progress-{{ $tIndex }}"></div>
                                     </div>
@@ -1932,15 +1929,15 @@
        Partner Stories 9:16 Vertical Reels Cards & Modern Player
        ═══════════════════════════════════════════════════════════════ */
     .testimonials .video-stage {
-        min-height: 610px;
+        min-height: 670px;
         height: auto !important;
-        max-width: 1180px;
-        margin: 36px auto 24px;
-        padding: 15px 0;
+        max-width: 1220px;
+        margin: 36px auto 26px;
+        padding: 20px 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 26px;
+        gap: 28px;
         perspective: 1200px;
         direction: ltr;
         position: relative;
@@ -1948,18 +1945,18 @@
     }
 
     .testimonials .video-card {
-        border: 1px solid rgba(29, 138, 104, 0.35);
+        border: 1px solid rgba(29, 138, 104, 0.4);
         color: #fff;
         position: relative;
         text-align: right;
         overflow: hidden;
         cursor: pointer;
-        background: linear-gradient(155deg, #071b19 0%, #051513 60%, #030d0c 100%);
-        width: 320px;
-        height: 568px;
+        background: #000;
+        width: 340px;
+        height: 604px;
         aspect-ratio: 9 / 16;
-        border-radius: 26px;
-        box-shadow: 0 25px 65px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 0, 0, 0.5);
+        border-radius: 22px;
+        box-shadow: 0 25px 65px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
         transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .6s ease, box-shadow .6s ease, border-color .4s ease;
         padding: 0;
         outline: none;
@@ -1968,13 +1965,13 @@
     }
 
     .testimonials .video-card:hover {
-        border-color: rgba(0, 229, 155, 0.6);
-        box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 229, 155, 0.25);
+        border-color: rgba(0, 229, 155, 0.65);
+        box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 229, 155, 0.25);
     }
 
     .testimonials .video-card.previous {
         order: 1;
-        transform: rotateY(28deg) scale(0.85) translateZ(-40px);
+        transform: rotateY(24deg) scale(0.86) translateZ(-35px);
         opacity: 0.65;
         z-index: 2;
     }
@@ -1982,15 +1979,15 @@
     .testimonials .video-card.active-video {
         order: 2;
         z-index: 5;
-        transform: scale(1.06) translateZ(35px);
+        transform: scale(1.04) translateZ(30px);
         opacity: 1;
         border-color: #00e59b;
-        box-shadow: 0 35px 85px rgba(0, 0, 0, 0.9), 0 0 45px rgba(0, 229, 155, 0.4);
+        box-shadow: 0 35px 85px rgba(0, 0, 0, 0.95), 0 0 45px rgba(0, 229, 155, 0.35);
     }
 
     .testimonials .video-card.next {
         order: 3;
-        transform: rotateY(-28deg) scale(0.85) translateZ(-40px);
+        transform: rotateY(-24deg) scale(0.86) translateZ(-35px);
         opacity: 0.65;
         z-index: 2;
     }
@@ -2022,7 +2019,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: center;
+        object-position: center center;
         border-radius: inherit;
         display: block;
         background: #000;
@@ -2044,19 +2041,19 @@
     .testimonials .frame-overlay-controls .frame-btn-group {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
         pointer-events: auto;
     }
 
     .testimonials .frame-btn {
         pointer-events: auto;
-        background: rgba(3, 13, 12, 0.72);
+        background: rgba(3, 13, 12, 0.65);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         color: #F3EFE5;
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
         display: inline-flex;
         align-items: center;
@@ -2064,27 +2061,27 @@
         font-size: 11px;
         cursor: pointer;
         transition: all 0.25s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
     .testimonials .frame-btn:hover {
-        background: #1D8A68;
-        color: #071B19;
+        background: rgba(29, 138, 104, 0.85);
+        color: #ffffff;
         border-color: #00E59B;
         transform: scale(1.08);
     }
 
     .testimonials .frame-btn.sound-btn {
-        background: rgba(3, 13, 12, 0.75);
-        border-color: rgba(0, 229, 155, 0.4);
-        color: #00e59b;
+        background: rgba(3, 13, 12, 0.65);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
     }
 
     .testimonials .frame-btn.sound-btn.sound-unmuted {
-        background: rgba(0, 229, 155, 0.9);
+        background: rgba(3, 13, 12, 0.85);
         border-color: #00e59b;
-        color: #071b19;
-        box-shadow: 0 0 10px rgba(0, 229, 155, 0.45);
+        color: #00e59b;
+        box-shadow: 0 0 12px rgba(0, 229, 155, 0.5);
     }
 
     /* Reels Bottom Information & Progress Track */
@@ -2093,41 +2090,17 @@
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 30px 14px 12px;
-        background: linear-gradient(180deg, transparent 0%, rgba(3, 13, 12, 0.6) 50%, rgba(3, 13, 12, 0.92) 100%);
+        padding: 0;
+        background: transparent;
         z-index: 10;
         pointer-events: none;
-        direction: rtl;
-        text-align: right;
-    }
-
-    .testimonials .frame-partner-badge {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        margin-bottom: 8px;
-    }
-
-    .testimonials .frame-partner-badge b {
-        font-family: var(--font-ar);
-        font-size: 13.5px;
-        color: #ffffff;
-        font-weight: 700;
-        text-shadow: 0 2px 6px rgba(0,0,0,0.8);
-    }
-
-    .testimonials .frame-partner-badge small {
-        font-family: var(--font-ar);
-        font-size: 11px;
-        color: var(--ox-gold, #C8A96B);
-        text-shadow: 0 1px 4px rgba(0,0,0,0.8);
     }
 
     .testimonials .frame-progress-track {
         width: 100%;
-        height: 3px;
-        background: rgba(255, 255, 255, 0.25);
-        border-radius: 99px;
+        height: 3.5px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 0 0 22px 22px;
         overflow: hidden;
         position: relative;
     }
@@ -2146,59 +2119,80 @@
     /* Responsive Breakpoints */
     @media (max-width: 1024px) {
         .testimonials .video-stage {
-            min-height: 550px;
+            min-height: 610px;
             height: auto !important;
-            gap: 16px;
+            gap: 20px;
             margin: 30px auto 20px;
         }
         .testimonials .video-card {
-            width: 280px;
-            height: 498px;
-            border-radius: 24px;
+            width: 310px;
+            height: 551px;
+            border-radius: 20px;
         }
     }
 
     @media (max-width: 768px) {
         .testimonials .video-stage {
-            min-height: 520px;
+            min-height: 590px;
             height: auto !important;
-            gap: 12px;
-            margin: 24px auto 18px;
+            gap: 14px;
+            margin: 24px auto 16px;
+            perspective: 800px;
         }
         .testimonials .video-card {
-            width: 270px;
-            height: 480px;
-            border-radius: 22px;
+            width: 290px;
+            height: 516px;
+            border-radius: 20px;
         }
         .testimonials .video-card.previous {
-            transform: rotateY(24deg) scale(0.82) translateZ(-30px);
-            opacity: 0.5;
+            transform: rotateY(16deg) scale(0.82) translateZ(-25px);
+            opacity: 0.45;
         }
         .testimonials .video-card.next {
-            transform: rotateY(-24deg) scale(0.82) translateZ(-30px);
-            opacity: 0.5;
+            transform: rotateY(-16deg) scale(0.82) translateZ(-25px);
+            opacity: 0.45;
         }
     }
 
     @media (max-width: 480px) {
         .testimonials .video-stage {
-            min-height: 490px;
+            min-height: 580px;
             height: auto !important;
-            gap: 8px;
-            margin: 20px auto 14px;
+            gap: 10px;
+            margin: 18px auto 12px;
+            perspective: 600px;
+            padding: 10px 0;
+            overflow: visible;
         }
         .testimonials .video-card {
-            width: 260px;
-            height: 462px;
-            border-radius: 20px;
+            width: min(85vw, 320px);
+            height: calc(min(85vw, 320px) * (16 / 9));
+            max-height: 74vh;
+            border-radius: 18px;
         }
         .testimonials .video-card.previous {
-            transform: rotateY(18deg) scale(0.78) translateZ(-20px);
+            transform: scale(0.8) translateX(-18%) translateZ(-20px);
             opacity: 0.35;
         }
+        .testimonials .video-card.active-video {
+            transform: scale(1.02);
+        }
         .testimonials .video-card.next {
-            transform: rotateY(-18deg) scale(0.78) translateZ(-20px);
+            transform: scale(0.8) translateX(18%) translateZ(-20px);
             opacity: 0.35;
+        }
+        .testimonials .frame-progress-track {
+            border-radius: 0 0 18px 18px;
+        }
+        .testimonials .frame-overlay-controls {
+            top: 10px;
+            left: 10px;
+            right: 10px;
+        }
+        .testimonials .frame-btn {
+            width: 30px;
+            height: 30px;
+            font-size: 10px;
         }
     }
 </style>
@@ -2642,7 +2636,7 @@
     if (storiesSection && 'IntersectionObserver' in window) {
         const storiesObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
                     isStoriesInView = true;
                     playActiveStoryVideo(true); // muted: true ensures browser allows immediate autoplay
                 } else if (!entry.isIntersecting || entry.intersectionRatio < 0.05) {
@@ -2651,10 +2645,21 @@
                 }
             });
         }, {
-            threshold: [0.05, 0.15, 0.35]
+            threshold: [0.05, 0.12, 0.35]
         });
         storiesObserver.observe(storiesSection);
     }
+
+    // Fallback scroll check for responsive mobile & desktop webviews
+    window.addEventListener('scroll', () => {
+        if (!isStoriesInView && storiesSection) {
+            const rect = storiesSection.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.75 && rect.bottom > 120) {
+                isStoriesInView = true;
+                playActiveStoryVideo(true);
+            }
+        }
+    }, { passive: true });
 
     // Check if stories section is already in view on page load
     setTimeout(() => {

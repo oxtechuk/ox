@@ -829,7 +829,7 @@
                     <div>
                         <label class="form-label">معاينة الصوت الحالي</label>
                         @php
-                            $previewSrc = !empty($settings['bg_audio_file']) ? asset(ltrim($settings['bg_audio_file'], '/')) : (!empty($settings['bg_audio_url']) ? $settings['bg_audio_url'] : 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3');
+                            $previewSrc = !empty($settings['bg_audio_file']) ? asset(ltrim($settings['bg_audio_file'], '/')) : (!empty($settings['bg_audio_url']) ? $settings['bg_audio_url'] : asset('assets/audio/ambient-experience.mp3'));
                         @endphp
                         <div style="padding: 10px 14px; background: #f8fafc; border: 1px solid #E2E8F0; border-radius: 8px;">
                             <audio controls style="width: 100%; height: 32px;" src="{{ $previewSrc }}"></audio>

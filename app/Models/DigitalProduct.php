@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Cache;
 
 class DigitalProduct extends Model
 {
@@ -137,5 +138,18 @@ class DigitalProduct extends Model
     public function scopeFeatured($query)
     {
         return $query->where('is_featured', true);
+    }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('home_digital_products');
+            Cache::forget('home_product_categories');
+        });
+
+        static::deleted(function () {
+            Cache::forget('home_digital_products');
+            Cache::forget('home_product_categories');
+        });
     }
 }

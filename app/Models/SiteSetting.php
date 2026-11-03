@@ -42,8 +42,16 @@ class SiteSetting extends Model
 
         Cache::forget("site_setting_{$key}");
         Cache::forget('site_settings_all');
+        Cache::forget('site_settings_dict');
 
         return $setting;
+    }
+
+    public static function cachedDict()
+    {
+        return Cache::rememberForever('site_settings_dict', function () {
+            return static::all()->pluck('value', 'key');
+        });
     }
 
     public static function getAllGrouped(): array
@@ -58,11 +66,13 @@ class SiteSetting extends Model
         static::saved(function ($setting) {
             Cache::forget("site_setting_{$setting->key}");
             Cache::forget('site_settings_all');
+            Cache::forget('site_settings_dict');
         });
 
         static::deleted(function ($setting) {
             Cache::forget("site_setting_{$setting->key}");
             Cache::forget('site_settings_all');
+            Cache::forget('site_settings_dict');
         });
     }
 }

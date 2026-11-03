@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class Testimonial extends Model
@@ -82,5 +83,18 @@ class Testimonial extends Model
         }
 
         return '';
+    }
+
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('home_testimonials');
+            Cache::forget('home_stories_json');
+        });
+
+        static::deleted(function () {
+            Cache::forget('home_testimonials');
+            Cache::forget('home_stories_json');
+        });
     }
 }
