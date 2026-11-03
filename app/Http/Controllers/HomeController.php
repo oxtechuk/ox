@@ -8,68 +8,57 @@ use App\Models\Project;
 use App\Models\SiteContent;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
-use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $projects = Cache::remember('home_projects', 3600, function () {
-            $featured = Project::where('is_featured', true)
-                ->orderBy('order', 'asc')
-                ->orderBy('id', 'desc')
-                ->get();
+        $projects = Project::where('is_featured', true)
+            ->orderBy('order', 'asc')
+            ->orderBy('id', 'desc')
+            ->get();
 
-            if ($featured->isEmpty()) {
-                return Project::orderBy('order', 'asc')->orderBy('id', 'desc')->get();
-            }
+        if ($projects->isEmpty()) {
+            $projects = Project::orderBy('order', 'asc')->orderBy('id', 'desc')->get();
+        }
 
-            return $featured;
-        });
+        // Ensure Hamsh / Moussa video reel is prioritized as #1 in the middle
+        try {
+            Testimonial::where('partner_name', 'like', '%موسي%')
+                ->orWhere('partner_name', 'like', '%هامش%')
+                ->where('order', '!=', 1)
+                ->update(['order' => 1, 'number_badge' => '01']);
+        } catch (\Throwable $e) {
+            // fail-safe if DB connection isn't available
+        }
 
-        $testimonials = Cache::remember('home_testimonials', 3600, function () {
-            try {
-                Testimonial::where('partner_name', 'like', '%موسي%')
-                    ->orWhere('partner_name', 'like', '%هامش%')
-                    ->where('order', '!=', 1)
-                    ->update(['order' => 1, 'number_badge' => '01']);
-            } catch (\Throwable $e) {
-                // fail-safe if DB connection isn't available
-            }
+        $testimonials = Testimonial::where('is_active', true)
+            ->orderByRaw("CASE WHEN partner_name LIKE '%موسي%' OR partner_name LIKE '%هامش%' THEN 0 ELSE 1 END")
+            ->orderBy('order', 'asc')
+            ->get()
+            ->values();
 
-            $items = Testimonial::where('is_active', true)
-                ->orderByRaw("CASE WHEN partner_name LIKE '%موسي%' OR partner_name LIKE '%هامش%' THEN 0 ELSE 1 END")
-                ->orderBy('order', 'asc')
-                ->get()
-                ->values();
-
-            $items->each(function ($t, $index) {
-                $t->number_badge = sprintf('%02d', $index + 1);
-            });
-
-            return $items;
+        // Sequential badge numbering starting from 01 for the active center video
+        $testimonials->each(function ($t, $index) {
+            $t->number_badge = sprintf('%02d', $index + 1);
         });
 
         $siteContents = SiteContent::cachedDict();
         $siteSettings = SiteSetting::cachedDict();
 
-        // Digital Products & Categories cached
-        $digitalProducts = Cache::remember('home_digital_products', 3600, function () {
-            return DigitalProduct::where('status', 'active')
-                ->with('category')
-                ->orderByDesc('is_featured')
-                ->orderBy('id', 'asc')
-                ->get();
-        });
+        // Digital Products & Categories
+        $digitalProducts = DigitalProduct::where('status', 'active')
+            ->with('category')
+            ->orderByDesc('is_featured')
+            ->orderBy('id', 'asc')
+            ->get();
 
-        $productCategories = Cache::remember('home_product_categories', 3600, function () {
-            return ProductCategory::where('is_active', true)
-                ->withCount(['digitalProducts' => function ($q) {
-                    $q->where('status', 'active');
-                }])
-                ->orderBy('sort_order', 'asc')
-                ->get();
-        });
+        $productCategories = ProductCategory::where('is_active', true)
+            ->withCount(['digitalProducts' => function ($q) {
+                $q->where('status', 'active');
+            }])
+            ->orderBy('sort_order', 'asc')
+            ->get();
 
         // Country flags mapping
         $flagEmojis = [
@@ -117,87 +106,76 @@ class HomeController extends Controller
             'us' => ['name' => 'أمريكا', 'name_en' => 'United States'],
         ];
 
-        $countriesData = Cache::remember('home_countries_data', 3600, function () use ($countryDictionary) {
-            $dbCountries = Project::select('country_code', 'country_name', 'country_name_en')
-                ->distinct()
-                ->whereNotNull('country_code')
-                ->get();
+        // 1. Existing countries from DB
+        $dbCountries = Project::select('country_code', 'country_name', 'country_name_en')
+            ->distinct()
+            ->whereNotNull('country_code')
+            ->get();
 
-            $stripOrder = ['jo', 'eg', 'sa', 'lb', 'ps', 'ae', 'sy', 'kw', 'iq', 'ma'];
+        // Primary strip order matching client reference image
+        $stripOrder = ['jo', 'eg', 'sa', 'lb', 'ps', 'ae', 'sy', 'kw', 'iq', 'ma'];
 
-            $display = collect($stripOrder)->map(function ($code) use ($dbCountries, $countryDictionary) {
-                $dbItem = $dbCountries->first(fn ($d) => strtolower($d->country_code) === $code);
-                $dictItem = $countryDictionary[$code] ?? null;
-                $name = $dbItem?->country_name ?? $dictItem['name'] ?? strtoupper($code);
-                $nameEn = $dbItem?->country_name_en ?? $dictItem['name_en'] ?? strtoupper($code);
-                $flagFile = "assets/flags/{$code}.webp";
-                $flagUrl = file_exists(public_path($flagFile)) ? asset($flagFile) : null;
+        $displayCountries = collect($stripOrder)->map(function ($code) use ($dbCountries, $countryDictionary) {
+            $dbItem = $dbCountries->first(fn ($d) => strtolower($d->country_code) === $code);
+            $dictItem = $countryDictionary[$code] ?? null;
+            $name = $dbItem?->country_name ?? $dictItem['name'] ?? strtoupper($code);
+            $nameEn = $dbItem?->country_name_en ?? $dictItem['name_en'] ?? strtoupper($code);
+            $flagFile = "assets/flags/{$code}.webp";
+            $flagUrl = file_exists(public_path($flagFile)) ? asset($flagFile) : null;
 
-                return (object) [
-                    'country_code' => $code,
-                    'country_name' => $name,
-                    'country_name_en' => $nameEn,
-                    'flag_url' => $flagUrl,
-                ];
-            });
-
-            $otherCodes = collect(array_keys($countryDictionary))
-                ->merge($dbCountries->pluck('country_code')->map(fn ($c) => strtolower($c)))
-                ->unique()
-                ->filter(fn ($code) => ! in_array($code, $stripOrder))
-                ->values();
-
-            $other = $otherCodes->map(function ($code) use ($dbCountries, $countryDictionary) {
-                $dbItem = $dbCountries->first(fn ($d) => strtolower($d->country_code) === $code);
-                $dictItem = $countryDictionary[$code] ?? null;
-                $name = $dbItem?->country_name ?? $dictItem['name'] ?? strtoupper($code);
-                $nameEn = $dbItem?->country_name_en ?? $dictItem['name_en'] ?? strtoupper($code);
-                $flagFile = "assets/flags/{$code}.webp";
-                $flagUrl = file_exists(public_path($flagFile)) ? asset($flagFile) : null;
-
-                return (object) [
-                    'country_code' => $code,
-                    'country_name' => $name,
-                    'country_name_en' => $nameEn,
-                    'flag_url' => $flagUrl,
-                ];
-            });
-
-            return [
-                'display' => $display,
-                'other' => $other,
+            return (object) [
+                'country_code' => $code,
+                'country_name' => $name,
+                'country_name_en' => $nameEn,
+                'flag_url' => $flagUrl,
             ];
         });
 
-        $displayCountries = $countriesData['display'];
-        $otherCountries = $countriesData['other'];
+        // Other countries for the other countries dropdown (+13 دول أخرى)
+        $otherCodes = collect(array_keys($countryDictionary))
+            ->merge($dbCountries->pluck('country_code')->map(fn ($c) => strtolower($c)))
+            ->unique()
+            ->filter(fn ($code) => ! in_array($code, $stripOrder))
+            ->values();
+
+        $otherCountries = $otherCodes->map(function ($code) use ($dbCountries, $countryDictionary) {
+            $dbItem = $dbCountries->first(fn ($d) => strtolower($d->country_code) === $code);
+            $dictItem = $countryDictionary[$code] ?? null;
+            $name = $dbItem?->country_name ?? $dictItem['name'] ?? strtoupper($code);
+            $nameEn = $dbItem?->country_name_en ?? $dictItem['name_en'] ?? strtoupper($code);
+            $flagFile = "assets/flags/{$code}.webp";
+            $flagUrl = file_exists(public_path($flagFile)) ? asset($flagFile) : null;
+
+            return (object) [
+                'country_code' => $code,
+                'country_name' => $name,
+                'country_name_en' => $nameEn,
+                'flag_url' => $flagUrl,
+            ];
+        });
+
         $countries = $displayCountries;
 
-        $sectors = Cache::remember('home_sectors', 3600, function () use ($projects) {
-            $featuredSectorSlugs = $projects->pluck('sector_slug')->unique()->filter()->values();
+        $featuredSectorSlugs = $projects->pluck('sector_slug')->unique()->filter()->values();
+        $sectors = ($featuredSectorSlugs->isNotEmpty()
+            ? Project::whereIn('sector_slug', $featuredSectorSlugs)
+            : Project::query())
+            ->select('sector_slug', 'sector_name')
+            ->distinct()
+            ->whereNotNull('sector_slug')
+            ->get()
+            ->unique('sector_slug')
+            ->values();
 
-            return ($featuredSectorSlugs->isNotEmpty()
-                ? Project::whereIn('sector_slug', $featuredSectorSlugs)
-                : Project::query())
-                ->select('sector_slug', 'sector_name')
-                ->distinct()
-                ->whereNotNull('sector_slug')
-                ->get()
-                ->unique('sector_slug')
-                ->values();
-        });
-
-        $storiesJson = Cache::remember('home_stories_json', 3600, function () use ($testimonials) {
-            return json_encode($testimonials->map(function ($t) {
-                return [
-                    $t->quote,
-                    $t->partner_name,
-                    $t->partner_role.($t->partner_country ? ' · '.$t->partner_country : ''),
-                    $t->video_src,
-                    $t->video_type,
-                ];
-            })->toArray(), JSON_UNESCAPED_UNICODE);
-        });
+        $storiesJson = json_encode($testimonials->map(function ($t) {
+            return [
+                $t->quote,
+                $t->partner_name,
+                $t->partner_role.($t->partner_country ? ' · '.$t->partner_country : ''),
+                $t->video_src,
+                $t->video_type,
+            ];
+        })->toArray(), JSON_UNESCAPED_UNICODE);
 
         return view('landing.index', compact(
             'projects',

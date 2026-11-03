@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class TrackingPixel extends Model
@@ -24,9 +25,26 @@ class TrackingPixel extends Model
 
     public static function getActivePixels()
     {
-        return Cache::rememberForever('active_tracking_pixels', function () {
-            return static::where('is_active', true)->get();
-        });
+        try {
+            $cached = Cache::get('active_tracking_pixels');
+            if ($cached instanceof Collection || (is_iterable($cached) && ! ($cached instanceof \__PHP_Incomplete_Class))) {
+                return $cached;
+            }
+            Cache::forget('active_tracking_pixels');
+        } catch (\Throwable $e) {
+        }
+
+        try {
+            $pixels = static::where('is_active', true)->get();
+            try {
+                Cache::put('active_tracking_pixels', $pixels, 86400);
+            } catch (\Throwable $e) {
+            }
+
+            return $pixels;
+        } catch (\Throwable $e) {
+            return collect();
+        }
     }
 
     public static function flushCache()

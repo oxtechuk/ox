@@ -3,7 +3,17 @@
     use App\Models\TrackingPixel;
 
     $siteSettings = SiteSetting::cachedDict();
+    if (!is_array($siteSettings) && !($siteSettings instanceof \ArrayAccess)) {
+        try {
+            $siteSettings = SiteSetting::all()->pluck('value', 'key')->toArray();
+        } catch (\Throwable $e) {
+            $siteSettings = [];
+        }
+    }
     $activePixels = TrackingPixel::getActivePixels();
+    if (!is_iterable($activePixels) || $activePixels instanceof \__PHP_Incomplete_Class) {
+        $activePixels = [];
+    }
     $currentUrl = url()->current();
     $isHome = request()->routeIs('home');
     $homeUrl = route('home');
